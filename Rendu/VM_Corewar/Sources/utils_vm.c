@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   main_vm.c                                        .::    .:/ .      .::   */
+/*   utils_vm.c                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/05/29 16:14:38 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/01 15:48:44 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Created: 2018/06/01 15:43:36 by dguelpa      #+#   ##    ##    #+#       */
+/*   Updated: 2018/06/01 15:48:49 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "main_vm.h"
 
-int		main(int argc, char const **argv)
+void	print_usage(void)
 {
-	if (argc > 1)
-	{
-		init_vm(argv);
-		parse_args(argv);
-	}
-	else
-		print_usage();
-	return (0);
+	ft_printf(USE);
+}
+
+void	ft_error(char *s)
+{
+	int i;
+
+	i = 0;
+	while (i < g_vm->nb_players)
+		free(g_vm->champions[i++]);
+	free(g_vm->champions);
+	free(g_vm->num_champs);
+	free(g_vm);
+	ft_printf(s);
+	exit(1);
 }
