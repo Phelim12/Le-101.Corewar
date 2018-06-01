@@ -6,7 +6,7 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/12/08 18:11:02 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2017/12/08 18:11:02 by clcreuso    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/06/01 13:23:42 by dguelpa     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -15,8 +15,8 @@
 
 CC = gcc
 
-NAME = ../corewar
-		
+NAME = ./corewar
+
 C_FLAGS = -Wall -Wextra -Werror
 
 DIR_LIB = ../Libft/
@@ -41,7 +41,7 @@ NB_FILES = $(words $(SRC))
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(INC)
 	@$(CC) $(C_FLAGS) $(OBJ) -L $(DIR_LIB) -lft -o $(NAME)
 	@printf "\r\033[0;32m✅️   make corewar 100%%\033[0m\033[K\n"
 
