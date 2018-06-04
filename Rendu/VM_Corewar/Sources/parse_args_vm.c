@@ -5,55 +5,59 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/06/01 15:42:26 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/01 15:48:55 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Created: 2018/06/04 12:50:12 by dguelpa      #+#   ##    ##    #+#       */
+/*   Updated: 2018/06/04 12:51:08 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../Includes/main_vm.h"
 
-void	parse_args(char const **argv)
+static void	parse_n(char const **argv, int *i, int *k)
+{
+	if (argv[*i + 1] && ft_str_is_number(argv[*i + 1]) &&
+			ft_atoi(argv[*i + 1]) >= 0)
+		g_vm->num_champs[*k] = ft_atoi(argv[*i + 1]);
+	else
+		ft_error("Wrong parameter for -n option\n");
+	if (argv[*i + 2] &&
+			!ft_strcmp(".cor", &argv[*i + 2][ft_strlen(argv[*i + 2]) - 4]))
+		g_vm->champions[*k] = ft_strdup(argv[*i + 2]);
+	else
+		ft_error("After -n, no file detected, or wrong extension\n");
+	*i += 3;
+	*k += 1;
+}
+
+static void	parse_dump(char const **argv, int *i)
+{
+	g_vm->dump = 1;
+	if (argv[*i + 1] && ft_str_is_number(argv[*i + 1]) &&
+			ft_atoi(argv[*i + 1]) >= 0)
+		g_vm->d_cycles = ft_atoi(argv[*i]);
+	else
+		ft_error("wrong parameter for -dump option\n");
+	*i += 2;
+}
+
+void		parse_args(char const **argv)
 {
 	int	i;
-	int	num;
+	int	default_num;
 	int	k;
 
 	i = 1;
 	k = 0;
-	num = 0;
+	default_num = 0;
 	while (argv[i])
 	{
 		if (!ft_strcmp("-dump", argv[i]))
-		{
-			g_vm->dump = 1;
-			if (argv[i + 1] && ft_str_is_number(argv[i + 1]) &&
-					ft_atoi(argv[i + 1]) >= 0)
-				g_vm->d_cycles = ft_atoi(argv[i]);
-			else
-				ft_error("Wrong parameter for -dump option\n");
-			i += 2;
-		}
+			parse_dump(argv, &i);
 		else if (!ft_strcmp("-n", argv[i]))
-		{
-			//apres -n, on peut considerer que les deux prochains arguments doivent
-			//etre un numero de joueur disponible puis un champion, pas d'autres options genre pas -n 1 -dump 54 test.cor
-			if (argv[i + 1] && ft_str_is_number(argv[i + 1]) &&
-			ft_atoi(argv[i + 1]) >= 0)
-				g_vm->num_champs[k] = ft_atoi(argv[i + 1]);
-			else
-				ft_error("Wrong parameter for -n option\n");
-			if (argv[i + 2] &&
-			!ft_strcmp(".cor", &argv[i + 2][ft_strlen(argv[i + 2]) - 4]))
-				g_vm->champions[k] = ft_strdup(argv[i + 2]);
-			else
-				ft_error("After -n, no file detected, or wrong extension\n");
-			k++;
-			i += 3;
-		}
+			parse_n(argv, &i, &k);
 		else if (!ft_strcmp(".cor", &argv[i][ft_strlen(argv[i]) - 4]))
 		{
-			g_vm->num_champs[k] = num++;
+			g_vm->num_champs[k] = default_num++;
 			g_vm->champions[k++] = ft_strdup(argv[i++]);
 		}
 		else
@@ -61,7 +65,7 @@ void	parse_args(char const **argv)
 	}
 }
 
-void	init_champs(char const **argv)
+void		init_champs(char const **argv)
 {
 	void	*tmp;
 	int		i;
@@ -83,7 +87,7 @@ void	init_champs(char const **argv)
 	g_vm->champions[i] = NULL;
 }
 
-void	init_vm(char const **argv)
+void		init_vm(char const **argv)
 {
 	void	*tmp;
 
@@ -93,4 +97,5 @@ void	init_vm(char const **argv)
 	g_vm->d_cycles = 0;
 	g_vm->nb_players = 0;
 	init_champs(argv);
+	parse_args(argv);
 }
