@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:38 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/04 13:32:05 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/04 14:36:39 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,7 +19,7 @@ int		main(int argc, char const **argv)
 	{
 		init_vm(argv);
 		parse_args(argv);
-		//save_champs();
+		//save_champs(); // need to interpret .cor files ?
 		//init_map(); //full 0, map de MEM_SIZE, init nb_players * 16 registres
 		//load_champs(); //divide map in nb_players and load them -> need to interpret .cor files
 		//RUN();
