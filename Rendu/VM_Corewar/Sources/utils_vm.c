@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 15:43:36 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/01 15:48:49 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/04 13:29:52 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,9 @@
 
 void	print_usage(void)
 {
-	ft_printf(USE);
+	ft_printf(USE1);
+	ft_printf(USE2);
+	ft_printf(USE3);
 }
 
 void	ft_error(char *s)
