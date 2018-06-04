@@ -6,7 +6,7 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/12/08 18:11:02 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2018/06/04 12:54:44 by dguelpa     ###    #+. /#+    ###.fr      #
+#    Updated: 2018/06/04 13:05:16 by dguelpa     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -42,7 +42,7 @@ NB_FILES = $(words $(SRC))
 all: $(NAME)
 
 $(NAME): $(OBJ) $(INC)
-	make -C ../Libft
+	@make -C ../Libft
 	@$(CC) $(C_FLAGS) $(OBJ) -L $(DIR_LIB) -lft -o $(NAME)
 	@printf "\r\033[0;32m✅️   make corewar 100%%\033[0m\033[K\n"
 
@@ -56,14 +56,14 @@ clean:
 	@if [ -e Sources/main_vm.o ]; then \
 		printf "\r\033[38;5;202m🗑️   clean corewar\033[0m\033[K\n";\
 	fi;
-	make -C ../Libft clean
+	@make -C ../Libft clean
 	@rm -rf $(OBJ)
 
 fclean: clean
 	@if [ -e $(NAME) ]; then \
 		printf "\r\033[38;5;196m🗑️   fclean corewar\033[0m\033[K\n"; \
 	fi;
-#	make -C ../Libft fclean
+	@make -C ../Libft fclean
 	@rm -rf $(NAME)
 
 re: fclean all

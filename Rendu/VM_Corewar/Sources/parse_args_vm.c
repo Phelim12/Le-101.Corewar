@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/04 12:50:12 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/04 12:51:08 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/04 13:04:25 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -97,5 +97,4 @@ void		init_vm(char const **argv)
 	g_vm->d_cycles = 0;
 	g_vm->nb_players = 0;
 	init_champs(argv);
-	parse_args(argv);
 }
