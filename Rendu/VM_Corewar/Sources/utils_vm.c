@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 15:43:36 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/04 13:29:52 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/05 17:19:37 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,13 +22,12 @@ void	print_usage(void)
 
 void	ft_error(char *s)
 {
-	int i;
+	unsigned int i;
 
 	i = 0;
 	while (i < g_vm->nb_players)
-		free(g_vm->champions[i++]);
-	free(g_vm->champions);
-	free(g_vm->num_champs);
+		free(g_vm->champion[i++]);
+	free(g_vm->champion);
 	free(g_vm);
 	ft_printf(s);
 	exit(1);

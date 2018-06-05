@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/04 13:31:09 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/05 18:43:54 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,13 +40,27 @@
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+typedef struct				s_champ
+{
+	char			*filename;
+	int				**registers;
+	int				live;
+	unsigned int	nb_process;
+	char			*name;
+	char			*comment;
+	int				num;
+
+}							t_champ;
+
 typedef struct				s_vm
 {
-	int		dump;
-	int		d_cycles;
-	int		nb_players;
-	int		*num_champs;
-	char	**champions;
+	unsigned int	cycle_to_die;
+	unsigned int	cycle;
+	t_champ			**champion;
+	int				**map;
+	int				dump;
+	unsigned int	d_cycles;
+	unsigned int	nb_players;
 }							t_vm;
 
 t_vm						*g_vm;
@@ -101,7 +115,7 @@ void						ft_error(char *s);
 
 # define REG_NUMBER			16
 
-# define CYCLE				_TO_DIE1536
+# define CYCLE_TO_DIE		1536
 # define CYCLE_DELTA		50
 # define NBR_LIVE			21
 # define MAX_CHECKS			10
