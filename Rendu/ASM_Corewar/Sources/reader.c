@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   main_asm.c                                       .::    .:/ .      .::   */
+/*   reader.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/05/29 15:54:45 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/04 18:57:12 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/06/04 18:52:58 by nbettach     #+#   ##    ##    #+#       */
+/*   Updated: 2018/06/04 20:35:08 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "main_asm.h"
+#include "../Includes/main_asm.h"
 
-int main(int argc, char const *argv[])
+
+void	reader()
 {
-	if (argc == 2)
-	{
-		printf("%s\n", argv[1]);
-		reader();
-	}
-	return (0);
+	
 }
