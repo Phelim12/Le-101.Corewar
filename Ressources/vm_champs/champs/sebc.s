@@ -1,5 +1,4 @@
 .name    "sebc"
 .comment "sebc"
-.extend
 
-
+live: zjmp %-4199
