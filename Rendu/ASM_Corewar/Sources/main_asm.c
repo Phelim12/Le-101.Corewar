@@ -17,8 +17,12 @@ int main(int argc, char const *argv[])
 {
 	if (argc == 2)
 	{
-		printf("%s\n", argv[1]);
-		reader();
+		if (!(reader(argv[1])))
+		{
+			perror("Error");
+			return (0);
+		}
+
 	}
 	return (0);
 }

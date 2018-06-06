@@ -17,7 +17,7 @@ CC = gcc
 
 NAME = ../asm
 		
-C_FLAGS = -Wall -Wextra -Werror
+C_FLAGS = 
 
 DIR_LIB = ../Libft/
 
@@ -25,7 +25,7 @@ DIR_SRC = Sources/
 
 DIR_INC = Includes/
 
-NAME_SRC = main_asm.c
+NAME_SRC = main_asm.c reader.c ft_strsplit_str.c
 
 NAME_INC = main_asm.h
 

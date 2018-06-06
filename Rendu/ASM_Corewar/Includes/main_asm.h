@@ -21,6 +21,9 @@
 #include <string.h>
 #include "../../Libft/Includes/libft.h"
 
+#define GOOD_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789"
+#define NOT_GOOD_CHARS	""
+
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 **┃ Functions alloweds:                                                        ┃
@@ -36,6 +39,27 @@
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+typedef struct	s_cmd
+{
+	char			*name;
+	char			*type;
+	struct s_cmd	*next;
+	int				index;
+}				t_cmd;
 
+typedef struct	s_line
+{
+	struct t_cmd	*cmds;
+	struct s_line	*next;
+	int				index;
+}				t_line;
+
+typedef struct	s_parser
+{
+	struct t_line	*file;
+}				t_parser;
+
+t_parser	*reader(const char *name);
+char		**ft_strsplit_str(const char *src, char *str);
 
 #endif
