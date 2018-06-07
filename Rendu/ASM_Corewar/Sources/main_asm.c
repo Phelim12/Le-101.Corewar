@@ -13,16 +13,33 @@
 
 #include "main_asm.h"
 
-int main(int argc, char const *argv[])
+void	free_list(t_cmd *list)
 {
+	t_cmd	*save;
+
+	while (list)
+	{
+		save = list;
+		free(list->data);
+		list = list->next;
+		free(save);
+	}
+}
+
+int		main(int argc, char const *argv[])
+{
+	t_cmd	*pointer;
+	int		fd;
+
 	if (argc == 2)
 	{
-		if (!(reader(argv[1])))
-		{
-			perror("Error");
+		if ((fd = open(argv[1], O_RDONLY)) == -1)
 			return (0);
-		}
-
+		if (!(pointer = reader(0, fd)))
+			printf("ERROR");
+		else
+			printf("\nLAAA-> %s\n", pointer->data);
+		free_list(pointer);
 	}
 	return (0);
 }
