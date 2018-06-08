@@ -25,6 +25,7 @@
 #define QUOTE			'"'
 #define SHARP			'#'
 #define POINT			'.'
+#define NEW_LINE		'\n'
 
 #define STR_1			"\"\0"
 #define STR_2			"\n\0"
@@ -32,11 +33,15 @@
 #define STR_4			"\n\t :,\0"
 
 #define SPACE_CHARS		" \t\v\f\r"
-#define REGISTER_CHARS	"r0123456789"
+#define SEPERATOR_CHARS		"%,:"
+
+
+#define HEADER_CHARS	"acemnot"
 #define LABEL_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789"
+#define VALID_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789%:, \t\v\f\r"
 
 
-#define BUFF_ELEM	32
+#define BUFF_ELEM	250
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -53,15 +58,22 @@
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+typedef struct	s_pos
+{
+	int				x;
+	int				y;
+}				t_pos;
+
 typedef struct	s_cmd
 {
 	char			*data;
 	char			*name;
 	char			*type;
+	int				index;
+	struct s_cmd	*start;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
-	struct s_cmd	*start;
-	int				index;
+	t_pos	pos;
 }				t_cmd;
 
 typedef struct	s_parser
@@ -70,7 +82,7 @@ typedef struct	s_parser
 	struct t_cmd	*file;
 }				t_parser;
 
-t_cmd	*reader(int index, int fd);
+t_cmd	*reader(int fd);
 char		**ft_strsplit_str(const char *src, char *str);
 
 #endif

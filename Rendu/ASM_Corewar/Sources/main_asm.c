@@ -35,7 +35,7 @@ int		main(int argc, char const *argv[])
 	{
 		if ((fd = open(argv[1], O_RDONLY)) == -1)
 			return (0);
-		if (!(pointer = reader(0, fd)))
+		if (!(pointer = reader(fd)))
 			printf("ERROR");
 		else
 			printf("\nLAAA-> %s\n", pointer->data);
