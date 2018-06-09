@@ -25,7 +25,7 @@ DIR_SRC = Sources/
 
 DIR_INC = Includes/
 
-NAME_SRC = main_asm.c reader.c
+NAME_SRC = main_asm.c reader.c take_elem.c tools_asm.c
 
 NAME_INC = main_asm.h
 

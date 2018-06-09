@@ -22,26 +22,21 @@
 #include "op.h"
 #include "../../Libft/Includes/libft.h"
 
+#define DASH			'-'
 #define QUOTE			'"'
 #define SHARP			'#'
 #define POINT			'.'
 #define NEW_LINE		'\n'
 
-#define STR_1			"\"\0"
-#define STR_2			"\n\0"
-#define STR_3			"\t \0"
-#define STR_4			"\n\t :,\0"
-
-#define SPACE_CHARS		" \t\v\f\r"
-#define SEPERATOR_CHARS		"%,:"
-
 
 #define HEADER_CHARS	"acemnot"
+#define NUMBER_CHARS	"0123456789"
 #define LABEL_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789"
-#define VALID_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789%:, \t\v\f\r"
+#define VALID_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789#%:.,-\n\""
+#define ERROR_MSG_01	"Syntax error at token [TOKEN][001:001] END \"(null)\""
 
 
-#define BUFF_ELEM	250
+#define BUFF_ELEM	32
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -82,7 +77,35 @@ typedef struct	s_parser
 	struct t_cmd	*file;
 }				t_parser;
 
-t_cmd	*reader(int fd);
-char		**ft_strsplit_str(const char *src, char *str);
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                                take_elem.c                                 ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+char	*realloc_str(char *str, int size);
+char	*init_params_take_elem(char **str, int *var, char start);
+char	take_elem(t_pos *position, char **str, char start, int fd);
+void	refresh_pos_token(t_pos *position, char start, char buf, int option);
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                                 reader.c                                   ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+t_cmd	*reader(t_cmd *result, t_cmd *previous, int fd);
+void	print_error_reader(t_cmd *result, t_pos position);
+int		find_buffer_elem(t_pos *position, char *buf, int fd);
+void	add_elem(t_cmd **result, t_pos *position, char *buf, int fd);
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                                tools_asm.c                                 ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+t_pos	init_pos(int y, int x);
+void	free_list(t_cmd *list);
 
 #endif
