@@ -22,24 +22,48 @@ t_pos	init_pos(int y, int x)
 	return (result);
 }
 
-void	free_list(t_cmd *list)
+void	free_line(t_cmd *line)
 {
-	t_cmd	*save;
+	t_cmd	*ptr;
 
-	while (list)
+	while (line)
 	{
-		save = list;
-		free(list->data);
-		list = list->next;
-		free(save);
+		ptr = line;
+		free(line->data);
+		line = line->next;
+		free(ptr);
 	}
 }
 
-void	print_list(t_cmd *pointer)
+void	free_file(t_line *file)
 {
-	while (pointer->next != NULL)
+	t_line	*ptr;
+
+	while (file)
 	{
-		printf("[%s] ", pointer->data);
+		ptr = file;
+		free_line(file->line);
+		file = file->next;
+		free(ptr);
+	}
+}
+
+void	print_line(t_cmd *pointer)
+{
+	while (pointer)
+	{
+		ft_printf("[%s] ", pointer->data);
+		pointer = pointer->next;
+	}
+	ft_printf("\n");
+}
+
+void	print_file(t_line *pointer)
+{
+	while (pointer)
+	{
+		ft_printf("LINE = ");
+		print_line(pointer->line);
 		pointer = pointer->next;
 	}
 }

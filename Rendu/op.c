@@ -25,9 +25,7 @@ typedef struct	s_op
 }				t_op;
 
 t_op    op_tab[17] =
-{	
-	//NAME		NB_PARAMS	TYPE_PARAMS											OPCODE		CYCLE	DESCRIPTION							CODE_OCTALE
-	string 		int 		char[3] 												int		int 	string									BOOL		BOOL
+{
 	{"live",	1,			{T_DIR}, 												1, 		10,		"alive", 								0, 			0},
 	{"ld",		2,			{T_DIR | T_IND, T_REG}, 								2, 		5,		"load", 								1, 			0},
 	{"st",		2,			{T_REG, T_IND | T_REG}, 								3, 		5,		"store", 								1, 			0},

@@ -15,7 +15,7 @@
 
 int		main(int argc, char const *argv[])
 {
-	t_cmd	*pointer;
+	t_line	*pointer;
 	int		fd;
 
 	if (argc == 2)
@@ -26,7 +26,8 @@ int		main(int argc, char const *argv[])
 			ft_printf("SLAUT\n");
 		else
 			ft_putendl_fd(ERROR_MSG_01, 2);
-		free_list(pointer);
+		print_file(pointer);
+		free_file(pointer);
 		close(fd);
 	}
 	return (0);

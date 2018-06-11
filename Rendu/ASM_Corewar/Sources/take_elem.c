@@ -40,40 +40,18 @@ char	*init_params_take_elem(char **str, int *var, char start)
 	return (NULL);
 }
 
-void	refresh_pos_token(t_pos *position, char start, char buf, int option)
-{
-	if (!(option))
-	{
-		if (start == NEW_LINE)
-		{
-			position->x = 0;
-			position->y += 1;
-		}
-	}
-	else
-	{
-		if (buf == NEW_LINE && start == QUOTE)
-		{
-			position->x = 0;
-			position->y += 1;
-		}
-		if (buf != NEW_LINE)
-			position->x += 1;
-	}
-}
-
-char	take_elem(t_pos *position, char **str, char start, int fd)
+char	take_elem(t_pos *pos, char **str, char start, int fd)
 {
 	char	*pattern;
 	char	buf;
 	int		ret;
 	int		var;
 
-	refresh_pos_token(position, start, buf, 0);
 	pattern = init_params_take_elem(str, &var, start);
 	while ((ret = read(fd, &buf, 1)) > 0)
 	{
-		refresh_pos_token(position, start, buf, 1);
+		(*pos) = (buf == NEW_LINE && start == QUOTE) \
+		? init_pos((pos->y + 1), 0) : init_pos(pos->y, (pos->x + 1));
 		if ((start == QUOTE && buf == QUOTE) ||
 			(start == SHARP && buf == NEW_LINE))
 			return (buf);

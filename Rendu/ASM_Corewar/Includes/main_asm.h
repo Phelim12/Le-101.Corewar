@@ -32,7 +32,7 @@
 #define HEADER_CHARS	"acemnot"
 #define NUMBER_CHARS	"0123456789"
 #define LABEL_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789"
-#define VALID_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789#%:.,-\n\""
+#define VALID_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789#%:.,-\""
 #define ERROR_MSG_01	"Syntax error at token [TOKEN][001:001] END \"(null)\""
 
 
@@ -64,10 +64,10 @@ typedef struct	s_pos
 
 typedef struct		s_head
 {
-  unsigned int		magic;
-  unsigned int		prog_size;
-  char				comment[COMMENT_LENGTH + 1];
-  char				prog_name[PROG_NAME_LENGTH + 1];
+	unsigned int	magic;
+	unsigned int	prog_size;
+	char			comment[COMMENT_LENGTH + 1];
+	char			prog_name[PROG_NAME_LENGTH + 1];
 }					t_head;
 
 typedef struct	s_cmd
@@ -75,18 +75,25 @@ typedef struct	s_cmd
 	char			*data;
 	char			*name;
 	char			*type;
-	struct s_cmd	*start;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
+	struct s_cmd	*start;
 	t_pos	pos;
 }				t_cmd;
 
+typedef struct	s_line
+{
+	t_cmd			*line;
+	struct s_line	*next;
+	struct s_line	*prev;
+	struct s_line	*start;
+}				t_line;
+
 typedef struct	s_parser
 {
-	struct t_head	*head;
-	struct t_cmd	*file;
+	t_head			*head;
+	t_line			*file;
 }				t_parser;
-
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -105,9 +112,10 @@ void	refresh_pos_token(t_pos *position, char start, char buf, int option);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-t_cmd	*reader(t_cmd *result, t_cmd *previous, int fd);
-void	print_error_reader(t_cmd *result, t_pos position);
-int		find_buffer_elem(t_pos *position, char *buf, int fd);
+void	print_error_errno(t_line *result);
+t_line	*reader(t_line *result, t_line *previous, int fd);
+void	print_error_reader(t_line *result, t_pos position);
+int		find_buffer_elem(t_pos *position, char *buf, int ret, int fd);
 void	add_elem(t_cmd **result, t_pos *position, char *buf, int fd);
 
 /*
@@ -117,7 +125,8 @@ void	add_elem(t_cmd **result, t_pos *position, char *buf, int fd);
 */
 
 t_pos	init_pos(int y, int x);
-void	free_list(t_cmd *list);
-void	print_list(t_cmd *pointer);
+void	free_file(t_line *file);
+void	print_line(t_cmd *pointer);
+void	print_file(t_line *pointer);
 
 #endif
