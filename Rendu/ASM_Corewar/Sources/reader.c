@@ -12,6 +12,16 @@
 /* ************************************************************************** */
 
 #include "../Includes/main_asm.h"
+#include <errno.h>  
+
+void	print_error_errno(t_cmd *result)
+{
+	if (result)
+		result = result->start;
+	free_list(result);
+	perror("Error fd");
+	exit(EXIT_FAILURE);
+}
 
 int		find_buffer_elem(t_pos *position, char *buf, int fd)
 {
@@ -36,6 +46,7 @@ void	add_elem(t_cmd **result, t_pos *position, char *buf, int fd)
 		previous->next = (*result);
 	(*result)->start = (previous) ? previous->start : (*result);
 	(*buf) = take_elem(position, &((*result)->data), (*buf), fd);
+	ft_printf("[%s] ", (*result)->data);
 }
 
 void	print_error_reader(t_cmd *result, t_pos position)
@@ -65,6 +76,8 @@ t_cmd	*reader(t_cmd *result, t_cmd *previous, int fd)
 			add_elem(&result, &position, &buf, fd);
 		else if (buf < 0 || buf > 34 || buf == 33)
 			print_error_reader(result, position);
+		else if (errno)
+			print_error_errno(result);
 	}
 	if (result)
 		return (result->start);

@@ -22,11 +22,12 @@ int		main(int argc, char const *argv[])
 	{
 		if ((fd = open(argv[1], O_RDONLY)) == -1)
 			return (0);
-		if (!(pointer = reader(NULL, NULL, fd)))
-			ft_putendl_fd(ERROR_MSG_01, 2);
+		if ((pointer = reader(NULL, NULL, fd)))
+			ft_printf("SLAUT\n");
 		else
-			printf("\nLAAA-> %s\n", pointer->data);
+			ft_putendl_fd(ERROR_MSG_01, 2);
 		free_list(pointer);
+		close(fd);
 	}
 	return (0);
 }

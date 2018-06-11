@@ -37,6 +37,9 @@
 
 
 #define BUFF_ELEM	32
+# define PROG_NAME_LENGTH		(128)
+# define COMMENT_LENGTH			(2048)
+# define COREWAR_EXEC_MAGIC		0xea83f3
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -59,12 +62,19 @@ typedef struct	s_pos
 	int				y;
 }				t_pos;
 
+typedef struct		s_head
+{
+  unsigned int		magic;
+  unsigned int		prog_size;
+  char				comment[COMMENT_LENGTH + 1];
+  char				prog_name[PROG_NAME_LENGTH + 1];
+}					t_head;
+
 typedef struct	s_cmd
 {
 	char			*data;
 	char			*name;
 	char			*type;
-	int				index;
 	struct s_cmd	*start;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
@@ -76,6 +86,7 @@ typedef struct	s_parser
 	struct t_head	*head;
 	struct t_cmd	*file;
 }				t_parser;
+
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
