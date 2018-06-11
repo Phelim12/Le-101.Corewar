@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 15:54:45 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/04 18:57:12 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/11 14:50:27 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,8 +24,8 @@ int		main(int argc, char const *argv[])
 			return (0);
 		if (!(pointer = reader(NULL, NULL, fd)))
 			ft_putendl_fd(ERROR_MSG_01, 2);
-		else
-			printf("\nLAAA-> %s\n", pointer->data);
+		//else
+		//	printf("\nLAAA-> %s\n", pointer->data);
 		free_list(pointer);
 	}
 	return (0);

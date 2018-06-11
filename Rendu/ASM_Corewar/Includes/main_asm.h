@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 15:55:56 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/04 20:35:04 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/11 19:41:54 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -107,5 +107,6 @@ void	add_elem(t_cmd **result, t_pos *position, char *buf, int fd);
 
 t_pos	init_pos(int y, int x);
 void	free_list(t_cmd *list);
+void	print_list(t_cmd *pointer);
 
 #endif
