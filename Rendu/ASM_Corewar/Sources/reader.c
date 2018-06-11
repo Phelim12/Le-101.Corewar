@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/04 18:52:58 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/04 20:35:08 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/11 19:41:57 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -80,6 +80,9 @@ t_cmd	*reader(t_cmd *result, t_cmd *previous, int fd)
 			print_error_errno(result);
 	}
 	if (result)
+	{
+		print_list(result->start);
 		return (result->start);
+	}
 	return (NULL);
 }
