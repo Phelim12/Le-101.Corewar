@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/13 16:50:28 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/13 17:55:35 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -86,6 +86,11 @@ void		init_champs(char const **argv)
 		ft_error("Too many .cor files in parameters\n");
 	parse_args(argv);
 	sub_init_champ();
+}
+
+int			init_map(void)
+{
+	return (0);
 }
 
 void		init_vm(char const **argv)
