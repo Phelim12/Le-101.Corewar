@@ -35,8 +35,10 @@
 #define VALID_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789#%:.,-\""
 #define ERROR_MSG_01	"Syntax error at token [TOKEN][001:001] END \"(null)\""
 
+#define NAME_CMD_STRING			".name"
+#define COMMENT_CMD_STRING		".comment"
 
-#define BUFF_ELEM	32
+#define BUFF_ELEM				32
 # define PROG_NAME_LENGTH		(128)
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
@@ -56,44 +58,31 @@
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-typedef struct	s_pos
-{
-	int				x;
-	int				y;
-}				t_pos;
-
-typedef struct		s_head
+typedef struct		s_header
 {
 	unsigned int	magic;
 	unsigned int	prog_size;
 	char			comment[COMMENT_LENGTH + 1];
 	char			prog_name[PROG_NAME_LENGTH + 1];
-}					t_head;
+}					t_header;
 
-typedef struct	s_cmd
+typedef struct	s_op
 {
-	char			*data;
 	char			*name;
-	char			*type;
-	struct s_cmd	*next;
-	struct s_cmd	*prev;
-	struct s_cmd	*start;
-	t_pos	pos;
-}				t_cmd;
+	char			nb_params;
+	char			params[3];
+	char			opcode;
+	int				cycle;
+	char			*desc;
+	char			occode;
+	char			not_identify;
+}				t_op;
 
-typedef struct	s_line
+typedef struct	s_pos
 {
-	t_cmd			*line;
-	struct s_line	*next;
-	struct s_line	*prev;
-	struct s_line	*start;
-}				t_line;
-
-typedef struct	s_parser
-{
-	t_head			*head;
-	t_line			*file;
-}				t_parser;
+	int				x;
+	int				y;
+}				t_pos;
 
 typedef struct	s_label
 {
@@ -104,6 +93,29 @@ typedef struct	s_label
 	struct s_label	*start;
 }				t_label;
 
+typedef struct	s_cmd
+{
+	struct s_cmd	*start;
+	struct s_cmd	*next;
+	struct s_cmd	*prev;
+	char			*data;
+	int				type;
+	t_pos			pos;
+}				t_cmd;
+
+typedef struct	s_line
+{
+	t_cmd			*line;
+	struct s_line	*next;
+	struct s_line	*prev;
+	struct s_line	*start;
+}				t_line;
+
+typedef struct	s_file
+{
+	t_header		header;
+	t_line			*file;
+}				t_file;
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -136,6 +148,7 @@ void	add_elem(t_cmd **result, t_pos *position, char *buf, int fd);
 
 t_pos	init_pos(int y, int x);
 void	free_file(t_line *file);
+void	free_line(t_cmd *line);
 void	print_line(t_cmd *pointer);
 void	print_file(t_line *pointer);
 

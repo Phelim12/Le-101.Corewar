@@ -52,11 +52,9 @@ char	take_elem(t_pos *pos, char **str, char start, int fd)
 	{
 		(*pos) = (buf == NEW_LINE && start == QUOTE) \
 		? init_pos((pos->y + 1), 0) : init_pos(pos->y, (pos->x + 1));
-		if ((start == QUOTE && buf == QUOTE) ||
-			(start == SHARP && buf == NEW_LINE))
+		if (start == QUOTE && buf == QUOTE)
 			return (buf);
-		if ((start != QUOTE && start != SHARP) &&
-			(!(pattern) || !(ft_strchr(pattern, buf))))
+		if (start != QUOTE && (!pattern || !(ft_strchr(pattern, buf))))
 			return (buf);
 		if ((var > 0) && !(var % (BUFF_ELEM - 1)))
 			(*str) = realloc_str((*str), var);

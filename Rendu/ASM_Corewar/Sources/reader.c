@@ -45,7 +45,7 @@ void	print_error_reader(t_line *result, t_pos position)
 	exit(EXIT_FAILURE);
 }
 
-void	add_cmd(t_cmd **result, t_pos *position, char *buf, int fd)
+int		add_cmd(t_cmd **result, t_pos *position, char *buf, int fd)
 {
 	t_cmd	*previous;
 
@@ -55,8 +55,14 @@ void	add_cmd(t_cmd **result, t_pos *position, char *buf, int fd)
 	(*result)->pos = (*position);
 	if (((*result)->prev = (previous) ? previous : NULL))
 		previous->next = (*result);
+	(*result)->type = (*buf == QUOTE) ? 1 : 0;
 	(*result)->start = (previous) ? previous->start : (*result);
 	(*buf) = take_elem(position, &((*result)->data), (*buf), fd);
+	if (((*result)->data)[0] == POINT && 
+		ft_strcmp((*result)->data, NAME_CMD_STRING) &&
+		ft_strcmp((*result)->data, COMMENT_CMD_STRING))
+		return (0);
+	return (1);
 }
 
 int		add_line(t_line **result, t_pos *position, char *buf, int fd)
@@ -83,6 +89,14 @@ int		add_line(t_line **result, t_pos *position, char *buf, int fd)
 	return (ret);
 }
 
+int		skip_comment(t_pos *position, char *buf, int fd)
+{
+	while ((read(fd, buf, 1)) > 0)
+		if ((*buf) == NEW_LINE)
+			return (1);
+	return (0);
+}
+
 t_line	*reader(t_line *result, t_line *previous, int fd)
 {
 	t_pos		position;
@@ -94,13 +108,15 @@ t_line	*reader(t_line *result, t_line *previous, int fd)
 	position = init_pos(1, 1);
 	while (buf != -1 && (ret = find_buffer_elem(&position, &buf, ret, fd)))
 	{
-		if (errno || (!(ft_strchr(VALID_CHARS, buf)) &&
-			(buf < 0 || buf > 34 || buf == 33)))
+		if (errno || (!(ft_strchr(VALID_CHARS, buf)) && (buf < 0 || buf > 32)))
 			print_error_reader(result, position);
+		else if (buf == SHARP)
+			ret = skip_comment(&position, &buf, fd);
 		else if ((buf == NEW_LINE) || !(result))
 			ret = add_line(&result, &position, &buf, fd);
 		else if (ft_strchr(VALID_CHARS, buf))
-			add_cmd(&(result->line), &position, &buf, fd);
+			if (!(add_cmd(&(result->line), &position, &buf, fd)))
+				print_error_reader(result, result->line->pos);
 	}
 	return ((result) ? result->start : NULL);
 }

@@ -26,6 +26,8 @@ void	free_line(t_cmd *line)
 {
 	t_cmd	*ptr;
 
+	if (line)
+		line = line->start;
 	while (line)
 	{
 		ptr = line;
@@ -39,6 +41,8 @@ void	free_file(t_line *file)
 {
 	t_line	*ptr;
 
+	if (file)
+		file = file->start;
 	while (file)
 	{
 		ptr = file;
