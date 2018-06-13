@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/05 18:43:54 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/13 15:29:17 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -72,6 +72,7 @@ t_vm						*g_vm;
 void						parse_args(char const **argv);
 void						init_champs(char const **argv);
 void						init_vm(char const **argv);
+int							get_header(int i, char *path);
 
 /*
 **------Functions in utils_vm.c

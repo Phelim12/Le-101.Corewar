@@ -6,14 +6,14 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/05 18:44:49 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/13 15:32:24 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "main_vm.h"
 
-static void	sub2_init_champ(int i)
+static void	sub2_init_champ(int i) //peut etre a passer en return INT pour la remontee d'erreur
 {
 	void			*tmp;
 	unsigned int	a;
@@ -28,8 +28,10 @@ static void	sub2_init_champ(int i)
 		ft_memset(g_vm->champion[i]->registers[a], 0, REG_NUMBER + 1);
 		g_vm->champion[i]->registers[a][1] = g_vm->champion[i]->num;
 	}
-	g_vm->champion[i]->name = NULL;
-	g_vm->champion[i]->comment = NULL;
+	if (get_header(i, g_vm->champion[i]->filename) == -1)
+		return ;
+//	g_vm->champion[i]->name = NULL;
+//	g_vm->champion[i]->comment = NULL;
 }
 
 static void	sub_init_champ(void)
@@ -101,5 +103,5 @@ void		init_vm(char const **argv)
 	g_vm->nb_players = 0;
 	init_champs(argv);
 	//init_map(); //full 0, map de MEM_SIZE, init nb_players * NB_REG registres
-	//load_champs(); //divide map in nb_players and load them -> need to interpret .cor files
+//	load_champs(); //divide map in nb_players and load them -> need to interpret .cor files
 }
