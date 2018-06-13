@@ -6,13 +6,13 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/04 18:52:58 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/13 14:57:55 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/13 18:25:08 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../Includes/main_asm.h"
-#include <errno.h>  
+#include <errno.h>
 
 int		find_buffer_elem(t_pos *position, char *buf, int ret, int fd)
 {
@@ -90,11 +90,11 @@ t_line	*reader(t_line *result, t_line *previous, int fd)
 	int			ret;
 
 	buf = 0;
-	ret = 1; 
+	ret = 1;
 	position = init_pos(1, 1);
 	while (buf != -1 && (ret = find_buffer_elem(&position, &buf, ret, fd)))
 	{
-		if (errno || (!(ft_strchr(VALID_CHARS, buf)) && 
+		if (errno || (!(ft_strchr(VALID_CHARS, buf)) &&
 			(buf < 0 || buf > 34 || buf == 33)))
 			print_error_reader(result, position);
 		else if ((buf == NEW_LINE) || !(result))
