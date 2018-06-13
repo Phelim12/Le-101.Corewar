@@ -6,20 +6,20 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/13 14:10:23 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/13 16:41:24 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/13 16:54:31 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../Includes/main_vm.h"
 
-unsigned int	BigToLittleEndian(unsigned int size)
+unsigned int	BigToLittleEndian(unsigned int i)
 {
-	size = ((size >> 24) & 0xff) |
-	((size << 8) & 0xff0000) |
-	((size >> 8) & 0xff00) |
-	((size << 24) & 0xff000000);
-	return (size);
+	i = ((i >> 24) & 0xff) |
+	((i << 8) & 0xff0000) |
+	((i >> 8) & 0xff00) |
+	((i << 24) & 0xff000000);
+	return (i);
 }
 
 int		get_header(int i, char *path)
@@ -41,5 +41,20 @@ int		get_header(int i, char *path)
 	g_vm->champion[i]->magic = BigToLittleEndian(header->magic);
 	ft_strdel(&path);
 	free(header);
+	return (0);
+}
+
+int		get_instructions(int i, char *path)
+{
+	// read de ? octets;
+	return (0);
+}
+
+int		get_champ(int i, char * path)
+{
+	if (get_header(i, path) == -1)
+		return (-1);
+	if (get_instructions(i, path) == -1)
+		return (-1);
 	return (0);
 }
