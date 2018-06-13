@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 15:55:56 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/11 19:41:54 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/13 17:23:15 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,7 +31,7 @@
 
 #define HEADER_CHARS	"acemnot"
 #define NUMBER_CHARS	"0123456789"
-#define LABEL_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789"
+#define LABEL_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789:"
 #define VALID_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789#%:.,-\""
 #define ERROR_MSG_01	"Syntax error at token [TOKEN][001:001] END \"(null)\""
 
@@ -95,6 +95,16 @@ typedef struct	s_parser
 	t_line			*file;
 }				t_parser;
 
+typedef struct	s_label
+{
+	char			*name;
+	struct s_cmd	*go_to;
+	struct s_label	*prev;
+	struct s_label	*next;
+	struct s_label	*start;
+}				t_label;
+
+
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 **┃                                take_elem.c                                 ┃
@@ -128,5 +138,13 @@ t_pos	init_pos(int y, int x);
 void	free_file(t_line *file);
 void	print_line(t_cmd *pointer);
 void	print_file(t_line *pointer);
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                                parser.c                                 ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+void	print_label(t_line *file, t_label *lab);
 
 #endif
