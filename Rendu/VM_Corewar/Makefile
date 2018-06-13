@@ -17,7 +17,7 @@ CC = gcc
 
 NAME = ./corewar
 
-C_FLAGS = -Wall -Wextra -Werror
+C_FLAGS = 
 
 DIR_LIB = ../Libft/
 
