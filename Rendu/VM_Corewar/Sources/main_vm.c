@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:38 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/05 18:43:42 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/13 15:45:48 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,10 +23,12 @@ int		main(int argc, char const **argv)
 		unsigned int	i = -1;
 		while (++i < g_vm->nb_players)
 		{
-				ft_printf("filename\t: %20s\nlive\t\t: %20d\nnb_process\t: %20d\nname\t\t: %20s\ncomment\t\t: %20s\nnum\t\t: %20d\n---------\n",
+				ft_printf("filename\t: %20s\nlive\t\t: %20d\nnb_process\t: %20d\nname\t\t: %20s\ncomment\t\t: %20s\nnum\t\t: %20d\nsize\t\t: %20u\nmagic\t\t: %20u\n---------\n",
 						g_vm->champion[i]->filename, g_vm->champion[i]->live,
 						g_vm->champion[i]->nb_process, g_vm->champion[i]->name,
-						g_vm->champion[i]->comment, g_vm->champion[i]->num);
+						g_vm->champion[i]->comment, g_vm->champion[i]->num,
+						g_vm->champion[i]->prog_size,
+						g_vm->champion[i]->magic);
 		}
 		//RUN();
 	}

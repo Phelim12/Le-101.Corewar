@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/13 15:32:24 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/13 15:44:31 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,8 +30,6 @@ static void	sub2_init_champ(int i) //peut etre a passer en return INT pour la re
 	}
 	if (get_header(i, g_vm->champion[i]->filename) == -1)
 		return ;
-//	g_vm->champion[i]->name = NULL;
-//	g_vm->champion[i]->comment = NULL;
 }
 
 static void	sub_init_champ(void)
