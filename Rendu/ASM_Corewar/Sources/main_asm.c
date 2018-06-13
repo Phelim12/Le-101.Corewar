@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 15:54:45 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/11 14:50:27 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/13 15:15:30 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,6 +27,8 @@ int		main(int argc, char const *argv[])
 		else
 			ft_putendl_fd(ERROR_MSG_01, 2);
 		print_file(pointer);
+		printf("print_label\n");
+		print_label(pointer, NULL);
 		free_file(pointer);
 		close(fd);
 	}
