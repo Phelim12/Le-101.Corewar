@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 15:43:36 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/05 17:19:37 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/14 14:16:31 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,15 +20,33 @@ void	print_usage(void)
 	ft_printf(USE3);
 }
 
-void	ft_error(char *s)
+void	check_data(void)
+{
+	int i;
+	char *error;
+
+	error = NULL;
+	i = -1;
+	while (++i < g_vm->nb_players)
+	{
+		if (g_vm->champion[i]->prog_size > MEM_SIZE / 6)
+			return (ft_error("size", i));
+	}
+}
+
+void	ft_error(char *s, int c)
 {
 	unsigned int i;
 
 	i = 0;
+	if (!ft_strcmp("size", s))
+		ft_printf("Error: File %s has too large a code (%d bytes > %d bytes)\n", g_vm->champion[c]->filename, g_vm->champion[c]->prog_size, MEM_SIZE / 6);
+	else
+		ft_printf(s);
 	while (i < g_vm->nb_players)
 		free(g_vm->champion[i++]);
 	free(g_vm->champion);
 	free(g_vm);
-	ft_printf(s);
+
 	exit(1);
 }

@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/13 17:55:35 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/14 14:18:01 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,7 +29,7 @@ static void	sub2_init_champ(int i) //peut etre a passer en return INT pour la re
 		g_vm->champion[i]->registers[a][1] = g_vm->champion[i]->num;
 	}
 	if (get_champ(i, g_vm->champion[i]->filename) == -1)
-		return ;
+		return ; // -1?
 }
 
 static void	sub_init_champ(void)
@@ -83,7 +83,7 @@ void		init_champs(char const **argv)
 		g_vm->champion[i++]->num = -1;
 	}
 	if (g_vm->nb_players > MAX_PLAYERS)
-		ft_error("Too many .cor files in parameters\n");
+		ft_error("Too many .cor files in parameters\n", 0);
 	parse_args(argv);
 	sub_init_champ();
 }

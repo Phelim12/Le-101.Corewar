@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/13 16:51:55 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/14 14:16:17 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -88,7 +88,8 @@ int							get_instructions(int i, char * path);
 */
 
 void						print_usage(void);
-void						ft_error(char *s);
+void						ft_error(char *s, int c);
+void						check_data(void);
 
 /*
 **----------------OP_H---------------
