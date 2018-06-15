@@ -19,6 +19,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 #include "op.h"
 #include "../../Libft/Includes/libft.h"
 
@@ -26,11 +27,13 @@
 #define QUOTE			'"'
 #define SHARP			'#'
 #define POINT			'.'
+#define PERCENT			'%'
 #define NEW_LINE		'\n'
 
 
 #define HEADER_CHARS	"acemnot"
 #define NUMBER_CHARS	"0123456789"
+#define DIRECT_CHARS	"-0123456789"
 #define LABEL_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789:"
 #define VALID_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789#%:.,-\""
 #define ERROR_MSG_01	"Syntax error at token [TOKEN][001:001] END \"(null)\""
@@ -38,7 +41,7 @@
 #define NAME_CMD_STRING			".name"
 #define COMMENT_CMD_STRING		".comment"
 
-#define BUFF_ELEM				32
+# define BUFF_ELEM				32
 # define PROG_NAME_LENGTH		(128)
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
@@ -57,6 +60,18 @@
 **┃  ◦ exit                                                                    ┃
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
+
+typedef enum		e_token
+{
+	COMMAND_COMMENT = 1,
+	INDIRECT_LABEL,
+	COMMAND_NAME,
+	INSTRUCTION,
+	INDIRECT,
+	DIRECT,
+	STRING,
+	LABEL,
+}					t_token;
 
 typedef struct		s_header
 {
@@ -99,7 +114,7 @@ typedef struct	s_cmd
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 	char			*data;
-	int				type;
+	int				token;
 	t_pos			pos;
 }				t_cmd;
 
@@ -119,14 +134,24 @@ typedef struct	s_file
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                                fill_header.c                               ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+char		*fill_prog_name(t_line *file, t_cmd *line);
+char		*fill_comment(t_line *file, t_cmd *line);
+t_header	fill_header(t_line *file);
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 **┃                                take_elem.c                                 ┃
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-char	*realloc_str(char *str, int size);
-char	*init_params_take_elem(char **str, int *var, char start);
-char	take_elem(t_pos *position, char **str, char start, int fd);
-void	refresh_pos_token(t_pos *position, char start, char buf, int option);
+char		*realloc_str(char *str, int size);
+char		*init_params_take_elem(char **str, int *var, char start);
+char		take_elem(t_pos *position, char **str, char start, int fd);
+void		refresh_pos_token(t_pos *position, char start, char buf, int option);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -134,11 +159,19 @@ void	refresh_pos_token(t_pos *position, char start, char buf, int option);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-void	print_error_errno(t_line *result);
-t_line	*reader(t_line *result, t_line *previous, int fd);
-void	print_error_reader(t_line *result, t_pos position);
-int		find_buffer_elem(t_pos *position, char *buf, int ret, int fd);
-void	add_elem(t_cmd **result, t_pos *position, char *buf, int fd);
+t_line		*reader(t_line *result, t_line *previous, int fd);
+int			find_buffer_elem(t_pos *position, char *buf, int ret, int fd);
+void		add_elem(t_cmd **result, t_pos *position, char *buf, int fd);
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                               print_error.c                                ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+void		print_error_reader(t_line *result, t_pos position);
+void		print_error_token(t_line *file, t_cmd *line, char *name);
+void		print_error_size_header(t_line *file, char *cmd, int size);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -146,18 +179,20 @@ void	add_elem(t_cmd **result, t_pos *position, char *buf, int fd);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-t_pos	init_pos(int y, int x);
-void	free_file(t_line *file);
-void	free_line(t_cmd *line);
-void	print_line(t_cmd *pointer);
-void	print_file(t_line *pointer);
+t_pos		init_pos(int y, int x);
+void		free_file(t_line *file);
+void		free_line(t_cmd *line);
+void		print_line(t_cmd *pointer);
+void		print_file(t_line *pointer);
+void		ft_putnbr_pad3_fd(int nbr, int fd);
+int			skip_comment(t_pos *position, char *buf, int fd);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃                                parser.c                                 ┃
+**┃                                  parser.c                                  ┃
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-void	print_label(t_line *file, t_label *lab);
+void		print_label(t_line *file, t_label *lab);
 
 #endif

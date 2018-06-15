@@ -35,6 +35,8 @@ char	*init_params_take_elem(char **str, int *var, char start)
 		return (NUMBER_CHARS);
 	if (start == POINT)
 		return (HEADER_CHARS);
+	if (start == PERCENT)
+		return (DIRECT_CHARS);
 	if (ft_strchr(LABEL_CHARS, start))
 		return (LABEL_CHARS);
 	return (NULL);
@@ -52,7 +54,10 @@ char	take_elem(t_pos *pos, char **str, char start, int fd)
 	{
 		(*pos) = (buf == NEW_LINE && start == QUOTE) \
 		? init_pos((pos->y + 1), 0) : init_pos(pos->y, (pos->x + 1));
-		if (start == QUOTE && buf == QUOTE)
+		if ((start == QUOTE && buf == QUOTE) || 
+			(buf == ':' && ft_strchr((*str), ':')) || 
+			(buf == '%' && ft_strchr((*str), '%')) || 
+			(start != QUOTE && var && ((*str)[var] == ':')))
 			return (buf);
 		if (start != QUOTE && (!pattern || !(ft_strchr(pattern, buf))))
 			return (buf);

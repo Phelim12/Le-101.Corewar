@@ -12,7 +12,6 @@
 /* ************************************************************************** */
 
 #include "../Includes/main_asm.h"
-#include <errno.h>
 
 int		find_buffer_elem(t_pos *position, char *buf, int ret, int fd)
 {
@@ -27,22 +26,35 @@ int		find_buffer_elem(t_pos *position, char *buf, int ret, int fd)
 	return (1);
 }
 
-void	print_error_reader(t_line *result, t_pos position)
+
+/*
+COMMAND_COMMENT .comment
+COMMAND_NAME .name
+STRING ""
+INSTRUCTION abcdefghijklmnopqrstuvwxyz_
+LABEL abcdefghijklmnopqrstuvwxyz_0123456789:
+INDIRECT_LABEL :abcdefghijklmnopqrstuvwxyz_0123456789
+INDIRECT 0123456789
+DIRECT %0123456789
+*/
+
+int		token_dispenser(char *cmd, char buf)
 {
-	if (result)
-		result = result->start;
-	free_file(result);
-	if (errno)
-		perror("Error fd");
-	else
-	{
-		ft_putstr_fd("Lexical error at [", 2);
-		ft_putnbr_fd(position.y, 2);
-		ft_putchar_fd(':', 2);
-		ft_putnbr_fd(position.x, 2);
-		ft_putendl_fd("]", 2);
-	}
-	exit(EXIT_FAILURE);
+	if (buf == QUOTE)
+		return (STRING);
+	if (cmd[(ft_strlen(cmd) - 1)] == ':')
+		return (LABEL);
+	if (cmd[0] == ':')
+		return (INDIRECT_LABEL);
+	if (cmd[0] == PERCENT)
+		return (DIRECT);
+	if (!(ft_strcmp(cmd, NAME_CMD_STRING)))
+		return (COMMAND_NAME);
+	if (!(ft_strcmp(cmd, COMMENT_CMD_STRING)))
+		return (COMMAND_COMMENT);
+	if (ft_str_is_number(cmd))
+		return (INDIRECT);
+	return (0);
 }
 
 int		add_cmd(t_cmd **result, t_pos *position, char *buf, int fd)
@@ -52,15 +64,21 @@ int		add_cmd(t_cmd **result, t_pos *position, char *buf, int fd)
 	previous = (*result) ? (*result) : NULL;
 	(*result) = (*result) ? (*result)->next : *result;
 	(*result) = ft_memalloc(sizeof(t_cmd));
-	(*result)->pos = (*position);
 	if (((*result)->prev = (previous) ? previous : NULL))
 		previous->next = (*result);
-	(*result)->type = (*buf == QUOTE) ? 1 : 0;
 	(*result)->start = (previous) ? previous->start : (*result);
+	(*result)->pos = (*position);
 	(*buf) = take_elem(position, &((*result)->data), (*buf), fd);
+	(*result)->token = token_dispenser((*result)->data, (*buf));
 	if (((*result)->data)[0] == POINT && 
 		ft_strcmp((*result)->data, NAME_CMD_STRING) &&
 		ft_strcmp((*result)->data, COMMENT_CMD_STRING))
+		return (0);
+	if (!(ft_strcmp((*result)->data, "%")) && ((*buf) != ':'))
+		return (0);
+	if (!(ft_strcmp((*result)->data, ":")))
+		return (0);
+	if (!(ft_strcmp((*result)->data, "-")))
 		return (0);
 	return (1);
 }
@@ -87,14 +105,6 @@ int		add_line(t_line **result, t_pos *position, char *buf, int fd)
 		previous->next = (*result);
 	(*result)->start = (previous) ? previous->start : (*result);
 	return (ret);
-}
-
-int		skip_comment(t_pos *position, char *buf, int fd)
-{
-	while ((read(fd, buf, 1)) > 0)
-		if ((*buf) == NEW_LINE)
-			return (1);
-	return (0);
 }
 
 t_line	*reader(t_line *result, t_line *previous, int fd)

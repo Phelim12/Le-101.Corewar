@@ -71,3 +71,21 @@ void	print_file(t_line *pointer)
 		pointer = pointer->next;
 	}
 }
+
+void	ft_putnbr_pad3_fd(int nbr, int fd)
+{
+	if (nbr < 10)
+		ft_putstr_fd("00", fd);
+	else if (nbr < 100)
+		ft_putchar_fd('0', fd);
+	ft_putnbr_fd(nbr, fd);
+}
+
+
+int		skip_comment(t_pos *position, char *buf, int fd)
+{
+	while ((read(fd, buf, 1)) > 0)
+		if ((*buf) == NEW_LINE)
+			return (1);
+	return (0);
+}
