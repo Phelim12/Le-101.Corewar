@@ -13,61 +13,86 @@
 
 #include "main_asm.h"
 
-char	*fill_prog_name(t_line *file, t_cmd *line)
+void		fill_name(char *result, t_line *file, t_cmd *line)
 {
-	char result[PROG_NAME_LENGTH + 1];
-
-	if (line->token)
-		print_error_token(file, line, line->data);
+	if (line->token == STRING)
+		print_error_token(file, line->pos, line->data, line->token);
 	if (!(line->next))
-		print_error_token(file, line, "ENDLINE");
+		print_error_token(file, line->pos, line->data, ENDLINE);
 	line = line->next;
 	if (line->next)
-		print_error_token(file, line->next, line->next->data);
-	if (!(line->token))
-		print_error_token(file, line, line->data);
-	if (ft_strlen(line->data) < PROG_NAME_LENGTH)
-		return (line->data);
+	{
+		line = line->next;
+		print_error_token(file, line->pos, line->data, line->token);
+	}
+	if (line->token != STRING)
+		print_error_token(file, line->pos, line->data, line->token);
+	if (ft_strlen(line->data) < NAME_LENGTH)
+		ft_strncpy(result, line->data, NAME_LENGTH);
 	else
-		print_error_size_header(file, "name", PROG_NAME_LENGTH);
-	return (NULL);
+		print_error_size_header(file, "name", NAME_LENGTH);
 }
 
-char	*fill_comment(t_line *file, t_cmd *line)
+void		fill_comment(char *result, t_line *file, t_cmd *line)
 {
-	char result[COMMENT_LENGTH + 1];
-
-	if (line->token)
-		print_error_token(file, line, line->data);
+	if (line->token == STRING)
+		print_error_token(file, line->pos, line->data, line->token);
 	if (!(line->next))
-		print_error_token(file, line, "ENDLINE");
+		print_error_token(file, line->pos, line->data, ENDLINE);
 	line = line->next;
 	if (line->next)
-		print_error_token(file, line->next, line->next->data);
-	if (!(line->token))
-		print_error_token(file, line, line->data);
+	{
+		line = line->next;
+		print_error_token(file, line->pos, line->data, line->token);
+	}
+	if (line->token != STRING)
+		print_error_token(file, line->pos, line->data, line->token);
 	if (ft_strlen(line->data) < COMMENT_LENGTH)
-		return (line->data);
+		ft_strncpy(result, line->data, COMMENT_LENGTH);
 	else
 		print_error_size_header(file, "comment", COMMENT_LENGTH);
-	return (NULL);
 }
 
-t_header	fill_header(t_line *file)
+/*t_line		*delete_header(t_line *file)
+{
+	t_line	*line;
+	int		var;
+
+	var = 0;
+	while (file->next)
+	{
+		file = file->next;
+		if (var++ < 2)
+		{
+			file->start = file;
+			line = file->prev;
+			free_line(line->line);
+			ft_memdel((void **)&line);
+			file->prev = NULL;
+		}
+		else
+			file->start = file->prev->start;
+	}
+	file->start = file->prev->start;
+	return (file->start);
+}*/
+
+t_header	fill_header(t_line **file, int comment, int name)
 {
 	t_header	result;
-	int			count;
+	t_cmd		*line;
 
-	count = 0;
-	while (count++ < 2)
+	while (comment || name)
 	{
-		if (!(ft_strcmp(file->line->data, NAME_CMD_STRING)))
-			ft_strncpy(result.prog_name, fill_prog_name(file, file->line), PROG_NAME_LENGTH);
-		else if (!(ft_strcmp(file->line->data, COMMENT_CMD_STRING)))
-			ft_strncpy(result.comment, fill_comment(file, file->line), COMMENT_LENGTH);
+		line = (*file)->line;
+		if (!(ft_strcmp(line->data, CMD_NAME)) && name--)
+			fill_name(result.name, (*file), line);
+		else if (!(ft_strcmp(line->data, CMD_COMMENT)) && comment--)
+			fill_comment(result.comment, (*file), line);
 		else
-			print_error_token(file, file->line, file->line->data);
-		file = file->next;
+			print_error_token((*file), line->pos, line->data, line->token);
+		(*file) = (*file)->next;
 	}
+	// (*file) = delete_header((*file)->start);
 	return (result);
 }

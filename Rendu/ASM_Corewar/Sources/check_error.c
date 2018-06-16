@@ -1,38 +1,30 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   main_asm.c                                       .::    .:/ .      .::   */
+/*   check_error.c                                    .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/05/29 15:54:45 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/13 15:15:30 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/06/16 20:34:16 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2018/06/16 20:34:16 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "main_asm.h"
+#include "../Includes/main_asm.h"
 
-int		main(int argc, char const *argv[])
+int		error_on_cmd(char *cmd, char buf)
 {
-	t_file	info;
-	int		fd;
-
-	if (argc == 2)
-	{
-		if ((fd = open(argv[1], O_RDONLY)) == -1)
-			return (0);
-		if ((info.file = reader(NULL, NULL, fd)))
-		{
-			info.header = fill_header(&(info.file), 1, 1);
-		}
-		else
-			print_error_token(NULL, init_pos(1, 1), NULL, END);
-		print_file(info.file);
-		// printf("print_label\n");
-		// print_label(info.file, NULL);
-		free_file(info.file);
-		close(fd);
-	}
+	if (cmd[0] == CMD_CHAR &&
+		ft_strcmp(cmd, CMD_NAME) && ft_strcmp(cmd, CMD_COMMENT))
+		return (1);
+	if ((ft_nbrchr(cmd, NEGATIVE_CHAR)) > 1)
+		return (1);
+	if (!(ft_strcmp(cmd, "%")))
+		return (1);
+	if (!(ft_strcmp(cmd, ":")))
+		return (1);
+	if (!(ft_strcmp(cmd, "-")))
+		return (1);
 	return (0);
 }

@@ -13,6 +13,34 @@
 
 #include "../Includes/main_asm.h"
 
+int		token_dispenser(char *cmd, char buf)
+{
+	int	end;
+
+	end = ft_strlen(cmd + 1);
+	if (buf == STRING_CHAR)
+		return (STRING);
+	if (cmd[0] == DIRECT_CHAR && cmd[1] == LABEL_CHAR)
+		return (DIRECT_LABEL);
+	if (cmd[end] == LABEL_CHAR)
+		return (LABEL);
+	if ((*cmd) == DIRECT_CHAR)
+		return (DIRECT);
+	if ((*cmd) == LABEL_CHAR)
+		return (INDIRECT_LABEL);
+	if ((*cmd) == SEPARATOR_CHAR && !(cmd[1]))
+		return (SEPARATOR);
+	if (ft_strstrchr(cmd, DIRECT_CHARS))
+		return (INDIRECT);
+	if (!(ft_strcmp(cmd, CMD_NAME)))
+		return (COMMAND_NAME);
+	if (ft_strstrchr(cmd, INSTRUCTION_CHARS))
+		return (INSTRUCTION);
+	if (!(ft_strcmp(cmd, CMD_COMMENT)))
+		return (COMMAND_COMMENT);
+	return (0);
+}
+
 int		find_buffer_elem(t_pos *position, char *buf, int ret, int fd)
 {
 	if (!(ret))
@@ -24,37 +52,6 @@ int		find_buffer_elem(t_pos *position, char *buf, int ret, int fd)
 	if ((*buf) >= 0 && (*buf) < 35)
 		return (read(fd, buf, 1));
 	return (1);
-}
-
-
-/*
-COMMAND_COMMENT .comment
-COMMAND_NAME .name
-STRING ""
-INSTRUCTION abcdefghijklmnopqrstuvwxyz_
-LABEL abcdefghijklmnopqrstuvwxyz_0123456789:
-INDIRECT_LABEL :abcdefghijklmnopqrstuvwxyz_0123456789
-INDIRECT 0123456789
-DIRECT %0123456789
-*/
-
-int		token_dispenser(char *cmd, char buf)
-{
-	if (buf == QUOTE)
-		return (STRING);
-	if (cmd[(ft_strlen(cmd) - 1)] == ':')
-		return (LABEL);
-	if (cmd[0] == ':')
-		return (INDIRECT_LABEL);
-	if (cmd[0] == PERCENT)
-		return (DIRECT);
-	if (!(ft_strcmp(cmd, NAME_CMD_STRING)))
-		return (COMMAND_NAME);
-	if (!(ft_strcmp(cmd, COMMENT_CMD_STRING)))
-		return (COMMAND_COMMENT);
-	if (ft_str_is_number(cmd))
-		return (INDIRECT);
-	return (0);
 }
 
 int		add_cmd(t_cmd **result, t_pos *position, char *buf, int fd)
@@ -69,17 +66,11 @@ int		add_cmd(t_cmd **result, t_pos *position, char *buf, int fd)
 	(*result)->start = (previous) ? previous->start : (*result);
 	(*result)->pos = (*position);
 	(*buf) = take_elem(position, &((*result)->data), (*buf), fd);
+	ft_printf("%15s -> ", (*result)->data);
+	if ((*buf) != STRING_CHAR && error_on_cmd((*result)->data, (*buf)))
+		return (0);
 	(*result)->token = token_dispenser((*result)->data, (*buf));
-	if (((*result)->data)[0] == POINT && 
-		ft_strcmp((*result)->data, NAME_CMD_STRING) &&
-		ft_strcmp((*result)->data, COMMENT_CMD_STRING))
-		return (0);
-	if (!(ft_strcmp((*result)->data, "%")) && ((*buf) != ':'))
-		return (0);
-	if (!(ft_strcmp((*result)->data, ":")))
-		return (0);
-	if (!(ft_strcmp((*result)->data, "-")))
-		return (0);
+	ft_printf("%s\n", token_name((*result)->token));
 	return (1);
 }
 
@@ -120,9 +111,9 @@ t_line	*reader(t_line *result, t_line *previous, int fd)
 	{
 		if (errno || (!(ft_strchr(VALID_CHARS, buf)) && (buf < 0 || buf > 32)))
 			print_error_reader(result, position);
-		else if (buf == SHARP)
+		else if (buf == COMMENT_CHAR)
 			ret = skip_comment(&position, &buf, fd);
-		else if ((buf == NEW_LINE) || !(result))
+		else if ((buf == LINE_CHAR) || !(result))
 			ret = add_line(&result, &position, &buf, fd);
 		else if (ft_strchr(VALID_CHARS, buf))
 			if (!(add_cmd(&(result->line), &position, &buf, fd)))

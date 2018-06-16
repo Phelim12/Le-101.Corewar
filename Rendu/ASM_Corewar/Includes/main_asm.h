@@ -23,27 +23,38 @@
 #include "op.h"
 #include "../../Libft/Includes/libft.h"
 
-#define DASH			'-'
+#define COLON			':'
 #define QUOTE			'"'
 #define SHARP			'#'
 #define POINT			'.'
 #define PERCENT			'%'
-#define NEW_LINE		'\n'
+#define COMMA			','
 
 
-#define HEADER_CHARS	"acemnot"
-#define NUMBER_CHARS	"0123456789"
-#define DIRECT_CHARS	"-0123456789"
-#define LABEL_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789:"
-#define VALID_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789#%:.,-\""
-#define ERROR_MSG_01	"Syntax error at token [TOKEN][001:001] END \"(null)\""
+#define EOF_CHAR				0
+#define CMD_CHAR				'.'
+#define LINE_CHAR				'\n'
+#define LABEL_CHAR				':'
+#define STRING_CHAR				'"'
+#define DIRECT_CHAR				'%'
+#define COMMENT_CHAR			'#'
+#define NEGATIVE_CHAR			'-'
+#define SEPARATOR_CHAR			','
 
-#define NAME_CMD_STRING			".name"
-#define COMMENT_CMD_STRING		".comment"
+#define CMD_NAME				".name"
+#define CMD_COMMENT				".comment"
+#define CMD_CHARS				"acemnot"
+#define NUMBER_CHARS			"0123456789"
+#define DIRECT_CHARS			"-0123456789"
+#define INSTRUCTION_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789"
+#define LABEL_CHARS				"abcdefghijklmnopqrstuvwxyz_0123456789:"
+#define VALID_CHARS				"abcdefghijklmnopqrstuvwxyz_0123456789#%:.,-\""
+	
+
 
 # define BUFF_ELEM				32
-# define PROG_NAME_LENGTH		(128)
-# define COMMENT_LENGTH			(2048)
+# define NAME_LENGTH			128
+# define COMMENT_LENGTH			2048
 # define COREWAR_EXEC_MAGIC		0xea83f3
 
 /*
@@ -61,24 +72,39 @@
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+/*
+COMMAND_COMMENT .comment
+COMMAND_NAME .name
+STRING ""
+INSTRUCTION abcdefghijklmnopqrstuvwxyz_
+LABEL abcdefghijklmnopqrstuvwxyz_0123456789:
+INDIRECT_LABEL :abcdefghijklmnopqrstuvwxyz_0123456789
+INDIRECT 0123456789
+DIRECT %0123456789
+*/
+
 typedef enum		e_token
 {
-	COMMAND_COMMENT = 1,
-	INDIRECT_LABEL,
-	COMMAND_NAME,
-	INSTRUCTION,
-	INDIRECT,
-	DIRECT,
+	COMMAND_NAME = 1,
 	STRING,
+	COMMAND_COMMENT,
 	LABEL,
+	INSTRUCTION,
+	SEPARATOR,
+	DIRECT,
+	DIRECT_LABEL,
+	INDIRECT,
+	INDIRECT_LABEL,
+	ENDLINE,
+	END,
 }					t_token;
 
 typedef struct		s_header
 {
 	unsigned int	magic;
 	unsigned int	prog_size;
+	char			name[NAME_LENGTH + 1];
 	char			comment[COMMENT_LENGTH + 1];
-	char			prog_name[PROG_NAME_LENGTH + 1];
 }					t_header;
 
 typedef struct	s_op
@@ -138,9 +164,9 @@ typedef struct	s_file
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-char		*fill_prog_name(t_line *file, t_cmd *line);
-char		*fill_comment(t_line *file, t_cmd *line);
-t_header	fill_header(t_line *file);
+void		fill_prog_name(char *result, t_line *file, t_cmd *line);
+void		fill_comment(char *result, t_line *file, t_cmd *line);
+t_header	fill_header(t_line **file, int comment, int name);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -149,7 +175,7 @@ t_header	fill_header(t_line *file);
 */
 
 char		*realloc_str(char *str, int size);
-char		*init_params_take_elem(char **str, int *var, char start);
+char		*init_params_take_elem(char **str, int *var, char start, char buf);
 char		take_elem(t_pos *position, char **str, char start, int fd);
 void		refresh_pos_token(t_pos *position, char start, char buf, int option);
 
@@ -170,8 +196,8 @@ void		add_elem(t_cmd **result, t_pos *position, char *buf, int fd);
 */
 
 void		print_error_reader(t_line *result, t_pos position);
-void		print_error_token(t_line *file, t_cmd *line, char *name);
 void		print_error_size_header(t_line *file, char *cmd, int size);
+void		print_error_token(t_line *file, t_pos pos, char *name, int token);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -179,6 +205,7 @@ void		print_error_size_header(t_line *file, char *cmd, int size);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+char		*token_name(int token);
 t_pos		init_pos(int y, int x);
 void		free_file(t_line *file);
 void		free_line(t_cmd *line);
@@ -186,6 +213,8 @@ void		print_line(t_cmd *pointer);
 void		print_file(t_line *pointer);
 void		ft_putnbr_pad3_fd(int nbr, int fd);
 int			skip_comment(t_pos *position, char *buf, int fd);
+int			ft_strstrchr(const char *str, const char *strchr);
+int			ft_nbrchr(const char *str, char chr);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -193,6 +222,7 @@ int			skip_comment(t_pos *position, char *buf, int fd);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+int			error_on_cmd(char *cmd, char buf);
 void		print_label(t_line *file, t_label *lab);
 
 #endif

@@ -81,11 +81,34 @@ void	ft_putnbr_pad3_fd(int nbr, int fd)
 	ft_putnbr_fd(nbr, fd);
 }
 
-
 int		skip_comment(t_pos *position, char *buf, int fd)
 {
 	while ((read(fd, buf, 1)) > 0)
-		if ((*buf) == NEW_LINE)
+		if ((*buf) == LINE_CHAR)
 			return (1);
 	return (0);
+}
+
+int		ft_strstrchr(const char *str, const char *strchr)
+{
+	int var;
+
+	var = -1;
+	while (str[++var])
+		if (!(ft_strchr(strchr, str[var])))
+			return (0);
+	return (1);
+}
+
+int		ft_nbrchr(const char *str, char chr)
+{
+	int result;
+	int var;
+
+	var = -1;
+	result = 0;
+	while (str[++var])
+		if (str[var] == chr)
+			result++;
+	return (result);
 }
