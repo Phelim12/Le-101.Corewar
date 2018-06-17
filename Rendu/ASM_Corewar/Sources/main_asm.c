@@ -22,9 +22,9 @@ int		main(int argc, char const *argv[])
 	{
 		if ((fd = open(argv[1], O_RDONLY)) == -1)
 			return (0);
-		if ((info.file = reader(NULL, NULL, fd)))
+		if ((info.file = reader(NULL, fd)))
 		{
-			info.header = fill_header(&(info.file), 1, 1);
+			// info.header = fill_header(&(info.file), 1, 1);
 		}
 		else
 			print_error_token(NULL, init_pos(1, 1), NULL, END);

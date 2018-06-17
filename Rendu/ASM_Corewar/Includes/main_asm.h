@@ -23,34 +23,37 @@
 #include "op.h"
 #include "../../Libft/Includes/libft.h"
 
-#define COLON			':'
-#define QUOTE			'"'
-#define SHARP			'#'
-#define POINT			'.'
-#define PERCENT			'%'
-#define COMMA			','
+/*
+**	CHAR DEFINE
+*/
 
+# define EOF_CHAR				'\0'
 
-#define EOF_CHAR				0
-#define CMD_CHAR				'.'
-#define LINE_CHAR				'\n'
-#define LABEL_CHAR				':'
-#define STRING_CHAR				'"'
-#define DIRECT_CHAR				'%'
-#define COMMENT_CHAR			'#'
-#define NEGATIVE_CHAR			'-'
-#define SEPARATOR_CHAR			','
+# define CMD_CHAR				'.'
+# define LINE_CHAR				'\n'
+# define LABEL_CHAR				':'
+# define STRING_CHAR			'"'
+# define DIRECT_CHAR			'%'
+# define COMMENT_CHAR			'#'
+# define NEGATIVE_CHAR			'-'
+# define SEPARATOR_CHAR			','
 
-#define CMD_NAME				".name"
-#define CMD_COMMENT				".comment"
-#define CMD_CHARS				"acemnot"
-#define NUMBER_CHARS			"0123456789"
-#define DIRECT_CHARS			"-0123456789"
-#define INSTRUCTION_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789"
-#define LABEL_CHARS				"abcdefghijklmnopqrstuvwxyz_0123456789:"
-#define VALID_CHARS				"abcdefghijklmnopqrstuvwxyz_0123456789#%:.,-\""
-	
+/*
+**	STRING DEFINE
+*/
 
+# define CMD_NAME				".name"
+# define CMD_CHARS				"acemnot"
+# define CMD_COMMENT			".comment"
+# define NUMBER_CHARS			"0123456789"
+# define DIRECT_CHARS			"-0123456789"
+# define INSTRUCTION_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789"
+# define LABEL_CHARS			"abcdefghijklmnopqrstuvwxyz_0123456789:"
+# define VALID_CHARS			"abcdefghijklmnopqrstuvwxyz_0123456789#%:.,-\""
+
+/*
+**	INTEGER DEFINE
+*/
 
 # define BUFF_ELEM				32
 # define NAME_LENGTH			128
@@ -71,53 +74,6 @@
 **┃  ◦ exit                                                                    ┃
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-
-/*
-COMMAND_COMMENT .comment
-COMMAND_NAME .name
-STRING ""
-INSTRUCTION abcdefghijklmnopqrstuvwxyz_
-LABEL abcdefghijklmnopqrstuvwxyz_0123456789:
-INDIRECT_LABEL :abcdefghijklmnopqrstuvwxyz_0123456789
-INDIRECT 0123456789
-DIRECT %0123456789
-*/
-
-typedef enum		e_token
-{
-	COMMAND_NAME = 1,
-	STRING,
-	COMMAND_COMMENT,
-	LABEL,
-	INSTRUCTION,
-	SEPARATOR,
-	DIRECT,
-	DIRECT_LABEL,
-	INDIRECT,
-	INDIRECT_LABEL,
-	ENDLINE,
-	END,
-}					t_token;
-
-typedef struct		s_header
-{
-	unsigned int	magic;
-	unsigned int	prog_size;
-	char			name[NAME_LENGTH + 1];
-	char			comment[COMMENT_LENGTH + 1];
-}					t_header;
-
-typedef struct	s_op
-{
-	char			*name;
-	char			nb_params;
-	char			params[3];
-	char			opcode;
-	int				cycle;
-	char			*desc;
-	char			occode;
-	char			not_identify;
-}				t_op;
 
 typedef struct	s_pos
 {
@@ -185,7 +141,7 @@ void		refresh_pos_token(t_pos *position, char start, char buf, int option);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-t_line		*reader(t_line *result, t_line *previous, int fd);
+t_line		*reader(t_line *result, int fd);
 int			find_buffer_elem(t_pos *position, char *buf, int ret, int fd);
 void		add_elem(t_cmd **result, t_pos *position, char *buf, int fd);
 

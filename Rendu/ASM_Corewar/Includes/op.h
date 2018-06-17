@@ -19,25 +19,15 @@
 #define REG_SIZE				4
 #define DIR_SIZE				REG_SIZE
 
-
 # define REG_CODE				1
 # define DIR_CODE				2
 # define IND_CODE				3
-
 
 #define MAX_ARGS_NUMBER			4
 #define MAX_PLAYERS				4
 #define MEM_SIZE				(4*1024)
 #define IDX_MOD					(MEM_SIZE / 8)
 #define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
-
-#define COMMENT_CHAR			'#'
-#define LABEL_CHAR				':'
-#define DIRECT_CHAR				'%'
-#define SEPARATOR_CHAR			','
-
-#define NAME_CMD_STRING			".name"
-#define COMMENT_CMD_STRING		".comment"
 
 #define REG_NUMBER				16
 
@@ -50,6 +40,9 @@
 **
 */
 
+# define NAME_LENGTH			128
+# define COMMENT_LENGTH			2048
+
 typedef char	t_arg_type;
 
 #define T_REG					1
@@ -61,4 +54,38 @@ typedef char	t_arg_type;
 **
 */
 
+typedef enum		e_token
+{
+	COMMAND_NAME = 1,
+	STRING,
+	COMMAND_COMMENT,
+	LABEL,
+	INSTRUCTION,
+	SEPARATOR,
+	DIRECT,
+	DIRECT_LABEL,
+	INDIRECT,
+	INDIRECT_LABEL,
+	ENDLINE,
+	END,
+}					t_token;
 
+typedef struct		s_header
+{
+	unsigned int	magic;
+	unsigned int	prog_size;
+	char			name[NAME_LENGTH + 1];
+	char			comment[COMMENT_LENGTH + 1];
+}					t_header;
+
+typedef struct	s_op
+{
+	char			*name;
+	char			nb_params;
+	char			params[3];
+	char			opcode;
+	int				cycle;
+	char			*desc;
+	char			occode;
+	char			not_identify;
+}				t_op;

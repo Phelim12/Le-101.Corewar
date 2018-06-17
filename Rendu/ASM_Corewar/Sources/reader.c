@@ -13,21 +13,29 @@
 
 #include "../Includes/main_asm.h"
 
+int 	ft_iscntrl(int c)
+{
+	if (c == 127)
+		return (1);
+	if (c <= 32 && c >= 0)
+		return (1);
+	return (0);
+}
+
 int		token_dispenser(char *cmd, char buf)
 {
-	int	end;
-
-	end = ft_strlen(cmd + 1);
+	if (cmd[0] == LINE_CHAR)
+		return (ENDLINE);
 	if (buf == STRING_CHAR)
 		return (STRING);
-	if (cmd[0] == DIRECT_CHAR && cmd[1] == LABEL_CHAR)
+	if (ft_strstr(cmd, "%:"))
 		return (DIRECT_LABEL);
-	if (cmd[end] == LABEL_CHAR)
+	if ((*cmd) == LABEL_CHAR)
+		return (INDIRECT_LABEL);
+	if (ft_strchr(cmd, LABEL_CHAR))
 		return (LABEL);
 	if ((*cmd) == DIRECT_CHAR)
 		return (DIRECT);
-	if ((*cmd) == LABEL_CHAR)
-		return (INDIRECT_LABEL);
 	if ((*cmd) == SEPARATOR_CHAR && !(cmd[1]))
 		return (SEPARATOR);
 	if (ft_strstrchr(cmd, DIRECT_CHARS))
@@ -38,7 +46,7 @@ int		token_dispenser(char *cmd, char buf)
 		return (INSTRUCTION);
 	if (!(ft_strcmp(cmd, CMD_COMMENT)))
 		return (COMMAND_COMMENT);
-	return (0);
+	return (END);
 }
 
 int		find_buffer_elem(t_pos *position, char *buf, int ret, int fd)
@@ -82,7 +90,7 @@ int		add_line(t_line **result, t_pos *position, char *buf, int fd)
 	ret = 1;
 	if ((*result))
 	{
-		ret = read(fd, buf, 1);
+		add_cmd(&((*result)->line), position, buf, fd);
 		(*position) = init_pos((position->y + 1), 1);
 		if (!((*result)->line))
 			return (ret);
@@ -98,7 +106,7 @@ int		add_line(t_line **result, t_pos *position, char *buf, int fd)
 	return (ret);
 }
 
-t_line	*reader(t_line *result, t_line *previous, int fd)
+t_line	*reader(t_line *result, int fd)
 {
 	t_pos		position;
 	char		buf;
@@ -109,7 +117,7 @@ t_line	*reader(t_line *result, t_line *previous, int fd)
 	position = init_pos(1, 1);
 	while (buf != -1 && (ret = find_buffer_elem(&position, &buf, ret, fd)))
 	{
-		if (errno || (!(ft_strchr(VALID_CHARS, buf)) && (buf < 0 || buf > 32)))
+		if ((!(ft_strchr(VALID_CHARS, buf)) && !(ft_iscntrl(buf))) || errno)
 			print_error_reader(result, position);
 		else if (buf == COMMENT_CHAR)
 			ret = skip_comment(&position, &buf, fd);
@@ -119,5 +127,6 @@ t_line	*reader(t_line *result, t_line *previous, int fd)
 			if (!(add_cmd(&(result->line), &position, &buf, fd)))
 				print_error_reader(result, result->line->pos);
 	}
+	add_cmd(&(result->line), &position, (char *)&ret, fd);
 	return ((result) ? result->start : NULL);
 }
