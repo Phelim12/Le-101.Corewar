@@ -1,34 +1,49 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   main_asm.c                                       .::    .:/ .      .::   */
+/*   print_tools.c                                    .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/05/29 15:54:45 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/13 15:15:30 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/06/18 21:55:04 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2018/06/18 21:55:04 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "main_asm.h"
 
-int		main(int argc, char const *argv[])
+void	print_coord_token(int nbr, int fd)
 {
-	t_file	info;
-	int		fd;
+	if (nbr < 100)
+		ft_putchar_fd('0', fd);
+	if (nbr < 10)
+		ft_putchar_fd('0', fd);
+	ft_putnbr_fd(nbr, fd);
+}
 
-	if (argc == 2)
+/*
+** DEBUG
+*/
+
+void	print_line(t_cmd *pointer)
+{
+	while (pointer)
 	{
-		if ((fd = open(argv[1], O_RDONLY)) == -1)
-			return (0);
-		if ((info.file = parser(NULL, fd))->line->token != END)
-			info.header = fill_header(&(info.file), 1, 1);
+		if (pointer->token == ENDLINE)
+			ft_printf("\n", pointer->data);
 		else
-			print_error_token(info.file, info.file->line);
-		print_file(info.file);
-		free_file(info.file);
-		close(fd);
+			ft_printf("[%s] ", pointer->data);
+		pointer = pointer->next;
 	}
-	return (0);
+}
+
+void	print_file(t_line *pointer)
+{
+	while (pointer)
+	{
+		ft_printf("LINE = ");
+		print_line(pointer->line);
+		pointer = pointer->next;
+	}
 }

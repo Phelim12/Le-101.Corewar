@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   reader.c                                         .::    .:/ .      .::   */
+/*   parser_asm.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/06/04 18:52:58 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/13 18:25:08 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/06/18 22:48:37 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2018/06/18 22:48:37 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../Includes/main_asm.h"
+#include "main_asm.h"
 
-int		cmd_is_good(char *cmd, char buf)
+int		cmd_is_good(char *cmd)
 {
 	if (cmd[0] == CMD_CHAR &&
 		ft_strcmp(cmd, CMD_NAME) && ft_strcmp(cmd, CMD_COMMENT))
@@ -41,7 +41,7 @@ int		add_cmd(t_cmd **result, t_pos *pos, char *buf, int fd)
 	(*result)->start = (previous) ? previous->start : (*result);
 	(*result)->pos = (*buf == STRING) ? init_pos(pos->y, (pos->x - 1)) : *pos;
 	(*buf) = take_elem(pos, &((*result)->data), (*buf), fd);
-	if ((*buf) != STRING_CHAR && cmd_is_good((*result)->data, (*buf)))
+	if ((*buf) != STRING_CHAR && cmd_is_good((*result)->data))
 		return (0);
 	(*result)->token = token_dispenser((*result)->data, (*buf));
 	return (1);
@@ -67,7 +67,7 @@ int		add_line(t_line **result, t_pos *pos, char *buf, int fd)
 	return (ret);
 }
 
-t_line	*reader(t_line *result, int fd)
+t_line	*parser(t_line *result, int fd)
 {
 	t_pos		pos;
 	char		buf;
@@ -79,7 +79,7 @@ t_line	*reader(t_line *result, int fd)
 		if ((!(ft_strchr(VALID_CHARS, buf)) && !(ft_iscntrl(buf))))
 			print_error_lexical(result, pos);
 		else if (buf == COMMENT_CHAR)
-			ret = pass_comment(&pos, &buf, fd);
+			ret = pass_comment(&buf, fd);
 		else if ((buf == LINE_CHAR) || !(result))
 			ret = add_line(&result, &pos, &buf, fd);
 		else if (ft_strchr(VALID_CHARS, buf))

@@ -5,30 +5,29 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/05/29 15:55:56 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/18 11:19:01 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/06/18 23:06:58 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2018/06/18 23:06:58 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef MAIN_ASM
-# define MAIN_ASM
+#ifndef MAIN_ASM_H
+# define MAIN_ASM_H
 
-#include <stdio.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include "op.h"
-#include "../../Libft/Includes/libft.h"
+# include <stdio.h>
+# include <fcntl.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <string.h>
+# include <errno.h>
+# include "../../Libft/Includes/libft.h"
+# include "op.h"
 
 /*
 **	CHAR DEFINE
 */
 
 # define EOF_CHAR				'\0'
-
 # define CMD_CHAR				'.'
 # define LINE_CHAR				'\n'
 # define LABEL_CHAR				':'
@@ -116,79 +115,108 @@ typedef struct	s_file
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                                 asm_tools.c                                ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+t_pos		init_pos(int y, int x);
+char		*realloc_str(char *str, int size);
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 **┃                                fill_header.c                               ┃
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+int			token_header(int token);
 void		fill_name(char *result, t_line *file);
 void		fill_comment(char *result, t_line *file);
+t_line		*delete_header(t_line *file, int size_header);
 t_header	fill_header(t_line **file, int comment, int name);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃                                take_elem.c                                 ┃
+**┃                                free_tools.c                                ┃
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-char		*realloc_str(char *str, int size);
-char		*init_take_elem(char **str, int *var, char start, char buf);
-char		take_elem(t_pos *position, char **str, char start, int fd);
-void		refresh_pos_token(t_pos *position, char start, char buf, int option);
+void		free_line(t_cmd *line);
+void		free_file(t_line *file);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃                                 reader.c                                   ┃
+**┃                                   label.c                                  ┃
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-t_line		*reader(t_line *result, int fd);
-void		add_elem(t_cmd **result, t_pos *position, char *buf, int fd);
+void		print_lab(t_label *lab);
+int			ft_labelspec(char *str);
+int			check_double(t_label *lab);
+void		add_label(t_label **result);
+int			check_label(t_line *file, t_label *lab);
+void		print_label(t_line *file, t_label *lab);
+int			check_label_next(char *str, t_label *lab);
+int			check_double_next(t_label *lab, char *str);
+void		init_label(t_label **result, t_line **file, t_cmd **line);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃                               print_error.c                                ┃
+**┃                                print_error.c                               ┃
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+void		print_error_token(t_line *file, t_cmd *cmd);
 void		print_error_lexical(t_line *result, t_pos position);
 void		print_error_size_header(t_line *file, char *cmd, int size);
-void		print_error_token(t_line *file, t_cmd *cmd);
-
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃                               tools_reader.c                               ┃
+**┃                                print_tools.c                               ┃
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-int		pass_comment(t_pos *pos, char *buf, int fd);
-int		special_read(t_pos *pos, char *buf, int ret, int fd);
-void	init_reader(t_line **result, t_pos *pos, char *buf, int *ret);
-
-/*
-**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃                                tools_asm.c                                 ┃
-**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-*/
-
-char		*token_name(int token);
-t_pos		init_pos(int y, int x);
-void		free_file(t_line *file);
-void		free_line(t_cmd *line);
 void		print_line(t_cmd *pointer);
 void		print_file(t_line *pointer);
-void		ft_putnbr_p3_fd(int nbr, int fd);
-int			token_dispenser(char *cmd, char buf);
-char		*token_name(int token);
 void		print_coord_token(int nbr, int fd);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃                                  label.c                                  ┃
+**┃                                parser_asm.c                                ┃
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-int			error_on_cmd(char *cmd, char buf);
-void		print_label(t_line *file, t_label *lab);
+int			cmd_is_good(char *cmd);
+t_line		*parser(t_line *result, int fd);
+int			add_cmd(t_cmd **result, t_pos *pos, char *buf, int fd);
+int			add_line(t_line **result, t_pos *pos, char *buf, int fd);
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                               parser_tools.c                               ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+int			pass_comment(char *buf, int fd);
+int			special_read(t_pos *pos, char *buf, int ret, int fd);
+void		init_reader(t_line **result, t_pos *pos, char *buf, int *ret);
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                                 take_elem.c                                ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+int			stop_elem(char *str, char start, char buf, int var);
+char		*init_take_elem(char **str, int *var, char start, char buf);
+char		take_elem(t_pos *pos, char **str, char start, int fd);
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                                token_tools.c                               ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+char		*token_name(int token);
+int			token_dispenser(char *cmd, char buf);
 
 #endif

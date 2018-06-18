@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../Includes/main_asm.h"
+#include "main_asm.h"
 
 t_pos	init_pos(int y, int x)
 {

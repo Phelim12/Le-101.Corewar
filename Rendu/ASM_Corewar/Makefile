@@ -17,23 +17,31 @@ CC = gcc
 
 NAME = ../asm
 		
-C_FLAGS = -g
+C_FLAGS =  -Wall -Wextra -Werror
 
 DIR_LIB = ../Libft/
 
 DIR_SRC = Sources/
 
+DIR_TOOLS = $(addprefix $(DIR_SRC), Tools/)
+
+DIR_PARSER = $(addprefix $(DIR_SRC), Parser/)
+
 DIR_INC = Includes/
 
-NAME_SRC =	fill_header.c main_asm.c label.c print_error.c reader.c \
-			take_elem.c tools_asm.c token_dispenser.c tools_reader.c\
-			print_tools.c free_tools.c
+NAME_SRC = main_asm.c print_error.c
 
+TOOLS_SRC = asm_tools.c token_tools.c print_tools.c free_tools.c
+
+PARSER_SRC = fill_header.c label.c parser_asm.c take_elem.c parser_tools.c
+			 
 NAME_INC = main_asm.h
 
 INC = $(addprefix $(DIR_INC), $(NAME_INC))
 
-SRC = $(addprefix $(DIR_SRC), $(NAME_SRC))
+SRC = $(addprefix $(DIR_SRC), $(NAME_SRC)) \
+	  $(addprefix $(DIR_TOOLS), $(TOOLS_SRC)) \
+	  $(addprefix $(DIR_PARSER), $(PARSER_SRC))
 
 OBJ = $(SRC:.c=.o)
 
@@ -50,7 +58,7 @@ $(NAME): $(OBJ)
 ./%.o: ./%.c $(INC)
 	@$(eval CURSOR=$(shell echo $$(($(CURSOR)+1))))
 	@$(eval PERCENT=$(shell echo $$(($(CURSOR)*100/$(NB_FILES)))))
-	@printf "\033[0;32m⌛️   make $(NAME) $(PERCENT)%%\033[0m\033[K\r"
+	@printf "\033[0;32m⌛️   make asm $(PERCENT)%%\033[0m\033[K\r"
 	@$(CC) $(C_FLAGS) -I $(DIR_INC) -o $@ -c $< 
 
 clean:

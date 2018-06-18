@@ -136,7 +136,6 @@ int		check_double(t_label *lab)
 
 void	print_label(t_line *file, t_label *lab)
 {
-	t_line	*tmp_file;
 	int		i;
 
 	while (file)

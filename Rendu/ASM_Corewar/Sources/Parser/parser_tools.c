@@ -1,46 +1,40 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   print_tools.c                                    .::    .:/ .      .::   */
+/*   tools_reader.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/06/18 21:55:04 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/18 21:55:04 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/06/18 21:17:45 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2018/06/18 21:17:45 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "main_asm.h"
 
-void	print_coord_token(int nbr, int fd)
+int		pass_comment(char *buf, int fd)
 {
-	if (nbr < 100)
-		ft_putchar_fd('0', fd);
-	if (nbr < 10)
-		ft_putchar_fd('0', fd);
-	ft_putnbr_fd(nbr, fd);
+	while ((read(fd, buf, 1)) > 0)
+		if ((*buf) == LINE_CHAR)
+			return (1);
+	return (0);
 }
 
-void	print_line(t_cmd *pointer)
+int		special_read(t_pos *pos, char *buf, int ret, int fd)
 {
-	while (pointer)
-	{
-		if (pointer->token == ENDLINE)
-			ft_printf("\n", pointer->data);
-		else
-			ft_printf("[%s] ", pointer->data);
-		pointer = pointer->next;
-	}
+	if (!(ret))
+		return (0);
+	if ((ft_iscntrl(*buf) && (*buf) != 10) || (*buf) == 34)
+		return (((read(fd, buf, 1)) > 0) ? pos->x++ : 0);
+	return (1);
 }
 
-void	print_file(t_line *pointer)
+void	init_reader(t_line **result, t_pos *pos, char *buf, int *ret)
 {
-	while (pointer)
-	{
-		ft_printf("LINE = ");
-		print_line(pointer->line);
-		pointer = pointer->next;
-	}
+	(*buf) = 0;
+	(*ret) = 1;
+	(*pos) = init_pos(1, 1);
+	(*result) = ft_memalloc(sizeof(t_line));
+	(*result)->start = (*result);
 }
-

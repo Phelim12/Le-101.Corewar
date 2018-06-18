@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../Includes/main_asm.h"
+#include "main_asm.h"
 
 int		stop_elem(char *str, char start, char buf, int var)
 {
