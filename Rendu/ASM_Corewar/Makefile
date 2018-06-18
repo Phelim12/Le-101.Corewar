@@ -33,7 +33,7 @@ NAME_SRC = main_asm.c print_error.c
 
 TOOLS_SRC = asm_tools.c token_tools.c print_tools.c free_tools.c
 
-PARSER_SRC = fill_header.c label.c parser_asm.c take_elem.c parser_tools.c
+PARSER_SRC = parser_header.c label.c parser_asm.c parser_elem.c parser_tools.c
 			 
 NAME_INC = main_asm.h
 

@@ -40,7 +40,7 @@ int		add_cmd(t_cmd **result, t_pos *pos, char *buf, int fd)
 		previous->next = (*result);
 	(*result)->start = (previous) ? previous->start : (*result);
 	(*result)->pos = (*buf == STRING) ? init_pos(pos->y, (pos->x - 1)) : *pos;
-	(*buf) = take_elem(pos, &((*result)->data), (*buf), fd);
+	(*buf) = parser_elem(pos, &((*result)->data), (*buf), fd);
 	if ((*buf) != STRING_CHAR && cmd_is_good((*result)->data))
 		return (0);
 	(*result)->token = token_dispenser((*result)->data, (*buf));
@@ -73,7 +73,7 @@ t_line	*parser(t_line *result, int fd)
 	char		buf;
 	int			ret;
 
-	init_reader(&result, &pos, &buf, &ret);
+	init_parser(&result, &pos, &buf, &ret);
 	while ((ret = special_read(&pos, &buf, ret, fd)))
 	{
 		if ((!(ft_strchr(VALID_CHARS, buf)) && !(ft_iscntrl(buf))))

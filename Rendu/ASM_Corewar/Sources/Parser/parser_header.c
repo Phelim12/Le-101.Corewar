@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   fill_header.c                                    .::    .:/ .      .::   */
+/*   parser_header.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: clcreuso <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/06/15 17:08:56 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/15 17:08:58 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/06/18 23:27:18 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2018/06/18 23:27:18 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,7 +44,7 @@ t_line		*delete_header(t_line *file, int size_header)
 	return (result);
 }
 
-void		fill_name(char *result, t_line *file)
+void		parser_name(char *result, t_line *file)
 {
 	t_cmd	*line;
 
@@ -59,7 +59,7 @@ void		fill_name(char *result, t_line *file)
 		print_error_size_header(file, "name", NAME_LENGTH);
 }
 
-void		fill_comment(char *result, t_line *file)
+void		parser_comment(char *result, t_line *file)
 {
 	t_cmd	*line;
 
@@ -74,7 +74,7 @@ void		fill_comment(char *result, t_line *file)
 		print_error_size_header(file, "comment", COMMENT_LENGTH);
 }
 
-t_header	fill_header(t_line **file, int comment, int name)
+t_header	parser_header(t_line **file, int comment, int name)
 {
 	t_header	result;
 	int			line;
@@ -83,9 +83,9 @@ t_header	fill_header(t_line **file, int comment, int name)
 	while (++line && token_header((*file)->line->token))
 	{
 		if ((*file)->line->token == COMMAND_NAME && name--)
-			fill_name(result.name, (*file));
+			parser_name(result.name, (*file));
 		else if ((*file)->line->token == COMMAND_COMMENT && comment--)
-			fill_comment(result.comment, (*file));
+			parser_comment(result.comment, (*file));
 		else if ((*file)->line->token != ENDLINE)
 			print_error_token((*file), (*file)->line);
 		(*file) = (*file)->next;

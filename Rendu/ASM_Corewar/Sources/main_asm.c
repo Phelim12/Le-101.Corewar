@@ -23,7 +23,7 @@ int		main(int argc, char const *argv[])
 		if ((fd = open(argv[1], O_RDONLY)) == -1)
 			return (0);
 		if ((info.file = parser(NULL, fd))->line->token != END)
-			info.header = fill_header(&(info.file), 1, 1);
+			info.header = parser_header(&(info.file), 1, 1);
 		else
 			print_error_token(info.file, info.file->line);
 		print_file(info.file);

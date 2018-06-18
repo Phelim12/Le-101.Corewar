@@ -124,15 +124,15 @@ char		*realloc_str(char *str, int size);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃                                fill_header.c                               ┃
+**┃                               parser_header.c                              ┃
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
 int			token_header(int token);
-void		fill_name(char *result, t_line *file);
-void		fill_comment(char *result, t_line *file);
+void		parser_name(char *result, t_line *file);
+void		parser_comment(char *result, t_line *file);
 t_line		*delete_header(t_line *file, int size_header);
-t_header	fill_header(t_line **file, int comment, int name);
+t_header	parser_header(t_line **file, int comment, int name);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -198,7 +198,7 @@ int			add_line(t_line **result, t_pos *pos, char *buf, int fd);
 
 int			pass_comment(char *buf, int fd);
 int			special_read(t_pos *pos, char *buf, int ret, int fd);
-void		init_reader(t_line **result, t_pos *pos, char *buf, int *ret);
+void		init_parser(t_line **result, t_pos *pos, char *buf, int *ret);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -207,8 +207,8 @@ void		init_reader(t_line **result, t_pos *pos, char *buf, int *ret);
 */
 
 int			stop_elem(char *str, char start, char buf, int var);
-char		*init_take_elem(char **str, int *var, char start, char buf);
-char		take_elem(t_pos *pos, char **str, char start, int fd);
+char		parser_elem(t_pos *pos, char **str, char start, int fd);
+char		*init_parse_elem(char **str, int *var, char start, char buf);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

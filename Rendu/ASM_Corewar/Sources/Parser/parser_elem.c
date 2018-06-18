@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   take_elem.c                                      .::    .:/ .      .::   */
+/*   parser_elem.c                                    .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/06/09 18:51:41 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/09 18:51:41 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/06/18 23:30:09 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2018/06/18 23:30:09 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,7 +26,7 @@ int		stop_elem(char *str, char start, char buf, int var)
 	return (0);
 }
 
-char	*init_take_elem(char **str, int *var, char start, char buf)
+char	*init_parser_elem(char **str, int *var, char start, char buf)
 {
 	(*str) = ft_strnew(BUFF_ELEM);
 	(*var) = (start == STRING_CHAR) ? -1 : 0;
@@ -44,7 +44,7 @@ char	*init_take_elem(char **str, int *var, char start, char buf)
 	return (NULL);
 }
 
-char	take_elem(t_pos *pos, char **str, char start, int fd)
+char	parser_elem(t_pos *pos, char **str, char start, int fd)
 {
 	char	*pattern;
 	char	buf;
@@ -52,7 +52,7 @@ char	take_elem(t_pos *pos, char **str, char start, int fd)
 	int		var;
 
 	ret = read(fd, &buf, 1);
-	pattern = init_take_elem(str, &var, start, buf);
+	pattern = init_parser_elem(str, &var, start, buf);
 	while (ret > 0)
 	{
 		*pos = (buf == LINE_CHAR && start == STRING_CHAR) \

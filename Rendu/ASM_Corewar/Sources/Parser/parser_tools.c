@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   tools_reader.c                                   .::    .:/ .      .::   */
+/*   parser_tools.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/06/18 21:17:45 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/18 21:17:45 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/06/18 23:30:38 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2018/06/18 23:30:38 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,7 +30,7 @@ int		special_read(t_pos *pos, char *buf, int ret, int fd)
 	return (1);
 }
 
-void	init_reader(t_line **result, t_pos *pos, char *buf, int *ret)
+void	init_parser(t_line **result, t_pos *pos, char *buf, int *ret)
 {
 	(*buf) = 0;
 	(*ret) = 1;
