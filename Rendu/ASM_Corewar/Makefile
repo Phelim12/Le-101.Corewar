@@ -6,7 +6,7 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/12/08 18:11:02 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2018/06/13 11:24:36 by nbettach    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/06/18 11:19:37 by nbettach    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -25,7 +25,7 @@ DIR_SRC = Sources/
 
 DIR_INC = Includes/
 
-NAME_SRC =	fill_header.c main_asm.c parser.c print_error.c reader.c \
+NAME_SRC =	fill_header.c main_asm.c label.c print_error.c reader.c \
 			take_elem.c tools_asm.c check_error.c
 
 NAME_INC = main_asm.h
