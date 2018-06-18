@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/14 17:00:50 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/18 17:14:17 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,9 +27,11 @@ static void	sub2_init_champ(int i) //peut etre a passer en return INT pour la re
 			g_vm->champion[i]->registers[a] = tmp;
 		ft_memset(g_vm->champion[i]->registers[a], 0, REG_NUMBER + 1);
 		g_vm->champion[i]->registers[a][1] = g_vm->champion[i]->num;
+		g_vm->champion[i]->registers[a][0] = g_vm->champion[i]->num * MEM_SIZE
+			/ g_vm->nb_players;
 	}
 	if (get_champ(i) == -1)
-		return ; // -1?
+		return ; // -1 ?
 }
 
 static void	sub_init_champ(void)
@@ -90,10 +92,16 @@ void		init_champs(char const **argv)
 
 int			init_map(void)
 {
+	unsigned int i;
+
 	if (!(g_vm->map = malloc(MEM_SIZE + 1)))
 		return (-1);
 	g_vm->map[MEM_SIZE] = '\0';
 	g_vm->map = ft_memset(g_vm->map, 0, (size_t)MEM_SIZE);
+	i = -1;
+	while (++i < g_vm->nb_players)
+		ft_memcpy(&g_vm->map[g_vm->champion[i]->registers[0][0]],
+				g_vm->champion[i]->instructions, g_vm->champion[i]->prog_size);
 	return (0);
 }
 

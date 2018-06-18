@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/13 14:10:23 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/14 16:33:37 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/18 16:09:34 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -45,14 +45,19 @@ int		get_header(int i)
 int		get_instructions(int i, int fd)
 {
 	int j;
+	int ret;
 
-	j = 0;
+	j = -1;
+	ret = 0;
 	g_vm->champion[i]->instructions = malloc(g_vm->champion[i]->prog_size);
-	while (read(fd, &g_vm->champion[i]->instructions[j++], 1) > 0 )
+	while ((ret = read(fd, &g_vm->champion[i]->instructions[++j], 1)) > 0 )
 		;
-//		dprintf(1, "%c", g_vm->champion[i]->instructions[j++]);
-	dprintf(1, "instructions:%s\n", g_vm->champion[i]->instructions);
-	return (0);
+//		dprintf(1, "%02x|", g_vm->champion[i]->instructions[j]);
+	dprintf(1, "\n-----------\ninstructions:%s\n", g_vm->champion[i]->instructions);
+	if (ret >= 0)
+		return (0);
+	else
+		return (-1);
 }
 
 int		get_champ(int i)
