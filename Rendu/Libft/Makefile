@@ -43,7 +43,7 @@ GNL =	get_next_line.c
 
 CHR = 	ft_isascii.c ft_isalnum.c ft_isalpha.c ft_isdigit.c ft_islower.c \
 		ft_isprint.c ft_isspace.c ft_isupper.c ft_tolower.c ft_toupper.c \
-		ft_size_wchar.c
+		ft_size_wchar.c ft_iscntrl.c
 
 LST =	ft_lstadd.c ft_lstdel.c ft_lstdelone.c ft_lstiter.c ft_lstnew.c \
 		ft_lstmap.c 
@@ -63,7 +63,7 @@ STR =	ft_strcat.c ft_strcmp.c ft_strdup.c ft_striteri.c ft_strlen.c \
 		ft_strncmp.c ft_strnew.c ft_strrev.c ft_strsub.c ft_wstrsub.c \
 		ft_strclr.c ft_strdel.c ft_striter.c ft_strlcat.c ft_strmapi.c \
 		ft_strncpy.c ft_strnstr.c ft_strsplit.c ft_strtrim.c ft_wstrlen.c\
-		ft_str_is_number.c
+		ft_strisdigit.c ft_count_chars.c ft_strispattern.c
 
 MATH =	ft_atoi.c ft_atou.c ft_ilen.c ft_imaxlen.c ft_imaxtoa.c ft_next_sqrt.c\
 		ft_ulen.c ft_umaxlen.c ft_umaxtoa.c ft_atoimax.c ft_atoumax.c ft_utoa.c\

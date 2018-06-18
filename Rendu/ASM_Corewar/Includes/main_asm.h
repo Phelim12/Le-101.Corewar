@@ -120,8 +120,8 @@ typedef struct	s_file
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-void		fill_prog_name(char *result, t_line *file, t_cmd *line);
-void		fill_comment(char *result, t_line *file, t_cmd *line);
+void		fill_name(char *result, t_line *file);
+void		fill_comment(char *result, t_line *file);
 t_header	fill_header(t_line **file, int comment, int name);
 
 /*
@@ -131,7 +131,7 @@ t_header	fill_header(t_line **file, int comment, int name);
 */
 
 char		*realloc_str(char *str, int size);
-char		*init_params_take_elem(char **str, int *var, char start, char buf);
+char		*init_take_elem(char **str, int *var, char start, char buf);
 char		take_elem(t_pos *position, char **str, char start, int fd);
 void		refresh_pos_token(t_pos *position, char start, char buf, int option);
 
@@ -142,7 +142,6 @@ void		refresh_pos_token(t_pos *position, char start, char buf, int option);
 */
 
 t_line		*reader(t_line *result, int fd);
-int			find_buffer_elem(t_pos *position, char *buf, int ret, int fd);
 void		add_elem(t_cmd **result, t_pos *position, char *buf, int fd);
 
 /*
@@ -151,9 +150,20 @@ void		add_elem(t_cmd **result, t_pos *position, char *buf, int fd);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-void		print_error_reader(t_line *result, t_pos position);
+void		print_error_lexical(t_line *result, t_pos position);
 void		print_error_size_header(t_line *file, char *cmd, int size);
-void		print_error_token(t_line *file, t_pos pos, char *name, int token);
+void		print_error_token(t_line *file, t_cmd *cmd);
+
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                               tools_reader.c                               ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+int		pass_comment(t_pos *pos, char *buf, int fd);
+int		special_read(t_pos *pos, char *buf, int ret, int fd);
+void	init_reader(t_line **result, t_pos *pos, char *buf, int *ret);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -167,10 +177,10 @@ void		free_file(t_line *file);
 void		free_line(t_cmd *line);
 void		print_line(t_cmd *pointer);
 void		print_file(t_line *pointer);
-void		ft_putnbr_pad3_fd(int nbr, int fd);
-int			skip_comment(t_pos *position, char *buf, int fd);
-int			ft_strstrchr(const char *str, const char *strchr);
-int			ft_nbrchr(const char *str, char chr);
+void		ft_putnbr_p3_fd(int nbr, int fd);
+int			token_dispenser(char *cmd, char buf);
+char		*token_name(int token);
+void		print_coord_token(int nbr, int fd);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

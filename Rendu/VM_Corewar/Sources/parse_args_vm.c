@@ -15,7 +15,7 @@
 
 static void	parse_n(char const **argv, unsigned int *i, unsigned int *k)
 {
-	if (argv[*i + 1] && ft_str_is_number(argv[*i + 1]) &&
+	if (argv[*i + 1] && ft_strisdigit(argv[*i + 1]) &&
 			ft_atoi(argv[*i + 1]) >= 0)
 		g_vm->champion[*k]->num = ft_atoi(argv[*i + 1]);
 	else
@@ -32,7 +32,7 @@ static void	parse_n(char const **argv, unsigned int *i, unsigned int *k)
 static void	parse_dump(char const **argv, unsigned int *i)
 {
 	g_vm->dump = 1;
-	if (argv[*i + 1] && ft_str_is_number(argv[*i + 1]) &&
+	if (argv[*i + 1] && ft_strisdigit(argv[*i + 1]) &&
 			ft_atoi(argv[*i + 1]) >= 0)
 		g_vm->d_cycles = ft_atoi(argv[*i]);
 	else

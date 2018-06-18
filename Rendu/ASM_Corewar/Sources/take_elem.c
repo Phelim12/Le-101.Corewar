@@ -13,19 +13,6 @@
 
 #include "../Includes/main_asm.h"
 
-char	*realloc_str(char *str, int size)
-{
-	char	*result;
-	int		var;
-
-	var = -1;
-	result = ft_strnew(size + BUFF_ELEM);
-	while (str && str[++var])
-		result[var] = str[var];
-	free(str);
-	return (result);
-}
-
 int		stop_elem(char *str, char start, char buf, int var)
 {
 	if (start == STRING_CHAR)
@@ -39,7 +26,7 @@ int		stop_elem(char *str, char start, char buf, int var)
 	return (0);
 }
 
-char	*init_params_take_elem(char **str, int *var, char start, char buf)
+char	*init_take_elem(char **str, int *var, char start, char buf)
 {
 	(*str) = ft_strnew(BUFF_ELEM);
 	(*var) = (start == STRING_CHAR) ? -1 : 0;
@@ -65,11 +52,11 @@ char	take_elem(t_pos *pos, char **str, char start, int fd)
 	int		var;
 
 	ret = read(fd, &buf, 1);
-	pattern = init_params_take_elem(str, &var, start, buf);
+	pattern = init_take_elem(str, &var, start, buf);
 	while (ret > 0)
 	{
-		(*pos) = (buf == LINE_CHAR && start == STRING_CHAR) \
-		? init_pos((pos->y + 1), 0) : init_pos(pos->y, (pos->x + 1));
+		*pos = (buf == LINE_CHAR && start == STRING_CHAR) \
+		? init_pos(pos->y + 1, 0) : init_pos(pos->y, pos->x + 1);
 		if (stop_elem(*str, start, buf, var))
 			return (buf);
 		if (start != STRING_CHAR && (!pattern || !(ft_strchr(pattern, buf))))
@@ -79,5 +66,5 @@ char	take_elem(t_pos *pos, char **str, char start, int fd)
 		(*str)[++var] = buf;
 		ret = read(fd, &buf, 1);
 	}
-	return (-1);
+	return (0);
 }

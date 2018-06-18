@@ -22,15 +22,11 @@ int		main(int argc, char const *argv[])
 	{
 		if ((fd = open(argv[1], O_RDONLY)) == -1)
 			return (0);
-		if ((info.file = reader(NULL, fd)))
-		{
-			// info.header = fill_header(&(info.file), 1, 1);
-		}
+		if ((info.file = reader(NULL, fd))->line->token != END)
+			info.header = fill_header(&(info.file), 1, 1);
 		else
-			print_error_token(NULL, init_pos(1, 1), NULL, END);
+			print_error_token(info.file, info.file->line);
 		print_file(info.file);
-		// printf("print_label\n");
-		// print_label(info.file, NULL);
 		free_file(info.file);
 		close(fd);
 	}
