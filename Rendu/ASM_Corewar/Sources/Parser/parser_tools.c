@@ -25,7 +25,7 @@ int		special_read(t_pos *pos, char *buf, int ret, int fd)
 {
 	if (!(ret))
 		return (0);
-	if ((ft_iscntrl(*buf) && (*buf) != 10) || (*buf) == 34)
+	if (ft_iscntrl(*buf) && (*buf) != 10)
 		return (((read(fd, buf, 1)) > 0) ? pos->x++ : 0);
 	return (1);
 }

@@ -32,18 +32,23 @@ int		cmd_is_good(char *cmd)
 int		add_cmd(t_cmd **result, t_pos *pos, char *buf, int fd)
 {
 	t_cmd	*previous;
+	int		string;
 
+	string = (*buf == STRING_CHAR) ? 1 : 0;
 	previous = (*result) ? (*result) : NULL;
 	(*result) = (*result) ? (*result)->next : (*result);
 	(*result) = ft_memalloc(sizeof(t_cmd));
+	(*result)->pos = (*pos);
 	if (((*result)->prev = (previous) ? previous : NULL))
 		previous->next = (*result);
 	(*result)->start = (previous) ? previous->start : (*result);
-	(*result)->pos = (*buf == STRING) ? init_pos(pos->y, (pos->x - 1)) : *pos;
 	(*buf) = parser_elem(pos, &((*result)->data), (*buf), fd);
 	if ((*buf) != STRING_CHAR && cmd_is_good((*result)->data))
 		return (0);
-	(*result)->token = token_dispenser((*result)->data, (*buf));
+	if (!((*result)->token))
+		(*result)->token = token_dispenser((*result)->data, buf, string);
+	if ((*result)->token == STRING)
+		read(fd, buf, 1);
 	return (1);
 }
 
@@ -80,7 +85,7 @@ t_line	*parser(t_line *result, int fd)
 			print_error_lexical(result, pos);
 		else if (buf == COMMENT_CHAR)
 			ret = pass_comment(&buf, fd);
-		else if ((buf == LINE_CHAR) || !(result))
+		else if (buf == LINE_CHAR)
 			ret = add_line(&result, &pos, &buf, fd);
 		else if (ft_strchr(VALID_CHARS, buf))
 			if (!(add_cmd(&(result->line), &pos, &buf, fd)))

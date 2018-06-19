@@ -42,14 +42,12 @@ char	*token_name(int token)
 	return ("");
 }
 
-int		token_dispenser(char *cmd, char buf)
+int		token_dispenser(char *cmd, char *buf, int string)
 {
+	if (string && (*buf) == STRING_CHAR)
+		return (STRING);
 	if (cmd[0] == LINE_CHAR)
 		return (ENDLINE);
-	if (buf == STRING_CHAR)
-		return (STRING);
-	if (cmd[0] == EOF_CHAR)
-		return (END);
 	if (cmd[0] == LABEL_CHAR)
 		return (INDIRECT_LABEL);
 	if (ft_strstr(cmd, "%:"))

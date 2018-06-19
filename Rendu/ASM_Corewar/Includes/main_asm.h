@@ -217,6 +217,6 @@ char		*init_parse_elem(char **str, int *var, char start, char buf);
 */
 
 char		*token_name(int token);
-int			token_dispenser(char *cmd, char buf);
+int			token_dispenser(char *cmd, char *buf, int string);
 
 #endif
