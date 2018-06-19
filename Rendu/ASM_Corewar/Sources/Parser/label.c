@@ -17,46 +17,9 @@ void	print_lab(t_label *lab)
 {
 	while (lab)
 	{
-		ft_printf("LABEL FINAL: %s - %s\n", lab->name, lab->go_to->data);
+		ft_printf("LABEL FINAL: %s - %s TOKEN: %s\n", lab->name, lab->go_to->data, token_name(lab->go_to->token));
 		lab = lab->next;
 	}
-}
-
-int		ft_labelspec(char *str)
-{
-	int		len;
-
-	len = ft_strlen(str);
-	if (str[0] == ':' && len > 1)
-		return (1);
-	else if (len > 1 && str[len - 1] == ':')
-		return (2);
-	else
-		return (0);
-}
-
-void	add_label(t_label **result)
-{
-	t_label	*previous;
-
-	previous = (*result) ? (*result) : NULL;
-	(*result) = (*result) ? (*result)->next : *result;
-	(*result) = ft_memalloc(sizeof(t_label));
-	if (((*result)->prev = (previous) ? previous : NULL))
-		previous->next = (*result);
-	(*result)->start = (previous) ? previous->start : (*result);
-}
-
-void	init_label(t_label **result, t_line **file, t_cmd **line)
-{
-	(*result)->name = ft_strdup((*line)->data);
-	(*result)->name[ft_strlen((*result)->name + 1)] = 0;
-	if ((*line)->next)
-		(*result)->go_to = (*line)->next;
-	else if ((*file)->next)
-		(*result)->go_to = (*file)->next->line;
-	else
-		ft_printf("Error\n");
 }
 
 int		check_label_next(char *str, t_label *lab)
@@ -83,9 +46,9 @@ int		check_label(t_line *file, t_label *lab)
 	{
 		while (file->line)
 		{
-			if (ft_labelspec(file->line->data) == 1)
+			if (file->line->token == INDIRECT_LABEL)
 			{
-				printf("%s\n", file->line->data);
+				printf("INDIRECT LABEL: %s\n", file->line->data);
 				if (check_label_next(file->line->data, lab))
 					return (1);
 			}
@@ -143,7 +106,7 @@ void	print_label(t_line *file, t_label *lab)
 		i = -1;
 		while (file->line && ++i < 1)
 		{
-			if (ft_labelspec(file->line->data) == 2)
+			if (file->line->token == LABEL)
 			{
 				add_label(&lab);
 				init_label(&lab, &file, &file->line);

@@ -27,6 +27,7 @@ int		main(int argc, char const *argv[])
 		else
 			print_error_token(info.file, info.file->line);
 		print_file(info.file);
+		print_label(info.file, NULL);
 		free_file(info.file);
 		close(fd);
 	}
