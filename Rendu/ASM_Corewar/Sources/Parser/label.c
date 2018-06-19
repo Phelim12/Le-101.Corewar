@@ -109,7 +109,8 @@ void	print_label(t_line *file, t_label *lab)
 			if (file->line->token == LABEL)
 			{
 				add_label(&lab);
-				init_label(&lab, &file, &file->line);
+				if ((init_label(&lab, &file, &file->line)))
+					ft_printf("Error init\n");
 			}
 			file->line = (file->line->next) ?
 				file->line->next : file->line->start;

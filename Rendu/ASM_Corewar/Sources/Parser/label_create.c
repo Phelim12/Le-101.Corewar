@@ -32,7 +32,6 @@ int		init_label(t_label **result, t_line **file, t_cmd **line)
 	(*result)->name = ft_strdup((*line)->data);
 	(*result)->name[ft_strlen((*result)->name + 1)] = 0;
 
-
  	t_line	*tmpfile;
 
 	tmpfile = (*file)->next;
@@ -59,14 +58,13 @@ int		init_label(t_label **result, t_line **file, t_cmd **line)
 			else
 			{
 				printf("Error1: [%s] TOKEN: %s\n", tmpfile->line->data, token_name(tmpfile->line->token));
-				tmpfile = (*file)->next;
+				(*result)->go_to = tmpfile->line;
 				return (1);
 			}
 			tmpfile = (tmpfile->next) ? tmpfile->next : (*file)->next;
 			if (tmpfile == (*file)->next)
 				break;
 		}
-		tmpfile = (*file)->next;
 	}
 
 

@@ -33,7 +33,7 @@ void	print_line(t_cmd *pointer)
 		if (pointer->token == ENDLINE)
 			ft_printf("\n", pointer->data);
 		else
-			ft_printf("[%s] ", pointer->data);
+			ft_printf("[%s] %s", pointer->data, token_name(pointer->token));
 		pointer = pointer->next;
 	}
 }
@@ -46,4 +46,5 @@ void	print_file(t_line *pointer)
 		print_line(pointer->line);
 		pointer = pointer->next;
 	}
+	printf("\n");
 }
