@@ -16,6 +16,7 @@
 int		main(int argc, char const *argv[])
 {
 	t_file	info;
+	t_label *lab;
 	int		fd;
 
 	if (argc == 2)
@@ -26,8 +27,9 @@ int		main(int argc, char const *argv[])
 			info.header = parser_header(&(info.file), 1, 1);
 		else
 			print_error_token(info.file, info.file->line);
-	//	print_file(info.file);
-		print_label(info.file, NULL);
+//		print_file(info.file);
+		lab = print_label(info.file, NULL);
+		free_label(lab);
 		free_file(info.file);
 		close(fd);
 	}

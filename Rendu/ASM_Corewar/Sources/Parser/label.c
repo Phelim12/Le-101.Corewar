@@ -22,41 +22,36 @@ void	print_lab(t_label *lab)
 	}
 }
 
-int		check_label_next(char *str, t_label *lab, int in_direct)
+void	check_label_next(t_line *file, t_cmd *cmd, t_label *lab, int in_direct)
 {
 	int		f;
 
 	f = 0;
 	while (lab)
 	{
-		if ((in_direct == 1) && (!ft_strcmp(lab->name, str + 1)))
+		if ((in_direct == 1) && (!ft_strcmp(lab->name, cmd->data + 1)))
 			f++;
-		else if ((in_direct == 2) && (!ft_strcmp(lab->name, str + 2)))
+		else if ((in_direct == 2) && (!ft_strcmp(lab->name, cmd->data + 2)))
 			f++;
 		lab = (lab->next) ? lab->next : lab->start;
 		if (lab == lab->start)
 			break;
 	}
 	if (!f)
-		return (1);
-	return (0);
+		print_error_nolabel(file ,cmd, lab);
 }
 
-int		check_label(t_line *file, t_label *lab)
+void	check_label(t_line *file, t_label *lab)
 {
 	while (file)
 	{
 		while (file->line)
 		{
 			if (file->line->token == INDIRECT_LABEL ||
-				file->line->token == DIRECT_LABEL)
-			{
-				printf("%s: %s\n", token_name(file->line->token), file->line->data);
-				if (check_label_next(file->line->data, lab,
-				(file->line->token == (DIRECT_LABEL) ? 2 : 1)))
-					return (1);
-			}
-			file->line = (file->line->next) ? file->line->next 
+					file->line->token == DIRECT_LABEL)
+				check_label_next(file, file->line, lab,
+					(file->line->token == (DIRECT_LABEL) ? 2 : 1));
+			file->line = (file->line->next) ? file->line->next
 			: file->line->start;
 			if (file->line == file->line->start)
 				break;
@@ -65,10 +60,9 @@ int		check_label(t_line *file, t_label *lab)
 		if (file == file->start)
 			break;
 	}
-	return (0);
 }
 
-int		check_double_next(t_label *lab, char *str)
+void	check_double_next(t_label *lab, char *str, t_line *file)
 {
 	int		err;
 	t_label *tmplab;
@@ -79,30 +73,27 @@ int		check_double_next(t_label *lab, char *str)
 	{
 		if (!ft_strcmp(str, lab->name))
 			err++;
+		if (err > 0)
+			print_error_label_repeat(file, lab->place, lab);
 		lab = (lab->next) ? lab->next : lab->start;
 		if (lab == lab->start)
 			break;
 	}
 	lab = tmplab;
-	if (err)
-		return (1);
-	return (0);
 }
 
-int		check_double(t_label *lab)
+void	check_double(t_label *lab, t_line *file)
 {
 	while (lab->next)
 	{
-		if (check_double_next(lab, lab->name))
-			return (1);
+		check_double_next(lab, lab->name, file);
 		lab = (lab->next) ? lab->next : lab->start;
 		if (lab == lab->start)
 			break;
 	}
-	return (0);
 }
 
-void	print_label(t_line *file, t_label *lab)
+t_label		*print_label(t_line *file, t_label *lab)
 {
 	int		i;
 
@@ -113,10 +104,8 @@ void	print_label(t_line *file, t_label *lab)
 		{
 			if (file->line->token == LABEL)
 			{
-				if ((add_label(&lab, &file->line)))
-					ft_printf("MALLOC FAIL\n");
-				if ((init_label(&lab, &file, &file->line)))
-					ft_printf("Error init\n");
+				add_label(&lab, &file->line, file);
+				init_label(&lab, &file, &file->line);
 			}
 			file->line = (file->line->next) ?
 				file->line->next : file->line->start;
@@ -125,9 +114,8 @@ void	print_label(t_line *file, t_label *lab)
 		if (file == file->start)
 			break;
 	}
-	print_lab(lab->start);
-	if (check_double(lab->start))
-		ft_printf("ERROR DOUBLE\n");
-	if (check_label(file->start, lab->start))
-		ft_printf("ERROR CALL LABEL\n");
+	//print_lab(lab->start);
+	check_double(lab->start, file);
+	check_label(file->start, lab->start);
+	return (lab);
 }

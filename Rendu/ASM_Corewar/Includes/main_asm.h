@@ -83,6 +83,7 @@ typedef struct	s_pos
 typedef struct	s_label
 {
 	char			*name;
+	struct s_cmd	*place;
 	struct s_cmd	*go_to;
 	struct s_label	*prev;
 	struct s_label	*next;
@@ -152,30 +153,39 @@ void		free_file(t_line *file);
 
 void		print_lab(t_label *lab);
 
-int			check_double(t_label *lab);
-int			check_label(t_line *file, t_label *lab);
-void		print_label(t_line *file, t_label *lab);
-int			check_label_next(char *str, t_label *lab, int in_direct);
-int			check_double_next(t_label *lab, char *str);
+void		check_double(t_label *lab, t_line *file);
+void		check_double_next(t_label *lab, char *str, t_line *file);
+void		check_label(t_line *file, t_label *lab);
+void		check_label_next(t_line *file, t_cmd *cmd, t_label *lab, int in_direct);
+t_label		*print_label(t_line *file, t_label *lab);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 **┃                                   label_create.c                           ┃
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-int			add_label(t_label **result, t_cmd **line);
-int			init_label(t_label **result, t_line **file, t_cmd **line);
-int			init_label_next(t_line *tmpfile, t_label **result);
+void		add_label(t_label **result, t_cmd **line, t_line *file);
+void		init_label(t_label **result, t_line **file, t_cmd **line);
+void		init_label_next(t_line *tmpfile, t_label **result);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 **┃                                print_error.c                               ┃
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-
 void		print_error_token(t_line *file, t_cmd *cmd);
 void		print_error_lexical(t_line *result, t_pos position);
 void		print_error_size_header(t_line *file, char *cmd, int size);
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                                print_label_error.c                         ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+void		print_error_malloc_fail(t_line *file, t_label *lab, t_cmd *cmd);
+void		print_error_label_repeat(t_line *file, t_cmd *cmd, t_label *lab);
+void		print_error_nolabel(t_line *file, t_cmd *cmd, t_label *lab);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
