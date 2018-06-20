@@ -140,6 +140,7 @@ t_header	parser_header(t_line **file, int comment, int name);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+void		free_label(t_label *lab);
 void		free_line(t_cmd *line);
 void		free_file(t_line *file);
 

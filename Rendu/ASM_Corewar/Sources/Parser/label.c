@@ -53,7 +53,7 @@ int		check_label(t_line *file, t_label *lab)
 			{
 				printf("%s: %s\n", token_name(file->line->token), file->line->data);
 				if (check_label_next(file->line->data, lab,
-				(file->line->token == DIRECT_LABEL) ? 2 : 1))
+				(file->line->token == (DIRECT_LABEL) ? 2 : 1)))
 					return (1);
 			}
 			file->line = (file->line->next) ? file->line->next 
