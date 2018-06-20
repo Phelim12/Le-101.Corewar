@@ -154,7 +154,7 @@ void		print_lab(t_label *lab);
 int			check_double(t_label *lab);
 int			check_label(t_line *file, t_label *lab);
 void		print_label(t_line *file, t_label *lab);
-int			check_label_next(char *str, t_label *lab);
+int			check_label_next(char *str, t_label *lab, int in_direct);
 int			check_double_next(t_label *lab, char *str);
 
 /*
@@ -162,8 +162,9 @@ int			check_double_next(t_label *lab, char *str);
 **┃                                   label_create.c                           ┃
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-int			add_label(t_label **result);
+int			add_label(t_label **result, t_cmd **line);
 int			init_label(t_label **result, t_line **file, t_cmd **line);
+int			init_label_next(t_line *tmpfile, t_label **result);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
