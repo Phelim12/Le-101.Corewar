@@ -49,6 +49,9 @@ int		add_cmd(t_cmd **result, t_pos *pos, char *buf, int fd)
 		(*result)->token = token_dispenser((*result)->data, buf, string);
 	if ((*result)->token == STRING)
 		read(fd, buf, 1);
+	ft_printf("[%s] ", token_name((*result)->token));
+	if ((*result)->token == ENDLINE)
+		ft_printf("\n");
 	return (1);
 }
 

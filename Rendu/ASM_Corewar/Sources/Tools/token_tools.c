@@ -15,8 +15,8 @@
 
 char	*token_name(int token)
 {
-	if (token == END)
-		return ("END");
+	if (token == REGISTER)
+		return ("REGISTER");
 	if (token == LABEL)
 		return ("LABEL");
 	if (token == DIRECT)
@@ -39,11 +39,16 @@ char	*token_name(int token)
 		return ("INDIRECT_LABEL");
 	if (token == COMMAND_COMMENT)
 		return ("COMMAND_COMMENT");
-	return ("");
+	return ("END");
 }
 
 int		token_dispenser(char *cmd, char *buf, int string)
 {
+	if (cmd[0] == EOF_CHAR)
+		return (END);
+	if (cmd[0] == 'r' && ft_strisdigit(cmd + 1) && 
+		ft_atoi(cmd + 1) > 0 && ft_atoi(cmd + 1) < 17)
+		return (REGISTER);
 	if (string && (*buf) == STRING_CHAR)
 		return (STRING);
 	if (cmd[0] == LINE_CHAR)
@@ -64,7 +69,5 @@ int		token_dispenser(char *cmd, char *buf, int string)
 		return (COMMAND_NAME);
 	if (ft_strispattern(cmd, INSTRUCTION_CHARS))
 		return (INSTRUCTION);
-	if (!(ft_strcmp(cmd, CMD_COMMENT)))
-		return (COMMAND_COMMENT);
-	return (0);
+	return (!(ft_strcmp(cmd, CMD_COMMENT)) ? COMMAND_COMMENT : END);
 }
