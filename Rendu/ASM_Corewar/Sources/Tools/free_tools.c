@@ -13,6 +13,20 @@
 
 #include "main_asm.h"
 
+void	free_label(t_label *lab)
+{
+	t_label		*ptr;
+
+	lab = (lab) ? lab->start : NULL;
+	while (lab)
+	{
+		ptr = lab;
+		free(lab->name);
+		lab = lab->next;
+		free(ptr);
+	}
+}
+
 void	free_line(t_cmd *line)
 {
 	t_cmd	*ptr;

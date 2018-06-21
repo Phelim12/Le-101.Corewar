@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/18 17:14:17 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/19 16:46:07 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,6 +26,9 @@ static void	sub2_init_champ(int i) //peut etre a passer en return INT pour la re
 		if ((tmp = (int*)malloc(REG_SIZE * REG_NUMBER + 1)))
 			g_vm->champion[i]->registers[a] = tmp;
 		ft_memset(g_vm->champion[i]->registers[a], 0, REG_NUMBER + 1);
+		if ((tmp = (unsigned char*)malloc(16)))
+			g_vm->champion[i]->fetchqueue[a] = tmp;
+		ft_memset(g_vm->champion[i]->fetchqueue[a], 0, 16);
 		g_vm->champion[i]->registers[a][1] = g_vm->champion[i]->num;
 		g_vm->champion[i]->registers[a][0] = g_vm->champion[i]->num * MEM_SIZE
 			/ g_vm->nb_players;

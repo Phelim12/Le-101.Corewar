@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/18 18:15:33 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/19 16:48:59 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,6 +46,7 @@ typedef struct				s_champ
 	unsigned int	prog_size;
 	char			*filename;
 	int				**registers;
+	unsigned char	**fetchqueue;
 	int				live;
 	unsigned int	nb_process;
 	char			*name;
