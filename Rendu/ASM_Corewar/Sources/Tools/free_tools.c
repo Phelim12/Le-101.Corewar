@@ -23,7 +23,7 @@ void	free_label(t_label *lab)
 		ptr = lab;
 		free(lab->name);
 		lab = lab->next;
-		free(ptr);
+		ft_memdel((void **)&ptr);
 	}
 }
 
@@ -37,7 +37,7 @@ void	free_line(t_cmd *line)
 		ptr = line;
 		free(line->data);
 		line = line->next;
-		free(ptr);
+		ft_memdel((void **)&ptr);
 	}
 }
 
@@ -45,12 +45,13 @@ void	free_file(t_line *file)
 {
 	t_line	*ptr;
 
-	file = (file) ? file->start : NULL;
+	if ((file = (file) ? file->start : NULL))
+		free_label(file->label);
 	while (file)
 	{
 		ptr = file;
 		free_line(file->line);
 		file = file->next;
-		free(ptr);
+		ft_memdel((void **)&ptr);
 	}
 }

@@ -50,9 +50,9 @@ void		parser_name(char *result, t_line *file)
 
 	line = file->line->next;
 	if (line->token != STRING)
-		print_error_token(file, line);
+		print_error_token(file, line, SYNTAX_MSG);
 	if (line->next->token != ENDLINE)
-		print_error_token(file, line->next);
+		print_error_token(file, line->next, SYNTAX_MSG);
 	if (ft_strlen(line->data) < NAME_LENGTH)
 		ft_strncpy(result, line->data, NAME_LENGTH);
 	else
@@ -65,9 +65,9 @@ void		parser_comment(char *result, t_line *file)
 
 	line = file->line->next;
 	if (line->token != STRING)
-		print_error_token(file, line);
+		print_error_token(file, line, SYNTAX_MSG);
 	if (line->next->token != ENDLINE)
-		print_error_token(file, line->next);
+		print_error_token(file, line->next, SYNTAX_MSG);
 	if (ft_strlen(line->data) < COMMENT_LENGTH)
 		ft_strncpy(result, line->data, COMMENT_LENGTH);
 	else
@@ -87,11 +87,11 @@ t_header	parser_header(t_line **file, int comment, int name)
 		else if ((*file)->line->token == COMMAND_COMMENT && comment--)
 			parser_comment(result.comment, (*file));
 		else if ((*file)->line->token != ENDLINE)
-			print_error_token((*file), (*file)->line);
+			print_error_token((*file), (*file)->line, SYNTAX_MSG);
 		(*file) = (*file)->next;
 	}
 	if (name || comment)
-		print_error_token((*file), (*file)->line);
+		print_error_token((*file), (*file)->line, SYNTAX_MSG);
 	(*file) = delete_header((*file)->start, line);
 	return (result);
 }

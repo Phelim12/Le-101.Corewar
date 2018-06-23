@@ -44,15 +44,13 @@ char	*token_name(int token)
 
 int		token_dispenser(char *cmd, char *buf, int string)
 {
-	if (cmd[0] == EOF_CHAR)
-		return (END);
-	if (cmd[0] == 'r' && ft_strisdigit(cmd + 1) && 
-		ft_atoi(cmd + 1) > 0 && ft_atoi(cmd + 1) < 17)
-		return (REGISTER);
 	if (string && (*buf) == STRING_CHAR)
 		return (STRING);
-	if (cmd[0] == LINE_CHAR)
-		return (ENDLINE);
+	if (cmd[0] == EOF_CHAR || cmd[0] == LINE_CHAR)
+		return ((cmd[0] == EOF_CHAR) ? END : ENDLINE);
+	if (cmd[0] == 'r' && ft_strisdigit(cmd + 1) &&
+		ft_atoi(cmd + 1) > 0 && ft_atoi(cmd + 1) < 17)
+		return (REGISTER);
 	if (cmd[0] == LABEL_CHAR)
 		return (INDIRECT_LABEL);
 	if (ft_strstr(cmd, "%:"))

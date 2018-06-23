@@ -67,6 +67,14 @@ typedef enum		e_token
 	END,
 }					t_token;
 
+typedef enum		e_msg
+{
+	SYNTAX_MSG,
+	DUP_LABEL_MSG,
+	NOT_EXIST_LABEL_MSG,
+	INVALID_INSTRUCTION_MSG,
+}					t_msg;
+
 typedef struct		s_header
 {
 	unsigned int	magic;
@@ -78,13 +86,13 @@ typedef struct		s_header
 typedef struct	s_op
 {
 	char			*name;
-	char			nb_params;
+	char			nparams;
 	char			params[3];
 	char			opcode;
-	int				cycle;
+	int				cycles;
 	char			*desc;
-	char			occode;
-	char			not_identify;
+	char			info_params;
+	char			size_dir;
 }				t_op;
 
 #endif

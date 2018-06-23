@@ -29,14 +29,14 @@ DIR_PARSER = $(addprefix $(DIR_SRC), Parser/)
 
 DIR_INC = Includes/
 
-NAME_SRC = main_asm.c print_error.c print_label_error.c
+NAME_SRC = main_asm.c print_error.c op.c
 
 TOOLS_SRC = asm_tools.c token_tools.c print_tools.c free_tools.c
 
-PARSER_SRC = parser_header.c label.c label_create.c parser_asm.c parser_elem.c \
-			parser_tools.c
+PARSER_SRC = parser_header.c parser_label.c parser_asm.c parser_elem.c \
+			parser_tools.c label_error.c
 
-NAME_INC = main_asm.h
+NAME_INC = main_asm.h op.h
 
 INC = $(addprefix $(DIR_INC), $(NAME_INC))
 

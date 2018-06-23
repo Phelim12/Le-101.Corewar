@@ -13,6 +13,30 @@
 
 #include "main_asm.h"
 
+int		fill_binary_cmd(t_line *file, t_cmd *result, t_op info)
+{
+	if (!(info.name))
+		print_error_token(file, result, INVALID_INSTRUCTION_MSG);
+	if (result->token == INSTRUCTION)
+		print_error_token(file, result, INVALID_INSTRUCTION_MSG);
+	return (0);
+}
+
+void	binary_cmd(t_line *file, t_cmd *result)
+{
+	t_op	info;
+
+	result = (result->token == LABEL) ? result->next : result;
+	if (result->token == ENDLINE || result->token == COMMAND_NAME ||
+		result->token == COMMAND_COMMENT)
+		return ;
+	else if (result->token == INSTRUCTION &&
+		(info = cmd_exist(result->data)).name)
+		fill_binary_cmd(file, result->next, info);
+	else
+		print_error_token(file, result, INVALID_INSTRUCTION_MSG);
+}
+
 int		cmd_is_good(char *cmd)
 {
 	if (cmd[0] == CMD_CHAR &&
@@ -49,9 +73,6 @@ int		add_cmd(t_cmd **result, t_pos *pos, char *buf, int fd)
 		(*result)->token = token_dispenser((*result)->data, buf, string);
 	if ((*result)->token == STRING)
 		read(fd, buf, 1);
-	ft_printf("[%s] ", token_name((*result)->token));
-	if ((*result)->token == ENDLINE)
-		ft_printf("\n");
 	return (1);
 }
 
@@ -66,6 +87,7 @@ int		add_line(t_line **result, t_pos *pos, char *buf, int fd)
 		return (ret);
 	else
 		(*result)->line = (*result)->line->start;
+	binary_cmd((*result), (*result)->line);
 	previous = (*result);
 	(*result) = (*result)->next;
 	(*result) = ft_memalloc(sizeof(t_line));

@@ -46,5 +46,15 @@ void	print_file(t_line *pointer)
 		print_line(pointer->line);
 		pointer = pointer->next;
 	}
-	printf("\n");
+	ft_printf("\n");
+}
+
+void	print_lab(t_label *lab)
+{
+	while (lab)
+	{
+		ft_printf("LABEL FINAL: %s - %s TOKEN: %s\n", lab->name,\
+		lab->value->data, token_name(lab->value->token));
+		lab = lab->next;
+	}
 }

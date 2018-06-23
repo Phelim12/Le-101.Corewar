@@ -83,8 +83,8 @@ typedef struct	s_pos
 typedef struct	s_label
 {
 	char			*name;
-	struct s_cmd	*place;
-	struct s_cmd	*go_to;
+	struct s_cmd	*value;
+	struct s_cmd	*adress;
 	struct s_label	*prev;
 	struct s_label	*next;
 	struct s_label	*start;
@@ -103,6 +103,7 @@ typedef struct	s_cmd
 typedef struct	s_line
 {
 	t_cmd			*line;
+	t_label			*label;
 	struct s_line	*next;
 	struct s_line	*prev;
 	struct s_line	*start;
@@ -113,6 +114,15 @@ typedef struct	s_file
 	t_header		header;
 	t_line			*file;
 }				t_file;
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                                   op.c                                     ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+t_op		*get_op_tab(void);
+t_op		cmd_exist(char *cmd);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -141,40 +151,40 @@ t_header	parser_header(t_line **file, int comment, int name);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-void		free_label(t_label *lab);
 void		free_line(t_cmd *line);
 void		free_file(t_line *file);
+void		free_label(t_label *lab);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃                                   label.c                                  ┃
+**┃                                label_error.c                               ┃
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-void		print_lab(t_label *lab);
-
-void		check_double(t_label *lab, t_line *file);
-void		check_double_next(t_label *lab, char *str, t_line *file);
-void		check_label(t_line *file, t_label *lab);
-void		check_label_next(t_line *file, t_cmd *cmd, t_label *lab, int in_direct);
-t_label		*print_label(t_line *file, t_label *lab);
+void		label_exist(t_line *file, t_label *lab);
+void		check_duplicate_label(t_label *label, t_line *file);
+void		label_exist_next(t_line *file, t_cmd *cmd, t_label *label);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃                                   label_create.c                           ┃
+**┃                               parser_label.c                               ┃
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-void		add_label(t_label **result, t_cmd **line, t_line *file);
-void		init_label(t_label **result, t_line **file, t_cmd **line);
-void		init_label_next(t_line *tmpfile, t_label **result);
+
+t_label		*init_parser_label();
+t_cmd		*init_label_value(t_line *file, t_cmd *line);
+void		add_label(t_label **result, t_line *file, t_cmd *line);
+void		parser_label(t_line *file);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 **┃                                print_error.c                               ┃
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-void		print_error_token(t_line *file, t_cmd *cmd);
+
+void		print_error_msg(t_cmd *cmd, int msg_error);
 void		print_error_lexical(t_line *result, t_pos position);
+void		print_error_token(t_line *file, t_cmd *cmd, int msg_error);
 void		print_error_size_header(t_line *file, char *cmd, int size);
 
 /*
@@ -183,9 +193,9 @@ void		print_error_size_header(t_line *file, char *cmd, int size);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-void		print_error_malloc_fail(t_line *file, t_label *lab, t_cmd *cmd);
-void		print_error_label_repeat(t_line *file, t_cmd *cmd, t_label *lab);
-void		print_error_nolabel(t_line *file, t_cmd *cmd, t_label *lab);
+void		print_error_malloc_fail(t_line *file);
+void		print_error_nolabel(t_line *file, t_cmd *cmd);
+void		print_error_label_repeat(t_line *file, t_cmd *cmd);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -193,6 +203,7 @@ void		print_error_nolabel(t_line *file, t_cmd *cmd, t_label *lab);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+void		print_lab(t_label *lab);
 void		print_line(t_cmd *pointer);
 void		print_file(t_line *pointer);
 void		print_coord_token(int nbr, int fd);
