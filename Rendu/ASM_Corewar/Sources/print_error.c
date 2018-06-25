@@ -20,6 +20,15 @@ void	print_error_malloc_fail(t_line *file)
 	exit(EXIT_FAILURE);
 }
 
+void	print_error_size_code(t_line *file)
+{
+	ft_putstr_fd("Code contains too many bytes (Max length ", 2);
+	ft_putnbr_fd(CHAMP_MAX_SIZE, 2);
+	ft_putendl_fd(")", 2);
+	free_file(file);
+	exit(EXIT_FAILURE);
+}
+
 void	print_error_lexical(t_line *result, t_pos position)
 {
 	free_file(result);
@@ -60,6 +69,28 @@ void	print_error_msg(t_cmd *cmd, int msg_error)
 	}
 	if (msg_error == INVALID_INSTRUCTION_MSG)
 		ft_putstr_fd("Invalid instruction at token [TOKEN][", 2);
+}
+
+void	print_error_params(t_line *file, t_cmd *params, int index, int type)
+{
+	t_cmd *ptr;
+
+	ptr = params;
+	while (ptr->token != INSTRUCTION)
+		ptr = ptr->prev;
+	ft_putstr_fd("Invalid parameter ", 2);
+	ft_putnbr_fd(index, 2);
+	ft_putstr_fd(" type ", 2);
+	if (type == 1)
+		ft_putstr_fd("register", 2);
+	if (type == 2)
+		ft_putstr_fd("direct", 2);
+	if (type == 3)
+		ft_putstr_fd("indirect", 2);
+	ft_putstr_fd(" for instruction ", 2);
+	ft_putendl_fd(ptr->data, 2);
+	free_file(file);
+	exit(EXIT_FAILURE);
 }
 
 void	print_error_token(t_line *file, t_cmd *cmd, int msg_error)

@@ -87,7 +87,7 @@ typedef struct	s_op
 {
 	char			*name;
 	char			nparams;
-	char			params[3];
+	char			params[4];
 	char			opcode;
 	int				cycles;
 	char			*desc;

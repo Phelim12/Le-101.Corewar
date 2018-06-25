@@ -80,6 +80,7 @@ t_header	parser_header(t_line **file, int comment, int name)
 	int			line;
 
 	line = 0;
+	result.prog_size = (*file)->size;
 	while (++line && token_header((*file)->line->token))
 	{
 		if ((*file)->line->token == COMMAND_NAME && name--)

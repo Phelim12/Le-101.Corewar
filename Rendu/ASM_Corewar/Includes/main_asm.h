@@ -97,11 +97,14 @@ typedef struct	s_cmd
 	struct s_cmd	*prev;
 	char			*data;
 	int				token;
+	int				octet;
+	int				info;
 	t_pos			pos;
 }				t_cmd;
 
 typedef struct	s_line
 {
+	int				size;
 	t_cmd			*line;
 	t_label			*label;
 	struct s_line	*next;
@@ -114,6 +117,16 @@ typedef struct	s_file
 	t_header		header;
 	t_line			*file;
 }				t_file;
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                              convert_binary.c                              ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+// int 	has_arg(int args, int query);
+void	count_octet(t_line *file, t_cmd *result);
+int		fill_binary_cmd(t_line *file, t_cmd *result, t_op info, int *ptr);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -182,10 +195,13 @@ void		parser_label(t_line *file);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+void		print_error_size_code(t_line *file);
+void		print_error_malloc_fail(t_line *file);
 void		print_error_msg(t_cmd *cmd, int msg_error);
 void		print_error_lexical(t_line *result, t_pos position);
 void		print_error_token(t_line *file, t_cmd *cmd, int msg_error);
 void		print_error_size_header(t_line *file, char *cmd, int size);
+void		print_error_params(t_line *file, t_cmd *params, int index, int type);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

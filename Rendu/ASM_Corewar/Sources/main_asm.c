@@ -26,6 +26,7 @@ int		main(int argc, char const *argv[])
 			info.header = parser_header(&(info.file), 1, 1);
 		else
 			print_error_token(info.file, info.file->line, SYNTAX_MSG);
+		printf("%d\n", info.header.prog_size);
 		parser_label(info.file);
 		print_lab(info.file->label);
 		free_file(info.file);
