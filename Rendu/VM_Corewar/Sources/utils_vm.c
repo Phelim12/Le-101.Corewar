@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 15:43:36 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 12:37:00 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 13:16:26 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,33 +16,40 @@
 /*
 **fonction de liste a tester
 */
-void	free_list(t_list *list)
+
+void	free_process(t_process *list)
 {
+	free(list->registers);
+	free(list->fetchqueue);
+	free(list);
 }
 
-void	list_remove_if(t_list **begin_list, void *content_ref, int (*cmp)())
+int		process_remove_if_live(t_process **begin_list, int lives)
 {
-	t_list	*list;
-	t_list	*tmp;
+	t_process	*list;
+	t_process	*tmp;
 
 	list = *begin_list;
 	while (list && list->next)
-	{
-		if (list == *begin_list && cmp(list->content, content_ref) == 0)
+		if (list == *begin_list && list->live == 0)
 		{
 			*begin_list = (*begin_list)->next;
-			free_list(list);
+			free_process(list);
 			list = *begin_list;
 		}
-		else if (cmp(list->next->content, content_ref) == 0)
+		else if (list->next->live == 0)
 		{
 			tmp = list->next->next;
 			free(list->next);
 			list->next = tmp;
 		}
 		else
+		{
+			lives += list->live;
+			list->live = 0;
 			list = list->next;
-	}
+		}
+	return (lives);
 }
 
 /*

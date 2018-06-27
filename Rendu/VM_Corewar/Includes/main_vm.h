@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 12:53:21 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 13:25:08 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -101,6 +101,8 @@ int							get_instructions(int i, int fd);
 **------Functions in utils_vm.c
 */
 
+int							process_remove_if_live(t_process **begin_list,
+							int lives);
 void						print_usage(void);
 void						ft_error(char *s, int c);
 void						check_data(void);
