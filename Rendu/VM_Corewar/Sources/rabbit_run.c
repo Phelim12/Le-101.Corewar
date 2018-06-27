@@ -6,8 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 17:10:20 by jjanin-r    ###    #+. /#+    ###.fr     */
-/*   Updated: 2018/06/27 13:24:44 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 17:39:07 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,7 +16,7 @@
 static	int check_players_process()
 {
 	unsigned int	a;
-	unsigned int	nb;
+	int				nb;
 
 	a = -1;
 	nb = 0;

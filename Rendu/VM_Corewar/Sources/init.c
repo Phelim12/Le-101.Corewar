@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 17:09:28 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 17:38:24 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,8 +44,8 @@ int			init_process(unsigned int a)
 
 static void	sort_champ_tab(void)
 {
-	t_champ	*tmp;
-	unsigned int		i;
+	t_champ			*tmp;
+	unsigned int	i;
 
 	i = -1;
 	while (++i < g_vm->nb_players - 1)
