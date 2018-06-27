@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 15:43:36 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/26 16:25:06 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 12:37:00 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,6 +16,9 @@
 /*
 **fonction de liste a tester
 */
+void	free_list(t_list *list)
+{
+}
 
 void	list_remove_if(t_list **begin_list, void *content_ref, int (*cmp)())
 {
@@ -28,7 +31,7 @@ void	list_remove_if(t_list **begin_list, void *content_ref, int (*cmp)())
 		if (list == *begin_list && cmp(list->content, content_ref) == 0)
 		{
 			*begin_list = (*begin_list)->next;
-			free(list);
+			free_list(list);
 			list = *begin_list;
 		}
 		else if (cmp(list->next->content, content_ref) == 0)

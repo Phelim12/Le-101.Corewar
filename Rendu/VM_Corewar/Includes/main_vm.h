@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 11:28:10 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 12:53:21 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,13 +40,20 @@
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+typedef struct				s_process
+{
+	int					*registers;
+	unsigned char		*fetchqueue;
+	int					cycle_delay;
+	int					live;
+	struct s_process	*next;
+}							t_process;
+
 typedef struct				s_champ
 {
 	unsigned int	magic;
 	unsigned int	prog_size;
 	char			*filename;
-	int				**registers;
-	unsigned char	**fetchqueue;
 	int				live;
 	unsigned int	nb_process;
 	char			*name;
@@ -65,8 +72,7 @@ typedef struct				s_vm
 	unsigned int	cycle_to_die;
 	unsigned int	cycle;
 	t_champ			**champion;
-	t_list			*list_process;
-	t_list			*fetchqueue;
+	t_process		*list_process;
 	unsigned char	*map;
 	int				dump;
 	unsigned int	d_cycles;
@@ -104,6 +110,17 @@ void						check_data(void);
 */
 
 int							cycling(void);
+
+/*
+**------Functions in lst_vm.c
+*/
+
+void						lstiter_vm(t_process *lst,
+							void (*f)(t_process *elem));
+void						lstadd_vm(t_process **alst, t_process *mew);
+t_process					*lstnew_vm(int *registers,
+							unsigned char *fetchqueue, int reg_size,
+							int fetch_size);
 
 /*
 **----------------OP_H---------------
