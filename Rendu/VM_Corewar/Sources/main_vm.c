@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:38 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 18:41:08 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 19:08:56 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,7 +25,7 @@ int		print_map()
 	while (++i < MEM_SIZE)
 	{
 		if (g_vm->p_map[i] < 0)
-			ft_printf("%02x|", g_vm->map[i]);
+			ft_printf("%02x ", g_vm->map[i]);
 		else
 		{
 			if (!(p_one == g_vm->p_map[i] || p_two == g_vm->p_map[i] || p_three == g_vm->p_map[i] || p_four == g_vm->p_map[i]))
@@ -40,13 +40,13 @@ int		print_map()
 					p_four = g_vm->p_map[i];
 			}
 			if (g_vm->p_map[i] == p_one)
-				ft_printf("{cyan}%02x{eoc}|", g_vm->map[i]);
+				ft_printf("{cyan}%02x{eoc} ", g_vm->map[i]);
 			if (g_vm->p_map[i] == p_two)
-				ft_printf("{yellow}%02x{eoc}|", g_vm->map[i]);
+				ft_printf("{yellow}%02x{eoc} ", g_vm->map[i]);
 			if (g_vm->p_map[i] == p_three)
-				ft_printf("{blue}%02x{eoc}|", g_vm->map[i]);
+				ft_printf("{magenta}%02x{eoc} ", g_vm->map[i]);
 			if (g_vm->p_map[i] == p_four)
-				ft_printf("{pink}%02x{eoc}|", g_vm->map[i]);
+				ft_printf("{green}%02x{eoc} ", g_vm->map[i]);
 		}
 	}
 	return (0);
