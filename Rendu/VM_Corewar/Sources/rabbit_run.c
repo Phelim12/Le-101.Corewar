@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 15:41:41 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 16:29:51 by dguelpa     ###    #+. /#+    ###.fr     */
 /*   Updated: 2018/06/27 13:24:44 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
@@ -54,7 +54,7 @@ int		cycling(void)
 	int cycles_passed;
 
 	cycles_passed = 0;
-	while (check_players_process() > 0 && g_vm->cycle_to_die <= CYCLE_TO_DIE &&
+	while (check_players_process() > 0 &&
 			(g_vm->dump == 0 || g_vm->cycle < g_vm->d_cycles))
 	{
 		cycles_passed = check_destruction_process(cycles_passed); //mdr -> pour detruire un process, il faut l'enlever de la memoire, et du tableau double.
@@ -71,7 +71,6 @@ int		cycling(void)
 		cycles_passed = increment(cycles_passed);
 		//dprintf(1, "cycle_passed %d\n cycle_to_die %u\n", cycles_passed, g_vm->cycle_to_die);
 	}
-	dprintf(1, "YOLO\n");
 	if (g_vm->dump == 1)
 		;
 		//ft_dump();

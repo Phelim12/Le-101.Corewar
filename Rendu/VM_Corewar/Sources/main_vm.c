@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:38 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 15:52:27 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 16:32:16 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,7 @@ int		main(int argc, char const **argv)
 	{
 		init_vm(argv);
 		check_data();
-		//cycling();
+//		cycling();
 		ft_printf("ctd\t: %20d\ncycle\t: %20d\ndump\t: %20d\nd_cycles : %20d\nnb_players : %20d\n////////\n",
 				g_vm->cycle_to_die, g_vm->cycle, g_vm->dump, g_vm->d_cycles, g_vm->nb_players);
 		unsigned int	i = -1;

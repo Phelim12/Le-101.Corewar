@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 15:43:36 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 16:01:48 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 16:16:57 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -39,10 +39,9 @@ void	decrease_nbr_process(t_process *list)
 	i = -1;
 	while (++i < g_vm->nb_players)
 	{
-		if (list->registers[1] == g_vm->champion[i]->nb_process)
+		if (list->registers[1] == g_vm->champion[i]->num)
 		{
 			g_vm->champion[i]->nb_process--;
-			dprintf(2, "AH AH %d\n", g_vm->champion[i]->nb_process);
 			break;
 		}
 	}
@@ -58,12 +57,10 @@ int		process_remove_if_live(t_process **begin_list, int lives)
 	{
 		if (list == *begin_list && list->live == 0)
 		{
-			dprintf(1, "BITE %p\n", *begin_list);
 			*begin_list = (*begin_list)->next;
 			decrease_nbr_process(list);
 			free_process(list);
 			list = *begin_list;
-			dprintf(1, "BITE AFTER %p\n", *begin_list);
 		}
 		else if (list->next && list->next->live == 0)
 		{

@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 14:43:51 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 16:22:10 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -69,7 +69,7 @@ typedef struct				s_champ
 
 typedef struct				s_vm
 {
-	unsigned int	cycle_to_die;
+	int				cycle_to_die;
 	unsigned int	cycle;
 	unsigned int	checks;
 	t_champ			**champion;
