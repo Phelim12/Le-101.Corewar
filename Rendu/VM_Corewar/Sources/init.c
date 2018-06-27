@@ -6,14 +6,14 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 16:23:38 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 16:50:57 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "main_vm.h"
 
-int		init_process(unsigned int a)
+int			init_process(unsigned int a)
 {
 	int				*tmp_reg;
 	unsigned char	*tmp_fetch;
@@ -42,11 +42,32 @@ int		init_process(unsigned int a)
 	return (0);
 }
 
+static void	sort_champ_tab(void)
+{
+	t_champ	*tmp;
+	int		i;
+
+	i = -1;
+	while (++i < g_vm->nb_players - 1)
+	{
+		if (g_vm->champion[i]->num > g_vm->champion[i + 1]->num)
+		{
+			tmp = g_vm->champion[i];
+			g_vm->champion[i] = g_vm->champion[i + 1];
+			g_vm->champion[i + 1] = tmp;
+			i = -1;
+		}
+		else
+			i++;
+	}
+}
+
 static int	sub2_init_champ(void)
 {
 	unsigned int	a;
 
 	a = -1;
+	sort_champ_tab();
 	while (++a < g_vm->nb_players)
 		if (init_process(a) == -1 || get_champ(a) == -1)
 			return (-1);

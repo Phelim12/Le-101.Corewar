@@ -6,16 +6,12 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 15:43:36 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 16:16:57 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 16:51:03 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "main_vm.h"
-
-/*
-**fonction de liste a tester
-*/
 
 void	free_process(t_process *list)
 {
@@ -24,7 +20,7 @@ void	free_process(t_process *list)
 	free(list);
 }
 
-int	norme_remove(t_process **list, int lives)
+int		norme_remove(t_process **list, int lives)
 {
 	lives += (*list)->live;
 	(*list)->live = 0;
@@ -74,15 +70,6 @@ int		process_remove_if_live(t_process **begin_list, int lives)
 	}
 	return (lives);
 }
-/*static int process_remove()
-{
-	tmp = list->next->next;
-	free_process(list->next);
-	list->next = tmp;
-}*/
-/*
-** ------------------
-*/
 
 void	print_usage(void)
 {
