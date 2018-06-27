@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 15:43:36 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 16:51:03 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 17:09:45 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,7 +30,7 @@ int		norme_remove(t_process **list, int lives)
 
 void	decrease_nbr_process(t_process *list)
 {
-	int	i;
+	unsigned int	i;
 
 	i = -1;
 	while (++i < g_vm->nb_players)
@@ -80,7 +80,7 @@ void	print_usage(void)
 
 void	check_data(void)
 {
-	int i;
+	unsigned int i;
 	char *error;
 
 	error = NULL;

@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/13 14:10:23 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 16:01:00 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 17:10:20 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,7 +25,6 @@ unsigned int	BigToLittleEndian(unsigned int i)
 int		get_header(int i)
 {
 	int fd;
-	char *s = NULL;
 	t_header *header;
 
 	header = malloc(sizeof(t_header));
