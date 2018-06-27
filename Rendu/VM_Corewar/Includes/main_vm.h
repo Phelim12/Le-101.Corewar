@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/19 16:48:59 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/22 15:41:19 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -61,6 +61,8 @@ typedef struct				s_vm
 	unsigned int	cycle_to_die;
 	unsigned int	cycle;
 	t_champ			**champion;
+	t_list			*list_process;
+	t_list			*fetchqueue;
 	unsigned char	*map;
 	int				dump;
 	unsigned int	d_cycles;
@@ -92,6 +94,12 @@ int							get_instructions(int i, int fd);
 void						print_usage(void);
 void						ft_error(char *s, int c);
 void						check_data(void);
+
+/*
+**------Functions in rabbit_run.c
+*/
+
+int							cycling(void);
 
 /*
 **----------------OP_H---------------

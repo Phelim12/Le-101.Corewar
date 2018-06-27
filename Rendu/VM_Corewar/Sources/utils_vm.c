@@ -6,12 +6,45 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 15:43:36 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/18 16:07:00 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/26 16:25:06 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "main_vm.h"
+
+/*
+**fonction de liste a tester
+*/
+
+void	list_remove_if(t_list **begin_list, void *content_ref, int (*cmp)())
+{
+	t_list	*list;
+	t_list	*tmp;
+
+	list = *begin_list;
+	while (list && list->next)
+	{
+		if (list == *begin_list && cmp(list->content, content_ref) == 0)
+		{
+			*begin_list = (*begin_list)->next;
+			free(list);
+			list = *begin_list;
+		}
+		else if (cmp(list->next->content, content_ref) == 0)
+		{
+			tmp = list->next->next;
+			free(list->next);
+			list->next = tmp;
+		}
+		else
+			list = list->next;
+	}
+}
+
+/*
+** ------------------
+*/
 
 void	print_usage(void)
 {
