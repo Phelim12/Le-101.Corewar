@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 13:05:41 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 14:44:12 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -139,6 +139,7 @@ void		init_vm(char const **argv)
 	if ((tmp = (t_vm*)malloc(sizeof(t_vm))))
 		g_vm = tmp;
 	g_vm->dump = 0;
+	g_vm->checks = 0;
 	g_vm->d_cycles = 0;
 	g_vm->cycle_to_die = CYCLE_TO_DIE;
 	g_vm->cycle = 0;

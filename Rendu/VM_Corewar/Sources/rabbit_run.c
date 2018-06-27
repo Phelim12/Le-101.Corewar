@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 13:33:29 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 14:51:09 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*   Updated: 2018/06/27 13:24:44 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
@@ -26,33 +26,16 @@ static	int check_players_process()
 	return (nb);
 }
 
-static int destruct_dead_processes()
-{
-	int			lives;
-	t_process	*tmp;
-
-	lives = 0;
-	tmp = g_vm->list_process;
-	while (tmp)
-	{
-		if (tmp->live > 0)
-		{
-			lives += tmp->live;
-			tmp->live = 0;
-		}
-		else
-			// lstdelone du process
-		tmp = tmp->next;
-	}
-	return (lives);
-}
-
 static int		check_destruction_process(int cycles_passed)
 {
 	if (cycles_passed == g_vm->cycle_to_die)
 	{
-		if (destruct_dead_processes() >= NBR_LIVE)
+		g_vm->checks++;
+		if (process_remove_if_live(&g_vm->list_process, 0) >= NBR_LIVE || g_vm->checks == MAX_CHECKS)
+		{
 			g_vm->cycle_to_die -= CYCLE_DELTA;
+			g_vm->checks = 0;
+		}
 		cycles_passed = 0;
 		// va parcourir la liste des processes et checker s'ils ont bien dit etre en vie (sinon CIAO), return le nombre de lives et les reinitialise a 0.
 		// s'il y a eu assez de lives on decremente CYCLE_TO_DIE.
