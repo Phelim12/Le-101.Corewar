@@ -6,14 +6,14 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/26 15:32:49 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 12:44:25 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../Includes/main_vm.h"
 
-static int check_players_process()
+static	int check_players_process()
 {
 	int	a;
 	int	nb;
@@ -25,22 +25,65 @@ static int check_players_process()
 	return (nb);
 }
 
+static int destruct_dead_processes()
+{
+	int lives;
+
+	lives = 0;
+	t_list *tmp;
+	tmp = g_vm->list_process;
+	while (tmp)
+	{
+		if (tmp->lives > 0)
+		{
+			lives += tmp->lives;
+			tmp->lives = 0;
+		}
+		else
+			// lstdelone du process
+		tmp = tmp->next;
+	}
+	return (lives);
+}
+
+static int		check_destruction_process(int cycles_passed)
+{
+	if (cycles_passed == g_vm->cycle_to_die)
+	{
+		if (destruct_dead_processes() >= NBR_LIVE)
+			g_vm->cycle_to_die -= CYCLE_DELTA;
+		cycles_passed = 0;
+		// va parcourir la liste des processes et checker s'ils ont bien dit etre en vie (sinon CIAO), return le nombre de lives et les reinitialise a 0.
+		// s'il y a eu assez de lives on decremente CYCLE_TO_DIE.
+	}
+	return (cycles_passed);
+}
+
+static int		increment(cycles_passed)
+{
+	g_vm->cycle++;
+	cycles_passed++;
+	return (cycles_passed);
+}
 int		cycling(void)
 {
+	int cycles_passed;
 
+	cycles_passed = 0;
 	while (check_players_process() > 0)
 	{
-		//check_destruction_process(); //mdr -> pour detruire un process, il faut l'enlever de la memoire, et du tableau double.
+		//cycles_passed = check_destruction_process(cycles_passed); //mdr -> pour detruire un process, il faut l'enlever de la memoire, et du tableau double.
 		//c'est qd meme plus pratique avec une liste chainees de process...
 		//cycle_process(); //remplissage de la fetchqueue ou delai, ou exec d'autre chose qu'un fork ou un live ou une ecriture memoire
-			//read_memory(); //stocker les infos en memoire. pourquoi pas carrement dupliquer g_vm avant et apres changement ? dans cycle_process ?
-			//write_memory(); //si ecriture simultanee, parralelisme : le dernier process cree joue en premier.
+		//read_memory(); //stocker les infos en memoire. pourquoi pas carrement dupliquer g_vm avant et apres changement ? dans cycle_process ?
+		//write_memory(); //si ecriture simultanee, parralelisme : le dernier process cree joue en premier.
 			// /!\ /!\
 			// /!\ /!\ les process sont tous stockes dans la vm, pas dans les champs.
 			// /!\ /!\ On ne fait pas jouer un process d'un champ, puis un autre. a chaque cycle, tous les process jouent
 			// /!\ /!\ D'ou le fait de les enregistrer ensembles dans la vm. inutile d'une struct champ pour les registers.
 		//exec_fork();
 		//exec_live();
+		//cycles_passed = increment(cycles_passed);
 	}
 	return (0);
 }
