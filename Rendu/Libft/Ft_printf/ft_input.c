@@ -1,44 +1,45 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_printf.c                                      .::    .:/ .      .::   */
+/*   ft_input.c                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/12 16:15:30 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 22:21:28 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/01/24 03:14:33 by jjanin-r     #+#   ##    ##    #+#       */
+/*   Updated: 2018/01/29 22:19:44 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#include <stdio.h>
 
-int			ft_printf(const char *restrict format, ...)
+void	ft_input(t_param **begin, char **str, int i, char *ptr)
 {
-	va_list		ap;
-	int			ret;
-	int			clen;
-	t_param		*ptr;
-	t_param		*begin;
+	char	*tmp;
+	t_param	*new;
 
-	begin = NULL;
-	ret = 0;
-	va_start(ap, format);
-	clen = ft_getparams(format, &begin, ap);
-	ptr = begin;
-	while (ptr)
+	tmp = ft_strsub(*str, 0, i);
+	if ((new = ft_inputnode(&tmp)) == NULL)
 	{
-		if (ptr->error == 1 || (ptr->input == 1 && ptr->next
-					&& ptr->next->error == 1))
-		{
-			ft_lsdel(&begin);
-			return (-1);
-		}
-		if (ptr->type != 'n')
-			ret = ft_print(ptr, ret);
-		ptr = ptr->next;
+		ft_lsdel(begin);
+		ft_strdel(&ptr);
+		exit(-1);
 	}
-	ft_lsdel(&begin);
-	return (ret - clen);
+	ft_lstpush(begin, new);
+	*str = *str + i;
+}
+
+void	ft_nomod(t_param **begin, char **str, int i, char *ptr)
+{
+	char	*tmp;
+	t_param	*new;
+
+	tmp = ft_strsub(*str, 0, i);
+	if ((new = ft_inputnode(&tmp)) == NULL)
+	{
+		ft_lsdel(begin);
+		ft_strdel(&ptr);
+		exit(-1);
+	}
+	ft_lstpush(begin, new);
 }

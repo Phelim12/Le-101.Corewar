@@ -1,44 +1,28 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_printf.c                                      .::    .:/ .      .::   */
+/*   ft_putflag.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/12 16:15:30 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 22:21:28 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Created: 2017/12/22 19:00:03 by jjanin-r     #+#   ##    ##    #+#       */
+/*   Updated: 2018/01/24 05:08:55 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#include <stdio.h>
 
-int			ft_printf(const char *restrict format, ...)
+void	ft_putflag(char c, t_param *ptr)
 {
-	va_list		ap;
-	int			ret;
-	int			clen;
-	t_param		*ptr;
-	t_param		*begin;
-
-	begin = NULL;
-	ret = 0;
-	va_start(ap, format);
-	clen = ft_getparams(format, &begin, ap);
-	ptr = begin;
-	while (ptr)
-	{
-		if (ptr->error == 1 || (ptr->input == 1 && ptr->next
-					&& ptr->next->error == 1))
-		{
-			ft_lsdel(&begin);
-			return (-1);
-		}
-		if (ptr->type != 'n')
-			ret = ft_print(ptr, ret);
-		ptr = ptr->next;
-	}
-	ft_lsdel(&begin);
-	return (ret - clen);
+	if (ptr->flag == 'a' && ft_findflag(ptr, c) == -1)
+		ptr->flag = c;
+	else if (ptr->flag1 == 'a' && ft_findflag(ptr, c) == -1)
+		ptr->flag1 = c;
+	else if (ptr->flag2 == 'a' && ft_findflag(ptr, c) == -1)
+		ptr->flag2 = c;
+	else if (ptr->flag3 == 'a' && ft_findflag(ptr, c) == -1)
+		ptr->flag3 = c;
+	else if (ptr->flag4 == 'a' && ft_findflag(ptr, c) == -1)
+		ptr->flag4 = c;
 }

@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 15:43:36 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 16:51:03 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 17:09:12 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,7 +30,7 @@ int		norme_remove(t_process **list, int lives)
 
 void	decrease_nbr_process(t_process *list)
 {
-	int	i;
+	unsigned int	i;
 
 	i = -1;
 	while (++i < g_vm->nb_players)
@@ -80,7 +80,7 @@ void	print_usage(void)
 
 void	check_data(void)
 {
-	int i;
+	unsigned int i;
 	char *error;
 
 	error = NULL;
@@ -88,11 +88,11 @@ void	check_data(void)
 	while (++i < g_vm->nb_players)
 	{
 		if (g_vm->champion[i]->prog_size > MEM_SIZE / 6)
-			return (ft_error("size", i));
+			return (error_vm("size", i));
 	}
 }
 
-void	ft_error(char *s, int c)
+void	error_vm(char *s, int c)
 {
 	unsigned int i;
 

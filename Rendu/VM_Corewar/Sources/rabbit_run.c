@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 16:29:51 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 17:10:20 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*   Updated: 2018/06/27 13:24:44 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
@@ -16,8 +16,8 @@
 
 static	int check_players_process()
 {
-	int	a;
-	int	nb;
+	unsigned int	a;
+	unsigned int	nb;
 
 	a = -1;
 	nb = 0;
@@ -51,7 +51,7 @@ static int		increment(cycles_passed)
 }
 int		cycling(void)
 {
-	int cycles_passed;
+	unsigned int cycles_passed;
 
 	cycles_passed = 0;
 	while (check_players_process() > 0 &&

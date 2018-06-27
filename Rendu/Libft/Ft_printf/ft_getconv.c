@@ -1,44 +1,40 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_printf.c                                      .::    .:/ .      .::   */
+/*   ft_getconv.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/12 16:15:30 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 22:21:28 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/01/10 15:19:09 by jjanin-r     #+#   ##    ##    #+#       */
+/*   Updated: 2018/01/24 02:10:07 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#include <stdio.h>
 
-int			ft_printf(const char *restrict format, ...)
+void		ft_getconv(char **str, t_param **begin)
 {
-	va_list		ap;
-	int			ret;
-	int			clen;
-	t_param		*ptr;
-	t_param		*begin;
+	t_param *ptr;
 
-	begin = NULL;
-	ret = 0;
-	va_start(ap, format);
-	clen = ft_getparams(format, &begin, ap);
-	ptr = begin;
-	while (ptr)
-	{
-		if (ptr->error == 1 || (ptr->input == 1 && ptr->next
-					&& ptr->next->error == 1))
-		{
-			ft_lsdel(&begin);
-			return (-1);
-		}
-		if (ptr->type != 'n')
-			ret = ft_print(ptr, ret);
+	ptr = *begin;
+	while (ptr->next)
 		ptr = ptr->next;
+	while (**str == 'h' || **str == 'l' || **str == 'j' || **str == 'z')
+	{
+		if (**str == 'h')
+			((*(*str + 1) == 'h') ? ft_whichconv(1, str, ptr) :
+			ft_whichconv(2, str, ptr));
+		else if (**str == 'l')
+		{
+			if (*(*str + 1) == 'l')
+				ft_whichconv(6, str, ptr);
+			else
+				ft_whichconv(5, str, ptr);
+		}
+		else if (**str == 'j')
+			ft_whichconv(3, str, ptr);
+		else if (**str == 'z')
+			ft_whichconv(4, str, ptr);
 	}
-	ft_lsdel(&begin);
-	return (ret - clen);
 }

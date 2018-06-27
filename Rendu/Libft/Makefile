@@ -6,7 +6,7 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/05/25 17:12:33 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2018/05/25 17:12:33 by clcreuso    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/06/27 17:01:44 by jjanin-r    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -37,7 +37,7 @@ DIR_LST = Linked_list/
 
 DIR_GNL = Get_next_line/
 
-NAME_INC = ft_printf.h libft.h
+NAME_INC = libftprintf.h libft.h
 
 GNL =	get_next_line.c
 
@@ -69,16 +69,28 @@ MATH =	ft_atoi.c ft_atou.c ft_ilen.c ft_imaxlen.c ft_imaxtoa.c ft_next_sqrt.c\
 		ft_ulen.c ft_umaxlen.c ft_umaxtoa.c ft_atoimax.c ft_atoumax.c ft_utoa.c\
 		ft_ilen_base.c ft_imaxlen_base.c ft_itoa.c ft_sqrt.c ft_ulen_base.c \
 		ft_umaxlen_base.c ft_umaxtoa_base.c ft_itoa_base.c ft_imaxtoa_base.c \
-		ft_utoa.c ft_utoa_base.c ft_ceil.c ft_sort_tab_ascii.c ft_hexatoi.c
+		ft_utoa.c ft_utoa_base.c ft_ceil.c ft_sort_tab_ascii.c ft_hexatoi.c\
+		ft_intlen.c
 
-PRTF =	find_params.c ft_printf.c len_arg.c modify_flags.c print_arg.c \
-		print_params.c reset.c search_arg.c
+PRTF =	ft_printf.c ft_inputnode.c ft_charstr.c ft_getparams.c\
+		ft_longitoa.c ft_longitoa_base.c ft_lstpush.c ft_mod.c\
+		ft_type.c ft_uncap.c ft_node.c ft_compute.c ft_getflags.c\
+		ft_putflag.c ft_getwidthprec.c ft_getconv.c ft_doflags.c\
+		ft_findflag.c ft_typex.c ft_typep.c ft_typeo.c ft_types.c\
+		ft_width.c ft_isflag.c ft_eraseflag.c ft_flag0.c ft_flagdiese.c\
+		ft_strjoinfree.c ft_prec.c ft_precstr.c ft_ulongitoa_base.c\
+		ft_typed.c ft_ulongitoa.c ft_typeu.c ft_typec.c ft_u.c\
+		ft_bigu.c ft_lsdel.c ft_putwchar.c ft_lsdelone.c\
+		ft_print.c ft_replaceflag.c ft_whichconv.c ft_putwstr.c\
+		ft_wstrlen.c ft_wstrndup.c ft_wprec.c ft_wclen.c\
+		ft_getmod.c ft_input.c ft_printwidth.c\
+		ft_dtoa.c ft_typef.c unicode.c ft_checkerror.c color.c
 
 SRC = 	$(addprefix $(DIR_CHR), $(CHR)) $(addprefix $(DIR_GNL), $(GNL)) \
 		$(addprefix $(DIR_LST), $(LST)) $(addprefix $(DIR_STR), $(STR)) \
 		$(addprefix $(DIR_MEM), $(MEM)) $(addprefix $(DIR_PUT), $(PUT)) \
 		$(addprefix $(DIR_MATH), $(MATH)) $(addprefix $(DIR_PRTF), $(PRTF))
-		
+
 INC =	$(addprefix $(DIR_INC), $(NAME_INC))
 
 OBJ =	$(SRC:.c=.o)
@@ -102,13 +114,13 @@ $(NAME): $(OBJ)
 clean:
 	@if [ -e Char/ft_isspace.o ]; then \
 		printf "\r\033[38;5;202m🗑️   clean $(NAME)\033[0m\033[K\n"; \
-	fi;
+		fi;
 	@rm -rf $(OBJ)
 
 fclean: clean
 	@if [ -e $(NAME) ]; then \
 		printf "\r\033[38;5;196m🗑️   fclean $(NAME)\033[0m\033[K\n"; \
-	fi;
+		fi;
 	@rm -rf $(NAME);
 
 re: fclean all

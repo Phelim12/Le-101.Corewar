@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:38 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 16:45:32 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 17:30:52 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,7 +40,7 @@ int		main(int argc, char const **argv)
 		}
 		i = -1;
 		while (++i < MEM_SIZE)
-			ft_printf("%02x|", g_vm->map[i]);
+			ft_printf("{blue}%02x{eoc}|", g_vm->map[i]);
 	}
 	else
 		print_usage();

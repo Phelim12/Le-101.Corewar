@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 16:50:57 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 17:09:28 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -45,7 +45,7 @@ int			init_process(unsigned int a)
 static void	sort_champ_tab(void)
 {
 	t_champ	*tmp;
-	int		i;
+	unsigned int		i;
 
 	i = -1;
 	while (++i < g_vm->nb_players - 1)
@@ -125,7 +125,7 @@ void		init_champs(char const **argv)
 		g_vm->champion[i++]->num = -1;
 	}
 	if (g_vm->nb_players > MAX_PLAYERS)
-		ft_error("Too many .cor files in parameters\n", 0);
+		error_vm("Too many .cor files in parameters\n", 0);
 	parse_args(argv);
 	sub_init_champ();
 }

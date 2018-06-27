@@ -1,44 +1,43 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_printf.c                                      .::    .:/ .      .::   */
+/*   ft_width.c                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/12 16:15:30 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 22:21:28 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/01/11 16:41:24 by jjanin-r     #+#   ##    ##    #+#       */
+/*   Updated: 2018/01/24 08:17:03 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#include <stdio.h>
 
-int			ft_printf(const char *restrict format, ...)
+void		ft_width(t_param *ptr)
 {
-	va_list		ap;
-	int			ret;
-	int			clen;
-	t_param		*ptr;
-	t_param		*begin;
+	int i;
+	int j;
 
-	begin = NULL;
-	ret = 0;
-	va_start(ap, format);
-	clen = ft_getparams(format, &begin, ap);
-	ptr = begin;
-	while (ptr)
-	{
-		if (ptr->error == 1 || (ptr->input == 1 && ptr->next
-					&& ptr->next->error == 1))
-		{
-			ft_lsdel(&begin);
-			return (-1);
-		}
-		if (ptr->type != 'n')
-			ret = ft_print(ptr, ret);
+	i = 0;
+	j = 0;
+	while (ptr->next)
 		ptr = ptr->next;
+	if (ptr->type == 'p')
+	{
+		ptr->string = ft_strjoinfree("0x", ptr->string, 2);
+		ptr->type = 'a';
 	}
-	ft_lsdel(&begin);
-	return (ret - clen);
+	if ((i = ptr->width - ft_strlen(ptr->string)) > 0)
+	{
+		if (ft_isflag(ptr) == 1)
+			ft_doflags(ptr, i);
+		else
+			while (i-- > 0)
+			{
+				if (ptr->type == '%' && ft_findflag(ptr, 'O') != -1)
+					ptr->string = ft_strjoinfree("0", ptr->string, 2);
+				else
+					ptr->string = ft_strjoinfree(" ", ptr->string, 2);
+			}
+	}
 }

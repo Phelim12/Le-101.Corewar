@@ -1,44 +1,40 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_printf.c                                      .::    .:/ .      .::   */
+/*   ft_node.c                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/12 16:15:30 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 22:21:28 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Created: 2017/12/22 17:56:08 by jjanin-r     #+#   ##    ##    #+#       */
+/*   Updated: 2018/01/29 22:05:57 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#include <stdio.h>
 
-int			ft_printf(const char *restrict format, ...)
+t_param	*ft_node(void)
 {
-	va_list		ap;
-	int			ret;
-	int			clen;
-	t_param		*ptr;
-	t_param		*begin;
+	t_param *new;
 
-	begin = NULL;
-	ret = 0;
-	va_start(ap, format);
-	clen = ft_getparams(format, &begin, ap);
-	ptr = begin;
-	while (ptr)
-	{
-		if (ptr->error == 1 || (ptr->input == 1 && ptr->next
-					&& ptr->next->error == 1))
-		{
-			ft_lsdel(&begin);
-			return (-1);
-		}
-		if (ptr->type != 'n')
-			ret = ft_print(ptr, ret);
-		ptr = ptr->next;
-	}
-	ft_lsdel(&begin);
-	return (ret - clen);
+	if (!(new = (t_param *)malloc(sizeof(*new))))
+		return (NULL);
+	new->flag = 'a';
+	new->flag1 = 'a';
+	new->flag2 = 'a';
+	new->flag3 = 'a';
+	new->flag4 = 'a';
+	new->width = 0;
+	new->prec = 0;
+	new->conv = 0;
+	new->size = 0;
+	new->string = NULL;
+	new->wstring = NULL;
+	new->wc = 0;
+	new->type = 'a';
+	new->ptr = NULL;
+	new->error = 0;
+	new->input = 0;
+	new->next = NULL;
+	return (new);
 }
