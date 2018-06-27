@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/04 12:50:12 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/18 16:06:53 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 11:31:06 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,7 +34,7 @@ static void	parse_dump(char const **argv, unsigned int *i)
 	g_vm->dump = 1;
 	if (argv[*i + 1] && ft_strisdigit(argv[*i + 1]) &&
 			ft_atoi(argv[*i + 1]) >= 0)
-		g_vm->d_cycles = ft_atoi(argv[*i]);
+		g_vm->d_cycles = ft_atoi(argv[*i + 1]);
 	else
 		ft_error("wrong parameter for -dump option\n", 0);
 	*i += 2;

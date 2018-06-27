@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/22 15:41:19 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 11:28:10 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,6 +55,10 @@ typedef struct				s_champ
 	unsigned char	*instructions;
 
 }							t_champ;
+
+/*
+**------Fetchqueue |cycle to exec|instruction sotcked in memory|
+*/
 
 typedef struct				s_vm
 {

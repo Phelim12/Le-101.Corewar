@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/22 16:58:09 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 11:30:08 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,12 +44,12 @@ int		init_fetchqueue(unsigned int a)
 	unsigned char	*tmp;
 	t_list			*new;
 
-	if (!(tmp = (unsigned char*)malloc(REG_SIZE * REG_NUMBER + 1)))
+	if (!(tmp = (unsigned char*)malloc(64 + 2)))
 		return (-1);
 	else
 	{
-		ft_memset(tmp, 0, REG_NUMBER + 1);
-		new = ft_lstnew(tmp, REG_SIZE * REG_NUMBER);
+		ft_memset(tmp, 0, 64 + 2);
+		new = ft_lstnew(tmp, 64 + 2);
 		if (g_vm->fetchqueue == NULL)
 			g_vm->fetchqueue = new;
 		else
