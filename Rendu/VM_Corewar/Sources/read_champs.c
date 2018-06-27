@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/13 14:10:23 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/22 16:28:54 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 16:01:00 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -52,7 +52,7 @@ int		get_instructions(int i, int fd)
 	g_vm->champion[i]->instructions = malloc(g_vm->champion[i]->prog_size);
 	while ((ret = read(fd, &g_vm->champion[i]->instructions[++j], 1)) > 0 )
 		;
-//		dprintf(1, "%02x|", g_vm->champion[i]->instructions[j]);
+		//dprintf(1, "%02x|", g_vm->champion[i]->instructions[j]);
 	dprintf(1, "\n-----------\ninstructions:%s\n", g_vm->champion[i]->instructions);
 	if (ret >= 0)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 14:44:12 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 16:05:47 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,7 +17,7 @@ int		init_process(unsigned int a)
 {
 	int				*tmp_reg;
 	unsigned char	*tmp_fetch;
-	t_process	*new;
+	t_process		*new;
 
 	if (!(tmp_reg = (int*)malloc(REG_SIZE * REG_NUMBER + 1)) ||
 			!(tmp_fetch = (unsigned char*)malloc(64)))
@@ -27,7 +27,7 @@ int		init_process(unsigned int a)
 		ft_memset(tmp_reg, 0, REG_NUMBER + 1);
 		ft_memset(tmp_fetch, 0, 64);
 		tmp_reg[1] = g_vm->champion[a]->num;
-		tmp_reg[0] = tmp_reg[1] * MEM_SIZE / g_vm->nb_players;
+		tmp_reg[0] = a * MEM_SIZE / g_vm->nb_players;
 		new = lstnew_vm(tmp_reg, tmp_fetch, REG_SIZE * REG_NUMBER + 1, 64);
 		if (g_vm->list_process == NULL)
 			g_vm->list_process = new;
@@ -146,6 +146,5 @@ void		init_vm(char const **argv)
 	g_vm->nb_players = 0;
 	g_vm->list_process = NULL;
 	init_champs(argv);
-	init_map(); //full 0, map de MEM_SIZE, init nb_players * NB_REG registres
-	//	load_champs(); //divide map in nb_players and load them -> need to interpret .cor files
+	init_map();
 }
