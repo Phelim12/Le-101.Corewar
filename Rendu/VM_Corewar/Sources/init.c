@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 17:38:24 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 18:35:07 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,7 +33,7 @@ int			init_process(unsigned int a)
 			g_vm->list_process = new;
 		else
 		{
-			lstadd_vm(&new, g_vm->list_process);
+			lstadd_vm(&g_vm->list_process, new);
 			g_vm->list_process = new;
 		}
 		free(tmp_reg);
@@ -64,11 +64,11 @@ static void	sort_champ_tab(void)
 
 static int	sub2_init_champ(void)
 {
-	unsigned int	a;
+	int	a;
 
-	a = -1;
+	a = g_vm->nb_players;
 	sort_champ_tab();
-	while (++a < g_vm->nb_players)
+	while (--a >= 0)
 		if (init_process(a) == -1 || get_champ(a) == -1)
 			return (-1);
 	return (0);
@@ -137,16 +137,20 @@ int			init_map(void)
 	unsigned int	i;
 
 	i = 0;
-	if (!(g_vm->map = malloc(MEM_SIZE + 1)))
+	if (!(g_vm->map = malloc(MEM_SIZE + 1)) || !(g_vm->p_map = malloc(MEM_SIZE + 1)))
 		return (-1);
 	g_vm->map[MEM_SIZE] = '\0';
+	g_vm->p_map[MEM_SIZE] = '\0';
 	g_vm->map = ft_memset(g_vm->map, 0, (size_t)MEM_SIZE);
+	g_vm->p_map = ft_memset(g_vm->p_map, -1, (size_t)MEM_SIZE);
 	list_tmp = g_vm->list_process;
 	while (list_tmp)
 	{
 		tmp = list_tmp->registers;
 		ft_memcpy(&g_vm->map[tmp[0]],
 				g_vm->champion[i]->instructions, g_vm->champion[i]->prog_size);
+		ft_memset(&g_vm->p_map[tmp[0]],
+				tmp[1], g_vm->champion[i]->prog_size);
 		list_tmp = list_tmp->next;
 		i++;
 	}
