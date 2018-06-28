@@ -15,20 +15,11 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	size_t	i;
-	char	*str;
+	int		i;
 
-	str = malloc(sizeof(char*) * ft_strlen(s));
-	if (!s)
-		return (NULL);
-	ft_strcpy(str, s);
-	i = ft_strlen(s);
-	str += i;
-	while ((int)i >= 0)
-	{
-		if (*str-- == c)
-			return ((char*)s + i);
-		i--;
-	}
+	i = (int)ft_strlen(s) + 1;
+	while (i--)
+		if (*(s + i) == (char)c)
+			return ((char *)s + i);
 	return (NULL);
 }

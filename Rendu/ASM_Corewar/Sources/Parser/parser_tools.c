@@ -13,11 +13,15 @@
 
 #include "main_asm.h"
 
-int		pass_comment(char *buf, int fd)
+int		pass_comment(t_cmd *cmds, char *buf, int fd)
 {
 	while ((read(fd, buf, 1)) > 0)
 		if ((*buf) == LINE_CHAR)
+		{
+			if (cmds && !(cmds->data))
+				read(fd, buf, 1);
 			return (1);
+		}
 	return (0);
 }
 
@@ -27,8 +31,11 @@ int		special_read(t_pos *pos, char *buf, int ret, int fd)
 		return (0);
 	if (ft_iscntrl(*buf) && (*buf) != 10)
 	{
-		pos->x++;
-		return (((read(fd, buf, 1)) > 0) ? 1 : 0);
+		if ((ret = read(fd, buf, 1)) < 0)
+			return (0);
+		if (*buf)
+			pos->x++;
+		return ((*buf) ? ret : 0);
 	}
 	return (1);
 }

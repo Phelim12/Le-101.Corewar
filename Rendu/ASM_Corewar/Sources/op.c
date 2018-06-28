@@ -40,12 +40,17 @@ t_op	g_op_tab[17] =
 	{0, 0, {0}, 0, 0, 0, 0, 0}
 };
 
-t_op		*get_op_tab(void)
+t_op	*get_op_tab(void)
 {
 	return (g_op_tab);
 }
 
-t_op		cmd_exist(char *cmd)
+int 	has_arg(char args, int query)
+{
+	return (args & query);
+}
+
+t_op	instruction_exist(char *cmd)
 {
 	int var;
 

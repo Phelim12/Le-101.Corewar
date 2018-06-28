@@ -53,7 +53,7 @@ void		parser_name(char *result, t_line *file)
 		print_error_token(file, line, SYNTAX_MSG);
 	if (line->next->token != ENDLINE)
 		print_error_token(file, line->next, SYNTAX_MSG);
-	if (ft_strlen(line->data) < NAME_LENGTH)
+	if (ft_strlen(line->data) <= NAME_LENGTH)
 		ft_strncpy(result, line->data, NAME_LENGTH);
 	else
 		print_error_size_header(file, "name", NAME_LENGTH);
@@ -68,7 +68,7 @@ void		parser_comment(char *result, t_line *file)
 		print_error_token(file, line, SYNTAX_MSG);
 	if (line->next->token != ENDLINE)
 		print_error_token(file, line->next, SYNTAX_MSG);
-	if (ft_strlen(line->data) < COMMENT_LENGTH)
+	if (ft_strlen(line->data) <= COMMENT_LENGTH)
 		ft_strncpy(result, line->data, COMMENT_LENGTH);
 	else
 		print_error_size_header(file, "comment", COMMENT_LENGTH);
@@ -81,6 +81,7 @@ t_header	parser_header(t_line **file, int comment, int name)
 
 	line = 0;
 	result.prog_size = (*file)->size;
+	result.magic = COREWAR_EXEC_MAGIC;
 	while (++line && token_header((*file)->line->token))
 	{
 		if ((*file)->line->token == COMMAND_NAME && name--)

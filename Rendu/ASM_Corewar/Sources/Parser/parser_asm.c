@@ -63,8 +63,10 @@ int		add_line(t_line **result, t_pos *pos, char *buf, int fd)
 		return (ret);
 	else
 		(*result)->line = (*result)->line->start;
-	count_octet((*result), (*result)->line);
-	if (((*result)->start->size += (*result)->line->octet) > CHAMP_MAX_SIZE)
+	(*result)->line->octet = count_byte_instruction(*result, (*result)->line);
+	(*result)->start->size += (*result)->line->octet;
+	(*result)->size = (*result)->start->size;
+	if ((*result)->start->size > CHAMP_MAX_SIZE)
 		print_error_size_code(*result);
 	previous = (*result);
 	(*result) = (*result)->next;
@@ -77,9 +79,9 @@ int		add_line(t_line **result, t_pos *pos, char *buf, int fd)
 
 t_line	*parser(t_line *result, int fd)
 {
-	t_pos		pos;
-	char		buf;
-	int			ret;
+	t_pos	pos;
+	char	buf;
+	int		ret;
 
 	init_parser(&result, &pos, &buf, &ret);
 	while ((ret = special_read(&pos, &buf, ret, fd)))
@@ -87,7 +89,7 @@ t_line	*parser(t_line *result, int fd)
 		if ((!(ft_strchr(VALID_CHARS, buf)) && !(ft_iscntrl(buf))))
 			print_error_lexical(result, pos);
 		else if (buf == COMMENT_CHAR)
-			ret = pass_comment(&buf, fd);
+			ret = pass_comment(result->line, &buf, fd);
 		else if (buf == LINE_CHAR)
 			ret = add_line(&result, &pos, &buf, fd);
 		else if (ft_strchr(VALID_CHARS, buf))

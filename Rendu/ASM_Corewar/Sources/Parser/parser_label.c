@@ -23,23 +23,23 @@ t_label	*init_parser_label(void)
 	return (result);
 }
 
-t_cmd	*init_label_value(t_line *file, t_cmd *line)
+int 	init_label_value(t_line *file, t_cmd *line)
 {
 	t_cmd	*ptr;
 
 	if (line->next->token == INSTRUCTION)
-		return (line->next);
+		return (file->size);
 	if (line->next->token != ENDLINE)
 		print_error_token(file, line->next, SYNTAX_MSG);
 	while ((file = file->next))
 	{
 		ptr = file->line->start;
 		if ((ptr->token == INSTRUCTION) || (ptr->token == END))
-			return (ptr);
+			return (file->size);
 		if (ptr->token != LABEL && ptr->token != ENDLINE)
 			print_error_token(file, ptr, SYNTAX_MSG);
 	}
-	return (NULL);
+	return (0);
 }
 
 void	add_label(t_label **result, t_line *file, t_cmd *line)
@@ -55,10 +55,10 @@ void	add_label(t_label **result, t_line *file, t_cmd *line)
 		previous->next = (*result);
 		(*result)->start = previous->start;
 	}
-	(*result)->adress = line;
 	(*result)->name = ft_strdup(line->data);
 	(*result)->name[ft_strlen((*result)->name + 1)] = 0;
 	(*result)->value = init_label_value(file, line);
+	printf("[%s] [%d] \n", (*result)->name, (*result)->value);
 }
 
 void	parser_label(t_line *file)

@@ -83,7 +83,7 @@ typedef struct	s_pos
 typedef struct	s_label
 {
 	char			*name;
-	struct s_cmd	*value;
+	int				value;
 	struct s_cmd	*adress;
 	struct s_label	*prev;
 	struct s_label	*next;
@@ -124,9 +124,11 @@ typedef struct	s_file
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-// int 	has_arg(int args, int query);
-void	count_octet(t_line *file, t_cmd *result);
-int		fill_binary_cmd(t_line *file, t_cmd *result, t_op info, int *ptr);
+int		code_params(int type);
+int		type_params(int token);
+int		size_params(t_op info, int type);
+int		count_byte_instruction(t_line *file, t_cmd *cmds);
+int		fill_binary_cmd(t_line *file, t_cmd *result, int *ptr);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -135,7 +137,8 @@ int		fill_binary_cmd(t_line *file, t_cmd *result, t_op info, int *ptr);
 */
 
 t_op		*get_op_tab(void);
-t_op		cmd_exist(char *cmd);
+t_op		instruction_exist(char *cmd);
+int			has_arg(char args, int query);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -185,7 +188,7 @@ void		label_exist_next(t_line *file, t_cmd *cmd, t_label *label);
 */
 
 t_label		*init_parser_label();
-t_cmd		*init_label_value(t_line *file, t_cmd *line);
+int 		init_label_value(t_line *file, t_cmd *line);
 void		add_label(t_label **result, t_line *file, t_cmd *line);
 void		parser_label(t_line *file);
 
@@ -241,7 +244,7 @@ int			add_line(t_line **result, t_pos *pos, char *buf, int fd);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-int			pass_comment(char *buf, int fd);
+int			pass_comment(t_cmd *cmds, char *buf, int fd);
 int			special_read(t_pos *pos, char *buf, int ret, int fd);
 void		init_parser(t_line **result, t_pos *pos, char *buf, int *ret);
 

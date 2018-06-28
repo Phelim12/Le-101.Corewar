@@ -17,7 +17,7 @@ CC = gcc
 
 NAME = ../asm
 		
-C_FLAGS =  -Wall -Wextra -Werror
+C_FLAGS = -g
 
 DIR_LIB = ../Libft/
 
@@ -31,10 +31,10 @@ DIR_INC = Includes/
 
 NAME_SRC = main_asm.c print_error.c op.c
 
-TOOLS_SRC = asm_tools.c token_tools.c print_tools.c free_tools.c
+TOOLS_SRC = asm_tools.c token_tools.c print_tools.c free_tools.c byte_tools.c
 
 PARSER_SRC = parser_header.c parser_label.c parser_asm.c parser_elem.c \
-			parser_tools.c label_error.c convert_binary.c
+			parser_tools.c label_error.c count_byte.c
 
 NAME_INC = main_asm.h op.h
 

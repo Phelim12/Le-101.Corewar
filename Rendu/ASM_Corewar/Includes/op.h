@@ -19,9 +19,9 @@
 ** On part du principe qu'un int fait 32 bits. Est-ce vrai chez vous ?
 */
 
+# define REG_SIZE				1
 # define IND_SIZE				2
-# define REG_SIZE				4
-# define DIR_SIZE				REG_SIZE
+# define DIR_SIZE				4
 
 # define REG_CODE				1
 # define DIR_CODE				2
@@ -52,19 +52,19 @@ typedef char		t_arg_type;
 
 typedef enum		e_token
 {
-	COMMAND_NAME = 1,
-	STRING,
-	COMMAND_COMMENT,
-	LABEL,
-	INSTRUCTION,
-	SEPARATOR,
-	DIRECT,
-	REGISTER,
-	DIRECT_LABEL,
-	INDIRECT,
-	INDIRECT_LABEL,
-	ENDLINE,
 	END,
+	LABEL,
+	DIRECT,
+	STRING,
+	ENDLINE,
+	INDIRECT,
+	REGISTER,
+	SEPARATOR,
+	INSTRUCTION,
+	DIRECT_LABEL,
+	COMMAND_NAME,
+	INDIRECT_LABEL,
+	COMMAND_COMMENT,
 }					t_token;
 
 typedef enum		e_msg
