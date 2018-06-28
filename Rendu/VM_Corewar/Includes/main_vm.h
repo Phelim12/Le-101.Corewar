@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 18:07:47 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/28 11:51:05 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -126,6 +126,13 @@ t_process					*lstnew_vm(int *registers,
 							unsigned char *fetchqueue, int reg_size,
 							int fetch_size);
 
+
+/*
+**------Functions in dump.c
+*/
+
+int							ft_dump(void);
+int							print_color(int i, int *p);
 /*
 **----------------OP_H---------------
 */
