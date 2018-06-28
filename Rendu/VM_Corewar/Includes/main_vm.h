@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/28 14:41:24 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/28 16:23:00 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,6 +40,25 @@
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+/*
+**
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃ typedef struct				s_process
+**┃ {
+**┃ 	int					*registers;		| Registers for the mighty champion
+**┃ 	unsigned char		*fetchqueue;	| Current instruction saved
+**┃ 	int					cycle_delay;	| Number of cycles needed to exec instruction
+**┃ 	int					live;			| Number of live since last cycle_to_die
+**┃ 	struct s_process	*next;			| Next and older process
+**┃ }							t_process;
+**┃
+**┃ Linked list ordered from the younger to the older, finaly linked to NULL,
+**┃ in order to respect the ancestral rule which allows the youngest to begin with
+**┃ hostilities.
+**┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
 typedef struct				s_process
 {
 	int					*registers;
@@ -48,6 +67,23 @@ typedef struct				s_process
 	int					live;
 	struct s_process	*next;
 }							t_process;
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃ typedef struct				s_champ
+**┃ {
+**┃ 	unsigned int	magic;			| Magic f**kin number
+**┃ 	unsigned int	prog_size;		| Champion size
+**┃ 	char			*filename;		| Filename
+**┃ 	int				live;			| Obsolete ? Mb total lives for champion
+**┃ 	unsigned int	nb_process;		| Number of its process
+**┃ 	char			*name;			| Apocalyptic name of Hell
+**┃ 	char			*comment;		| Funniest comment ever written by bonobos
+**┃ 	int				num;			| Number of player
+**┃ 	unsigned char	*instructions;	| Finnest part of the champion, fist-like
+**┃ }							t_champ;
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
 
 typedef struct				s_champ
 {
@@ -60,11 +96,24 @@ typedef struct				s_champ
 	char			*comment;
 	int				num;
 	unsigned char	*instructions;
-
 }							t_champ;
 
 /*
-**------Fetchqueue |cycle to exec|instruction sotcked in memory|
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃ typedef struct				s_vm
+**┃ {
+**┃ 	int				cycle_to_die;	| Various limit of CYCLE_TO_DIE
+**┃ 	unsigned int	cycle;			| Total number of cycles passed
+**┃ 	unsigned int	checks;			| Number of cycle_to_die passed with no changes
+**┃ 	t_champ			**champion;		| Tab of structs, with champions inside, sort by num
+**┃ 	t_process		*list_process;	| Linked list of processes, from the younger to the older
+**┃ 	unsigned char	*map;			| The ARENA of MEM_SIZE
+**┃ 	char			*p_map;			| Map 'filter', with the num of players in, for colors
+**┃ 	int				dump;			| Flag dump
+**┃ 	unsigned int	d_cycles;		| Nombre de cycles avant le dump
+**┃ 	unsigned int	nb_players;		| Nombre de players
+**┃ }							t_vm;
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
 typedef struct				s_vm
@@ -84,15 +133,39 @@ typedef struct				s_vm
 t_vm						*g_vm;
 
 /*
-**------Functions in parse_args_vm.c
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃
+**┃ ------Functions in parse_args_vm.c
+**┃
+**┃ Parse argv, and treat -n and -dump.
+**┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
 void						parse_args(char const **argv);
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃
+**┃ ------Functions in init.c
+**┃
+**┃ Initiaize all structures, g_vm and champs and processes.
+**┃ Set the map after reading champs.
+**┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
 void						init_champs(char const **argv);
 void						init_vm(char const **argv);
 
 /*
-**------Fuctions in read_champs.c
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃
+**┃ ------Functions in read_champs.c
+**┃
+**┃ Decode champs, save the header and instructions.
+**┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
 int							get_champ(int i);
@@ -100,7 +173,13 @@ int							get_header(int i);
 int							get_instructions(int i, int fd);
 
 /*
-**------Functions in utils_vm.c
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃
+**┃ ------Functions in utils_vm.c
+**┃
+**┃ Different useful functions.
+**┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
 int							process_remove_if_live(t_process **begin_list,
@@ -111,13 +190,25 @@ int							check_data(void);
 void						introduction(void);
 
 /*
-**------Functions in rabbit_run.c
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃
+**┃ ------Functions in rabbit_run.c
+**┃
+**┃ It's really gettin started here.
+**┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
 int							cycling(void);
 
 /*
-**------Functions in lst_vm.c
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃
+**┃ ------Functions in lst_vm.c
+**┃
+**┃ Linked_list functions, adapted from libft for the current s_process type.
+**┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
 void						lstiter_vm(t_process *lst,
@@ -127,13 +218,19 @@ t_process					*lstnew_vm(int *registers,
 							unsigned char *fetchqueue, int reg_size,
 							int fetch_size);
 
-
 /*
-**------Functions in dump.c
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃
+**┃ ------Functions in dump.c
+**┃
+**┃ Dumper.
+**┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
 int							ft_dump(void);
 int							print_color(int i, int *p, int pc);
+
 /*
 **----------------OP_H---------------
 */

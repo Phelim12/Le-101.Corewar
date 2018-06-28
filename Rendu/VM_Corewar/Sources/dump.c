@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/27 19:47:07 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/28 14:26:44 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/28 15:32:54 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,7 @@
 
 int		is_pc(int i)
 {
-	t_process *tmp;
+	t_process	*tmp;
 
 	tmp = g_vm->list_process;
 	while (tmp)
