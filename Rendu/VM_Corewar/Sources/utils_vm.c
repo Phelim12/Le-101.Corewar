@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 15:43:36 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/28 13:41:13 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/28 14:49:04 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -71,6 +71,22 @@ int		process_remove_if_live(t_process **begin_list, int lives)
 	return (lives);
 }
 
+void	introduction(void)
+{
+	int j = 1;
+	unsigned int i = 0;
+
+	ft_printf("Introducing contestants...\n");
+	while (i < g_vm->nb_players)
+	{
+		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n", j++,
+				g_vm->champion[i]->prog_size,
+				g_vm->champion[i]->name,
+				g_vm->champion[i]->comment);
+		i++;
+	}
+}
+
 void	print_usage(void)
 {
 	ft_printf(USE1);
@@ -110,4 +126,4 @@ int		error_vm(char *s, int c)
 	free(g_vm);
 	exit(1);
 	return (-1)
-;}
+		;}
