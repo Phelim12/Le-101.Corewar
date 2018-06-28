@@ -1,44 +1,43 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_printf.c                                      .::    .:/ .      .::   */
+/*   ft_printwidth.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/12 16:15:30 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 22:21:28 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/01/24 06:58:42 by jjanin-r     #+#   ##    ##    #+#       */
+/*   Updated: 2018/01/24 07:15:50 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#include <stdio.h>
 
-int			ft_printf(const char *restrict format, ...)
+char	*ft_printwidth(t_param *ptr, char c)
 {
-	va_list		ap;
-	int			ret;
-	int			clen;
-	t_param		*ptr;
-	t_param		*begin;
+	char	*str;
+	int		i;
+	int		j;
 
-	begin = NULL;
-	ret = 0;
-	va_start(ap, format);
-	clen = ft_getparams(format, &begin, ap);
-	ptr = begin;
-	while (ptr)
+	i = 0;
+	j = 0;
+	str = NULL;
+	if (c == 'W')
+		i = ptr->width - ft_wclen(ptr->wc);
+	else if (c == 'w')
+		i = ptr->width - 1;
+	else if (c == 'S')
+		i = ptr->width - ft_wstrlen(ptr->wstring);
+	if (i > 0)
 	{
-		if (ptr->error == 1 || (ptr->input == 1 && ptr->next
-					&& ptr->next->error == 1))
-		{
-			ft_lsdel(&begin);
-			return (-1);
-		}
-		if (ptr->type != 'n')
-			ret = ft_print(ptr, ret);
-		ptr = ptr->next;
+		if (!(str = (char *)malloc(sizeof(char) * i + 1)))
+			return (NULL);
+		if (ft_findflag(ptr, '0') != -1 || ft_findflag(ptr, 'O') != -1)
+			while (str[j])
+				str[j++] = '0';
+		else
+			while (str[j])
+				str[j++] = ' ';
 	}
-	ft_lsdel(&begin);
-	return (ret - clen);
+	return (str);
 }

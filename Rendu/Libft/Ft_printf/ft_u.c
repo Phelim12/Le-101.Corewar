@@ -1,44 +1,38 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_printf.c                                      .::    .:/ .      .::   */
+/*   ft_u.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/12 16:15:30 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 22:21:28 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/01/12 20:09:28 by jjanin-r     #+#   ##    ##    #+#       */
+/*   Updated: 2018/01/24 02:23:49 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#include <stdio.h>
 
-int			ft_printf(const char *restrict format, ...)
+void		ft_u(t_param *ptr, va_list ap)
 {
-	va_list		ap;
-	int			ret;
-	int			clen;
-	t_param		*ptr;
-	t_param		*begin;
+	unsigned long long li;
 
-	begin = NULL;
-	ret = 0;
-	va_start(ap, format);
-	clen = ft_getparams(format, &begin, ap);
-	ptr = begin;
-	while (ptr)
+	if (!(li = va_arg(ap, unsigned long long int)) && ptr->prec == -1)
+		ptr->string = ft_strdup("");
+	else
 	{
-		if (ptr->error == 1 || (ptr->input == 1 && ptr->next
-					&& ptr->next->error == 1))
-		{
-			ft_lsdel(&begin);
-			return (-1);
-		}
-		if (ptr->type != 'n')
-			ret = ft_print(ptr, ret);
-		ptr = ptr->next;
+		if (!ptr->conv)
+			li = (unsigned int)li;
+		else if (ptr->conv == 5)
+			li = (unsigned long int)li;
+		else if (ptr->conv == 1)
+			li = (unsigned char)li;
+		else if (ptr->conv == 2)
+			li = (unsigned short)li;
+		else if (ptr->conv == 3)
+			li = (uintmax_t)li;
+		else if (ptr->conv == 4)
+			li = (size_t)li;
+		ptr->string = ft_ulongitoa(li);
 	}
-	ft_lsdel(&begin);
-	return (ret - clen);
 }

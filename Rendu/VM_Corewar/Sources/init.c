@@ -6,35 +6,70 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/19 16:46:07 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 18:53:41 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "main_vm.h"
 
-static void	sub2_init_champ(int i) //peut etre a passer en return INT pour la remontee d'erreur
+int			init_process(unsigned int a)
 {
-	void			*tmp;
+	int				*tmp_reg;
+	unsigned char	*tmp_fetch;
+	t_process		*new;
+
+	if (!(tmp_reg = (int*)malloc(REG_SIZE * REG_NUMBER + 1)) ||
+			!(tmp_fetch = (unsigned char*)malloc(64)))
+		return (-1);
+	else
+	{
+		ft_memset(tmp_reg, 0, REG_NUMBER + 1);
+		ft_memset(tmp_fetch, 0, 64);
+		tmp_reg[1] = g_vm->champion[a]->num;
+		tmp_reg[0] = (g_vm->nb_players - a - 1) * MEM_SIZE / g_vm->nb_players;
+		new = lstnew_vm(tmp_reg, tmp_fetch, REG_SIZE * REG_NUMBER + 1, 64);
+		if (g_vm->list_process == NULL)
+			g_vm->list_process = new;
+		else
+		{
+			lstadd_vm(&g_vm->list_process, new);
+			g_vm->list_process = new;
+		}
+		free(tmp_reg);
+		free(tmp_fetch);
+	}
+	return (0);
+}
+
+static void	sort_champ_tab(void)
+{
+	t_champ			*tmp;
+	unsigned int	i;
+
+	i = -1;
+	while (++i < g_vm->nb_players - 1)
+	{
+		if (g_vm->champion[i]->num > g_vm->champion[i + 1]->num)
+		{
+			tmp = g_vm->champion[i];
+			g_vm->champion[i] = g_vm->champion[i + 1];
+			g_vm->champion[i + 1] = tmp;
+			i = -1;
+		}
+	}
+}
+
+static int	sub2_init_champ(void)
+{
 	unsigned int	a;
 
 	a = -1;
-	if ((tmp = (int**)malloc(sizeof(int*) * g_vm->champion[i]->nb_process)))
-		g_vm->champion[i]->registers = tmp;
-	while (++a < g_vm->champion[i]->nb_process)
-	{
-		if ((tmp = (int*)malloc(REG_SIZE * REG_NUMBER + 1)))
-			g_vm->champion[i]->registers[a] = tmp;
-		ft_memset(g_vm->champion[i]->registers[a], 0, REG_NUMBER + 1);
-		if ((tmp = (unsigned char*)malloc(16)))
-			g_vm->champion[i]->fetchqueue[a] = tmp;
-		ft_memset(g_vm->champion[i]->fetchqueue[a], 0, 16);
-		g_vm->champion[i]->registers[a][1] = g_vm->champion[i]->num;
-		g_vm->champion[i]->registers[a][0] = g_vm->champion[i]->num * MEM_SIZE
-			/ g_vm->nb_players;
-	}
-	if (get_champ(i) == -1)
-		return ; // -1 ?
+	sort_champ_tab();
+	while (++a < g_vm->nb_players)
+		if (init_process(a) == -1 || get_champ(a) == -1)
+			return (-1);
+	return (0);
 }
 
 static void	sub_init_champ(void)
@@ -62,8 +97,8 @@ static void	sub_init_champ(void)
 			else
 				g_vm->champion[i]->num = num;
 		}
-		sub2_init_champ(i);
 	}
+	sub2_init_champ();
 }
 
 void		init_champs(char const **argv)
@@ -88,23 +123,35 @@ void		init_champs(char const **argv)
 		g_vm->champion[i++]->num = -1;
 	}
 	if (g_vm->nb_players > MAX_PLAYERS)
-		ft_error("Too many .cor files in parameters\n", 0);
+		error_vm("Too many .cor files in parameters\n", 0);
 	parse_args(argv);
 	sub_init_champ();
 }
 
 int			init_map(void)
 {
-	unsigned int i;
+	t_process		*list_tmp;
+	int				*tmp;
+	unsigned int	i;
 
-	if (!(g_vm->map = malloc(MEM_SIZE + 1)))
+	i = 0;
+	if (!(g_vm->map = malloc(MEM_SIZE + 1)) || !(g_vm->p_map = malloc(MEM_SIZE + 1)))
 		return (-1);
 	g_vm->map[MEM_SIZE] = '\0';
+	g_vm->p_map[MEM_SIZE] = '\0';
 	g_vm->map = ft_memset(g_vm->map, 0, (size_t)MEM_SIZE);
-	i = -1;
-	while (++i < g_vm->nb_players)
-		ft_memcpy(&g_vm->map[g_vm->champion[i]->registers[0][0]],
+	g_vm->p_map = ft_memset(g_vm->p_map, -1, (size_t)MEM_SIZE);
+	list_tmp = g_vm->list_process;
+	while (list_tmp)
+	{
+		tmp = list_tmp->registers;
+		ft_memcpy(&g_vm->map[tmp[0]],
 				g_vm->champion[i]->instructions, g_vm->champion[i]->prog_size);
+		ft_memset(&g_vm->p_map[tmp[0]],
+				tmp[1], g_vm->champion[i]->prog_size);
+		list_tmp = list_tmp->next;
+		i++;
+	}
 	return (0);
 }
 
@@ -115,11 +162,12 @@ void		init_vm(char const **argv)
 	if ((tmp = (t_vm*)malloc(sizeof(t_vm))))
 		g_vm = tmp;
 	g_vm->dump = 0;
+	g_vm->checks = 0;
 	g_vm->d_cycles = 0;
 	g_vm->cycle_to_die = CYCLE_TO_DIE;
 	g_vm->cycle = 0;
 	g_vm->nb_players = 0;
+	g_vm->list_process = NULL;
 	init_champs(argv);
-	init_map(); //full 0, map de MEM_SIZE, init nb_players * NB_REG registres
-//	load_champs(); //divide map in nb_players and load them -> need to interpret .cor files
+	init_map();
 }

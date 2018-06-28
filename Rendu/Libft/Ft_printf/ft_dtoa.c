@@ -1,44 +1,42 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_printf.c                                      .::    .:/ .      .::   */
+/*   ft_dtoa.c                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/12 16:15:30 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 22:21:28 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/01/24 08:34:48 by jjanin-r     #+#   ##    ##    #+#       */
+/*   Updated: 2018/01/24 09:34:11 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#include <stdio.h>
 
-int			ft_printf(const char *restrict format, ...)
+char	*ft_dtoa(double nbr, int prec)
 {
-	va_list		ap;
-	int			ret;
-	int			clen;
-	t_param		*ptr;
-	t_param		*begin;
+	char			*ret;
+	char			*d;
+	long long int	nb;
+	float			dec;
+	int				i;
 
-	begin = NULL;
-	ret = 0;
-	va_start(ap, format);
-	clen = ft_getparams(format, &begin, ap);
-	ptr = begin;
-	while (ptr)
+	nb = nbr / 1;
+	if ((dec = nbr - nb) < 0)
+		dec = -dec;
+	i = prec;
+	while (i-- > 0)
+		dec *= 10;
+	dec /= 1;
+	d = ft_longitoa(dec);
+	while ((i = prec - (int)ft_strlen(d)) > 0)
+		d = ft_strjoinfree(d, "0", 1);
+	if (prec == 0)
+		ret = ft_itoa(nb);
+	else
 	{
-		if (ptr->error == 1 || (ptr->input == 1 && ptr->next
-					&& ptr->next->error == 1))
-		{
-			ft_lsdel(&begin);
-			return (-1);
-		}
-		if (ptr->type != 'n')
-			ret = ft_print(ptr, ret);
-		ptr = ptr->next;
+		ret = ft_strjoinfree(ft_longitoa(nb), ".", 1);
+		ret = ft_strjoinfree(ret, d, 3);
 	}
-	ft_lsdel(&begin);
-	return (ret - clen);
+	return (ret);
 }

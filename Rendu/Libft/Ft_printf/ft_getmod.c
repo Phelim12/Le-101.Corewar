@@ -1,44 +1,32 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_printf.c                                      .::    .:/ .      .::   */
+/*   ft_getmod.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/12 16:15:30 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 22:21:28 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/01/24 03:09:33 by jjanin-r     #+#   ##    ##    #+#       */
+/*   Updated: 2018/01/29 22:08:02 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#include <stdio.h>
 
-int			ft_printf(const char *restrict format, ...)
+void	ft_getmod(t_param **begin, char **str, va_list ap, char *ptr)
 {
-	va_list		ap;
-	int			ret;
-	int			clen;
-	t_param		*ptr;
-	t_param		*begin;
-
-	begin = NULL;
-	ret = 0;
-	va_start(ap, format);
-	clen = ft_getparams(format, &begin, ap);
-	ptr = begin;
-	while (ptr)
+	*str = *str + 1;
+	if (!(ft_lstpush(begin, ft_node())))
 	{
-		if (ptr->error == 1 || (ptr->input == 1 && ptr->next
-					&& ptr->next->error == 1))
-		{
-			ft_lsdel(&begin);
-			return (-1);
-		}
-		if (ptr->type != 'n')
-			ret = ft_print(ptr, ret);
-		ptr = ptr->next;
+		ft_lsdel(begin);
+		ft_strdel(&ptr);
+		exit(-1);
 	}
-	ft_lsdel(&begin);
-	return (ret - clen);
+	ft_getflags(str, begin);
+	ft_getwidthprec(str, begin, ap);
+	ft_getflags(str, begin);
+	ft_getconv(str, begin);
+	ft_getflags(str, begin);
+	if (ft_type(str, begin, ap) != -1)
+		ft_compute(begin);
 }

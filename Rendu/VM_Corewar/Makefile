@@ -6,7 +6,7 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/12/08 18:11:02 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2018/06/13 14:22:02 by jjanin-r    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/06/28 11:51:14 by jjanin-r    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -17,7 +17,7 @@ CC = gcc
 
 NAME = ./corewar
 
-C_FLAGS = 
+C_FLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 
 DIR_LIB = ../Libft/
 
@@ -25,7 +25,8 @@ DIR_SRC = Sources/
 
 DIR_INC = Includes/
 
-NAME_SRC = main_vm.c parse_args_vm.c utils_vm.c init.c read_champs.c
+NAME_SRC = main_vm.c parse_args_vm.c utils_vm.c init.c read_champs.c \
+ rabbit_run.c lst_vm.c dump.c
 
 NAME_INC = main_vm.h
 

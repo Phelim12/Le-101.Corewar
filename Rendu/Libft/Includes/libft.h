@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/12/28 15:16:18 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2017/12/28 15:16:18 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/27 17:02:00 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,7 +23,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <wchar.h>
-# include "ft_printf.h"
+# include "libftprintf.h"
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -89,6 +89,7 @@ int				ft_umaxlen_base(uintmax_t n, int base);
 char			*ft_imaxtoa_base(intmax_t nbr, char *base);
 char			*ft_umaxtoa_base(uintmax_t nbr, char *base);
 char			*ft_utoa_base(unsigned int nbr, char *base);
+int				ft_intlen(int nb);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

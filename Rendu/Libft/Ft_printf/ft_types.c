@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_printf.c                                      .::    .:/ .      .::   */
+/*   ft_types.c                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/12 16:15:30 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 22:21:28 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/01/10 19:11:30 by jjanin-r     #+#   ##    ##    #+#       */
+/*   Updated: 2018/01/24 02:35:52 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,31 +14,23 @@
 #include "libftprintf.h"
 #include <stdio.h>
 
-int			ft_printf(const char *restrict format, ...)
+void		ft_types(t_param *ptr, va_list ap)
 {
-	va_list		ap;
-	int			ret;
-	int			clen;
-	t_param		*ptr;
-	t_param		*begin;
+	char*str;
 
-	begin = NULL;
-	ret = 0;
-	va_start(ap, format);
-	clen = ft_getparams(format, &begin, ap);
-	ptr = begin;
-	while (ptr)
+	str = NULL;
+	if (ptr->type == 'S' || (ptr->type == 's' && ptr->conv == 5))
+		ft_bigs(ptr, ap);
+	else
 	{
-		if (ptr->error == 1 || (ptr->input == 1 && ptr->next
-					&& ptr->next->error == 1))
+		if (!(str = va_arg(ap, char *)) && ptr->prec == -1)
+			ptr->string = ft_strdup("");
+		else
 		{
-			ft_lsdel(&begin);
-			return (-1);
+			if (!(str))
+				ptr->string = ft_strdup("(null)");
+			else
+				ptr->string = ft_strdup(str);
 		}
-		if (ptr->type != 'n')
-			ret = ft_print(ptr, ret);
-		ptr = ptr->next;
 	}
-	ft_lsdel(&begin);
-	return (ret - clen);
 }

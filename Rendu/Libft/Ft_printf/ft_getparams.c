@@ -1,44 +1,32 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_printf.c                                      .::    .:/ .      .::   */
+/*   ft_getparams.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/12 16:15:30 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 22:21:28 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Created: 2017/12/14 15:21:15 by jjanin-r     #+#   ##    ##    #+#       */
+/*   Updated: 2018/01/29 22:20:35 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#include <stdio.h>
 
-int			ft_printf(const char *restrict format, ...)
+int		ft_getparams(const char *restrict format, t_param **begin, va_list ap)
 {
-	va_list		ap;
-	int			ret;
-	int			clen;
-	t_param		*ptr;
-	t_param		*begin;
+	int		i;
+	char	*str;
+	int		clen;
 
-	begin = NULL;
-	ret = 0;
-	va_start(ap, format);
-	clen = ft_getparams(format, &begin, ap);
-	ptr = begin;
-	while (ptr)
-	{
-		if (ptr->error == 1 || (ptr->input == 1 && ptr->next
-					&& ptr->next->error == 1))
-		{
-			ft_lsdel(&begin);
-			return (-1);
-		}
-		if (ptr->type != 'n')
-			ret = ft_print(ptr, ret);
-		ptr = ptr->next;
-	}
-	ft_lsdel(&begin);
-	return (ret - clen);
+	i = 0;
+	str = ft_strdup(format);
+	clen = ft_colorlen(str);
+	str = ft_color(str);
+	if ((ft_strchr(str, '%')) == NULL)
+		ft_nomod(begin, &str, ft_strlen(str), str);
+	else
+		ft_mod(begin, &str, ap, 0);
+	ft_strdel(&str);
+	return (clen);
 }

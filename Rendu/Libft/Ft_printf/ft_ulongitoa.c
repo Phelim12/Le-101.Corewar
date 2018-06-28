@@ -1,44 +1,51 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_printf.c                                      .::    .:/ .      .::   */
+/*   ft_ulongitoa.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/12 16:15:30 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 22:21:28 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/01/12 18:33:26 by jjanin-r     #+#   ##    ##    #+#       */
+/*   Updated: 2018/01/24 02:30:57 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#include <stdio.h>
 
-int			ft_printf(const char *restrict format, ...)
+int		ft_ulongintlen(unsigned long long nb)
 {
-	va_list		ap;
-	int			ret;
-	int			clen;
-	t_param		*ptr;
-	t_param		*begin;
+	int i;
 
-	begin = NULL;
-	ret = 0;
-	va_start(ap, format);
-	clen = ft_getparams(format, &begin, ap);
-	ptr = begin;
-	while (ptr)
+	i = 0;
+	if (nb == 0)
+		i++;
+	while (nb)
 	{
-		if (ptr->error == 1 || (ptr->input == 1 && ptr->next
-					&& ptr->next->error == 1))
-		{
-			ft_lsdel(&begin);
-			return (-1);
-		}
-		if (ptr->type != 'n')
-			ret = ft_print(ptr, ret);
-		ptr = ptr->next;
+		nb /= 10;
+		i++;
 	}
-	ft_lsdel(&begin);
-	return (ret - clen);
+	return (i);
+}
+
+char	*ft_ulongitoa(unsigned long long n)
+{
+	char				*ret;
+	int					size;
+	unsigned long long	i;
+
+	i = n;
+	size = ft_ulongintlen(i);
+	if (!(ret = malloc(sizeof(char) * size + 1)))
+		return (NULL);
+	ret[size] = '\0';
+	if (i == 0)
+		ret[0] = '0';
+	while (i)
+	{
+		ret[size - 1] = i % 10 + 48;
+		i = i / 10;
+		size--;
+	}
+	return (ret);
 }
