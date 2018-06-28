@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/28 11:51:05 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/28 13:29:32 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -106,8 +106,8 @@ int							get_instructions(int i, int fd);
 int							process_remove_if_live(t_process **begin_list,
 							int lives);
 void						print_usage(void);
-void						error_vm(char *s, int c);
-void						check_data(void);
+int							error_vm(char *s, int c);
+int							check_data(void);
 
 /*
 **------Functions in rabbit_run.c

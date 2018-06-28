@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:38 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/28 11:49:53 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/28 13:07:53 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,7 @@ int		main(int argc, char const **argv)
 	{
 		init_vm(argv);
 		check_data();
-		//		cycling();
+		cycling();
 		ft_printf("ctd\t: %20d\ncycle\t: %20d\ndump\t: %20d\nd_cycles : %20d\nnb_players : %20d\n////////\n",
 				g_vm->cycle_to_die, g_vm->cycle, g_vm->dump, g_vm->d_cycles, g_vm->nb_players);
 		int	i = g_vm->nb_players;
@@ -38,7 +38,7 @@ int		main(int argc, char const **argv)
 					g_vm->champion[i]->magic);
 			list_tmp = list_tmp->next;
 		}
-		ft_dump();
+//		ft_dump();
 	}
 	else
 		print_usage();

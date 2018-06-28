@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/04 12:50:12 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 17:05:49 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/28 13:40:54 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -56,6 +56,6 @@ void		parse_args(char const **argv)
 		else if (!ft_strcmp(".cor", &argv[i][ft_strlen(argv[i]) - 4]))
 			g_vm->champion[k++]->filename = ft_strdup(argv[i++]);
 		else
-			error_vm("An error occured in the argument passed to corewar\n", 0);
+			error_vm("An error occured in the argument passed to Corewar\n", 0);
 	}
 }

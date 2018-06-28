@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 15:43:36 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 17:39:24 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/28 13:41:13 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -78,7 +78,7 @@ void	print_usage(void)
 	ft_printf(USE3);
 }
 
-void	check_data(void)
+int		check_data(void)
 {
 	unsigned int i;
 	char *error;
@@ -90,14 +90,17 @@ void	check_data(void)
 		if (g_vm->champion[i]->prog_size > MEM_SIZE / 6)
 			return (error_vm("size", i));
 	}
+	return (0);
 }
 
-void	error_vm(char *s, int c)
+int		error_vm(char *s, int c)
 {
 	unsigned int i;
 
 	i = 0;
-	if (!ft_strcmp("size", s))
+	if (!ft_strcmp("open", s))
+		ft_printf("Can't read source file %s\n", g_vm->champion[c]->filename);
+	else if (!ft_strcmp("size", s))
 		ft_printf("Error: File %s has too large a code (%d bytes > %d bytes)\n", g_vm->champion[c]->filename, g_vm->champion[c]->prog_size, MEM_SIZE / 6);
 	else
 		ft_printf(s);
@@ -105,6 +108,6 @@ void	error_vm(char *s, int c)
 		free(g_vm->champion[i++]);
 	free(g_vm->champion);
 	free(g_vm);
-
 	exit(1);
-}
+	return (-1)
+;}
