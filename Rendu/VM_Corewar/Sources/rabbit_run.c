@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/28 14:45:39 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/28 16:36:35 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -59,8 +59,7 @@ int		cycling(void)
 	while (check_players_process() > 0 &&
 			(g_vm->dump == 0 || g_vm->cycle < g_vm->d_cycles))
 	{
-		cycles_passed = check_destruction_process(cycles_passed); //mdr -> pour detruire un process, il faut l'enlever de la memoire, et du tableau double.
-		//c'est qd meme plus pratique avec une liste chainees de process...
+		cycles_passed = check_destruction_process(cycles_passed);
 		//cycle_process(); //remplissage de la fetchqueue ou delai, ou exec d'autre chose qu'un fork ou un live ou une ecriture memoire
 		//read_memory(); //stocker les infos en memoire. pourquoi pas carrement dupliquer g_vm avant et apres changement ? dans cycle_process ?
 		//write_memory(); //si ecriture simultanee, parralelisme : le dernier process cree joue en premier.
@@ -77,3 +76,29 @@ int		cycling(void)
 		ft_dump();
 	return (0);
 }
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃
+**┃ ------ Le Pole Question
+**┃
+**┃ - Lors de l'arrivee sur une instruction viable, parser l'instruction et la stocker dans la fetchqueue ?
+**┃ ----> Comportement a verifier par corruption de l'instruction pendant le delay
+**┃ - Lors de l'arrivee sur une instruction viable, garder en memoire les valeurs
+**┃ des variables pouvant etre ecrasee ?
+**┃ ----> Comportement a verifier par corruption des valeurs pendant le delay
+**┃ ----> Il est vraisemblable que ce sera lors de l'exec que l'on ira chercher les valeurs des parametres
+**┃
+**┃ - Mouvement du PC. A mon avis : PC bouge a chaque instruction, jump s'il faut jump etc.
+**┃ Le curseur visible de la VM n'est pas le PC, mais un vrai cursor en recherche de la prochaine instruction.
+**┃ Sur ..|00|.. c'est le cursor qui se deplace, et le PC est laisse avant.
+**┃ Je pense qu'il faudrait suivre le verbose 16 de la VM dans un premier temps
+**┃ Maybe.
+**┃ ----> a confirmer
+**┃
+**┃
+**┃
+**┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
