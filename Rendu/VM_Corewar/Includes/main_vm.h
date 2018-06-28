@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/28 13:29:32 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/28 14:22:18 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -132,7 +132,7 @@ t_process					*lstnew_vm(int *registers,
 */
 
 int							ft_dump(void);
-int							print_color(int i, int *p);
+int							print_color(int i, int *p, int pc);
 /*
 **----------------OP_H---------------
 */

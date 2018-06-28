@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/28 13:08:10 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/28 13:54:55 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,6 +27,7 @@ static	int check_players_process()
 
 static int		check_destruction_process(int cycles_passed)
 {
+	// la verif ne se fait que si on a atteint CYCLE_TO_DIE cycles
 	if (cycles_passed == g_vm->cycle_to_die)
 	{
 		g_vm->checks++;

@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/29 14:00:54 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 22:56:22 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/28 14:00:03 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,6 +31,8 @@ static char		*ft_checkcolor(char *str)
 		return (ft_strdup("\033[35m"));
 	else if (ft_strncmp(str, "{green}", 7) == 0)
 		return (ft_strdup("\033[32m"));
+	else if (ft_strncmp(str, "{n_white}", 7) == 0)
+		return (ft_strdup("\033[47m"));
 	return (NULL);
 }
 
