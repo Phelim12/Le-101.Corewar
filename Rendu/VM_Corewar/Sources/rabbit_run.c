@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 17:39:07 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/28 11:30:06 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -48,6 +48,25 @@ static int		increment(cycles_passed)
 	cycles_passed++;
 	return (cycles_passed);
 }
+
+static void		ft_dump()
+{
+	int	i;
+	int	per_line;
+	long	adress;
+
+	i = 0;
+	adress = (long)&g_vm->map[i];
+	while (i < MEM_SIZE)
+	{
+		per_line = 32;
+		ft_printf("%.4p : ", &g_vm->map[i] - adress);
+		while (--per_line >= 0)
+			ft_printf("%.2x ", g_vm->map[i++]);
+		ft_printf("\n");
+	}
+}
+
 int		cycling(void)
 {
 	unsigned int cycles_passed;
@@ -71,7 +90,6 @@ int		cycling(void)
 		//dprintf(1, "cycle_passed %d\n cycle_to_die %u\n", cycles_passed, g_vm->cycle_to_die);
 	}
 	if (g_vm->dump == 1)
-		;
-		//ft_dump();
+		ft_dump();
 	return (0);
 }
