@@ -13,6 +13,15 @@
 
 #include "main_asm.h"
 
+void	init_parser(t_line **result, t_pos *pos, char *buf, int *ret)
+{
+	(*buf) = 0;
+	(*ret) = 1;
+	(*pos) = init_pos(1, 0);
+	(*result) = ft_memalloc(sizeof(t_line));
+	(*result)->start = (*result);
+}
+
 int		pass_comment(t_cmd *cmds, char *buf, int fd)
 {
 	while ((read(fd, buf, 1)) > 0)
@@ -38,13 +47,4 @@ int		special_read(t_pos *pos, char *buf, int ret, int fd)
 		return ((*buf) ? ret : 0);
 	}
 	return (1);
-}
-
-void	init_parser(t_line **result, t_pos *pos, char *buf, int *ret)
-{
-	(*buf) = 0;
-	(*ret) = 1;
-	(*pos) = init_pos(1, 0);
-	(*result) = ft_memalloc(sizeof(t_line));
-	(*result)->start = (*result);
 }

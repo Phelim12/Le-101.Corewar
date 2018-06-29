@@ -63,9 +63,9 @@ int		add_line(t_line **result, t_pos *pos, char *buf, int fd)
 		return (ret);
 	else
 		(*result)->line = (*result)->line->start;
+	(*result)->size = (*result)->start->size;
 	(*result)->line->octet = count_byte_instruction(*result, (*result)->line);
 	(*result)->start->size += (*result)->line->octet;
-	(*result)->size = (*result)->start->size;
 	if ((*result)->start->size > CHAMP_MAX_SIZE)
 		print_error_size_code(*result);
 	previous = (*result);

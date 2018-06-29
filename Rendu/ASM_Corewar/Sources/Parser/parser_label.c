@@ -58,7 +58,6 @@ void	add_label(t_label **result, t_line *file, t_cmd *line)
 	(*result)->name = ft_strdup(line->data);
 	(*result)->name[ft_strlen((*result)->name + 1)] = 0;
 	(*result)->value = init_label_value(file, line);
-	printf("[%s] [%d] \n", (*result)->name, (*result)->value);
 }
 
 void	parser_label(t_line *file)

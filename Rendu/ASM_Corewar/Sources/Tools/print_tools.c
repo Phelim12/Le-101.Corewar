@@ -13,15 +13,6 @@
 
 #include "main_asm.h"
 
-void	print_coord_token(int nbr, int fd)
-{
-	if (nbr < 100)
-		ft_putchar_fd('0', fd);
-	if (nbr < 10)
-		ft_putchar_fd('0', fd);
-	ft_putnbr_fd(nbr, fd);
-}
-
 /*
 ** DEBUG
 */

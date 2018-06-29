@@ -46,6 +46,7 @@
 # define CMD_COMMENT			".comment"
 # define NUMBER_CHARS			"0123456789"
 # define DIRECT_CHARS			"-0123456789"
+# define WRITING_MSG			"Writing output program to %s\n"
 # define INSTRUCTION_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789"
 # define LABEL_CHARS			"abcdefghijklmnopqrstuvwxyz_0123456789:"
 # define VALID_CHARS			"abcdefghijklmnopqrstuvwxyz_0123456789#%:.,-\""
@@ -119,6 +120,42 @@ typedef struct	s_file
 }				t_file;
 
 /*
+** write_file
+*/
+
+char	*name_exec_file(const char *name);
+void		write_code(t_line *file, int fd);
+void	write_header(t_header header, int fd);
+void	write_file(t_file info, char const *argv[]);
+
+/*
+** write_instruction
+*/
+
+void	write_register(t_cmd *ptr, int fd);
+void	write_indirect(t_line *tmp, t_cmd *ptr, int fd);
+void	write_direct_int(t_line *tmp, t_cmd *ptr, int fd);
+void	write_direct_short(t_line *tmp, t_cmd *ptr, int fd);
+void	write_instruction(t_line *tmp, t_cmd *cmds, int fd);
+
+/*
+** write_tools
+*/
+
+void	write_binary_int(int fd, int nb);
+void	write_binary_short(int fd, short nb);
+void	convert_short(unsigned char **ptr ,int n);
+void	convert_integer(unsigned char **ptr ,int n);
+
+
+/*
+** write_tools
+*/
+
+void		parser_code(t_line *file);
+
+
+/*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 **┃                              convert_binary.c                              ┃
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
@@ -180,6 +217,8 @@ void		free_label(t_label *lab);
 void		label_exist(t_line *file, t_label *lab);
 void		check_duplicate_label(t_label *label, t_line *file);
 void		label_exist_next(t_line *file, t_cmd *cmd, t_label *label);
+int			label_byte(t_label *label, char *label_name);
+
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -198,6 +237,7 @@ void		parser_label(t_line *file);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+void		file_not_exist(char const *argv[]);
 void		print_error_size_code(t_line *file);
 void		print_error_malloc_fail(t_line *file);
 void		print_error_msg(t_cmd *cmd, int msg_error);
@@ -205,6 +245,7 @@ void		print_error_lexical(t_line *result, t_pos position);
 void		print_error_token(t_line *file, t_cmd *cmd, int msg_error);
 void		print_error_size_header(t_line *file, char *cmd, int size);
 void		print_error_params(t_line *file, t_cmd *params, int index, int type);
+void		cant_create_file(char const *argv[], char *name_exec, t_file info);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

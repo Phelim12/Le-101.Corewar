@@ -13,6 +13,20 @@
 
 #include "main_asm.h"
 
+int		label_byte(t_label *label, char *label_name)
+{
+	t_label *tmp;
+
+	tmp = label;
+	while (tmp)
+	{
+		if (!(ft_strcmp(tmp->name, label_name)))
+			return (tmp->value);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
 void	check_duplicate_label(t_label *label, t_line *file)
 {
 	t_label *ptr_1;

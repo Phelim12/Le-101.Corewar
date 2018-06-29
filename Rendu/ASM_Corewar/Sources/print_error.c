@@ -20,12 +20,37 @@ void	print_error_malloc_fail(t_line *file)
 	exit(EXIT_FAILURE);
 }
 
+void	print_coord_token(int nbr, int fd)
+{
+	if (nbr < 100)
+		ft_putchar_fd('0', fd);
+	if (nbr < 10)
+		ft_putchar_fd('0', fd);
+	ft_putnbr_fd(nbr, fd);
+}
+
 void	print_error_size_code(t_line *file)
 {
 	ft_putstr_fd("Code contains too many bytes (Max length ", 2);
 	ft_putnbr_fd(CHAMP_MAX_SIZE, 2);
 	ft_putendl_fd(")", 2);
 	free_file(file);
+	exit(EXIT_FAILURE);
+}
+
+void	file_not_exist(char const *argv[])
+{
+	ft_putstr_fd(argv[0] + 2, 2);
+	ft_putstr_fd(": ", 2);
+	perror(argv[1]);
+	exit(EXIT_FAILURE);
+}
+
+void	cant_create_file(char const *argv[], char *name_exec, t_file info)
+{
+	ft_putstr_fd(argv[0], 2);
+	perror(name_exec);
+	free_file(info.file);
 	exit(EXIT_FAILURE);
 }
 
