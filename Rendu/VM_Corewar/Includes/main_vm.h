@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/28 16:23:00 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/03 11:46:13 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -230,6 +230,20 @@ t_process					*lstnew_vm(int *registers,
 
 int							ft_dump(void);
 int							print_color(int i, int *p, int pc);
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃
+**┃ ------Functions in cycle.c
+**┃
+**┃ Cycling
+**┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+int						cycle_process(void);
+unsigned char			*read_instruction(void);
+t_process				*get_last_proc(void);
 
 /*
 **----------------OP_H---------------

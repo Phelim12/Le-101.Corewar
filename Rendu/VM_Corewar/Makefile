@@ -6,7 +6,7 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/12/08 18:11:02 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2018/06/28 11:51:14 by jjanin-r    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/03 11:40:36 by jjanin-r    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -26,7 +26,7 @@ DIR_SRC = Sources/
 DIR_INC = Includes/
 
 NAME_SRC = main_vm.c parse_args_vm.c utils_vm.c init.c read_champs.c \
- rabbit_run.c lst_vm.c dump.c
+ rabbit_run.c lst_vm.c dump.c cycle.c
 
 NAME_INC = main_vm.h
 
