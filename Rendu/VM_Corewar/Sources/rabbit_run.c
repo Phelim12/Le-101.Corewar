@@ -6,28 +6,12 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/03 11:15:23 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/03 11:38:23 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../Includes/main_vm.h"
-
-int		cycle_process()
-{
-	t_process *proc;
-
-	proc = get_last_proc(); //on chope le processus a exec en premier (le dernier de la liste ?)
-	while (proc)
-	{
-		if (!proc->cycle_delay)
-			proc->fetchqueue = read_instruction(); //on read l'instruction + le bit d'encodage et on l'insere dans la fetchqueue
-		else
-			proc->cycle_delay--;
-		proc = proc->next;
-	}
-	return (0);
-}
 
 static	int check_players_process()
 {
