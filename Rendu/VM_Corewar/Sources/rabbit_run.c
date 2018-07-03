@@ -6,12 +6,28 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/28 16:36:35 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/03 11:15:23 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../Includes/main_vm.h"
+
+int		cycle_process()
+{
+	t_process *proc;
+
+	proc = get_last_proc(); //on chope le processus a exec en premier (le dernier de la liste ?)
+	while (proc)
+	{
+		if (!proc->cycle_delay)
+			proc->fetchqueue = read_instruction(); //on read l'instruction + le bit d'encodage et on l'insere dans la fetchqueue
+		else
+			proc->cycle_delay--;
+		proc = proc->next;
+	}
+	return (0);
+}
 
 static	int check_players_process()
 {
@@ -72,6 +88,7 @@ int		cycling(void)
 		cycles_passed = increment(cycles_passed);
 //		dprintf(1, "cycle_passed %d\n cycle_to_die %u\n", cycles_passed, g_vm->cycle_to_die);
 	}
+	dprintf(1, "cycles_passed = %d\n", cycles_passed);
 	if (g_vm->dump == 1)
 		ft_dump();
 	return (0);
@@ -95,7 +112,7 @@ int		cycling(void)
 **┃ Je pense qu'il faudrait suivre le verbose 16 de la VM dans un premier temps
 **┃ Maybe.
 **┃ ----> a confirmer
-**┃
+**┃	/!\ SEGV sur ./corewar -d 1500
 **┃
 **┃
 **┃

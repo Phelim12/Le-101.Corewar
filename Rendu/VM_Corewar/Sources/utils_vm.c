@@ -6,12 +6,26 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 15:43:36 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/28 14:49:04 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/03 10:21:33 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "main_vm.h"
+
+int		free_all(void)
+{
+	unsigned int i;
+
+	i = 0;
+	while (i < g_vm->nb_players)
+		free(g_vm->champion[i++]);
+	free(g_vm->champion);
+	ft_strdel(&g_vm->p_map);
+	ft_strdel((char **)&g_vm->map);
+	free(g_vm);
+	return (0);
+}
 
 void	free_process(t_process *list)
 {
@@ -73,13 +87,13 @@ int		process_remove_if_live(t_process **begin_list, int lives)
 
 void	introduction(void)
 {
-	int j = 1;
 	unsigned int i = 0;
 
 	ft_printf("Introducing contestants...\n");
 	while (i < g_vm->nb_players)
 	{
-		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n", j++,
+		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
+				g_vm->champion[i]->num, // num du champion ou ordre ? on laisse un player 0 ou on commence a 1 ?
 				g_vm->champion[i]->prog_size,
 				g_vm->champion[i]->name,
 				g_vm->champion[i]->comment);
@@ -97,9 +111,7 @@ void	print_usage(void)
 int		check_data(void)
 {
 	unsigned int i;
-	char *error;
 
-	error = NULL;
 	i = -1;
 	while (++i < g_vm->nb_players)
 	{
@@ -120,10 +132,7 @@ int		error_vm(char *s, int c)
 		ft_printf("Error: File %s has too large a code (%d bytes > %d bytes)\n", g_vm->champion[c]->filename, g_vm->champion[c]->prog_size, MEM_SIZE / 6);
 	else
 		ft_printf(s);
-	while (i < g_vm->nb_players)
-		free(g_vm->champion[i++]);
-	free(g_vm->champion);
-	free(g_vm);
+	free_all();
 	exit(1);
 	return (-1)
 		;}

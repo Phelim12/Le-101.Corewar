@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 18:53:41 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/03 11:05:05 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,6 +29,7 @@ int			init_process(unsigned int a)
 		tmp_reg[1] = g_vm->champion[a]->num;
 		tmp_reg[0] = (g_vm->nb_players - a - 1) * MEM_SIZE / g_vm->nb_players;
 		new = lstnew_vm(tmp_reg, tmp_fetch, REG_SIZE * REG_NUMBER + 1, 64);
+		new->cycle_delay = 0;
 		if (g_vm->list_process == NULL)
 			g_vm->list_process = new;
 		else
