@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   write_instruction.c                              .::    .:/ .      .::   */
+/*   write_params.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/06/29 16:13:45 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/29 16:13:45 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/07/05 17:42:41 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2018/07/05 17:42:41 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -71,11 +71,11 @@ void	write_direct_int(t_line *tmp, t_cmd *ptr, int fd)
 	{
 		label_value = label_byte(tmp->label, (ptr->data + 2));
 		nb_ind = label_value - tmp->size;
-		write_binary_short(fd, nb_ind);
+		write_binary_int(fd, nb_ind);
 	}
 }
 
-void	write_instruction(t_line *tmp, t_cmd *cmds, int fd)
+void	write_params(t_line *tmp, t_cmd *cmds, int fd)
 {
 	t_cmd	*ptr;
 	t_op	info;

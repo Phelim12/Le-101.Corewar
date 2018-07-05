@@ -43,7 +43,7 @@ void	write_code(t_line *file, int fd)
 		while (ptr)
 		{
 			if (ptr->token == INSTRUCTION)
-				write_instruction(tmp, ptr, fd);
+				write_params(tmp, ptr, fd);
 			ptr = ptr->next;
 		}
 		tmp = tmp->next;
@@ -70,7 +70,7 @@ void	write_file(t_file info, char const *argv[])
 		cant_create_file(argv, name_exec, info);
 	write_header(info.header, fd);
 	write_code(info.file, fd);
-	ft_printf(WRITING_MSG, name_exec);
+	ft_printf(MSG_WRITING, name_exec);
 	ft_strdel(&name_exec);
 	close(fd);
 }

@@ -1,31 +1,53 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   parser_tools.c                                   .::    .:/ .      .::   */
+/*   tools_parser.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/06/18 23:30:38 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/18 23:30:38 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/07/05 17:48:13 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2018/07/05 17:48:13 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "main_asm.h"
 
-void	init_parser(t_line **result, t_pos *pos, char *buf, int *ret)
+t_pos	init_pos(int y, int x)
+{
+	t_pos	result;
+
+	result.x = x;
+	result.y = y;
+	return (result);
+}
+
+void	init_parser(t_line **ptr, t_pos *pos, char *buf, int *ret)
 {
 	(*buf) = 0;
 	(*ret) = 1;
 	(*pos) = init_pos(1, 0);
-	(*result) = ft_memalloc(sizeof(t_line));
-	(*result)->start = (*result);
+	(*ptr) = ft_memalloc(sizeof(t_line));
+	(*ptr)->start = (*ptr);
+}
+
+char	*realloc_str(char *str, int size)
+{
+	char	*result;
+	int		var;
+
+	var = -1;
+	result = ft_strnew(size + BUFF_ELEM);
+	while (str && str[++var])
+		result[var] = str[var];
+	free(str);
+	return (result);
 }
 
 int		pass_comment(t_cmd *cmds, char *buf, int fd)
 {
 	while ((read(fd, buf, 1)) > 0)
-		if ((*buf) == LINE_CHAR)
+		if ((*buf) == CHAR_LINE)
 		{
 			if (cmds && !(cmds->data))
 				read(fd, buf, 1);

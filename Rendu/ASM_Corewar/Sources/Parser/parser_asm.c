@@ -15,10 +15,10 @@
 
 int		cmd_is_good(char *cmd)
 {
-	if (cmd[0] == CMD_CHAR &&
+	if (cmd[0] == CHAR_CMD &&
 		ft_strcmp(cmd, CMD_NAME) && ft_strcmp(cmd, CMD_COMMENT))
 		return (1);
-	if ((ft_count_chars(cmd, NEGATIVE_CHAR)) > 1)
+	if ((ft_count_chars(cmd, CHAR_NEGATIVE)) > 1)
 		return (1);
 	if (!(ft_strcmp(cmd, "%")))
 		return (1);
@@ -34,7 +34,7 @@ int		add_cmd(t_cmd **result, t_pos *pos, char *buf, int fd)
 	t_cmd	*previous;
 	int		string;
 
-	string = (*buf == STRING_CHAR) ? 1 : 0;
+	string = (*buf == CHAR_STRING) ? 1 : 0;
 	previous = (*result) ? (*result) : NULL;
 	(*result) = (*result) ? (*result)->next : (*result);
 	(*result) = ft_memalloc(sizeof(t_cmd));
@@ -43,7 +43,7 @@ int		add_cmd(t_cmd **result, t_pos *pos, char *buf, int fd)
 		previous->next = (*result);
 	(*result)->start = (previous) ? previous->start : (*result);
 	(*buf) = parser_elem(pos, &((*result)->data), (*buf), fd);
-	if ((*buf) != STRING_CHAR && cmd_is_good((*result)->data))
+	if ((*buf) != CHAR_STRING && cmd_is_good((*result)->data))
 		return (0);
 	if (!((*result)->token))
 		(*result)->token = token_dispenser((*result)->data, buf, string);
@@ -64,7 +64,7 @@ int		add_line(t_line **result, t_pos *pos, char *buf, int fd)
 	else
 		(*result)->line = (*result)->line->start;
 	(*result)->size = (*result)->start->size;
-	(*result)->line->octet = count_byte_instruction(*result, (*result)->line);
+	(*result)->line->octet = parser_instruction(*result, (*result)->line);
 	(*result)->start->size += (*result)->line->octet;
 	if ((*result)->start->size > CHAMP_MAX_SIZE)
 		print_error_size_code(*result);
@@ -86,13 +86,13 @@ t_line	*parser(t_line *result, int fd)
 	init_parser(&result, &pos, &buf, &ret);
 	while ((ret = special_read(&pos, &buf, ret, fd)))
 	{
-		if ((!(ft_strchr(VALID_CHARS, buf)) && !(ft_iscntrl(buf))))
+		if ((!(ft_strchr(CHARS_VALID, buf)) && !(ft_iscntrl(buf))))
 			print_error_lexical(result, pos);
-		else if (buf == COMMENT_CHAR)
+		else if (buf == CHAR_COMMENT)
 			ret = pass_comment(result->line, &buf, fd);
-		else if (buf == LINE_CHAR)
+		else if (buf == CHAR_LINE)
 			ret = add_line(&result, &pos, &buf, fd);
-		else if (ft_strchr(VALID_CHARS, buf))
+		else if (ft_strchr(CHARS_VALID, buf))
 			if (!(add_cmd(&(result->line), &pos, &buf, fd)))
 				print_error_lexical(result, result->line->pos);
 	}

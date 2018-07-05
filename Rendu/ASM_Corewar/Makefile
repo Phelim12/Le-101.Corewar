@@ -27,27 +27,33 @@ DIR_TOOLS = $(addprefix $(DIR_SRC), Tools/)
 
 DIR_WRITE = $(addprefix $(DIR_SRC), Write/)
 
+DIR_ERROR = $(addprefix $(DIR_SRC), Error/)
+
 DIR_PARSER = $(addprefix $(DIR_SRC), Parser/)
 
 DIR_INC = Includes/
 
-NAME_SRC = main_asm.c print_error.c op.c
+NAME_SRC = main_asm.c
 
-WRITE_SRC = write_file.c write_instruction.c write_tools.c
+WRITE_SRC = write_file.c write_params.c
 
-TOOLS_SRC = asm_tools.c token_tools.c free_tools.c byte_tools.c
+ERROR_SRC = error_asm.c error_file.c error_token.c
+
+TOOLS_SRC = tools_byte.c tools_free.c tools_label.c tools_parser.c \
+			tools_token.c tools_op.c tools_write.c
 
 PARSER_SRC = parser_header.c parser_label.c parser_asm.c parser_elem.c \
-			parser_tools.c label_error.c count_byte.c parser_code.c 
+			 parser_code.c
 
-NAME_INC = main_asm.h op.h
+NAME_INC = asm_define.h asm_functions.h main_asm.h asm_enum.h asm_struct.h op.h
 
 INC = $(addprefix $(DIR_INC), $(NAME_INC))
 
 SRC = $(addprefix $(DIR_SRC), $(NAME_SRC)) \
 	  $(addprefix $(DIR_TOOLS), $(TOOLS_SRC)) \
 	  $(addprefix $(DIR_WRITE), $(WRITE_SRC)) \
-	  $(addprefix $(DIR_PARSER), $(PARSER_SRC)) 
+	  $(addprefix $(DIR_ERROR), $(ERROR_SRC)) \
+	  $(addprefix $(DIR_PARSER), $(PARSER_SRC))
 
 OBJ = $(SRC:.c=.o)
 

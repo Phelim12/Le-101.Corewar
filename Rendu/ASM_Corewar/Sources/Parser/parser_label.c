@@ -34,8 +34,10 @@ int 	init_label_value(t_line *file, t_cmd *line)
 	while ((file = file->next))
 	{
 		ptr = file->line->start;
-		if ((ptr->token == INSTRUCTION) || (ptr->token == END))
+		if (ptr->token == INSTRUCTION)
 			return (file->size);
+		if (ptr->token == END)
+			return (file->prev->size);
 		if (ptr->token != LABEL && ptr->token != ENDLINE)
 			print_error_token(file, ptr, SYNTAX_MSG);
 	}

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   byte_tools.c                                     .::    .:/ .      .::   */
+/*   tools_byte.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/06/28 15:48:44 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/28 15:48:44 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/07/05 17:46:47 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2018/07/05 17:46:47 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,4 +46,22 @@ int		size_params(t_op info, int type)
 	if (type == T_DIR && !(info.size_dir))
 		return (DIR_SIZE);
 	return (0);
+}
+
+int		byte_info_params(t_line *file, t_cmd *cmd, t_op info, int type)
+{
+	static int	bit_shift = 8;
+	static int	index = 0;
+	int			byte;
+	int			code;
+
+	byte = 0;
+	code = code_params(type);
+	if (has_arg(info.params[index++], type))
+		byte = (code << (bit_shift -= 2));
+	else
+		print_error_params(file, cmd, index - 1, type);
+	if (!(info.params[index]) && (bit_shift = 8))
+		index = 0;
+	return (byte);
 }

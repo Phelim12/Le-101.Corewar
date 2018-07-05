@@ -1,40 +1,42 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   print_tools.c                                    .::    .:/ .      .::   */
+/*   asm_enum.h                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/06/18 21:55:04 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/18 21:55:04 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/07/05 19:04:15 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2018/07/05 19:04:15 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "main_asm.h"
+#ifndef ASM_ENUM_H
+# define ASM_ENUM_H
 
-/*
-** DEBUG
-*/
-
-void	print_line(t_cmd *pointer)
+typedef enum		e_msg
 {
-	while (pointer)
-	{
-		if (pointer->token == ENDLINE)
-			ft_printf("\n", pointer->data);
-		else
-			ft_printf("[%s] %s", pointer->data, token_name(pointer->token));
-		pointer = pointer->next;
-	}
-}
+	SYNTAX_MSG,
+	DUP_LABEL_MSG,
+	NOT_EXIST_LABEL_MSG,
+	INVALID_INSTRUCTION_MSG,
+}					t_msg;
 
-void	print_file(t_line *pointer)
+typedef enum		e_token
 {
-	while (pointer)
-	{
-		print_line(pointer->line);
-		pointer = pointer->next;
-	}
-	ft_printf("\n");
-}
+	END,
+	LABEL,
+	DIRECT,
+	STRING,
+	ENDLINE,
+	INDIRECT,
+	REGISTER,
+	SEPARATOR,
+	INSTRUCTION,
+	DIRECT_LABEL,
+	COMMAND_NAME,
+	INDIRECT_LABEL,
+	COMMAND_COMMENT,
+}					t_token;
+
+#endif

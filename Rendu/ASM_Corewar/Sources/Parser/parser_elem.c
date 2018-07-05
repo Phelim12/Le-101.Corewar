@@ -15,13 +15,13 @@
 
 int		stop_elem(char *str, char start, char buf, int var)
 {
-	if (start == STRING_CHAR)
-		return ((buf == STRING_CHAR) ? 1 : 0);
-	if (buf == LABEL_CHAR && ft_strchr(str, LABEL_CHAR))
+	if (start == CHAR_STRING)
+		return ((buf == CHAR_STRING) ? 1 : 0);
+	if (buf == CHAR_LABEL && ft_strchr(str, CHAR_LABEL))
 		return (1);
-	if (buf == DIRECT_CHAR && ft_strchr(str, DIRECT_CHAR))
+	if (buf == CHAR_DIRECT && ft_strchr(str, CHAR_DIRECT))
 		return (1);
-	if (var && str[0] != DIRECT_CHAR && str[var] == LABEL_CHAR)
+	if (var && str[0] != CHAR_DIRECT && str[var] == CHAR_LABEL)
 		return (1);
 	return (0);
 }
@@ -29,18 +29,18 @@ int		stop_elem(char *str, char start, char buf, int var)
 char	*init_parser_elem(char **str, int *var, char start, char buf)
 {
 	(*str) = ft_strnew(BUFF_ELEM);
-	(*var) = (start == STRING_CHAR) ? -1 : 0;
-	(*str)[0] = (start != STRING_CHAR) ? start : 0;
-	if (start == NEGATIVE_CHAR)
-		return (NUMBER_CHARS);
-	if (start == CMD_CHAR)
-		return (CMD_CHARS);
-	if (start == DIRECT_CHAR && buf == LABEL_CHAR)
-		return (LABEL_CHARS);
-	if (start == DIRECT_CHAR)
-		return (DIRECT_CHARS);
-	if (ft_strchr(LABEL_CHARS, start))
-		return (LABEL_CHARS);
+	(*var) = (start == CHAR_STRING) ? -1 : 0;
+	(*str)[0] = (start != CHAR_STRING) ? start : 0;
+	if (start == CHAR_NEGATIVE)
+		return (CHARS_NUMBER);
+	if (start == CHAR_CMD)
+		return (CHARS_CMD);
+	if (start == CHAR_DIRECT && buf == CHAR_LABEL)
+		return (CHARS_LABEL);
+	if (start == CHAR_DIRECT)
+		return (CHARS_DIRECT);
+	if (ft_strchr(CHARS_LABEL, start))
+		return (CHARS_LABEL);
 	return (NULL);
 }
 
@@ -55,11 +55,11 @@ char	parser_elem(t_pos *pos, char **str, char start, int fd)
 	pattern = init_parser_elem(str, &var, start, buf);
 	while (ret > 0)
 	{
-		*pos = (buf == LINE_CHAR && start == STRING_CHAR) \
+		*pos = (buf == CHAR_LINE && start == CHAR_STRING) \
 		? init_pos(pos->y + 1, 0) : init_pos(pos->y, pos->x + 1);
 		if (stop_elem(*str, start, buf, var))
 			return (buf);
-		if (start != STRING_CHAR && (!pattern || !(ft_strchr(pattern, buf))))
+		if (start != CHAR_STRING && (!pattern || !(ft_strchr(pattern, buf))))
 			return (buf);
 		if ((var > 0) && !(var % (BUFF_ELEM - 1)))
 			(*str) = realloc_str((*str), var);

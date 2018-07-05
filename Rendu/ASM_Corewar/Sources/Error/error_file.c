@@ -1,36 +1,30 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   tools_asm.c                                      .::    .:/ .      .::   */
+/*   error_file.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/06/09 18:53:36 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/11 15:16:51 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/07/05 20:25:01 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2018/07/05 20:25:01 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "main_asm.h"
 
-t_pos	init_pos(int y, int x)
+void	file_not_exist(char const *argv[])
 {
-	t_pos	result;
-
-	result.x = x;
-	result.y = y;
-	return (result);
+	ft_putstr_fd(argv[0] + 2, 2);
+	ft_putstr_fd(": ", 2);
+	perror(argv[1]);
+	exit(EXIT_FAILURE);
 }
 
-char	*realloc_str(char *str, int size)
+void	cant_create_file(char const *argv[], char *name_exec, t_file info)
 {
-	char	*result;
-	int		var;
-
-	var = -1;
-	result = ft_strnew(size + BUFF_ELEM);
-	while (str && str[++var])
-		result[var] = str[var];
-	free(str);
-	return (result);
+	ft_putstr_fd(argv[0], 2);
+	perror(name_exec);
+	free_file(info.file);
+	exit(EXIT_FAILURE);
 }
