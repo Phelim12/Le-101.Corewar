@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/03 11:05:05 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/10 10:29:50 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -162,13 +162,16 @@ void		init_vm(char const **argv)
 
 	if ((tmp = (t_vm*)malloc(sizeof(t_vm))))
 		g_vm = tmp;
-	g_vm->dump = 0;
-	g_vm->checks = 0;
-	g_vm->d_cycles = 0;
 	g_vm->cycle_to_die = CYCLE_TO_DIE;
 	g_vm->cycle = 0;
-	g_vm->nb_players = 0;
+	g_vm->checks = 0;
+	g_vm->champion = NULL;
 	g_vm->list_process = NULL;
+	g_vm->map = NULL;
+	g_vm->p_map = NULL;
+	g_vm->dump = 0;
+	g_vm->d_cycles = 0;
+	g_vm->nb_players = 0;
 	init_champs(argv);
 	init_map();
 }

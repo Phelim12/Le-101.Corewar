@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/03 11:38:10 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/03 11:47:57 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/10 11:20:48 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,26 +15,33 @@
 
 int		cycle_process()
 {
-	t_process *proc;
+	t_process	*proc;
 
-	proc = get_last_proc(); //on chope le processus a exec en premier (la liste est dans l'ordre ?)
+	proc = g_vm->list_process;
 	while (proc)
 	{
-		if (!proc->cycle_delay)
+		if (!proc->cycle_delay && !proc->fetchqueue)
 		{
-			proc->fetchqueue = read_instruction(); //jump au prochain op puis read l'instruction + le bit d'encodage et on l'insere dans la fetchqueue
+//			proc->fetchqueue = read_instruction(); //jump au prochain op puis read l'instruction + le bit d'encodage et on l'insere dans la fetchqueue
+		}
+		else if (!proc->cycle_delay && proc->fetchqueue)
+		{
+			//exec_process();
 		}
 		else
 			proc->cycle_delay--;
-		proc = proc->next;
 	}
 	return (0);
 }
 
 /*
-t_process		*get_last_proc();
-{}
+unsigned char	*read_instruction()
+{
 
-unsigned char	*read_instruction();
-{}
+}
+
+void			*exec_process()
+{
+
+}
 */

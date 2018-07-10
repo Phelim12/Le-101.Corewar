@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 15:43:36 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/03 10:21:33 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/10 10:37:43 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -129,10 +129,11 @@ int		error_vm(char *s, int c)
 	if (!ft_strcmp("open", s))
 		ft_printf("Can't read source file %s\n", g_vm->champion[c]->filename);
 	else if (!ft_strcmp("size", s))
-		ft_printf("Error: File %s has too large a code (%d bytes > %d bytes)\n", g_vm->champion[c]->filename, g_vm->champion[c]->prog_size, MEM_SIZE / 6);
+		ft_printf("Error: File %s has too large a code (%d bytes > %d bytes)\n",
+		g_vm->champion[c]->filename, g_vm->champion[c]->prog_size, MEM_SIZE / 6);
 	else
 		ft_printf(s);
 	free_all();
 	exit(1);
-	return (-1)
-		;}
+	return (-1);
+}

@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/03 11:38:23 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/10 10:40:24 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -72,7 +72,7 @@ int		cycling(void)
 		cycles_passed = increment(cycles_passed);
 //		dprintf(1, "cycle_passed %d\n cycle_to_die %u\n", cycles_passed, g_vm->cycle_to_die);
 	}
-	dprintf(1, "cycles_passed = %d\n", cycles_passed);
+//	dprintf(1, "cycles_passed = %d\n", cycles_passed);
 	if (g_vm->dump == 1)
 		ft_dump();
 	return (0);
@@ -96,9 +96,9 @@ int		cycling(void)
 **┃ Je pense qu'il faudrait suivre le verbose 16 de la VM dans un premier temps
 **┃ Maybe.
 **┃ ----> a confirmer
-**┃	/!\ SEGV sur ./corewar -d 1500
+**┃	/!\ SEGV sur ./corewar -d 1500 --> SOLVED (pb lors de l'init et le free_all, des trucs pas instancies)
 **┃
-**┃
+**┃ LEAKS ?
 **┃
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
