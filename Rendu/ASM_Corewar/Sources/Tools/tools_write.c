@@ -13,13 +13,13 @@
 
 #include "main_asm.h"
 
-void	convert_short(unsigned char **ptr ,int n)
+void	convert_short(unsigned char **ptr, int n)
 {
 	(*ptr)[0] = (n >> 8) & 0xFF;
 	(*ptr)[1] = n & 0xFF;
 }
 
-void	convert_integer(unsigned char **ptr ,int n)
+void	convert_integer(unsigned char **ptr, int n)
 {
 	(*ptr)[0] = (n >> 24) & 0xFF;
 	(*ptr)[1] = (n >> 16) & 0xFF;

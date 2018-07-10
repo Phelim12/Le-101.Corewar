@@ -23,7 +23,7 @@ t_label	*init_parser_label(void)
 	return (result);
 }
 
-int 	init_label_value(t_line *file, t_cmd *line)
+int		init_label_value(t_line *file, t_cmd *line)
 {
 	t_cmd	*ptr;
 

@@ -45,7 +45,7 @@ t_op	*get_op_tab(void)
 	return (g_op_tab);
 }
 
-int 	has_arg(char args, int query)
+int		has_arg(char args, int query)
 {
 	return (args & query);
 }

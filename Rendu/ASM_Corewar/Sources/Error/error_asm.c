@@ -45,7 +45,7 @@ void	print_error_size_header(t_line *file, char *cmd, int size)
 	exit(EXIT_FAILURE);
 }
 
-void	print_error_params(t_line *file, t_cmd *params, int index, int type)
+void	print_error_params(t_line *file, t_cmd *params, int nb, int type)
 {
 	t_cmd *ptr;
 
@@ -53,7 +53,7 @@ void	print_error_params(t_line *file, t_cmd *params, int index, int type)
 	while (ptr->token != INSTRUCTION)
 		ptr = ptr->prev;
 	ft_putstr_fd(MSG_PARAMS_1, 2);
-	ft_putnbr_fd(index, 2);
+	ft_putnbr_fd(nb, 2);
 	ft_putstr_fd(MSG_PARAMS_2, 2);
 	if (type == 1)
 		ft_putstr_fd(MSG_REG, 2);

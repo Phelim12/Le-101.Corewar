@@ -1,18 +1,19 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   op.c                                               :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: zaz <marvin@42.fr>                         +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/10/04 11:43:01 by zaz               #+#    #+#             */
-/*   Updated: 2013/11/06 14:44:35 by zaz              ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   tools_op.c                                       .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2018/07/05 22:10:59 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2018/07/05 22:10:59 by clcreuso    ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
 
-#include "op.h"
+#include "main_asm.h"
 
-t_op    op_tab[17] =
+t_op	g_op_tab[17] =
 {
 	{"live", 1, {T_DIR}, 1, 10, "alive", 0, 0},
 	{"ld", 2, {T_DIR | T_IND, T_REG}, 2, 5, "load", 1, 0},
@@ -39,21 +40,23 @@ t_op    op_tab[17] =
 	{0, 0, {0}, 0, 0, 0, 0, 0}
 };
 
-t_op		*get_op_tab(void)
+t_op	*get_op_tab(void)
 {
-	return (op_tab);
+	return (g_op_tab);
 }
 
-int			cmd_exist(char *cmd)
+int		has_arg(char args, int query)
 {
-	int i;
+	return (args & query);
+}
 
-	i = 0;
-	while (i < OP_TAB_LENGTH)
-	{
-		if (!(ft_strcmp(get_op_tab()[i].name, cmd)))
-			return (gopt()[i]);
-		i++;
-	}
-	return (gopt()[OP_TAB_LENGTH]);
+t_op	instruction_exist(char *cmd)
+{
+	int var;
+
+	var = -1;
+	while (g_op_tab[++var].name)
+		if (!(ft_strcmp(g_op_tab[var].name, cmd)))
+			return (g_op_tab[var]);
+	return (g_op_tab[var]);
 }

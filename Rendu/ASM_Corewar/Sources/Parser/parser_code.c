@@ -50,7 +50,7 @@ int		parser_params(t_line *file, t_cmd *cmds, int *info_params)
 		result += size_params(info, type);
 		cmds = cmds->next;
 		if (stop_params(file, cmds, info))
-			break;
+			break ;
 	}
 	cmds = cmds->start;
 	return (result);
@@ -62,12 +62,12 @@ int		parser_instruction(t_line *file, t_cmd *cmds)
 
 	result = 0;
 	cmds = (cmds->token == LABEL) ? cmds->next : cmds;
-	if (cmds->token == ENDLINE || 
+	if (cmds->token == ENDLINE ||
 		cmds->token == COMMAND_NAME ||
 		cmds->token == COMMAND_COMMENT)
 		return (0);
 	if (cmds->token == INSTRUCTION)
-	{	
+	{
 		if ((instruction_exist(cmds->data)).name)
 			result = parser_params(file, cmds, (&cmds->info));
 		else

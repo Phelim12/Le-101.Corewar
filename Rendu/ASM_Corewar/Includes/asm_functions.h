@@ -34,7 +34,7 @@
 void		print_error_size_code(t_line *file);
 void		print_error_lexical(t_line *result, t_pos position);
 void		print_error_size_header(t_line *file, char *cmd, int size);
-void		print_error_params(t_line *file, t_cmd *params, int index, int type);
+void		print_error_params(t_line *file, t_cmd *params, int nb, int type);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -172,7 +172,7 @@ void		label_exist_next(t_line *file, t_cmd *cmd, t_label *label);
 
 t_op		*get_op_tab(void);
 t_op		instruction_exist(char *cmd);
-int 		has_arg(char args, int query);
+int			has_arg(char args, int query);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -203,8 +203,8 @@ int			token_dispenser(char *cmd, char *buf, int string);
 
 void		write_binary_int(int fd, int nb);
 void		write_binary_short(int fd, short nb);
-void		convert_short(unsigned char **ptr ,int n);
-void		convert_integer(unsigned char **ptr ,int n);
+void		convert_short(unsigned char **ptr, int n);
+void		convert_integer(unsigned char **ptr, int n);
 
 /*
 **╔════════════════════════════════════════════════════════════════════════════╗
