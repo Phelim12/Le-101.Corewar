@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/03 11:46:13 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/12 10:45:47 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -132,6 +132,18 @@ typedef struct				s_vm
 
 t_vm						*g_vm;
 
+typedef struct		s_op
+{
+	char			*name;
+	char			nparams;
+	char			params[4];
+	char			opcode;
+	int				cycles;
+	char			*desc;
+	char			info_params;
+	char			size_dir;
+}					t_op;
+
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 **┃
@@ -242,8 +254,33 @@ int							print_color(int i, int *p, int pc);
 */
 
 int						cycle_process(void);
-unsigned char			*read_instruction(void);
 t_process				*get_last_proc(void);
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃
+**┃ ------Functions in read.c
+**┃
+**┃ Reading
+**┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+t_op			get_reg(int cursor, t_op instruction, int i);
+t_op			get_ind(int cursor, t_op instruction, int i);
+t_op			get_dir(int cursor, t_op instruction, int i);
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃
+**┃ ------Functions in tools_op.c
+**┃
+**┃ tools
+**┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+t_op	get_opcode(char op_code);
 
 /*
 **----------------OP_H---------------
