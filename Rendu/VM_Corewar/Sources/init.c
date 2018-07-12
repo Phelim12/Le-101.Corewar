@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/10 10:29:50 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/12 11:55:48 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,11 +16,11 @@
 int			init_process(unsigned int a)
 {
 	int				*tmp_reg;
-	unsigned char	*tmp_fetch;
+	t_op			*tmp_fetch;
 	t_process		*new;
 
 	if (!(tmp_reg = (int*)malloc(REG_SIZE * REG_NUMBER + 1)) ||
-			!(tmp_fetch = (unsigned char*)malloc(64)))
+			!(tmp_fetch = (t_op *)malloc(sizeof(t_op))))
 		return (-1);
 	else
 	{

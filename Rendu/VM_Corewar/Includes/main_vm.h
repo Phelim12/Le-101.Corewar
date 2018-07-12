@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/12 10:45:47 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/12 11:48:37 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -227,7 +227,7 @@ void						lstiter_vm(t_process *lst,
 							void (*f)(t_process *elem));
 void						lstadd_vm(t_process **alst, t_process *mew);
 t_process					*lstnew_vm(int *registers,
-							unsigned char *fetchqueue, int reg_size,
+							t_op *fetchqueue, int reg_size,
 							int fetch_size);
 
 /*

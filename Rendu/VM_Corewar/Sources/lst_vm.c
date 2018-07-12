@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/27 12:22:43 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/10 10:46:39 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/12 11:48:41 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,7 +30,7 @@ void		lstiter_vm(t_process *lst, void (*f)(t_process *elem))
 	}
 }
 
-t_process	*lstnew_vm(int *registers, unsigned char *fetchqueue, int reg_size,
+t_process	*lstnew_vm(int *registers, t_op *fetchqueue, int reg_size,
 		int fetch_size)
 {
 	t_process *new;
