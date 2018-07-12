@@ -31,6 +31,7 @@ int		main(int argc, char const *argv[])
 		}
 		else
 			print_error_token(info.file, info.file->line, SYNTAX_MSG);
+		verbose_file(info);
 		write_file(info, argv);
 		free_file(info.file);
 	}
