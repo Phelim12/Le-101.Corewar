@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/27 12:22:43 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/12 11:48:41 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/12 16:09:14 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,11 +30,12 @@ void		lstiter_vm(t_process *lst, void (*f)(t_process *elem))
 	}
 }
 
-t_process	*lstnew_vm(int *registers, t_op *fetchqueue, int reg_size,
-		int fetch_size)
+t_process	*lstnew_vm(int *registers, int reg_size)
 {
-	t_process *new;
+	t_process	*new;
+	int			i;
 
+	i = 0;
 	new = (t_process*)malloc(sizeof(t_process));
 	if (!new)
 		return (NULL);
@@ -46,13 +47,10 @@ t_process	*lstnew_vm(int *registers, t_op *fetchqueue, int reg_size,
 			return (NULL);
 		ft_memcpy(new->registers, registers, reg_size);
 	}
-	if (!fetchqueue)
-		new->fetchqueue = NULL;
-	else
+	while (i < 4)
 	{
-		if (!(new->fetchqueue = malloc(fetch_size)))
-			return (NULL);
-		ft_memcpy(new->fetchqueue, fetchqueue, fetch_size);
+		new->fetchqueue[i][0] = 0;
+		new->fetchqueue[i++][1] = -1;
 	}
 	new->live = 0;
 	new->cycle_delay = 0;

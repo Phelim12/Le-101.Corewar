@@ -26,5 +26,6 @@
 # include "asm_enum.h"
 # include "asm_struct.h"
 # include "asm_functions.h"
+# include "colors_define.h"
 
 #endif

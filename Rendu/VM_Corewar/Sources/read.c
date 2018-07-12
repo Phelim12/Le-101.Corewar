@@ -6,20 +6,19 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/10 16:59:52 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/12 10:58:20 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/12 17:17:23 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../Includes/main_vm.h"
 
-t_op			get_reg(int cursor, t_op instruction, int i)
+int				get_reg(int cursor)
 {
-	instruction.params[i] = g_vm->map[cursor];
-	return (instruction);
+	return (g_vm->map[cursor]);
 }
 
-t_op			get_dir(int cursor, t_op instruction, int i)
+int				get_dir(int cursor, t_op instruction)
 {
 	int		ret;
 	int		j;
@@ -33,12 +32,10 @@ t_op			get_dir(int cursor, t_op instruction, int i)
 		ret = (ret << 8) | g_vm->map[cursor + j + 1];
 		j++;
 	}
-	instruction.params[i] = ret;
-	return (instruction);
+	return ((size == 2 ? (short)ret : ret));
 }
 
-t_op			get_ind(int cursor, t_op instruction, int i)
+int				get_ind(int cursor)
 {
-	instruction.params[i] = g_vm->map[cursor] << 8 | g_vm->map[cursor + 1];
-	return (instruction);
+	return (g_vm->map[cursor] << 8 | g_vm->map[cursor + 1]);
 }

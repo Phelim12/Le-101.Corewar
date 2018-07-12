@@ -13,64 +13,53 @@
 
 #include "main_asm.h"
 
-char	*name_exec_file(const char *name)
+void	verbose_code(t_line *file, t_line *tmp)
 {
-	char	*result;
-	char	*str;
-
-	result = ft_strnew(ft_strlen(name) + 5);
-	ft_strcat(result, name);
-	if ((str = ft_strrchr(result, '.')))
-	{
-		str[1] = 'c';
-		str[2] = 'o';
-		str[3] = 'r';
-	}
-	else
-		ft_strcat(result, ".cor");
-	return (result);
-}
-
-void	write_code(t_line *file, int fd)
-{
-	t_line	*tmp;
 	t_cmd	*ptr;
 
 	tmp = file;
 	while (tmp)
 	{
 		ptr = tmp->line->start;
+		if (ptr->token != END && ptr->token != ENDLINE)
+			ft_printf("\n\n%s|%d  [%d]|%s", ITLC, tmp->size, ptr->octet, C_END);
 		while (ptr)
 		{
+			if (ptr->token == LABEL)
+				ft_printf(" %s(%s)%s", LGRAY, ptr->data, C_END);
 			if (ptr->token == INSTRUCTION)
-				write_params(tmp, ptr, fd);
+			{
+				ft_printf("\n%s%s%s %s->%s ", INST, ptr->data, 
+					C_END, YELLOW, C_END);
+				verbose_params(tmp, ptr);
+			}
 			ptr = ptr->next;
 		}
 		tmp = tmp->next;
 	}
 }
 
-void	write_header(t_header header, int fd)
+void	verbose_header(t_header header)
 {
-	write_binary_int(fd, header.magic);
-	write(fd, header.name, NAME_LENGTH);
-	write_binary_int(fd, 0);
-	write_binary_int(fd, header.prog_size);
-	write(fd, header.comment, COMMENT_LENGTH);
-	write_binary_int(fd, 0);
+	char *ptr1;
+	char *ptr2;
+
+	ft_printf("\n---------------------\n");
+	ft_printf("%sMagic number :%s 0x%s\n", DGRAY, C_END,
+			ptr1 = ft_utoa_base(header.magic, "0123456789abcdef"));
+	ft_printf("%sName         :%s \"%s\"\n", BRED, C_END, header.name);
+	ft_printf("%sSize         :%s %d Bytes - 0x%s\n", DGRAY, C_END,
+			header.prog_size,
+			ptr2 = ft_utoa_base(header.prog_size, "0123456789abcdef"));
+	ft_printf("%sComment      :%s \"%s\"", BRED, C_END, header.comment);
+	ft_printf("\n---------------------\n\n");
+	ft_memdel((void**)&ptr1);
+	ft_memdel((void**)&ptr2);
 }
 
-void	write_file(t_file info, char const *argv[])
+void	verbose_file(t_file info)
 {
-	char	*name_exec;
-	int		fd;
-
-	name_exec = name_exec_file(argv[1]);
-	if ((fd = open(name_exec, O_WRONLY | O_TRUNC | O_CREAT, 0600)) == -1)
-		cant_create_file(argv, name_exec, info);
-	write_header(info.header, fd);
-	write_code(info.file, fd);
-	ft_printf(MSG_WRITING, name_exec);
-	ft_strdel(&name_exec);
-	close(fd);
+	verbose_header(info.header);
+	verbose_code(info.file, NULL);
+	ft_printf("\n\n");
 }

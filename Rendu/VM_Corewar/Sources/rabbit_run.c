@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/12 10:34:03 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/12 17:25:47 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,6 +31,7 @@ static int		check_destruction_process(int cycles_passed)
 	if (cycles_passed == g_vm->cycle_to_die)
 	{
 		g_vm->checks++;
+		//DIANTRE DOUBLE DECREMENTATION ??
 		if (process_remove_if_live(&g_vm->list_process, 0) >= NBR_LIVE || g_vm->checks >= MAX_CHECKS)
 		{
 			g_vm->cycle_to_die -= CYCLE_DELTA;
