@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 15:43:36 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/10 10:37:43 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/13 16:00:21 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,7 +30,6 @@ int		free_all(void)
 void	free_process(t_process *list)
 {
 	free(list->registers);
-	free(list->fetchqueue);
 	free(list);
 }
 

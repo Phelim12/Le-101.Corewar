@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/12 17:25:47 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/13 15:53:52 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -71,7 +71,7 @@ int		cycling(void)
 		//exec_fork();
 		//exec_live();
 		cycles_passed = increment(cycles_passed);
-//		dprintf(1, "cycle_passed %d\n cycle_to_die %u\n", cycles_passed, g_vm->cycle_to_die);
+		//dprintf(1, "cycle_passed %d\n cycle_to_die %u\n", cycles_passed, g_vm->cycle_to_die);
 	}
 //	dprintf(1, "cycles_passed = %d\n", cycles_passed);
 	if (g_vm->dump == 1)

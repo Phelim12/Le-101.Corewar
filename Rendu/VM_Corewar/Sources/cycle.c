@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/03 11:38:10 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/12 17:16:39 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/13 16:00:34 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,8 +42,8 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 	int j = 0;
 	while (j < 4)
 	{
-		ft_printf("fetch[%d][0] = %d\n", j, (*proc)->fetchqueue[j][0]);
-		ft_printf("fetch[%d][1] = %d\n", j, (*proc)->fetchqueue[j][1]);
+		/*ft_printf("fetch[%d][0] = %d\n", j, (*proc)->fetchqueue[j][0]);
+		ft_printf("fetch[%d][1] = %d\n", j, (*proc)->fetchqueue[j][1]);*/
 		j++;
 	}
 	return (cursor);
@@ -73,12 +73,12 @@ static void				read_instruction(t_process **proc)
 		(*proc)->fetchqueue[i][0] = 0;
 		(*proc)->fetchqueue[i++][1] = -1;
 	}
-	dprintf(1, "PC = %d\n", (*proc)->registers[0]);
 	cursor = (*proc)->registers[0];
 	instruction = get_opcode(g_vm->map[cursor]);
-	ft_printf("OPCODE = %d\n", g_vm->map[cursor]);
-	ft_printf("instruction = %s\n", instruction.name);
-	dprintf(1, "info params = %d\n", instruction.info_params);
+//	dprintf(1, "PC = %d | Player : %d\n", (*proc)->registers[0], (*proc)->registers[1]);
+//	ft_printf("OPCODE = %d\n", g_vm->map[cursor]);
+//	ft_printf("instruction = %s\n", instruction.name);
+//	dprintf(1, "info params = %d\n", instruction.info_params);
 	if (instruction.info_params)
 		(*proc)->registers[0] = read_ocp(++cursor, instruction, proc) % MEM_SIZE;
 	else
@@ -88,6 +88,7 @@ static void				read_instruction(t_process **proc)
 int		cycle_process()
 {
 	t_process	*proc;
+
 	proc = g_vm->list_process;
 	while (proc)
 	{
