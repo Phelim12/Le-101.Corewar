@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/13 16:02:08 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/17 16:07:36 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,6 +46,7 @@
 **┃ typedef struct				s_process
 **┃ {
 **┃ 	int					*registers;		| Registers for the mighty champion
+**┃ 	char				carry;			| Dayum carry
 **┃ 	unsigned char		*fetchqueue;	| Current instruction saved
 **┃ 	int					cycle_delay;	| Number of cycles needed to exec instruction
 **┃ 	int					live;			| Number of live since last cycle_to_die
@@ -62,6 +63,7 @@
 typedef struct				s_process
 {
 	int					*registers;
+	char				carry;
 	int					fetchqueue[4][2];
 	int					cycle_delay;
 	int					live;
@@ -251,8 +253,8 @@ int							print_color(int i, int *p, int pc);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-int						cycle_process(void);
-t_process				*get_last_proc(void);
+int							cycle_process(void);
+t_process					*get_last_proc(void);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -264,9 +266,9 @@ t_process				*get_last_proc(void);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-int				get_reg(int cursor);
-int				get_ind(int cursor);
-int				get_dir(int cursor, t_op instruction);
+int							get_reg(int cursor);
+int							get_ind(int cursor);
+int							get_dir(int cursor, t_op instruction);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -278,7 +280,21 @@ int				get_dir(int cursor, t_op instruction);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-t_op	get_opcode(char op_code);
+t_op						get_opcode(char op_code);
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃
+**┃ ------Functions in tools_registers.c
+**┃
+**┃ tools for extract values from registers and fill registers
+**┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+
+long long int				extract(unsigned char *tab, unsigned char v_size,
+							unsigned char index,int t_size);
 
 /*
 **----------------OP_H---------------

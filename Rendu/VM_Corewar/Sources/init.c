@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/12 16:27:24 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/17 15:58:01 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,7 @@ int			init_process(unsigned int a)
 		return (-1);
 	else
 	{
-		ft_memset(tmp_reg, 0, REG_NUMBER + 1);
+		ft_memset(tmp_reg, 0, REG_NUMBER * REG_SIZE + 1);
 		tmp_reg[1] = g_vm->champion[a]->num;
 		tmp_reg[0] = (g_vm->nb_players - a - 1) * MEM_SIZE / g_vm->nb_players;
 		new = lstnew_vm(tmp_reg, REG_SIZE * REG_NUMBER + 1);

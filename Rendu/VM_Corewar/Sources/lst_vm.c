@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/27 12:22:43 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/12 16:09:14 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/17 15:57:36 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -54,6 +54,7 @@ t_process	*lstnew_vm(int *registers, int reg_size)
 	}
 	new->live = 0;
 	new->cycle_delay = 0;
+	new->carry = 0;
 	new->next = NULL;
 	return (new);
 }
