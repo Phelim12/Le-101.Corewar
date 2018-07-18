@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 17:57:30 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/18 18:03:18 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/18 18:38:19 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -54,5 +54,5 @@ void		ft_fork(t_process **proc)
 	int aim;
 
 	aim = (*proc)->registers[0] + (*proc)->fetchqueue[0][1] % IDX_MOD;
-	//creer un nouveau process a g_vm->map[aim];
+	//creer une copie du process a g_vm->map[aim];
 }

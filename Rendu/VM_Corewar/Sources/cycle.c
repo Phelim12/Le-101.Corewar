@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/03 11:38:10 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/18 15:54:58 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/18 18:52:58 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -96,11 +96,7 @@ int		cycle_process()
 		{
 			read_instruction(&proc); //jump au prochain op puis read l'instruction + le bit d'encodage et on l'insere dans la fetchqueue
 		}
-		else if (!proc->cycle_delay)
-		{
-			//exec_process(); FAIRE L'EXECUTION EN DEHORS, DANS cycling, de rabbit_runbit_run.c
-		}
-		else
+		else if (proc->cycle_delay > 0)
 			proc->cycle_delay--;
 		proc = proc->next;
 	}
