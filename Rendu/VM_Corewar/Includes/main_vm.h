@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/18 18:00:54 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/18 19:32:45 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -257,6 +257,9 @@ int							print_color(int i, int *p, int pc);
 
 int							cycle_process(void);
 t_process					*get_last_proc(void);
+void						exec_fork();
+void						exec_live();
+void						exec_process();
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

@@ -6,12 +6,14 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 17:57:30 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/18 18:38:19 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/18 19:44:30 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../Includes/main_vm.h"
+
+// manque la gestion des labels
 
 void		ft_lld(t_process **proc)
 {

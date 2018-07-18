@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/03 11:38:10 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/18 18:52:58 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/18 19:39:37 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,9 +40,9 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 		i++;
 	}
 	int j = 0;
+	ft_printf("OPCODE = %d | %s\n", (*proc)->op, instruction.name);
 	while (j < 4)
 	{
-		dprintf(1, "OPCODE = %d | %s\n", (*proc)->op, instruction.name);
 		ft_printf("fetch[%d][0] = %d\n", j, (*proc)->fetchqueue[j][0]);
 		ft_printf("fetch[%d][1] = %d\n", j, (*proc)->fetchqueue[j][1]);
 		j++;
@@ -83,6 +83,76 @@ static void				read_instruction(t_process **proc)
 		(*proc)->registers[0] = read_ocp(++cursor, instruction, proc) % MEM_SIZE;
 	else
 		(*proc)->registers[0] = read_params(++cursor, instruction, proc) % MEM_SIZE;
+}
+
+void	run(t_process *proc)
+{
+	if (proc->op == 2)
+		ft_ld(&proc);
+	if (proc->op == 3)
+		ft_st(&proc);
+	if (proc->op == 4)
+		ft_add(&proc);
+	if (proc->op == 5)
+		ft_sub(&proc);
+	if (proc->op == 6)
+		ft_and(&proc);
+	if (proc->op == 7)
+		ft_or(&proc);
+	if (proc->op == 8)
+		ft_xor(&proc);
+	if (proc->op == 9)
+		ft_zjmp(&proc);
+	if (proc->op == 10)
+		ft_ldi(&proc);
+	if (proc->op == 11)
+		ft_sti(&proc);
+	if (proc->op == 13)
+		ft_lld(&proc);
+	if (proc->op == 14)
+		ft_lldi(&proc);
+	if (proc->op == 16)
+		ft_aff(&proc);
+}
+
+void	exec_live()
+{
+	t_process *proc;
+
+	proc = g_vm->list_process;
+	while (proc)
+	{
+		if (proc->op == 1)
+			ft_live(&proc);
+		proc = proc->next;
+	}
+}
+
+void	exec_fork()
+{
+	t_process *proc;
+
+	proc = g_vm->list_process;
+	while (proc)
+	{
+		if (proc->op == 12)
+			ft_fork(&proc);
+		if (proc->op == 15)
+			ft_lfork(&proc);
+		proc = proc->next;
+	}
+}
+
+void	exec_process()
+{
+	t_process *proc;
+
+	proc = g_vm->list_process;
+	while (proc)
+	{
+		run(proc);
+		proc = proc->next;
+	}
 }
 
 int		cycle_process()
