@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/03 11:38:10 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/18 14:34:19 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/18 14:49:57 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -51,13 +51,12 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 
 static int			read_ocp(int cursor, t_op instruction, t_process **proc)
 {
-	unsigned char	ocp;
 
-	ocp = g_vm->map[cursor];
-	(*proc)->fetchqueue[0][0] = ocp >> 6 & 0x3;
-	(*proc)->fetchqueue[1][0] = ocp >> 4 & 0x3;
-	(*proc)->fetchqueue[2][0] = ocp >> 2 & 0x3;
-	(*proc)->fetchqueue[3][0] = ocp & 0x3;
+	(*proc)->ocp = g_vm->map[cursor];
+	(*proc)->fetchqueue[0][0] = (*proc)->ocp >> 6 & 0x3;
+	(*proc)->fetchqueue[1][0] = (*proc)->ocp >> 4 & 0x3;
+	(*proc)->fetchqueue[2][0] = (*proc)->ocp >> 2 & 0x3;
+	(*proc)->fetchqueue[3][0] = (*proc)->ocp & 0x3;
 	return (read_params(++cursor, instruction, proc));
 }
 

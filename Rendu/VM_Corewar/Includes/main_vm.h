@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/18 14:00:40 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/18 14:50:40 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -48,6 +48,7 @@
 **┃ 	int					*registers;		| Registers for the mighty champion
 **┃ 	char				carry;			| Dayum carry
 **┃ 	unsigned char		*fetchqueue;	| Current instruction saved
+**┃ 	char				ocp;			| Current ocp
 **┃ 	int					cycle_delay;	| Number of cycles needed to exec instruction
 **┃ 	int					live;			| Number of live since last cycle_to_die
 **┃ 	struct s_process	*next;			| Next and older process
@@ -65,6 +66,7 @@ typedef struct				s_process
 	int					*registers;
 	char				carry;
 	int					fetchqueue[4][2];
+	char				ocp;
 	int					cycle_delay;
 	int					live;
 	struct s_process	*next;
