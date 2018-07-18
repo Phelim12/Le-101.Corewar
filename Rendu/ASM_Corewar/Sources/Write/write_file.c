@@ -40,15 +40,8 @@ void	write_code(t_line *file, int fd)
 	while (tmp)
 	{
 		ptr = tmp->line->start;
-		if (ptr->token != END && ptr->token != ENDLINE)
-		{
-			ft_printf("\n%d\t", tmp->size);
-			ft_printf("(%d) :\n", ptr->octet);
-		}
 		while (ptr)
 		{
-			if (ptr->token != END && ptr->token != ENDLINE && ptr->token != SEPARATOR)
-				ft_printf("%s\t", ptr->data);
 			if (ptr->token == INSTRUCTION)
 				write_params(tmp, ptr, fd);
 			ptr = ptr->next;
