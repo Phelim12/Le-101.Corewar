@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/18 15:51:19 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/18 18:00:54 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -297,6 +297,33 @@ t_op						get_opcode(char op_code);
 
 long long int				extract(unsigned char *tab, unsigned char v_size,
 							unsigned char index,int t_size);
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃
+**┃ ------Instrtuctions (in instructX.c)
+**┃
+**┃ all instructions executions
+**┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+void						ft_live(t_process **proc);
+void						ft_ld(t_process **proc);
+void						ft_st(t_process **proc);
+void						ft_add(t_process **proc);
+void						ft_sub(t_process **proc);
+void						ft_and(t_process **proc);
+void						ft_or(t_process **proc);
+void						ft_xor(t_process **proc);
+void						ft_zjmp(t_process **proc);
+void						ft_ldi(t_process **proc);
+void						ft_sti(t_process **proc);
+void						ft_fork(t_process **proc);
+void						ft_lld(t_process **proc);
+void						ft_lldi(t_process **proc);
+void						ft_lfork(t_process **proc);
+void						ft_aff(t_process **proc);
 
 /*
 **----------------OP_H---------------
