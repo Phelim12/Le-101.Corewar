@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/03 11:38:10 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/17 15:13:09 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/18 14:34:19 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -98,7 +98,7 @@ int		cycle_process()
 		}
 		else if (!proc->cycle_delay)
 		{
-			//exec_process();
+			//exec_process(); FAIRE L'EXECUTION EN DEHORS, DANS cycling, de rabbit_runbit_run.c
 		}
 		else
 			proc->cycle_delay--;

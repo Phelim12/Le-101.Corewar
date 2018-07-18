@@ -6,14 +6,14 @@
 /*   By: magaspar <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/16 15:01:37 by magaspar     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/16 16:42:16 by magaspar    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/18 14:32:54 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../Includes/main_vm.h"
 
-int			find_player(t_process **proc, t_vm *g_vm)
+int			find_player(t_process **proc)
 {
 	int player;
 	
@@ -26,11 +26,11 @@ int			find_player(t_process **proc, t_vm *g_vm)
 	return (-1);
 }
 
-void		ft_live(t_process **proc, t_vm *g_vm)
+void		ft_live(t_process **proc)
 {
 	int player;
 
-	player = find_player(proc, g_vm);
+	player = find_player(proc);
 	/*if (is_win(proc))
 	{
 		//check_win before/after cycle ?

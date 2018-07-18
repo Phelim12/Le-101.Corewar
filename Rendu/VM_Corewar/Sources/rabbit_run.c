@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/13 15:53:52 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/18 14:34:18 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -61,7 +61,7 @@ int		cycling(void)
 			(g_vm->dump == 0 || g_vm->cycle < g_vm->d_cycles))
 	{
 		cycles_passed = check_destruction_process(cycles_passed);
-		cycle_process(); //remplissage de la fetchqueue ou delai, ou exec d'autre chose qu'un fork ou un live ou une ecriture memoire
+		cycle_process();//remplissage de la fetchqueue ou delai, ou exec d'autre chose qu'un fork ou un live ou une ecriture memoire
 		//read_memory(); //stocker les infos en memoire. pourquoi pas carrement dupliquer g_vm avant et apres changement ? dans cycle_process ?
 		//write_memory(); //si ecriture simultanee, parralelisme : le dernier process cree joue en premier.
 			// /!\ /!\
