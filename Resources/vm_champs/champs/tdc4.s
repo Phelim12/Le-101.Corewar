@@ -2,8 +2,7 @@
 .comment	"ta mere elle fait du rodeo sur les kfar"
 .extend
 
-
-debut:	
+debut:
 	st	r1, :li1+1
 	st	r1, :li2+1
 	ld	%100, r4

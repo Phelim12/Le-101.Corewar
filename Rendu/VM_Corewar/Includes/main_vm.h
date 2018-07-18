@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/03 11:46:13 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/18 14:50:40 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,7 +46,9 @@
 **┃ typedef struct				s_process
 **┃ {
 **┃ 	int					*registers;		| Registers for the mighty champion
+**┃ 	char				carry;			| Dayum carry
 **┃ 	unsigned char		*fetchqueue;	| Current instruction saved
+**┃ 	char				ocp;			| Current ocp
 **┃ 	int					cycle_delay;	| Number of cycles needed to exec instruction
 **┃ 	int					live;			| Number of live since last cycle_to_die
 **┃ 	struct s_process	*next;			| Next and older process
@@ -62,7 +64,9 @@
 typedef struct				s_process
 {
 	int					*registers;
-	unsigned char		*fetchqueue;
+	char				carry;
+	int					fetchqueue[4][2];
+	char				ocp;
 	int					cycle_delay;
 	int					live;
 	struct s_process	*next;
@@ -84,6 +88,18 @@ typedef struct				s_process
 **┃ }							t_champ;
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
+
+typedef struct		s_op
+{
+	char			*name;
+	char			nparams;
+	char			params[4];
+	char			opcode;
+	int				cycles;
+	char			*desc;
+	char			info_params;
+	char			size_dir;
+}					t_op;
 
 typedef struct				s_champ
 {
@@ -214,9 +230,7 @@ int							cycling(void);
 void						lstiter_vm(t_process *lst,
 							void (*f)(t_process *elem));
 void						lstadd_vm(t_process **alst, t_process *mew);
-t_process					*lstnew_vm(int *registers,
-							unsigned char *fetchqueue, int reg_size,
-							int fetch_size);
+t_process					*lstnew_vm(int *registers, int reg_size);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -241,9 +255,48 @@ int							print_color(int i, int *p, int pc);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-int						cycle_process(void);
-unsigned char			*read_instruction(void);
-t_process				*get_last_proc(void);
+int							cycle_process(void);
+t_process					*get_last_proc(void);
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃
+**┃ ------Functions in read.c
+**┃
+**┃ Reading
+**┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+int							get_reg(int cursor);
+int							get_ind(int cursor);
+int							get_dir(int cursor, t_op instruction);
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃
+**┃ ------Functions in tools_op.c
+**┃
+**┃ tools
+**┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+t_op						get_opcode(char op_code);
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃
+**┃ ------Functions in tools_registers.c
+**┃
+**┃ tools for extract values from registers and fill registers
+**┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+
+long long int				extract(unsigned char *tab, unsigned char v_size,
+							unsigned char index,int t_size);
 
 /*
 **----------------OP_H---------------
