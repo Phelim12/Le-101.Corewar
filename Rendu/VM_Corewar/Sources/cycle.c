@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/03 11:38:10 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/18 14:49:57 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/18 15:54:58 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,8 +42,9 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 	int j = 0;
 	while (j < 4)
 	{
-		/*ft_printf("fetch[%d][0] = %d\n", j, (*proc)->fetchqueue[j][0]);
-		ft_printf("fetch[%d][1] = %d\n", j, (*proc)->fetchqueue[j][1]);*/
+		dprintf(1, "OPCODE = %d | %s\n", (*proc)->op, instruction.name);
+		ft_printf("fetch[%d][0] = %d\n", j, (*proc)->fetchqueue[j][0]);
+		ft_printf("fetch[%d][1] = %d\n", j, (*proc)->fetchqueue[j][1]);
 		j++;
 	}
 	return (cursor);
@@ -52,11 +53,10 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 static int			read_ocp(int cursor, t_op instruction, t_process **proc)
 {
 
-	(*proc)->ocp = g_vm->map[cursor];
-	(*proc)->fetchqueue[0][0] = (*proc)->ocp >> 6 & 0x3;
-	(*proc)->fetchqueue[1][0] = (*proc)->ocp >> 4 & 0x3;
-	(*proc)->fetchqueue[2][0] = (*proc)->ocp >> 2 & 0x3;
-	(*proc)->fetchqueue[3][0] = (*proc)->ocp & 0x3;
+	(*proc)->fetchqueue[0][0] = g_vm->map[cursor] >> 6 & 0x3;
+	(*proc)->fetchqueue[1][0] = g_vm->map[cursor] >> 4 & 0x3;
+	(*proc)->fetchqueue[2][0] = g_vm->map[cursor] >> 2 & 0x3;
+	(*proc)->fetchqueue[3][0] = g_vm->map[cursor] & 0x3;
 	return (read_params(++cursor, instruction, proc));
 }
 
@@ -74,6 +74,7 @@ static void				read_instruction(t_process **proc)
 	}
 	cursor = (*proc)->registers[0];
 	instruction = get_opcode(g_vm->map[cursor]);
+	(*proc)->op = g_vm->map[cursor];
 //	dprintf(1, "PC = %d | Player : %d\n", (*proc)->registers[0], (*proc)->registers[1]);
 //	ft_printf("OPCODE = %d\n", g_vm->map[cursor]);
 //	ft_printf("instruction = %s\n", instruction.name);

@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/18 14:50:40 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/18 15:51:19 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -66,7 +66,7 @@ typedef struct				s_process
 	int					*registers;
 	char				carry;
 	int					fetchqueue[4][2];
-	char				ocp;
+	char				op;
 	int					cycle_delay;
 	int					live;
 	struct s_process	*next;
