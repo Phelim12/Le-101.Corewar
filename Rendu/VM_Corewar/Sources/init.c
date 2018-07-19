@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/17 15:58:01 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/19 12:35:52 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -165,7 +165,9 @@ void		init_vm(char const **argv)
 	g_vm->list_process = NULL;
 	g_vm->map = NULL;
 	g_vm->p_map = NULL;
+	g_vm->last_live = -1;
 	g_vm->dump = 0;
+	g_vm->v = 0;
 	g_vm->d_cycles = 0;
 	g_vm->nb_players = 0;
 	init_champs(argv);

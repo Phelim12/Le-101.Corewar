@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/17 15:56:19 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/18 14:23:33 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/19 14:14:31 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,10 +26,10 @@ static long long int	fill_the_bone(long long int val)
 }
 
 /*
-** Extract from a tab the index-ieme value  when the tab is cut by v_size bytes
-** MSB is the most significant byte
-** t_size in bytes
-*/
+ ** Extract from a tab the index-ieme value  when the tab is cut by v_size bytes
+ ** MSB is the most significant byte
+ ** t_size in bytes
+ */
 
 long long int	extract(unsigned char *tab, unsigned char v_size,
 		unsigned char index, int t_size)
@@ -58,4 +58,33 @@ long long int	extract(unsigned char *tab, unsigned char v_size,
 		ft_printf("msb : %lld and val : %lld\n", msb, val);
 	}
 	return (val);
+}
+
+char		*itoo(int nb)
+{
+	char			*tab;
+
+	tab = malloc(sizeof(char) * 4);
+	tab[0] = (nb &		 0xF000) >> 12;
+	tab[1] = (nb & 0xF00) >> 8;
+	tab[2] = (nb & 0xF0) >> 4;
+	tab[3] = (nb & 0xF);
+	return (tab);
+}
+
+int			read_map(int index, int size)
+{
+	int				i;
+	unsigned int	ret;
+
+	ret = 0;
+	i = 0;
+	while (i < size)
+	{
+		ret += g_vm->map[index + i++] << 12;
+		ret += g_vm->map[index + i++] << 8;
+		ret += g_vm->map[index + i++] << 4;
+		ret += g_vm->map[index + i++];
+	}
+	return (ret);
 }

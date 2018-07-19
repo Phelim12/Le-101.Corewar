@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/03 11:38:10 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/18 19:39:37 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/19 13:04:59 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -39,15 +39,20 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 		param++;
 		i++;
 	}
-	int j = 0;
-	ft_printf("OPCODE = %d | %s\n", (*proc)->op, instruction.name);
-	while (j < 4)
+//	int j = 0;
+	ft_printf("OPCODE = %d | %s | type %d value %d | type %d value %d | type %d value %d\n", (*proc)->op, instruction.name,
+			(*proc)->fetchqueue[0][0], (*proc)->fetchqueue[0][1],
+			(*proc)->fetchqueue[1][0], (*proc)->fetchqueue[1][1],
+			(*proc)->fetchqueue[2][0], (*proc)->fetchqueue[2][1],
+			(*proc)->fetchqueue[3][0], (*proc)->fetchqueue[3][1]);
+	ft_printf("PC = %d\n", (*proc)->registers[0]);
+/*	while (j < 4)
 	{
 		ft_printf("fetch[%d][0] = %d\n", j, (*proc)->fetchqueue[j][0]);
 		ft_printf("fetch[%d][1] = %d\n", j, (*proc)->fetchqueue[j][1]);
 		j++;
 	}
-	return (cursor);
+*/	return (cursor);
 }
 
 static int			read_ocp(int cursor, t_op instruction, t_process **proc)
@@ -75,6 +80,7 @@ static void				read_instruction(t_process **proc)
 	cursor = (*proc)->registers[0];
 	instruction = get_opcode(g_vm->map[cursor]);
 	(*proc)->op = g_vm->map[cursor];
+	(*proc)->begin = cursor;
 //	dprintf(1, "PC = %d | Player : %d\n", (*proc)->registers[0], (*proc)->registers[1]);
 //	ft_printf("OPCODE = %d\n", g_vm->map[cursor]);
 //	ft_printf("instruction = %s\n", instruction.name);
@@ -150,6 +156,7 @@ void	exec_process()
 	proc = g_vm->list_process;
 	while (proc)
 	{
+		dprintf(1, "exec_process player %d\n", proc->registers[1]);
 		run(proc);
 		proc = proc->next;
 	}

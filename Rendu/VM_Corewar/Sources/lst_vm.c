@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/27 12:22:43 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/17 15:57:36 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/19 11:38:20 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -53,6 +53,7 @@ t_process	*lstnew_vm(int *registers, int reg_size)
 		new->fetchqueue[i++][1] = -1;
 	}
 	new->live = 0;
+	new->begin = registers[0];
 	new->cycle_delay = 0;
 	new->carry = 0;
 	new->next = NULL;

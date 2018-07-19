@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/18 19:32:45 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/19 12:47:16 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -64,6 +64,7 @@
 typedef struct				s_process
 {
 	int					*registers;
+	int					begin;
 	char				carry;
 	int					fetchqueue[4][2];
 	char				op;
@@ -139,9 +140,11 @@ typedef struct				s_vm
 	unsigned int	checks;
 	t_champ			**champion;
 	t_process		*list_process;
+	int				last_live;
 	unsigned char	*map;
 	char			*p_map;
 	int				dump;
+	int				v;
 	unsigned int	d_cycles;
 	unsigned int	nb_players;
 }							t_vm;
@@ -327,6 +330,7 @@ void						ft_lld(t_process **proc);
 void						ft_lldi(t_process **proc);
 void						ft_lfork(t_process **proc);
 void						ft_aff(t_process **proc);
+void						modify_carry(t_process **proc);
 
 /*
 **----------------OP_H---------------

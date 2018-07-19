@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 18:02:59 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/18 18:49:40 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/19 12:51:29 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,7 +17,7 @@ void		ft_lfork(t_process **proc)
 {
 	int aim;
 
-	aim = (*proc)->registers[0] + (*proc)->fetchqueue[0][1];
+	aim = (*proc)->begin + (*proc)->fetchqueue[0][1];
 	//creer une copie du process a g_vm->map[aim];
 }
 

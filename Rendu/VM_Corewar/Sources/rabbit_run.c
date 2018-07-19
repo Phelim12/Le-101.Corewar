@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/18 19:33:18 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/19 14:12:28 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,8 +60,10 @@ int		cycling(void)
 	while (check_players_process() > 0 &&
 			(g_vm->dump == 0 || g_vm->cycle < g_vm->d_cycles))
 	{
+		dprintf(1, "Parsing...\n");
 		cycles_passed = check_destruction_process(cycles_passed);
 		cycle_process();//remplissage de la fetchqueue ou delai, ou exec d'autre chose qu'un fork ou un live ou une ecriture memoire
+		dprintf(1, "Execution...\n");
 		exec_process();
 		// /!\ /!\
 		// /!\ /!\ les process sont tous stockes dans la vm, pas dans les champs.
@@ -69,9 +71,14 @@ int		cycling(void)
 		// // /!\ /!\ D'ou le fait de les enregistrer ensembles dans la vm. inutile d'une struct champ pour les registers.
 		exec_fork();
 		exec_live();
+		ft_dump();
 		cycles_passed = increment(cycles_passed);
-		//dprintf(1, "cycle_passed %d\n cycle_to_die %u\n", cycles_passed, g_vm->cycle_to_die);
+//		dprintf(1, "cycle_passed %d\n cycle_to_die %u\n", cycles_passed, g_vm->cycle_to_die);
+		dprintf(1, "Player %d last_lived\n----------------------------------------------------\n\n", g_vm->last_live);
+		if (g_vm->v)
+			ft_printf("Cycle %d\n", g_vm->cycle);
 	}
+
 //	dprintf(1, "cycles_passed = %d\n", cycles_passed);
 	if (g_vm->dump == 1)
 		ft_dump();
