@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/19 12:35:52 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/19 20:22:38 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,11 +18,11 @@ int			init_process(unsigned int a)
 	int				*tmp_reg;
 	t_process		*new;
 
-	if (!(tmp_reg = (int*)malloc(REG_SIZE * REG_NUMBER + 1)))
+	if (!(tmp_reg = (int*)malloc(REG_SIZE * REG_NUMBER)))
 		return (-1);
 	else
 	{
-		ft_memset(tmp_reg, 0, REG_NUMBER * REG_SIZE + 1);
+		ft_memset(tmp_reg, 0, REG_NUMBER * REG_SIZE);
 		tmp_reg[1] = g_vm->champion[a]->num;
 		tmp_reg[0] = (g_vm->nb_players - a - 1) * MEM_SIZE / g_vm->nb_players;
 		new = lstnew_vm(tmp_reg, REG_SIZE * REG_NUMBER + 1);

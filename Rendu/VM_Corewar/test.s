@@ -13,3 +13,5 @@ st			r5, 24
 st			r4, 80
 st			r2, 20
 sti			r2, 40, r3
+add			r2, r3, r7
+st			r7, 10
