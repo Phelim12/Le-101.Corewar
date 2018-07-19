@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 18:02:59 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/19 12:51:29 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/19 15:29:01 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,16 +23,22 @@ void		ft_lfork(t_process **proc)
 
 void		ft_add(t_process **proc)
 {
-	(*proc)->registers[(*proc)->fetchqueue[2][1]] =
-	(*proc)->registers[(*proc)->fetchqueue[0][1]] +
+	int		ret;
+
+	ret = (*proc)->registers[(*proc)->fetchqueue[0][1]] +
 	(*proc)->registers[(*proc)->fetchqueue[1][1]];
+	(*proc)->registers[(*proc)->fetchqueue[2][1]] = ret;
+	(*proc)->carry = (!ret ? 1 : 0);
 }
 
 void		ft_sub(t_process **proc)
 {
-	(*proc)->registers[(*proc)->fetchqueue[2][1]] =
-	(*proc)->registers[(*proc)->fetchqueue[0][1]] -
+	int		ret;
+	
+	ret = (*proc)->registers[(*proc)->fetchqueue[0][1]] -
 	(*proc)->registers[(*proc)->fetchqueue[1][1]];
+	(*proc)->registers[(*proc)->fetchqueue[2][1]] = ret;
+	(*proc)->carry = (!ret ? 1 : 0);
 }
 
 void		ft_or(t_process **proc)

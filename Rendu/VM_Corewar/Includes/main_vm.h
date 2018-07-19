@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/19 12:47:16 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/19 17:08:54 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -303,6 +303,9 @@ t_op						get_opcode(char op_code);
 
 long long int				extract(unsigned char *tab, unsigned char v_size,
 							unsigned char index,int t_size);
+unsigned int				read_map(int index, int size);
+unsigned char				*itoo(int nb);
+void						print(int player, int index, int value);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

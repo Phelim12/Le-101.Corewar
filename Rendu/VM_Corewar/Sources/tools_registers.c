@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/17 15:56:19 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/19 14:14:31 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/19 19:11:49 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,31 +60,38 @@ long long int	extract(unsigned char *tab, unsigned char v_size,
 	return (val);
 }
 
-char		*itoo(int nb)
+unsigned char		*itoo(int nb)
 {
-	char			*tab;
+	unsigned char	*tab;
 
-	tab = malloc(sizeof(char) * 4);
-	tab[0] = (nb &		 0xF000) >> 12;
-	tab[1] = (nb & 0xF00) >> 8;
-	tab[2] = (nb & 0xF0) >> 4;
-	tab[3] = (nb & 0xF);
+	tab = malloc(sizeof(unsigned char) * 4);
+	tab[0] = (nb & 0xFF000000) >> 24;
+	tab[1] = (nb & 0xFF0000) >> 16;
+	tab[2] = (nb & 0xFF00) >> 8;
+	tab[3] = (nb & 0xFF);
 	return (tab);
 }
 
-int			read_map(int index, int size)
+unsigned int		read_map(int index, int size)
 {
-	int				i;
-	unsigned int	ret;
+	int					i;
+	unsigned int		ret;
 
+	index %= MEM_SIZE;
 	ret = 0;
 	i = 0;
 	while (i < size)
 	{
-		ret += g_vm->map[index + i++] << 12;
+		ret += g_vm->map[index + i++] << 24;
+		ret += g_vm->map[index + i++] << 16;
 		ret += g_vm->map[index + i++] << 8;
-		ret += g_vm->map[index + i++] << 4;
 		ret += g_vm->map[index + i++];
 	}
 	return (ret);
+}
+
+void				print(int player, int index, int value)
+{
+	g_vm->map[index] = value;
+	g_vm->p_map[index] = player;
 }

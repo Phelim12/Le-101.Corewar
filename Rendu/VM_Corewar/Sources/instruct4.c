@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 18:06:55 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/19 12:46:35 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/19 16:06:55 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,12 +43,4 @@ void		ft_xor(t_process **proc)
 				(*proc)->fetchqueue[1][1];
 		}
 	}
-}
-
-void		modify_carry(t_process **proc)
-{
-	if (!(*proc)->carry)
-		(*proc)->carry = 1;
-	else
-		(*proc)->carry = 0;
 }
