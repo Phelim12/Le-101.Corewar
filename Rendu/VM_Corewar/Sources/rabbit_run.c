@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/19 14:12:28 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/20 15:28:50 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -71,7 +71,6 @@ int		cycling(void)
 		// // /!\ /!\ D'ou le fait de les enregistrer ensembles dans la vm. inutile d'une struct champ pour les registers.
 		exec_fork();
 		exec_live();
-		ft_dump();
 		cycles_passed = increment(cycles_passed);
 //		dprintf(1, "cycle_passed %d\n cycle_to_die %u\n", cycles_passed, g_vm->cycle_to_die);
 		dprintf(1, "Player %d last_lived\n----------------------------------------------------\n\n", g_vm->last_live);

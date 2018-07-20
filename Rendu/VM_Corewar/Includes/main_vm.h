@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/20 11:34:21 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/20 15:43:46 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -328,10 +328,10 @@ void						ft_xor(t_process **proc);
 void						ft_zjmp(t_process **proc);
 void						ft_ldi(t_process **proc);
 void						ft_sti(t_process **proc);
-void						ft_fork(t_process **proc);
+void						ft_fork(t_process **proc, t_process **begin);
 void						ft_lld(t_process **proc);
 void						ft_lldi(t_process **proc);
-void						ft_lfork(t_process **proc);
+void						ft_lfork(t_process **proc, t_process **begin);
 void						ft_aff(t_process **proc);
 int							check_registers(t_process *proc);
 

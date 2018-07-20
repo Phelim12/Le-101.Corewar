@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/03 11:38:10 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/20 14:41:47 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/20 15:47:06 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -96,95 +96,111 @@ void	run(t_process *proc)
 {
 	if (proc->op == 2)
 		ft_ld(&proc);
-	if (proc->op == 3)
+	else if (proc->op == 3)
 		ft_st(&proc);
-	if (proc->op == 4)
+	else if (proc->op == 4)
 		ft_add(&proc);
-	if (proc->op == 5)
+	else if (proc->op == 5)
 		ft_sub(&proc);
-	if (proc->op == 6)
+	else if (proc->op == 6)
 		ft_and(&proc);
-	if (proc->op == 7)
+	else if (proc->op == 7)
 		ft_or(&proc);
-	if (proc->op == 8)
+	else if (proc->op == 8)
 		ft_xor(&proc);
-	if (proc->op == 9)
+	else if (proc->op == 9)
 		ft_zjmp(&proc);
-	if (proc->op == 10)
+	else if (proc->op == 10)
 		ft_ldi(&proc);
-	if (proc->op == 11)
+	else if (proc->op == 11)
 		ft_sti(&proc);
-	if (proc->op == 13)
+	else if (proc->op == 13)
 		ft_lld(&proc);
-	if (proc->op == 14)
+	else if (proc->op == 14)
 		ft_lldi(&proc);
-	if (proc->op == 16)
+	else if (proc->op == 16)
 		ft_aff(&proc);
 }
 
 void	exec_live()
 {
-	t_process *proc;
+	t_process	**proc;
+	t_process	*begin;
 
-	proc = g_vm->list_process;
-	while (proc)
+	proc = &g_vm->list_process;
+	begin = g_vm->list_process;
+	while (*proc)
 	{
-		if (proc->op == 1)
-			ft_live(&proc);
-		proc = proc->next;
+		if ((*proc)->op == 1 && (*proc)->cycle_delay == 0)
+		{
+			dprintf(1, "exec_process_live player %d\n", (*proc)->registers[1]);
+			ft_live(proc);
+			(*proc)->cycle_delay = -1;
+		}
+		(*proc) = (*proc)->next;
 	}
+	g_vm->list_process = begin;
 }
 
 void	exec_fork()
 {
-	t_process *proc;
+	t_process	**proc;
+	t_process	*begin;
 
-	proc = g_vm->list_process;
-	while (proc)
+	proc = &g_vm->list_process;
+	begin = g_vm->list_process;
+	while (*proc)
 	{
-		if (proc->op == 12)
-			ft_fork(&proc);
-		if (proc->op == 15)
-			ft_lfork(&proc);
-		proc = proc->next;
+		if (((*proc)->op == 12 || (*proc)->op == 15) &&
+			(*proc)->cycle_delay == 0)
+		{
+			if ((*proc)->op == 12)
+				ft_fork(proc, &begin);
+			else if ((*proc)->op == 15)
+				ft_lfork(proc, &begin);
+			(*proc)->cycle_delay = -1;
+		}
+		(*proc) = (*proc)->next;
 	}
+	g_vm->list_process = begin;
 }
 
 void	exec_process()
 {
-	t_process *proc;
+	t_process	**proc;
+	t_process	*begin;
 
-	proc = g_vm->list_process;
-	while (proc)
+	proc = &g_vm->list_process;
+	begin = g_vm->list_process;
+	while (*proc)
 	{
-		dprintf(1, "exec_process player %d\n", proc->registers[1]);
-		if (check_registers(proc))
-			run(proc);
-		proc = proc->next;
+		dprintf(1, "exec_process player %d\n", (*proc)->registers[1]);
+		if (check_registers(*proc) && (*proc)->cycle_delay == 0 &&
+			(*proc)->op != 1 && (*proc)->op != 12 && (*proc)->op != 15)
+		{
+			run(*proc);
+			(*proc)->cycle_delay = -1;
+		}
+		(*proc) = (*proc)->next;
 	}
+	g_vm->list_process = begin;
 }
 
 int		cycle_process()
 {
-	t_process	*proc;
+	t_process	**proc;
+	t_process	*begin;
 
-	proc = g_vm->list_process;
-	while (proc)
+	proc = &g_vm->list_process;
+	begin = g_vm->list_process;
+	while (*proc)
 	{
-		if (proc->cycle_delay == -1)
-		{
-			read_instruction(&proc); //jump au prochain op puis read l'instruction + le bit d'encodage et on l'insere dans la fetchqueue
-		}
-		else if (proc->cycle_delay > 0)
-			proc->cycle_delay--;
-		proc = proc->next;
+		if ((*proc)->cycle_delay == -1)
+			read_instruction(proc); //jump au prochain op puis read l'instruction + le bit d'encodage et on l'insere dans la fetchqueue
+		else if ((*proc)->cycle_delay > 0)
+			(*proc)->cycle_delay--;
+		*proc = (*proc)->next;
 	}
+	g_vm->list_process = begin;
 	return (0);
 }
-
-/*
-void			*exec_process()
-{
-
-}
-*/

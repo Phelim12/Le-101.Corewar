@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 17:57:30 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/20 14:38:25 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/20 15:44:42 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -67,15 +67,14 @@ void		ft_aff(t_process **proc)
 	ft_printf("%c\n", c);
 }
 
-void		ft_fork(t_process **proc)
+void		ft_fork(t_process **proc, t_process **begin)
 {
-	int aim;
+	int				aim;
 	t_process		*new;
 
 	aim = (*proc)->begin + (*proc)->fetchqueue[0][1] % IDX_MOD;
 	dprintf(1, "aim = %d\n", aim);
 	new = lstnew_vm((*proc)->registers, REG_SIZE * REG_NUMBER);
 	new->registers[0] = aim;
-	lstadd_vm(&g_vm->list_process, new);
-	g_vm->list_process = new;
+	lstadd_vm(begin, new);
 }

@@ -6,14 +6,14 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 18:02:59 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/20 14:28:16 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/20 15:43:54 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../Includes/main_vm.h"
 
-void		ft_lfork(t_process **proc)
+void		ft_lfork(t_process **proc, t_process **begin)
 {
 	int				aim;
 	t_process		*new;
@@ -22,8 +22,7 @@ void		ft_lfork(t_process **proc)
 	dprintf(1, "aim = %d\n", aim);
 	new = lstnew_vm((*proc)->registers, REG_SIZE * REG_NUMBER);
 	new->registers[0] = aim;
-	lstadd_vm(&g_vm->list_process, new);
-	g_vm->list_process = new;
+	lstadd_vm(begin, new);
 }
 
 void		ft_add(t_process **proc)
