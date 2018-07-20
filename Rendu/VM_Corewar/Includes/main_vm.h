@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/19 17:08:54 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/20 11:34:21 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -333,7 +333,7 @@ void						ft_lld(t_process **proc);
 void						ft_lldi(t_process **proc);
 void						ft_lfork(t_process **proc);
 void						ft_aff(t_process **proc);
-void						modify_carry(t_process **proc);
+int							check_registers(t_process *proc);
 
 /*
 **----------------OP_H---------------

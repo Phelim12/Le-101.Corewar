@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/03 11:38:10 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/19 13:04:59 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/20 14:41:47 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -79,6 +79,7 @@ static void				read_instruction(t_process **proc)
 	}
 	cursor = (*proc)->registers[0];
 	instruction = get_opcode(g_vm->map[cursor]);
+	(*proc)->cycle_delay = instruction.cycles;
 	(*proc)->op = g_vm->map[cursor];
 	(*proc)->begin = cursor;
 //	dprintf(1, "PC = %d | Player : %d\n", (*proc)->registers[0], (*proc)->registers[1]);
@@ -157,7 +158,8 @@ void	exec_process()
 	while (proc)
 	{
 		dprintf(1, "exec_process player %d\n", proc->registers[1]);
-		run(proc);
+		if (check_registers(proc))
+			run(proc);
 		proc = proc->next;
 	}
 }

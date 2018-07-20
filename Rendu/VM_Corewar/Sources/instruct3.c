@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 18:02:59 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/19 20:45:57 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/20 14:28:16 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,34 +15,40 @@
 
 void		ft_lfork(t_process **proc)
 {
-	int aim;
+	int				aim;
+	t_process		*new;
 
 	aim = (*proc)->begin + (*proc)->fetchqueue[0][1];
-	//creer une copie du process a g_vm->map[aim];
+	dprintf(1, "aim = %d\n", aim);
+	new = lstnew_vm((*proc)->registers, REG_SIZE * REG_NUMBER);
+	new->registers[0] = aim;
+	lstadd_vm(&g_vm->list_process, new);
+	g_vm->list_process = new;
 }
 
 void		ft_add(t_process **proc)
 {
-	int		i;
-
-	i = 0;
-	while (++i < 4)
-		if ((*proc)->fetchqueue[i][0] == 1 && ((*proc)->fetchqueue[i][1] == 0 || (*proc)->fetchqueue[i][1] == 1))
-			return ;
 	(*proc)->registers[(*proc)->fetchqueue[2][1]] =
 		((*proc)->registers[(*proc)->fetchqueue[0][1]] +
 		 (*proc)->registers[(*proc)->fetchqueue[1][1]]);
 	(*proc)->carry = (!(*proc)->registers[(*proc)->fetchqueue[2][1]] ? 1 : 0);
+	dprintf(1, "1st param (%d) + 2nd param (%d) = %d\n",
+			(*proc)->registers[(*proc)->fetchqueue[0][1]],
+			(*proc)->registers[(*proc)->fetchqueue[1][1]],
+			(*proc)->registers[(*proc)->fetchqueue[2][1]]);
 }
 
 void		ft_sub(t_process **proc)
 {
-	int		ret;
 	
-	ret = (*proc)->registers[(*proc)->fetchqueue[0][1]] -
-	(*proc)->registers[(*proc)->fetchqueue[1][1]];
-	(*proc)->registers[(*proc)->fetchqueue[2][1]] = ret;
-	(*proc)->carry = (!ret ? 1 : 0);
+	(*proc)->registers[(*proc)->fetchqueue[2][1]] =
+		(*proc)->registers[(*proc)->fetchqueue[0][1]] -
+		(*proc)->registers[(*proc)->fetchqueue[1][1]];
+	(*proc)->carry = (!(*proc)->registers[(*proc)->fetchqueue[2][1]] ? 1 : 0);
+	dprintf(1, "1st param (%d) - 2nd param (%d) = %d\n",
+			(*proc)->registers[(*proc)->fetchqueue[0][1]],
+			(*proc)->registers[(*proc)->fetchqueue[1][1]],
+			(*proc)->registers[(*proc)->fetchqueue[2][1]]);
 }
 
 void		ft_or(t_process **proc)
@@ -53,14 +59,20 @@ void		ft_or(t_process **proc)
 			(*proc)->registers[(*proc)->fetchqueue[2][1]] =
 				(*proc)->registers[(*proc)->fetchqueue[0][1]] |
 				(*proc)->registers[(*proc)->fetchqueue[1][1]];
-		else
+		else if ((*proc)->fetchqueue[1][0] == 2)
 		{
 			(*proc)->registers[(*proc)->fetchqueue[2][1]] =
 				(*proc)->registers[(*proc)->fetchqueue[0][1]] |
 				(*proc)->fetchqueue[1][1];
 		}
+		else
+		{
+			(*proc)->registers[(*proc)->fetchqueue[2][1]] =
+				read_map(((*proc)->begin + (*proc)->fetchqueue[0][1]) % IDX_MOD, 4) |
+				(*proc)->fetchqueue[1][1];
+		}
 	}
-	else
+	else if ((*proc)->fetchqueue[0][0] == 2)
 	{
 		if ((*proc)->fetchqueue[1][0] == 1)
 		{
@@ -68,14 +80,41 @@ void		ft_or(t_process **proc)
 				(*proc)->fetchqueue[0][1] |
 				(*proc)->registers[(*proc)->fetchqueue[1][1]];
 		}
-		else
+		else if ((*proc)->fetchqueue[1][0] == 2)
 		{
 			(*proc)->registers[(*proc)->fetchqueue[2][1]] =
 				(*proc)->fetchqueue[0][1] |
 				(*proc)->fetchqueue[1][1];
 		}
+		else
+		{
+			(*proc)->registers[(*proc)->fetchqueue[2][1]] =
+				read_map(((*proc)->begin + (*proc)->fetchqueue[1][1]) % IDX_MOD, 4) |
+				(*proc)->fetchqueue[0][1];
+		}
 	}
-
+	else
+	{
+		if ((*proc)->fetchqueue[1][0] == 1)
+		{
+			(*proc)->registers[(*proc)->fetchqueue[2][1]] =
+				read_map(((*proc)->begin + (*proc)->fetchqueue[0][1]) % IDX_MOD, 4) |
+				(*proc)->registers[(*proc)->fetchqueue[1][1]];
+		}
+		else if ((*proc)->fetchqueue[1][0] == 2)
+		{
+			(*proc)->registers[(*proc)->fetchqueue[2][1]] =
+				read_map(((*proc)->begin + (*proc)->fetchqueue[0][1]) % IDX_MOD, 4) |
+				(*proc)->fetchqueue[1][1];
+		}
+		else
+		{
+			(*proc)->registers[(*proc)->fetchqueue[2][1]] =
+				read_map(((*proc)->begin + (*proc)->fetchqueue[1][1]) % IDX_MOD, 4) |
+				read_map(((*proc)->begin + (*proc)->fetchqueue[0][1]) % IDX_MOD, 4);
+		}
+	}
+	(*proc)->carry = (!(*proc)->registers[(*proc)->fetchqueue[2][1]] ? 1 : 0);
 }
 
 void		ft_and(t_process **proc)
@@ -86,14 +125,20 @@ void		ft_and(t_process **proc)
 			(*proc)->registers[(*proc)->fetchqueue[2][1]] =
 				(*proc)->registers[(*proc)->fetchqueue[0][1]] &
 				(*proc)->registers[(*proc)->fetchqueue[1][1]];
-		else
+		else if ((*proc)->fetchqueue[1][0] == 2)
 		{
 			(*proc)->registers[(*proc)->fetchqueue[2][1]] =
 				(*proc)->registers[(*proc)->fetchqueue[0][1]] &
 				(*proc)->fetchqueue[1][1];
 		}
+		else
+		{
+			(*proc)->registers[(*proc)->fetchqueue[2][1]] =
+				read_map(((*proc)->begin + (*proc)->fetchqueue[0][1]) % IDX_MOD, 4) &
+				(*proc)->fetchqueue[1][1];
+		}
 	}
-	else
+	else if ((*proc)->fetchqueue[0][0] == 2)
 	{
 		if ((*proc)->fetchqueue[1][0] == 1)
 		{
@@ -101,11 +146,43 @@ void		ft_and(t_process **proc)
 				(*proc)->fetchqueue[0][1] &
 				(*proc)->registers[(*proc)->fetchqueue[1][1]];
 		}
-		else
+		else if ((*proc)->fetchqueue[1][0] == 2)
 		{
 			(*proc)->registers[(*proc)->fetchqueue[2][1]] =
 				(*proc)->fetchqueue[0][1] &
 				(*proc)->fetchqueue[1][1];
 		}
+		else
+		{
+			(*proc)->registers[(*proc)->fetchqueue[2][1]] =
+				read_map(((*proc)->begin + (*proc)->fetchqueue[1][1]) % IDX_MOD, 4) &
+				(*proc)->fetchqueue[0][1];
+		}
 	}
+	else
+	{
+		if ((*proc)->fetchqueue[1][0] == 1)
+		{
+			(*proc)->registers[(*proc)->fetchqueue[2][1]] =
+				read_map(((*proc)->begin + (*proc)->fetchqueue[0][1]) % IDX_MOD, 4) &
+				(*proc)->registers[(*proc)->fetchqueue[1][1]];
+		}
+		else if ((*proc)->fetchqueue[1][0] == 2)
+		{
+			(*proc)->registers[(*proc)->fetchqueue[2][1]] =
+				read_map(((*proc)->begin + (*proc)->fetchqueue[0][1]) % IDX_MOD, 4) &
+				(*proc)->fetchqueue[1][1];
+		}
+		else
+		{
+			(*proc)->registers[(*proc)->fetchqueue[2][1]] =
+				read_map(((*proc)->begin + (*proc)->fetchqueue[1][1]) % IDX_MOD, 4) &
+				read_map(((*proc)->begin + (*proc)->fetchqueue[0][1]) % IDX_MOD, 4);
+		}
+	}
+	(*proc)->carry = (!(*proc)->registers[(*proc)->fetchqueue[2][1]] ? 1 : 0);
+	dprintf(1, "1st param (%d) & 2nd param (%d) = %d\n",
+			(*proc)->fetchqueue[0][1],
+			(*proc)->fetchqueue[1][1],
+			(*proc)->registers[(*proc)->fetchqueue[2][1]]);
 }

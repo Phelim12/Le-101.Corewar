@@ -6,14 +6,13 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 17:57:30 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/19 19:40:22 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/20 14:38:25 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../Includes/main_vm.h"
 
-// manque la gestion des labels
 
 void		ft_lld(t_process **proc)
 {
@@ -26,8 +25,8 @@ void		ft_lld(t_process **proc)
 	else
 		(*proc)->registers[(*proc)->fetchqueue[1][1]] =
 			read_map(aim, REG_SIZE);
-	(*proc)->carry = (!read_map(aim, REG_SIZE) ? 1 : 0);
-	dprintf(1, "register[%d] = %d\n", (*proc)->fetchqueue[1][1], (*proc)->registers[(*proc)->fetchqueue[1][1]]);
+	(*proc)->carry = (!(*proc)->registers[(*proc)->fetchqueue[1][1]] ? 1 : 0);
+//	dprintf(1, "register[%d] = %d\n", (*proc)->fetchqueue[1][1], (*proc)->registers[(*proc)->fetchqueue[1][1]]);
 }
 
 void		ft_lldi(t_process **proc)
@@ -35,7 +34,6 @@ void		ft_lldi(t_process **proc)
 
 	int				fparam;
 	int				sparam;
-	unsigned int	ret;
 
 	if ((*proc)->fetchqueue[0][0] == 3)
 		fparam = read_map(((*proc)->begin + (*proc)->fetchqueue[0][1] % IDX_MOD), 4);
@@ -47,11 +45,10 @@ void		ft_lldi(t_process **proc)
 		sparam = (*proc)->fetchqueue[1][1];
 	else
 		sparam = (*proc)->registers[(*proc)->fetchqueue[1][1]];
-	dprintf(1, "1st param = %d, sparam = %d, pc = %d\n", fparam, sparam, (*proc)->begin);
-	ret = read_map((fparam + sparam + (*proc)->begin), 4);
-	(*proc)->registers[(*proc)->fetchqueue[2][1]] = ret;
-	(*proc)->carry = (!ret ? 1 : 0);
-	dprintf(1, "register[%d] = %d\n", (*proc)->fetchqueue[2][1], (*proc)->registers[(*proc)->fetchqueue[2][1]]);
+//	dprintf(1, "1st param = %d, sparam = %d, pc = %d\n", fparam, sparam, (*proc)->begin);
+	(*proc)->registers[(*proc)->fetchqueue[2][1]] = read_map((fparam + sparam + (*proc)->begin), 4);
+	(*proc)->carry = (!(*proc)->registers[(*proc)->fetchqueue[2][1]] ? 1 : 0);
+//	dprintf(1, "register[%d] = %d\n", (*proc)->fetchqueue[2][1], (*proc)->registers[(*proc)->fetchqueue[2][1]]);
 }
 
 void		ft_zjmp(t_process **proc)
@@ -73,7 +70,12 @@ void		ft_aff(t_process **proc)
 void		ft_fork(t_process **proc)
 {
 	int aim;
+	t_process		*new;
 
 	aim = (*proc)->begin + (*proc)->fetchqueue[0][1] % IDX_MOD;
-	//creer une copie du process a g_vm->map[aim];
+	dprintf(1, "aim = %d\n", aim);
+	new = lstnew_vm((*proc)->registers, REG_SIZE * REG_NUMBER);
+	new->registers[0] = aim;
+	lstadd_vm(&g_vm->list_process, new);
+	g_vm->list_process = new;
 }
