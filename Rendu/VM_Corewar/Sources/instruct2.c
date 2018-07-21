@@ -36,13 +36,13 @@ void		ft_live(t_process **proc)
 	{
 		g_vm->champion[player]->live++;
 		g_vm->last_live = player;
-		ft_printf("un processus dit que le joueur %d(%s) est en vie\n",
-				player, g_vm->champion[player]->name);
+/*		ft_printf("un processus dit que le joueur %d(%s) est en vie\n",
+				player, g_vm->champion[player]->name);*/
 	}
 /*		int j = -1;
 		while (++j < 2)
-			ft_printf("Player %d has %d lives\n", j, g_vm->champion[j]->live);
-*/}
+			ft_printf("Player %d has %d lives\n", j, g_vm->champion[j]->live);*/
+}
 
 void		ft_ld(t_process **proc)
 {
@@ -68,7 +68,8 @@ void		ft_st(t_process **proc)
 	i = -1;
 	tab = NULL;
 	aim = (*proc)->begin + (*proc)->fetchqueue[1][1] % IDX_MOD;
-//	dprintf(1, "aim = %d\n", aim);
+	// dprintf(1, "aim = %d\n", aim);
+	// ft_printf("TEST %d\n", (*proc)->fetchqueue[1][0]);
 	if ((*proc)->fetchqueue[1][0] == 1)
 		(*proc)->registers[(*proc)->fetchqueue[1][1]] = (*proc)->registers[(*proc)->fetchqueue[0][1]];
 	else
@@ -77,7 +78,7 @@ void		ft_st(t_process **proc)
 		while (++i < 4)
 			print((*proc)->registers[1], aim + i, tab[i]);
 	}
-//	dprintf(1, "register[%d] = %d\n", (*proc)->fetchqueue[0][1], (*proc)->registers[(*proc)->fetchqueue[0][1]]);
+	// dprintf(1, "register[%d] = %d\n", (*proc)->fetchqueue[0][1], (*proc)->registers[(*proc)->fetchqueue[0][1]]);
 }
 
 void		ft_sti(t_process **proc)

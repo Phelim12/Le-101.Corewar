@@ -64,7 +64,7 @@ void		ft_aff(t_process **proc)
 	c = (*proc)->registers[(*proc)->fetchqueue[0][1]] % 256;
 	if (c < 32 || c > 126)
 		return ;
-	ft_printf("%c\n", c);
+	// ft_printf("%c\n", c);
 }
 
 void		ft_fork(t_process **proc, t_process **begin)

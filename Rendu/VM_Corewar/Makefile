@@ -17,7 +17,7 @@ CC = gcc
 
 NAME = ./corewar
 
-C_FLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+C_FLAGS = -Wall -Wextra -Werror -g
 
 DIR_LIB = ../Libft/
 

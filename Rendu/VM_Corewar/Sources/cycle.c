@@ -20,6 +20,12 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 
 	param = 0;
 	i = 0;
+	if ((*proc)->op == -1)
+	{
+		while (g_vm->map[cursor] < 1 || g_vm->map[cursor] > 16)
+			cursor++;
+		return (cursor);
+	}
 	while (((*proc)->fetchqueue[i][0] || (!instruction.info_params && !param))
 			&& i < 4)
 	{
@@ -57,11 +63,11 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 
 static int			read_ocp(int cursor, t_op instruction, t_process **proc)
 {
-
 	(*proc)->fetchqueue[0][0] = g_vm->map[cursor] >> 6 & 0x3;
 	(*proc)->fetchqueue[1][0] = g_vm->map[cursor] >> 4 & 0x3;
 	(*proc)->fetchqueue[2][0] = g_vm->map[cursor] >> 2 & 0x3;
-	(*proc)->fetchqueue[3][0] = g_vm->map[cursor] & 0x3;
+	if (((*proc)->fetchqueue[3][0] = g_vm->map[cursor] & 0x3))
+		(*proc)->op = -1;
 	return (read_params(++cursor, instruction, proc));
 }
 
@@ -174,12 +180,15 @@ void	exec_process()
 	begin = g_vm->list_process;
 	while (*proc)
 	{
-//		dprintf(1, "exec_process player %d\n", (*proc)->registers[1]);
-		if (check_registers(*proc) && (*proc)->cycle_delay == 0 &&
-			(*proc)->op != 1 && (*proc)->op != 12 && (*proc)->op != 15)
+		if ((*proc)->op != -1)
 		{
-			run(*proc);
-			(*proc)->cycle_delay = -1;
+//			dprintf(1, "exec_process player %d\n", (*proc)->registers[1]);
+			if (check_registers(*proc) && (*proc)->cycle_delay == 0 &&
+				(*proc)->op != 1 && (*proc)->op != 12 && (*proc)->op != 15)
+			{
+				run(*proc);
+				(*proc)->cycle_delay = -1;
+			}
 		}
 		(*proc) = (*proc)->next;
 	}
