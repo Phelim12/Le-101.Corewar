@@ -16,17 +16,17 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 FILES=$(ls -1 ./Champs)
 
-if [ ! -d ./MCOREWARE_OUTPUT ]; then
-	mkdir ./MCOREWARE_OUTPUT
+if [ ! -d ./MCOREWAR_OUTPUT ]; then
+	mkdir ./MCOREWAR_OUTPUT
 fi
 
-if [ ! -d ./RCOREWARE_OUTPUT ]; then
-	mkdir ./RCOREWARE_OUTPUT
+if [ ! -d ./RCOREWAR_OUTPUT ]; then
+	mkdir ./RCOREWAR_OUTPUT
 fi
 
 if [[ $1 = "clear" ]]; then
-	rm -rf ./RCOREWARE_OUTPUT
-	rm -rf ./MCOREWARE_OUTPUT
+	rm -rf ./RCOREWAR_OUTPUT
+	rm -rf ./MCOREWAR_OUTPUT
 	printf "The directory are clear.\n"
 	exit 1
 fi
@@ -48,15 +48,17 @@ do
 
 		OUTPUT="${NAME1}_vs_${NAME2}.output"
 
-		./corewar ./Champs/$P1 ./Champs/$P2 -d $1 > ./MCOREWARE_OUTPUT/$OUTPUT
-		./r_corewar ./Champs/$P1 ./Champs/$P2 -d $1 > ./RCOREWARE_OUTPUT/$OUTPUT
+		./corewar ./Champs/$P1 ./Champs/$P2 -d $1 > ./MCOREWAR_OUTPUT/$OUTPUT
+		./r_corewar ./Champs/$P1 ./Champs/$P2 -d $1 > ./RCOREWAR_OUTPUT/$OUTPUT
 
-		DIFF=$(diff ./RCOREWARE_OUTPUT/$OUTPUT ./MCOREWARE_OUTPUT/$OUTPUT)
+		DIFF=$(diff ./RCOREWAR_OUTPUT/$OUTPUT ./MCOREWAR_OUTPUT/$OUTPUT)
+
 
 		if [ "$DIFF" = "" ]; then
 			printf "${GREEN}$NAME1 VS $NAME2 ✔ ${NC}\n"
 		else
-			printf "${RED}$NAME1 VS $NAME2 ✘ ${NC}\n"
+			printf "${RED}$NAME1 VS $NAME2 ✘ (REAL COREWAR IN FIRST)${NC}\n"
+			diff -d ./RCOREWAR_OUTPUT/$OUTPUT ./MCOREWAR_OUTPUT/$OUTPUT
 			read -p "Press any key to continue... " -n1 -s
 		fi
 
