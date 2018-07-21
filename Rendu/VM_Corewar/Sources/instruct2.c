@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 18:01:49 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/21 13:23:33 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/21 15:20:48 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -77,7 +77,7 @@ void		ft_st(t_process **proc)
 		while (++i < 4)
 			print((*proc)->registers[1], aim + i, tab[i]);
 	}
-	dprintf(1, "register[%d] = %d\n", (*proc)->fetchqueue[0][1], (*proc)->registers[(*proc)->fetchqueue[0][1]]);
+//	dprintf(1, "register[%d] = %d\n", (*proc)->fetchqueue[0][1], (*proc)->registers[(*proc)->fetchqueue[0][1]]);
 }
 
 void		ft_sti(t_process **proc)

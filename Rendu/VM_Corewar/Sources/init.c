@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/21 15:09:56 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/21 16:21:02 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,18 +23,14 @@ int			init_process(unsigned int a)
 	else
 	{
 		ft_memset(tmp_reg, 0, REG_NUMBER * REG_SIZE);
-		tmp_reg[1] = g_vm->champion[a]->num;
-//		dprintf(1, "reg[1] = %d\n", g_vm->champion[a]->num);
-		tmp_reg[0] = (g_vm->nb_players - a - 1) * MEM_SIZE / g_vm->nb_players;
+		tmp_reg[1] = -g_vm->champion[a]->num;
+		tmp_reg[0] = a * MEM_SIZE / g_vm->nb_players;
 		new = lstnew_vm(tmp_reg, REG_SIZE * REG_NUMBER + 1);
 		new->cycle_delay = -1;
 		if (g_vm->list_process == NULL)
 			g_vm->list_process = new;
 		else
-		{
 			lstadd_vm(&g_vm->list_process, new);
-			g_vm->list_process = new;
-		}
 		free(tmp_reg);
 	}
 	return (0);
@@ -48,7 +44,7 @@ static void	sort_champ_tab(void)
 	i = -1;
 	while (++i < g_vm->nb_players - 1)
 	{
-		if (g_vm->champion[i]->num < g_vm->champion[i + 1]->num)
+		if (g_vm->champion[i]->num > g_vm->champion[i + 1]->num)
 		{
 			tmp = g_vm->champion[i];
 			g_vm->champion[i] = g_vm->champion[i + 1];
@@ -60,14 +56,22 @@ static void	sort_champ_tab(void)
 
 static int	sub2_init_champ(void)
 {
-	unsigned int	a;
+	int	a;
+
+	a = g_vm->nb_players;
+	sort_champ_tab();
+	while (--a >= 0)
+		if (init_process(a) == -1 || get_champ(a) == -1)
+			return (-1);
+	return (0);
+/*	unsigned int	a;
 
 	a = -1;
 	sort_champ_tab();
 	while (++a < g_vm->nb_players)
 		if (init_process(a) == -1 || get_champ(a) == -1)
 			return (-1);
-	return (0);
+	return (0);*/
 }
 
 static void	sub_init_champ(void)
@@ -75,10 +79,10 @@ static void	sub_init_champ(void)
 	unsigned int	i;
 	long			num;
 	unsigned int	j;
-//	unsigned int	f;
-//	dprintf(1, "in subinit champs\n");
-/*	i = -1;
-	num = -1;
+	unsigned int	f;
+
+	i = -1;
+	num = 1;
 	while (++i < g_vm->nb_players)
 	{
 		g_vm->champion[i]->live = 0;
@@ -91,15 +95,15 @@ static void	sub_init_champ(void)
 				if ((long)g_vm->champion[j]->num == (long)num)
 					f = 0;
 			if (f == 0)
-				num--;
+				num++;
 			else
 				g_vm->champion[i]->num = (long)num;
 		}
-		num--;
-	}*/
+		num++;
+	}
 
-	i = -1;
-	num = -1;
+/*	i = -1;
+	num = 1;
 	while (++i < g_vm->nb_players)
 	{
 		g_vm->champion[i]->live = 0;
@@ -111,21 +115,15 @@ static void	sub_init_champ(void)
 			{
 				if (g_vm->champion[j]->num == num)
 				{
-					num--;
+					num++;
 					j = -1;
 				}
 			}
-			g_vm->champion[i]->num = num--;
+			g_vm->champion[i]->num = -num++;
 		}
-	}
+	}*/
 
-/*	unsigned int x = -1;
-	dprintf(1, "nb_players = %d\n", g_vm->nb_players);
-	while (++x < g_vm->nb_players)
-	{
-		dprintf(1, "champion_num = %d\n", g_vm->champion[x]->num);
-	}
-*/	sub2_init_champ();
+	sub2_init_champ();
 }
 
 void		init_champs(char const **argv)
@@ -203,4 +201,17 @@ void		init_vm(char const **argv)
 	g_vm->nb_players = 0;
 	init_champs(argv);
 	init_map();
-}
+/*	unsigned int x = -1;
+	dprintf(1, "nb_players = %d\n", g_vm->nb_players);
+	while (++x < g_vm->nb_players)
+	{
+		dprintf(1, "champion_num = %d\n name : %s\n", g_vm->champion[x]->num, g_vm->champion[x]->name);
+	}
+	t_process *proc;
+	proc = g_vm->list_process;
+	while (proc)
+	{
+		dprintf(1, "PC : %d\n num : %d\n", proc->registers[0], proc->registers[1]);
+		proc = proc->next;
+	}
+*/}
