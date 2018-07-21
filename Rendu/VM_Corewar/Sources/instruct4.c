@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 18:06:55 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/20 13:41:17 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/21 13:21:27 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -85,7 +85,7 @@ int				check_registers(t_process *proc)
 
 	i = -1;
 	while (++i < 4)
-		if (proc->fetchqueue[i][0] == 1 && proc->fetchqueue[i][1] < 2)
+		if (proc->fetchqueue[i][0] == 1 && proc->fetchqueue[i][1] < 1)
 			return (0);
 	return (1);
 }

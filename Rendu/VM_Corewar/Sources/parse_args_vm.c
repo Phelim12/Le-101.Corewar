@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/04 12:50:12 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/19 12:41:04 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/21 12:51:44 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -49,8 +49,8 @@ void		parse_args(char const **argv)
 	k = 0;
 	while (argv[i])
 	{
-		dprintf(1, "arg %d\n", i);
-		if (!ft_strcmp("-dump", argv[i]))
+//		dprintf(1, "arg %d\n", i);
+		if (!ft_strcmp("-d", argv[i]))
 			parse_dump(argv, &i);
 		else if (!ft_strcmp("-n", argv[i]))
 			parse_n(argv, &i, &k);

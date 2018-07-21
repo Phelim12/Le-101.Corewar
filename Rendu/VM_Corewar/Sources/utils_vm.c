@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 15:43:36 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/13 16:00:21 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/21 15:09:14 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -92,7 +92,8 @@ void	introduction(void)
 	while (i < g_vm->nb_players)
 	{
 		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
-				g_vm->champion[i]->num, // num du champion ou ordre ? on laisse un player 0 ou on commence a 1 ?
+				(g_vm->champion[i]->num >= 0 ? g_vm->champion[i]->num :
+				 g_vm->champion[i]->num * -1), // num du champion ou ordre ? on laisse un player 0 ou on commence a 1 ?
 				g_vm->champion[i]->prog_size,
 				g_vm->champion[i]->name,
 				g_vm->champion[i]->comment);

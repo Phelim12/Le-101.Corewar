@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:38 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/19 18:12:47 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/21 12:50:38 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,7 +40,7 @@ int		main(int argc, char const **argv)
 					g_vm->champion[i]->magic);
 			list_tmp = list_tmp->next;
 		}*/
-	ft_printf("le joueur %d(%s) a gagne\n", g_vm->last_live, g_vm->champion[g_vm->last_live]->name);
+//	ft_printf("le joueur %d(%s) a gagne\n", g_vm->last_live, g_vm->champion[g_vm->last_live]->name);
 	}
 	else
 		print_usage();

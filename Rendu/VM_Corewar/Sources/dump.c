@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/27 19:47:07 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/12 16:56:57 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/21 12:53:50 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,17 +41,17 @@ int		print_color(int i, int *p, int pc)
 			p[3] = g_vm->p_map[i];
 	}
 	if (g_vm->p_map[i] == p[0])
-		ft_printf((pc ? "{n_white}{black}%02x{eoc}{eoc}" :
-					"{cyan}%02x{eoc}"), g_vm->map[i]);
+		ft_printf((pc ? "%02x" :
+					"%02x"), g_vm->map[i]);
 	if (g_vm->p_map[i] == p[1])
-		ft_printf((pc ? "{n_white}{black}%02x{eoc}{eoc}" :
-					"{yellow}%02x{eoc}"), g_vm->map[i]);
+		ft_printf((pc ? "%02x" :
+					"%02x"), g_vm->map[i]);
 	if (g_vm->p_map[i] == p[2])
-		ft_printf((pc ? "{n_white}{black}%02x{eoc}{eoc}" :
-					"{magenta}%02x{eoc}"), g_vm->map[i]);
+		ft_printf((pc ? "%02x" :
+					"%02x"), g_vm->map[i]);
 	if (g_vm->p_map[i] == p[3])
-		ft_printf((pc ? "{n_white}{black}%02x{eoc}{eoc}" :
-					"{green}%02x{eoc}"), g_vm->map[i]);
+		ft_printf((pc ? "%02x" :
+					"%02x"), g_vm->map[i]);
 	return (0);
 }
 
@@ -70,14 +70,13 @@ int		ft_dump(void)
 	{
 		if (i == 0)
 			ft_printf("%-#5.4x : ", i);
-		else if (i % 32 == 0)
+		else if (i % 64 == 0)
 			ft_printf("\n%-#5.4x : ", i);
 		if (g_vm->p_map[i] < 0)
 			ft_printf("%02x", g_vm->map[i]);
 		else
 			print_color(i, p, is_pc(i));
-		if ((i + 1) % 32 != 0)
-			ft_printf(" ");
+		ft_printf(" ");
 	}
 	ft_printf("\n");
 	return (0);

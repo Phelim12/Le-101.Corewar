@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/19 20:22:38 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/21 15:09:56 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,6 +24,7 @@ int			init_process(unsigned int a)
 	{
 		ft_memset(tmp_reg, 0, REG_NUMBER * REG_SIZE);
 		tmp_reg[1] = g_vm->champion[a]->num;
+//		dprintf(1, "reg[1] = %d\n", g_vm->champion[a]->num);
 		tmp_reg[0] = (g_vm->nb_players - a - 1) * MEM_SIZE / g_vm->nb_players;
 		new = lstnew_vm(tmp_reg, REG_SIZE * REG_NUMBER + 1);
 		new->cycle_delay = -1;
@@ -47,7 +48,7 @@ static void	sort_champ_tab(void)
 	i = -1;
 	while (++i < g_vm->nb_players - 1)
 	{
-		if (g_vm->champion[i]->num > g_vm->champion[i + 1]->num)
+		if (g_vm->champion[i]->num < g_vm->champion[i + 1]->num)
 		{
 			tmp = g_vm->champion[i];
 			g_vm->champion[i] = g_vm->champion[i + 1];
@@ -72,30 +73,59 @@ static int	sub2_init_champ(void)
 static void	sub_init_champ(void)
 {
 	unsigned int	i;
-	unsigned int	num;
+	long			num;
 	unsigned int	j;
-	int				f;
-
-	i = -1;
+//	unsigned int	f;
+//	dprintf(1, "in subinit champs\n");
+/*	i = -1;
+	num = -1;
 	while (++i < g_vm->nb_players)
 	{
 		g_vm->champion[i]->live = 0;
 		g_vm->champion[i]->nb_process = 1;
-		num = 0;
-		while (g_vm->champion[i]->num == -1)
+		f = 1;
+		while (g_vm->champion[i]->num == 0)
 		{
 			j = -1;
-			f = 1;
 			while (++j < g_vm->nb_players)
 				if ((long)g_vm->champion[j]->num == (long)num)
 					f = 0;
 			if (f == 0)
-				num++;
+				num--;
 			else
-				g_vm->champion[i]->num = num;
+				g_vm->champion[i]->num = (long)num;
+		}
+		num--;
+	}*/
+
+	i = -1;
+	num = -1;
+	while (++i < g_vm->nb_players)
+	{
+		g_vm->champion[i]->live = 0;
+		g_vm->champion[i]->nb_process = 1;
+		if (g_vm->champion[i]->num == 0)
+		{
+			j = -1;
+			while (++j < g_vm->nb_players)
+			{
+				if (g_vm->champion[j]->num == num)
+				{
+					num--;
+					j = -1;
+				}
+			}
+			g_vm->champion[i]->num = num--;
 		}
 	}
-	sub2_init_champ();
+
+/*	unsigned int x = -1;
+	dprintf(1, "nb_players = %d\n", g_vm->nb_players);
+	while (++x < g_vm->nb_players)
+	{
+		dprintf(1, "champion_num = %d\n", g_vm->champion[x]->num);
+	}
+*/	sub2_init_champ();
 }
 
 void		init_champs(char const **argv)
@@ -103,6 +133,7 @@ void		init_champs(char const **argv)
 	void			*tmp;
 	unsigned int	i;
 
+//	dprintf(1, "in init champs\n");
 	i = 0;
 	while (argv[i])
 	{
@@ -117,7 +148,7 @@ void		init_champs(char const **argv)
 	{
 		if ((tmp = (t_champ*)malloc(sizeof(t_champ))))
 			g_vm->champion[i] = tmp;
-		g_vm->champion[i++]->num = -1;
+		g_vm->champion[i++]->num = 0;
 	}
 	if (g_vm->nb_players > MAX_PLAYERS)
 		error_vm("Too many .cor files in parameters\n", 0);
