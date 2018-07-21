@@ -53,13 +53,13 @@ do
 
 		DIFF=$(diff ./RCOREWAR_OUTPUT/$OUTPUT ./MCOREWAR_OUTPUT/$OUTPUT)
 
-
 		if [ "$DIFF" = "" ]; then
 			printf "${GREEN}$NAME1 VS $NAME2 ✔ ${NC}\n"
 		else
 			printf "${RED}$NAME1 VS $NAME2 ✘ (REAL COREWAR IN FIRST)${NC}\n"
 			diff -d ./RCOREWAR_OUTPUT/$OUTPUT ./MCOREWAR_OUTPUT/$OUTPUT
 			read -p "Press any key to continue... " -n1 -s
+			printf "\n"
 		fi
 
 	done
