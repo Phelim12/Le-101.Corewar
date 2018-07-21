@@ -53,8 +53,12 @@ void		ft_lldi(t_process **proc)
 
 void		ft_zjmp(t_process **proc)
 {
+	dprintf(2, "aim = %d\nparam = %d\n", ((*proc)->begin + (*proc)->fetchqueue[0][1] % IDX_MOD) % MEM_SIZE, (*proc)->fetchqueue[0][1]);
 	if ((*proc)->carry == 1)
-		(*proc)->registers[0] = (*proc)->begin + (*proc)->fetchqueue[0][1] % IDX_MOD;
+		(*proc)->registers[0] = ((*proc)->begin + (*proc)->fetchqueue[0][1] % IDX_MOD) % MEM_SIZE;
+	if ((*proc)->registers[0] < 0)
+		(*proc)->registers[0] += MEM_SIZE;
+	dprintf(2, "aim = %d\n", (*proc)->registers[0]);
 }
 
 void		ft_aff(t_process **proc)

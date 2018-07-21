@@ -18,14 +18,16 @@ int			init_process(unsigned int a)
 	int				*tmp_reg;
 	t_process		*new;
 
-	if (!(tmp_reg = (int*)malloc(REG_SIZE * REG_NUMBER)))
+	if (!(tmp_reg = (int*)malloc(REG_SIZE * (REG_NUMBER + 1))))
 		return (-1);
 	else
 	{
-		ft_memset(tmp_reg, 0, REG_NUMBER * REG_SIZE);
+		ft_memset(tmp_reg, 0, (REG_NUMBER + 1) * REG_SIZE);
 		tmp_reg[1] = -g_vm->champion[a]->num;
 		tmp_reg[0] = a * MEM_SIZE / g_vm->nb_players;
-		new = lstnew_vm(tmp_reg, REG_SIZE * REG_NUMBER + 1);
+		tmp_reg[15] = 0;
+//		dprintf(2, "reg[16] = %d\n", tmp_reg[15]);
+		new = lstnew_vm(tmp_reg, REG_SIZE * (REG_NUMBER + 1));
 		new->cycle_delay = -1;
 		if (g_vm->list_process == NULL)
 			g_vm->list_process = new;

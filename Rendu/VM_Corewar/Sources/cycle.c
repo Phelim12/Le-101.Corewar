@@ -60,14 +60,48 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 	}
 */	return (cursor);
 }
+/*
+typedef struct		s_op
+{
+	char			*name;
+	char			nparams;
+	char			params[4];
+	char			opcode;
+	int				cycles;
+	char			*desc;
+	char			info_params;
+	char			size_dir;
+}					t_op;*/
+
+
+int		size_params(int type)
+{
+	if (type == 1)
+		return (1);
+	if (type == 2)
+		return (2);
+	if (type == 3)
+		return (4);
+	return (0);
+}
+
 
 static int			read_ocp(int cursor, t_op instruction, t_process **proc)
 {
+	if (!g_vm->map[cursor])
+		(*proc)->op = -1;
+	if (((*proc)->fetchqueue[3][0] = g_vm->map[cursor] & 0x3))
+		(*proc)->op = -1;
 	(*proc)->fetchqueue[0][0] = g_vm->map[cursor] >> 6 & 0x3;
 	(*proc)->fetchqueue[1][0] = g_vm->map[cursor] >> 4 & 0x3;
 	(*proc)->fetchqueue[2][0] = g_vm->map[cursor] >> 2 & 0x3;
-	if (((*proc)->fetchqueue[3][0] = g_vm->map[cursor] & 0x3))
+	if (instruction.nparams >= 1 && !(size_params((*proc)->fetchqueue[0][0]) & instruction.params[0]))
 		(*proc)->op = -1;
+	if (instruction.nparams >= 2 && !(size_params((*proc)->fetchqueue[1][0]) & instruction.params[1]))
+		(*proc)->op = -1;
+	if (instruction.nparams == 3 && !(size_params((*proc)->fetchqueue[2][0]) & instruction.params[2]))
+		(*proc)->op = -1;
+//	dprintf(2, "rd_ocp : op = %d\n", (*proc)->op);
 	return (read_params(++cursor, instruction, proc));
 }
 
@@ -92,6 +126,7 @@ static void				read_instruction(t_process **proc)
 //	ft_printf("OPCODE = %d\n", g_vm->map[cursor]);
 //	ft_printf("instruction = %s\n", instruction.name);
 //	dprintf(1, "info params = %d\n", instruction.info_params);
+//	dprintf(2, "opcode = %d\ninforparams = %d\n", (*proc)->op, instruction.info_params);
 	if (instruction.info_params)
 		(*proc)->registers[0] = read_ocp(++cursor, instruction, proc) % MEM_SIZE;
 	else
@@ -100,6 +135,7 @@ static void				read_instruction(t_process **proc)
 
 void	run(t_process *proc)
 {
+	dprintf(2, "op = %d\n PC = %d\n", (*proc).op, proc->registers[0]);
 	if (proc->op == 2)
 		ft_ld(&proc);
 	else if (proc->op == 3)
@@ -213,3 +249,11 @@ int		cycle_process()
 	g_vm->list_process = begin;
 	return (0);
 }
+
+
+
+
+
+
+
+

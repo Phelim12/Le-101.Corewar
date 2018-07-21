@@ -20,6 +20,7 @@ void		ft_live(t_process **proc)
 
 //	dprintf(1, "RUN LIVE Player %d\n", (*proc)->registers[1]);
 	i = 0;
+	player = 0;
 	while (i < g_vm->nb_players)
 	{
 		if (g_vm->champion[i]->num == (*proc)->fetchqueue[0][1])
@@ -34,7 +35,7 @@ void		ft_live(t_process **proc)
 //	ft_printf("Current proc lives = %d\n", (*proc)->live);
 	if (i < g_vm->nb_players)
 	{
-		g_vm->champion[player]->live++;
+		g_vm->champion[i]->live++;
 		g_vm->last_live = player;
 /*		ft_printf("un processus dit que le joueur %d(%s) est en vie\n",
 				player, g_vm->champion[player]->name);*/
@@ -49,7 +50,7 @@ void		ft_ld(t_process **proc)
 	int aim;
 
 	aim = (*proc)->begin + (*proc)->fetchqueue[0][1] % IDX_MOD;
-//	dprintf(1, "aim = %d\n", aim);
+	// dprintf(1, "AIM = %d\n", aim);
 	if ((*proc)->fetchqueue[0][0] == 2)
 		(*proc)->registers[(*proc)->fetchqueue[1][1]] = (*proc)->fetchqueue[0][1];
 	else
@@ -68,8 +69,10 @@ void		ft_st(t_process **proc)
 	i = -1;
 	tab = NULL;
 	aim = (*proc)->begin + (*proc)->fetchqueue[1][1] % IDX_MOD;
-	// dprintf(1, "aim = %d\n", aim);
-	// ft_printf("TEST %d\n", (*proc)->fetchqueue[1][0]);
+//	dprintf(2, "PC = %d\n", (*proc)->registers[0]);
+//	dprintf(2, "aim = %d\n", aim);
+//	dprintf(2, "params : %d & %d\n", (*proc)->fetchqueue[0][1], (*proc)->fetchqueue[1][1]);
+//	dprintf(2, "register[%d] = %d\n", (*proc)->fetchqueue[0][1], (*proc)->registers[(*proc)->fetchqueue[0][1]]);
 	if ((*proc)->fetchqueue[1][0] == 1)
 		(*proc)->registers[(*proc)->fetchqueue[1][1]] = (*proc)->registers[(*proc)->fetchqueue[0][1]];
 	else
@@ -78,7 +81,6 @@ void		ft_st(t_process **proc)
 		while (++i < 4)
 			print((*proc)->registers[1], aim + i, tab[i]);
 	}
-	// dprintf(1, "register[%d] = %d\n", (*proc)->fetchqueue[0][1], (*proc)->registers[(*proc)->fetchqueue[0][1]]);
 }
 
 void		ft_sti(t_process **proc)
@@ -89,6 +91,9 @@ void		ft_sti(t_process **proc)
 	unsigned char	*tab;
 	int		i;
 
+//	dprintf(2, "sti PC = %d\n", (*proc)->registers[0]);
+//	dprintf(2, "sti params : %d & %d\n", (*proc)->fetchqueue[0][1], (*proc)->fetchqueue[1][1]);
+//	dprintf(2, "sti register[%d] = %d\n", (*proc)->fetchqueue[0][1], (*proc)->registers[(*proc)->fetchqueue[0][1]]);
 	i = -1;
 	tab = NULL;
 	if ((*proc)->fetchqueue[1][0] == 3)
@@ -105,7 +110,7 @@ void		ft_sti(t_process **proc)
 	tab = itoo((*proc)->registers[(*proc)->fetchqueue[0][1]]);
 	while (++i < 4)
 		print((*proc)->registers[1], aim + i, tab[i]);
-//	dprintf(1, "aim = %d\n", aim);
+//	dprintf(2, "sti aim = %d\n", aim);
 //	dprintf(1, "register[%d] = %d\n", (*proc)->fetchqueue[0][1], (*proc)->registers[(*proc)->fetchqueue[0][1]]);
 }
 

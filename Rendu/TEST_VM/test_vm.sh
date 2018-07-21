@@ -44,6 +44,10 @@ do
 	for P2 in $FILES
 	do
 
+		if [ $NAME1 != "Explosive_Kitty" ]; then
+			break 
+		fi
+
 		NAME2=$(echo $P2 | rev | cut -c5- | rev)
 
 		OUTPUT="${NAME1}_vs_${NAME2}.output"

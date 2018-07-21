@@ -118,6 +118,7 @@ void		ft_or(t_process **proc)
 
 void		ft_and(t_process **proc)
 {
+	//dprintf(2, "OPCODE = %d\n", (*proc)->op);
 	if ((*proc)->fetchqueue[0][0] == 1)
 	{
 		if ((*proc)->fetchqueue[1][0] == 1)

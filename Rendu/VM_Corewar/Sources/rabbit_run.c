@@ -74,8 +74,7 @@ int		cycling(void)
 		cycles_passed = increment(cycles_passed);
 //		dprintf(1, "cycle_passed %d\n cycle_to_die %u\n", cycles_passed, g_vm->cycle_to_die);
 //		dprintf(1, "Player %d last_lived\n----------------------------------------------------\n\n", g_vm->last_live);
-		if (g_vm->v)
-			ft_printf("Cycle %d\n", g_vm->cycle);
+//		ft_printf("Cycle %d\n", g_vm->cycle);
 	}
 
 //	dprintf(1, "cycles_passed = %d\n", cycles_passed);

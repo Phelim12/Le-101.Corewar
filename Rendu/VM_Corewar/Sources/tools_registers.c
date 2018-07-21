@@ -77,16 +77,15 @@ unsigned int		read_map(int index, int size)
 	int					i;
 	unsigned int		ret;
 
-	index %= MEM_SIZE;
-	ret = 0;
 	i = 0;
-	while (i < size)
-	{
-		ret += g_vm->map[index + i++] << 24;
-		ret += g_vm->map[index + i++] << 16;
-		ret += g_vm->map[index + i++] << 8;
-		ret += g_vm->map[index + i++];
-	}
+	ret = 0;
+	index %= MEM_SIZE;
+	if (index < 0)
+		index += MEM_SIZE;
+	ret += g_vm->map[index + i++] << 24;
+	ret += g_vm->map[index + i++] << 16;
+	ret += g_vm->map[index + i++] << 8;
+	ret += g_vm->map[index + i++];
 	return (ret);
 }
 
