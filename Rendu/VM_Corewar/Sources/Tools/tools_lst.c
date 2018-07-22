@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   lst_vm.c                                         .::    .:/ .      .::   */
+/*   tools_lst.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
+/*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/06/27 12:22:43 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/19 11:38:20 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/07/22 17:00:45 by nbettach     #+#   ##    ##    #+#       */
+/*   Updated: 2018/07/22 17:04:29 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "main_vm.h"
+#include "../../Includes/main_vm.h"
 
 void		lstadd_vm(t_process **alst, t_process *new)
 {
@@ -28,6 +28,15 @@ void		lstiter_vm(t_process *lst, void (*f)(t_process *elem))
 		f(lst);
 		lst = lst->next;
 	}
+}
+
+void		lstnew_vm_init(t_process *new, int *registers)
+{
+	new->live = 0;
+	new->begin = registers[0];
+	new->cycle_delay = 0;
+	new->carry = 0;
+	new->next = NULL;
 }
 
 t_process	*lstnew_vm(int *registers, int reg_size)
@@ -52,10 +61,6 @@ t_process	*lstnew_vm(int *registers, int reg_size)
 		new->fetchqueue[i][0] = 0;
 		new->fetchqueue[i++][1] = -1;
 	}
-	new->live = 0;
-	new->begin = registers[0];
-	new->cycle_delay = 0;
-	new->carry = 0;
-	new->next = NULL;
+	lstnew_vm_init(new, registers);
 	return (new);
 }

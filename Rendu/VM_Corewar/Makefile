@@ -6,7 +6,7 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/12/08 18:11:02 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2018/07/22 16:56:57 by nbettach    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/22 17:01:28 by nbettach    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -30,13 +30,13 @@ DIR_INSTRUCTIONS = $(addprefix $(DIR_SRC), Instructions/)
 DIR_TOOLS = $(addprefix $(DIR_SRC), Tools/)
 
 NAME_SRC = main_vm.c parse_args_vm.c init.c read_champs.c \
- rabbit_run.c lst_vm.c dump.c cycle.c read.c
+ rabbit_run.c dump.c cycle.c read.c
 
 INSTRUCTIONS_SRC = add.c aff.c and.c check_register.c fork.c ld.c ldi.c \
  lfork.c live.c lld.c lldi.c or.c st.c sti.c sub.c xor.c zjmp.c
 
 TOOLS_SRC = tools_error.c tools_free.c tools_instructions.c tools_op.c \
- tools_registers.c tools_vm.c
+ tools_registers.c tools_vm.c tools_lst.c
 
 NAME_INC = main_vm.h
 
