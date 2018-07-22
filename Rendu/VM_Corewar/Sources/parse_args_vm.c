@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/04 12:50:12 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/21 12:51:44 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/22 17:19:50 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,6 +40,42 @@ static void	parse_dump(char const **argv, unsigned int *i)
 	*i += 2;
 }
 
+static void	parse_v(char const **argv, unsigned int *i)
+{
+	int		verbose;
+
+	if (argv[*i + 1] && ft_strisdigit(argv[*i + 1]) &&
+			ft_atoi(argv[*i + 1]) >= 0)
+	{
+		verbose = ft_atoi(argv[*i + 1]);
+		if (verbose < 1 || verbose > 3)
+			error_vm("Please enter a valid verbose mode (1 - 3)\n", 0);
+		else
+			g_vm->v = verbose;
+	}
+	else
+		error_vm("wrong parameter for -v option\n", 0);
+	*i += 2;
+}
+
+static void	parse_s(char const **argv, unsigned int *i)
+{
+	int		size;
+
+	if (argv[*i + 1] && ft_strisdigit(argv[*i + 1]) &&
+			ft_atoi(argv[*i + 1]) >= 0)
+	{
+		size = ft_atoi(argv[*i + 1]);
+		if (size != 32 && size != 64)
+			error_vm("Please enter a valid dump size (32 | 64)\n", 0);
+		else
+			g_vm->d_size = size;
+	}
+	else
+		error_vm("wrong parameter for -s option\n", 0);
+	*i += 2;
+}
+
 void		parse_args(char const **argv)
 {
 	unsigned int	i;
@@ -56,8 +92,10 @@ void		parse_args(char const **argv)
 			parse_n(argv, &i, &k);
 		else if (!ft_strcmp(".cor", &argv[i][ft_strlen(argv[i]) - 4]))
 			g_vm->champion[k++]->filename = ft_strdup(argv[i++]);
-		else if (!ft_strcmp("-v", argv[i++]))
-			g_vm->v = 1;
+		else if (!ft_strcmp("-v", argv[i]))
+			parse_v(argv, &i);
+		else if (!ft_strcmp("-s", argv[i]))
+			parse_s(argv, &i);
 		else
 			error_vm("An error occured in the argument passed to Corewar\n", 0);
 	}

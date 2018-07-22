@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 15:10:14 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/22 15:12:11 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/22 17:22:43 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,5 +27,5 @@ void		ft_sub(t_process **proc)
 		(*proc)->registers[(*proc)->fetchqueue[0][1]] -
 		(*proc)->registers[(*proc)->fetchqueue[1][1]];
 	(*proc)->carry = (!(*proc)->registers[(*proc)->fetchqueue[2][1]] ? 1 : 0);
-	debug_sub(proc);
+//	debug_sub(proc);
 }

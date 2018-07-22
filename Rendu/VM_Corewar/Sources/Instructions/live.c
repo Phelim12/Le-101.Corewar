@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 14:25:00 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/22 14:37:48 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/22 17:22:02 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,7 +41,7 @@ void		ft_live(t_process **proc)
 
 	i = 0;
 	player = 0;
-	debug_live(proc, player, 1);
+//	debug_live(proc, player, 1);
 	while (i < g_vm->nb_players)
 	{
 		if (g_vm->champion[i]->num == (*proc)->fetchqueue[0][1])
@@ -51,14 +51,14 @@ void		ft_live(t_process **proc)
 		}
 		i++;
 	}
-	debug_live(proc, player, 2);
+//	debug_live(proc, player, 2);
 	(*proc)->live++;
-	debug_live(proc, player, 3);
+//	debug_live(proc, player, 3);
 	if (i < g_vm->nb_players)
 	{
 		g_vm->champion[i]->live++;
 		g_vm->last_live = player;
-		debug_live(proc, player, 4);
+//		debug_live(proc, player, 4);
 	}
-	debug_live(proc, player, 5);
+//	debug_live(proc, player, 5);
 }

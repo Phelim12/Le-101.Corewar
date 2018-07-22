@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 14:26:27 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/22 14:47:18 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/22 17:22:38 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,7 +41,7 @@ void		ft_sti(t_process **proc)
 	unsigned char	*tab;
 	int				i;
 
-	debug_sti(proc, 0, 1);
+//	debug_sti(proc, 0, 1);
 	i = -1;
 	tab = NULL;
 	if ((*proc)->fetchqueue[1][0] == 3)
@@ -59,5 +59,5 @@ void		ft_sti(t_process **proc)
 	tab = itoo((*proc)->registers[(*proc)->fetchqueue[0][1]]);
 	while (++i < 4)
 		print((*proc)->registers[1], aim + i, tab[i]);
-	debug_sti(proc, aim, 2);
+//	debug_sti(proc, aim, 2);
 }

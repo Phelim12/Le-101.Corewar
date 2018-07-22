@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/27 19:47:07 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/21 12:53:50 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/22 17:19:16 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -70,7 +70,7 @@ int		ft_dump(void)
 	{
 		if (i == 0)
 			ft_printf("%-#5.4x : ", i);
-		else if (i % 64 == 0)
+		else if (i % (g_vm->d_size ? g_vm->d_size : 64) == 0)
 			ft_printf("\n%-#5.4x : ", i);
 		if (g_vm->p_map[i] < 0)
 			ft_printf("%02x", g_vm->map[i]);

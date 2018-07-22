@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 14:02:02 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/22 14:22:01 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/22 17:22:56 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,5 +28,5 @@ void		ft_zjmp(t_process **proc)
 			((*proc)->begin + (*proc)->fetchqueue[0][1] % IDX_MOD) % MEM_SIZE;
 	if ((*proc)->registers[0] < 0)
 		(*proc)->registers[0] += MEM_SIZE;
-	debug_zjmp(proc);
+//	debug_zjmp(proc);
 }

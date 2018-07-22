@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/21 12:45:43 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/22 17:12:17 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,6 +60,8 @@ int		cycling(void)
 	while (check_players_process() > 0 &&
 			(g_vm->dump == 0 || g_vm->cycle < g_vm->d_cycles))
 	{
+		if (g_vm->v >= 3)
+			ft_printf("Cycle %d\n", g_vm->cycle);
 //		dprintf(1, "Parsing...\n");
 		cycles_passed = check_destruction_process(cycles_passed);
 		cycle_process();//remplissage de la fetchqueue ou delai, ou exec d'autre chose qu'un fork ou un live ou une ecriture memoire

@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 14:25:29 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/22 14:39:15 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/22 17:21:32 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,5 +33,5 @@ void		ft_ld(t_process **proc)
 		(*proc)->registers[(*proc)->fetchqueue[1][1]] =
 			read_map(aim, REG_SIZE);
 	(*proc)->carry = (!(*proc)->registers[(*proc)->fetchqueue[1][1]] ? 1 : 0);
-	debug_ld(proc, aim);
+//	debug_ld(proc, aim);
 }

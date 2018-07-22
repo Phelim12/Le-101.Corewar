@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 14:26:03 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/22 14:41:26 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/22 17:56:50 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,8 +33,10 @@ void		ft_st(t_process **proc)
 
 	i = -1;
 	tab = NULL;
-	aim = (*proc)->begin + (*proc)->fetchqueue[1][1] % IDX_MOD;
-	debug_st(proc, aim);
+	aim = ((*proc)->begin + (*proc)->fetchqueue[1][1] % IDX_MOD) % MEM_SIZE;
+	if (aim < 0)
+		aim += MEM_SIZE;
+//	debug_st(proc, aim);
 	if ((*proc)->fetchqueue[1][0] == 1)
 		(*proc)->registers[(*proc)->fetchqueue[1][1]] =
 			(*proc)->registers[(*proc)->fetchqueue[0][1]];

@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/22 16:03:27 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/22 17:18:30 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -145,6 +145,7 @@ typedef struct				s_vm
 	char			*p_map;
 	int				dump;
 	int				v;
+	int				d_size;
 	unsigned int	d_cycles;
 	unsigned int	nb_players;
 }							t_vm;
@@ -288,6 +289,7 @@ int							get_dir(int cursor, t_op instruction);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+t_op						*get_op_tab();
 t_op						get_opcode(char op_code);
 
 /*

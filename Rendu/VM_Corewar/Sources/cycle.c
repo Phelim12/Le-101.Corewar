@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/03 11:38:10 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/21 13:25:21 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/22 17:50:00 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -133,9 +133,42 @@ static void				read_instruction(t_process **proc)
 		(*proc)->registers[0] = read_params(++cursor, instruction, proc) % MEM_SIZE;
 }
 
+void	print_instruction(t_process *proc)
+{
+	char	*s;
+	t_op	*tab;
+	int		f;
+	int		i;
+
+	i = -1;
+	f = 0;
+	s = NULL;
+	tab = get_op_tab();
+	ft_printf("P%d |\t%s", abs(proc->registers[1]), tab[g_vm->map[proc->begin] - 1].name);
+	if (g_vm->v >= 1)
+	{
+		while (++i < tab[proc->op - 1].nparams)
+	{
+		if (proc->fetchqueue[i][0] == 1)
+			ft_printf((f ? ", r%d" : "\tr%d"), proc->fetchqueue[i][1]);
+		else if (proc->fetchqueue[i][0] == 2)
+			ft_printf((f ? ", %%%d" : "\t%%%d"), proc->fetchqueue[i][1]);
+		else
+			ft_printf((f ? ", %d" : "\t%d"), proc->fetchqueue[i][1]);
+		f = 1;
+	}
+	}
+	if (g_vm->v >= 2)
+		ft_printf((g_vm->v == 3 ? "\t\tPC -> %d\n" : "\t\tPC -> %d"), proc->begin);
+	if (g_vm->v < 3)
+		ft_printf("\t\tCycle %d\n", g_vm->cycle);
+	else
+		ft_printf("\n");
+}
+
 void	run(t_process *proc)
 {
-	dprintf(2, "op = %d\n PC = %d\n", (*proc).op, proc->registers[0]);
+//	print_instruction(proc);
 	if (proc->op == 2)
 		ft_ld(&proc);
 	else if (proc->op == 3)
@@ -171,10 +204,13 @@ void	exec_live()
 
 	proc = &g_vm->list_process;
 	begin = g_vm->list_process;
+//	print_instruction(*proc);
 	while (*proc)
 	{
 		if ((*proc)->op == 1 && (*proc)->cycle_delay == 0)
 		{
+			if (g_vm->v)
+				print_instruction(*proc);
 //			dprintf(1, "exec_process_live player %d\n", (*proc)->registers[1]);
 			ft_live(proc);
 			(*proc)->cycle_delay = -1;
@@ -190,12 +226,15 @@ void	exec_fork()
 	t_process	*begin;
 
 	proc = &g_vm->list_process;
-	begin = g_vm->list_process;
+	begin = g_vm->list_process;	
+//	print_instruction(*proc);
 	while (*proc)
 	{
 		if (((*proc)->op == 12 || (*proc)->op == 15) &&
 			(*proc)->cycle_delay == 0)
 		{
+			if (g_vm->v)
+				print_instruction(*proc);
 			if ((*proc)->op == 12)
 				ft_fork(proc, &begin);
 			else if ((*proc)->op == 15)
@@ -222,6 +261,8 @@ void	exec_process()
 			if (check_registers(*proc) && (*proc)->cycle_delay == 0 &&
 				(*proc)->op != 1 && (*proc)->op != 12 && (*proc)->op != 15)
 			{
+				if (g_vm->v)
+					print_instruction(*proc);
 				run(*proc);
 				(*proc)->cycle_delay = -1;
 			}

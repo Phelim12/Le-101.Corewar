@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 13:59:42 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/22 14:17:08 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/22 17:22:11 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,5 +41,5 @@ void		ft_lldi(t_process **proc)
 	(*proc)->registers[(*proc)->fetchqueue[2][1]] =
 		read_map((fparam + sparam + (*proc)->begin), 4);
 	(*proc)->carry = (!(*proc)->registers[(*proc)->fetchqueue[2][1]] ? 1 : 0);
-	debug_lldi(proc, fparam, sparam);
+//	debug_lldi(proc, fparam, sparam);
 }

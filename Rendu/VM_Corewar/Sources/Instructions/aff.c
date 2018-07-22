@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 14:00:35 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/22 14:05:37 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/22 17:20:59 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,5 +25,5 @@ void		ft_aff(t_process **proc)
 	c = (*proc)->registers[(*proc)->fetchqueue[0][1]] % 256;
 	if (c < 32 || c > 126)
 		return ;
-	debug_aff(c);
+//	debug_aff(c);
 }

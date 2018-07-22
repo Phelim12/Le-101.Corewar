@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 15:17:36 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/22 15:23:50 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/22 17:21:13 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -96,5 +96,5 @@ void		ft_and(t_process **proc)
 	else
 		and_ind(proc);
 	(*proc)->carry = (!(*proc)->registers[(*proc)->fetchqueue[2][1]] ? 1 : 0);
-	debug_and(proc);
+//	debug_and(proc);
 }
