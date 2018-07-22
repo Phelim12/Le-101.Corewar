@@ -6,12 +6,12 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/17 15:56:19 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/21 15:23:55 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/22 15:52:28 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../Includes/main_vm.h"
+#include "../../Includes/main_vm.h"
 
 static long long int	fill_the_bone(long long int val)
 {
@@ -26,12 +26,12 @@ static long long int	fill_the_bone(long long int val)
 }
 
 /*
- ** Extract from a tab the index-ieme value  when the tab is cut by v_size bytes
- ** MSB is the most significant byte
- ** t_size in bytes
- */
+** Extract from a tab the index-ieme value  when the tab is cut by v_size bytes
+** MSB is the most significant byte
+** t_size in bytes
+*/
 
-long long int	extract(unsigned char *tab, unsigned char v_size,
+long long int			extract(unsigned char *tab, unsigned char v_size,
 		unsigned char index, int t_size)
 {
 	int				i;
@@ -60,36 +60,7 @@ long long int	extract(unsigned char *tab, unsigned char v_size,
 	return (val);
 }
 
-unsigned char		*itoo(int nb)
-{
-	unsigned char	*tab;
-
-	tab = malloc(sizeof(unsigned char) * 4);
-	tab[0] = (nb & 0xFF000000) >> 24;
-	tab[1] = (nb & 0xFF0000) >> 16;
-	tab[2] = (nb & 0xFF00) >> 8;
-	tab[3] = (nb & 0xFF);
-	return (tab);
-}
-
-unsigned int		read_map(int index, int size)
-{
-	int					i;
-	unsigned int		ret;
-
-	i = 0;
-	ret = 0;
-	index %= MEM_SIZE;
-	if (index < 0)
-		index += MEM_SIZE;
-	ret += g_vm->map[index + i++] << 24;
-	ret += g_vm->map[index + i++] << 16;
-	ret += g_vm->map[index + i++] << 8;
-	ret += g_vm->map[index + i++];
-	return (ret);
-}
-
-void				print(int player, int index, int value)
+void					print(int player, int index, int value)
 {
 	g_vm->map[index] = value;
 	g_vm->p_map[index] = player;

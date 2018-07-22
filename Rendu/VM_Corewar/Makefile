@@ -6,7 +6,7 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/12/08 18:11:02 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2018/07/22 15:35:55 by nbettach    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/22 16:56:57 by nbettach    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -27,18 +27,24 @@ DIR_INC = Includes/
 
 DIR_INSTRUCTIONS = $(addprefix $(DIR_SRC), Instructions/)
 
-NAME_SRC = main_vm.c parse_args_vm.c utils_vm.c init.c read_champs.c \
- rabbit_run.c lst_vm.c dump.c cycle.c read.c tools_op.c tools_registers.c \
+DIR_TOOLS = $(addprefix $(DIR_SRC), Tools/)
+
+NAME_SRC = main_vm.c parse_args_vm.c init.c read_champs.c \
+ rabbit_run.c lst_vm.c dump.c cycle.c read.c
 
 INSTRUCTIONS_SRC = add.c aff.c and.c check_register.c fork.c ld.c ldi.c \
  lfork.c live.c lld.c lldi.c or.c st.c sti.c sub.c xor.c zjmp.c
+
+TOOLS_SRC = tools_error.c tools_free.c tools_instructions.c tools_op.c \
+ tools_registers.c tools_vm.c
 
 NAME_INC = main_vm.h
 
 INC = $(addprefix $(DIR_INC), $(NAME_INC))
 
 SRC = $(addprefix $(DIR_SRC), $(NAME_SRC)) \
-	  $(addprefix $(DIR_INSTRUCTIONS), $(INSTRUCTIONS_SRC))
+	  $(addprefix $(DIR_INSTRUCTIONS), $(INSTRUCTIONS_SRC)) \
+	  $(addprefix $(DIR_TOOLS), $(TOOLS_SRC))
 
 OBJ = $(SRC:.c=.o)
 

@@ -1,37 +1,17 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   utils_vm.c                                       .::    .:/ .      .::   */
+/*   tools_vm.c                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
+/*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/06/01 15:43:36 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/21 15:53:52 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/07/22 16:46:57 by nbettach     #+#   ##    ##    #+#       */
+/*   Updated: 2018/07/22 16:51:10 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "main_vm.h"
-
-int		free_all(void)
-{
-	unsigned int i;
-
-	i = 0;
-	while (i < g_vm->nb_players)
-		free(g_vm->champion[i++]);
-	free(g_vm->champion);
-	ft_strdel(&g_vm->p_map);
-	ft_strdel((char **)&g_vm->map);
-	free(g_vm);
-	return (0);
-}
-
-void	free_process(t_process *list)
-{
-	free(list->registers);
-	free(list);
-}
+#include "../../Includes/main_vm.h"
 
 int		norme_remove(t_process **list, int lives)
 {
@@ -51,7 +31,7 @@ void	decrease_nbr_process(t_process *list)
 		if (list->registers[1] == g_vm->champion[i]->num)
 		{
 			g_vm->champion[i]->nb_process--;
-			break;
+			break ;
 		}
 	}
 }
@@ -86,26 +66,20 @@ int		process_remove_if_live(t_process **begin_list, int lives)
 
 void	introduction(void)
 {
-	unsigned int i = 0;
+	unsigned int i;
 
+	i = 0;
 	ft_printf("Introducing contestants...\n");
 	while (i < g_vm->nb_players)
 	{
 		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
 				(g_vm->champion[i]->num >= 0 ? g_vm->champion[i]->num :
-				 g_vm->champion[i]->num * -1), // num du champion ou ordre ? on laisse un player 0 ou on commence a 1 ?
+				g_vm->champion[i]->num * -1),
 				g_vm->champion[i]->prog_size,
 				g_vm->champion[i]->name,
 				g_vm->champion[i]->comment);
 		i++;
 	}
-}
-
-void	print_usage(void)
-{
-	ft_printf(USE1);
-	ft_printf(USE2);
-	ft_printf(USE3);
 }
 
 int		check_data(void)
@@ -119,21 +93,4 @@ int		check_data(void)
 			return (error_vm("size", i));
 	}
 	return (0);
-}
-
-int		error_vm(char *s, int c)
-{
-	unsigned int i;
-
-	i = 0;
-	if (!ft_strcmp("open", s))
-		ft_printf("Can't read source file %s\n", g_vm->champion[c]->filename);
-	else if (!ft_strcmp("size", s))
-		ft_printf("Error: File %s has too large a code (%d bytes > %d bytes)\n",
-		g_vm->champion[c]->filename, g_vm->champion[c]->prog_size, MEM_SIZE / 6);
-	else
-		ft_printf(s);
-	free_all();
-	exit(1);
-	return (-1);
 }
