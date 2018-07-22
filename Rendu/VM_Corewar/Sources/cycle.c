@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/03 11:38:10 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/22 17:50:00 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/22 23:13:36 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,12 +20,8 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 
 	param = 0;
 	i = 0;
-	if ((*proc)->op == -1)
-	{
-		while (g_vm->map[cursor] < 1 || g_vm->map[cursor] > 16)
-			cursor++;
-		return (cursor);
-	}
+//	dprintf(2, "cursor in rd_params = %d\n", cursor);
+	(*proc)->cycle_delay = instruction.cycles - 1;
 	while (((*proc)->fetchqueue[i][0] || (!instruction.info_params && !param))
 			&& i < 4)
 	{
@@ -88,19 +84,39 @@ int		size_params(int type)
 
 static int			read_ocp(int cursor, t_op instruction, t_process **proc)
 {
-	if (!g_vm->map[cursor])
-		(*proc)->op = -1;
-	if (((*proc)->fetchqueue[3][0] = g_vm->map[cursor] & 0x3))
+	int		i;
+
+	i = -1;
+	if (g_vm->map[cursor] > 0xff || g_vm->map[cursor] < 0x40)
 		(*proc)->op = -1;
 	(*proc)->fetchqueue[0][0] = g_vm->map[cursor] >> 6 & 0x3;
 	(*proc)->fetchqueue[1][0] = g_vm->map[cursor] >> 4 & 0x3;
 	(*proc)->fetchqueue[2][0] = g_vm->map[cursor] >> 2 & 0x3;
+	if (((*proc)->fetchqueue[3][0] == g_vm->map[cursor]) & 0x3)
+		(*proc)->op = -1;
 	if (instruction.nparams >= 1 && !(size_params((*proc)->fetchqueue[0][0]) & instruction.params[0]))
-		(*proc)->op = -1;
+		(*proc)->op = -2;
 	if (instruction.nparams >= 2 && !(size_params((*proc)->fetchqueue[1][0]) & instruction.params[1]))
-		(*proc)->op = -1;
+		(*proc)->op = -2;
 	if (instruction.nparams == 3 && !(size_params((*proc)->fetchqueue[2][0]) & instruction.params[2]))
-		(*proc)->op = -1;
+		(*proc)->op = -2;
+	if ((*proc)->op < 0)
+	{
+		(*proc)->cycle_delay = instruction.cycles - 1;
+		if ((*proc)->op == -1)
+			return (++cursor);
+		while (++i < instruction.nparams)
+		{
+			if ((*proc)->fetchqueue[i][0] == 1)
+				cursor++;
+			if ((*proc)->fetchqueue[i][0] == 1)
+				cursor += (instruction.size_dir == 1 ? 2 : 4);
+			if ((*proc)->fetchqueue[i][0] == 1)
+				cursor += 2;
+		}
+		return (++cursor);
+	}
+//	dprintf(2, "proc op = %d\n", (*proc)->op);
 //	dprintf(2, "rd_ocp : op = %d\n", (*proc)->op);
 	return (read_params(++cursor, instruction, proc));
 }
@@ -111,6 +127,7 @@ static void				read_instruction(t_process **proc)
 	int					cursor;
 	int				i;
 
+//	dprintf(2, "rd_instr\n");
 	i = 0;
 	while (i < 4)
 	{
@@ -119,8 +136,10 @@ static void				read_instruction(t_process **proc)
 	}
 	cursor = (*proc)->registers[0];
 	instruction = get_opcode(g_vm->map[cursor]);
-	(*proc)->cycle_delay = instruction.cycles - 1;
-	(*proc)->op = g_vm->map[cursor];
+	if (!instruction.name)
+		(*proc)->op = -1;
+	else
+		(*proc)->op = g_vm->map[cursor];
 	(*proc)->begin = cursor;
 //	dprintf(1, "PC = %d | Player : %d\n", (*proc)->registers[0], (*proc)->registers[1]);
 //	ft_printf("OPCODE = %d\n", g_vm->map[cursor]);
@@ -131,6 +150,7 @@ static void				read_instruction(t_process **proc)
 		(*proc)->registers[0] = read_ocp(++cursor, instruction, proc) % MEM_SIZE;
 	else
 		(*proc)->registers[0] = read_params(++cursor, instruction, proc) % MEM_SIZE;
+//	dprintf(2, "LE VRAI PC EST = %d\n", (*proc)->registers[0]);
 }
 
 void	print_instruction(t_process *proc)
@@ -168,6 +188,7 @@ void	print_instruction(t_process *proc)
 
 void	run(t_process *proc)
 {
+//	dprintf(2, "PC = %d\n", proc->registers[0]);
 //	print_instruction(proc);
 	if (proc->op == 2)
 		ft_ld(&proc);
@@ -261,6 +282,7 @@ void	exec_process()
 			if (check_registers(*proc) && (*proc)->cycle_delay == 0 &&
 				(*proc)->op != 1 && (*proc)->op != 12 && (*proc)->op != 15)
 			{
+//				dprintf(2, "WHUT\n");
 				if (g_vm->v)
 					print_instruction(*proc);
 				run(*proc);
@@ -281,6 +303,7 @@ int		cycle_process()
 	begin = g_vm->list_process;
 	while (*proc)
 	{
+//		dprintf(2, "cycle_delay = %d\n", (*proc)->cycle_delay);
 		if ((*proc)->cycle_delay == -1)
 			read_instruction(proc); //jump au prochain op puis read l'instruction + le bit d'encodage et on l'insere dans la fetchqueue
 		else if ((*proc)->cycle_delay > 0)

@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 14:26:27 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/22 17:22:38 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/22 22:36:11 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,7 +19,7 @@ void		debug_sti(t_process **proc, int aim, int debug)
 	{
 		dprintf(2, "sti PC = %d\n", (*proc)->registers[0]);
 		dprintf(2, "sti params : %d & %d\n",
-				(*proc)->fetchqueue[0][1], (*proc)->fetchqueue[1][1]);
+				(*proc)->fetchqueue[1][1], (*proc)->fetchqueue[2][1]);
 		dprintf(2, "sti register[%d] = %d\n",
 				(*proc)->fetchqueue[0][1],
 				(*proc)->registers[(*proc)->fetchqueue[0][1]]);
@@ -46,7 +46,7 @@ void		ft_sti(t_process **proc)
 	tab = NULL;
 	if ((*proc)->fetchqueue[1][0] == 3)
 		fparam =
-			read_map((*proc)->fetchqueue[1][1] % IDX_MOD + (*proc)->begin, 4);
+			read_map(((*proc)->fetchqueue[1][1] < 0 ? (*proc)->fetchqueue[1][1] + MEM_SIZE : (*proc)->fetchqueue[1][1]) % IDX_MOD + (*proc)->begin, 4);
 	else if ((*proc)->fetchqueue[1][0] == 1)
 		fparam = (*proc)->registers[(*proc)->fetchqueue[1][1]];
 	else
