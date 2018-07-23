@@ -66,5 +66,5 @@ void		ft_sti(t_process **proc)
 	i = -1;
 	while (++i < 4)
 		print((*proc)->registers[1], aim + i, tab[i]);
-	debug_sti(proc, aim, 2);
+	// debug_sti(proc, aim, 2);
 }

@@ -112,7 +112,7 @@ static int			read_ocp(int cursor, t_op instruction, t_process **proc)
 //		dprintf(2, "type = %d\n", (*proc)->fetchqueue[i][0]);
 	if (check_ocp(cursor - 1, cursor))
 		(*proc)->op = -1;
-	dprintf(2, "proc op = %d\n", (*proc)->op);
+	// dprintf(2, "proc op = %d\n", (*proc)->op);
 	//	dprintf(2, "rd_ocp : op = %d\n", (*proc)->op);
 	return (read_params(++cursor, instruction, proc));
 }
@@ -134,8 +134,8 @@ static void				read_instruction(t_process **proc)
 	instruction = get_opcode(g_vm->map[cursor]);
 	(*proc)->op = g_vm->map[cursor];
 	(*proc)->begin = cursor;
-	ft_printf("PC %d | OPCODE = %d\n", (*proc)->registers[0],  g_vm->map[cursor]);
-	ft_printf("instruction = %s\n", instruction.name);
+	// dprintf(2, "PC %d | OPCODE = %d\n", (*proc)->registers[0],  g_vm->map[cursor]);
+	// dprintf(2, "instruction = %s\n", instruction.name);
 	//	dprintf(1, "info params = %d\n", instruction.info_params);
 	//	dprintf(2, "opcode = %d\ninforparams = %d\n", (*proc)->op, instruction.info_params);
 	if (instruction.info_params)
