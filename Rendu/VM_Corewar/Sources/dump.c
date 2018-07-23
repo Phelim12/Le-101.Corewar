@@ -55,6 +55,29 @@ int		print_color(int i, int *p, int pc)
 	return (0);
 }
 
+int		ft_print_pc(int pos)
+{
+	t_process		*tmp;
+
+	tmp = g_vm->list_process;
+	while (tmp)
+	{
+		/*ft_printf("TMP : %d\n", tmp->begin);
+		ft_printf("POS : %d\n", pos);
+		sleep(1);*/
+		if (tmp->begin == pos)
+		{
+			if (tmp->registers[1] == -1)
+				ft_printf("\033[44m");
+			if (tmp->registers[1] == -2)
+				ft_printf("\033[41m");
+			return (1);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
 int		ft_dump(void)
 {
 	int i;
@@ -66,6 +89,7 @@ int		ft_dump(void)
 	p[3] = -2;
 
 	i = -1;
+
 	while (++i < MEM_SIZE)
 	{
 		if (i == 0)
@@ -73,7 +97,12 @@ int		ft_dump(void)
 		else if (i % (g_vm->d_size ? g_vm->d_size : 64) == 0)
 			ft_printf("\n%-#5.4x : ", i);
 		if (g_vm->p_map[i] < 0)
-			ft_printf("%02x", g_vm->map[i]);
+		{
+			if (ft_print_pc(i))
+				ft_printf("%02x\033[0m", g_vm->map[i]);
+			else
+				ft_printf("%02x", g_vm->map[i]);
+		}
 		else
 			print_color(i, p, is_pc(i));
 		ft_printf(" ");

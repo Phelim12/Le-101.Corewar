@@ -181,7 +181,7 @@ void	print_instruction(t_process *proc)
 void	run(t_process *proc)
 {
 		// dprintf(2, "PC = %d\n", proc->registers[0]);
-	// print_instruction(proc);
+	print_instruction(proc);
 	if (proc->op == 2)
 		ft_ld(&proc);
 	else if (proc->op == 3)
