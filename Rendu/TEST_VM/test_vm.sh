@@ -44,7 +44,7 @@ do
 	for P2 in $FILES
 	do
 
-		if [ $NAME1 != "salamahenagalabadoun" ]; then
+		if [ $NAME1 != "Gagnant" ]; then
 			break 
 		fi
 

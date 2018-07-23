@@ -158,7 +158,8 @@ void	print_instruction(t_process *proc)
 	f = 0;
 	s = NULL;
 	tab = get_op_tab();
-	ft_printf("\n\t\tP%d |\t%s", abs(proc->registers[1]), tab[g_vm->map[proc->begin] - 1].name);
+	ft_printf("\n%d", g_vm->map[proc->begin] - 1);
+	ft_printf("\nP%d |\t%s", abs(proc->registers[1]), tab[g_vm->map[proc->begin] - 1].name);
 	if (g_vm->v >= 1)
 	{
 		while (++i < tab[proc->op - 1].nparams)

@@ -61,10 +61,39 @@ void		ft_sti(t_process **proc)
 		sparam = (*proc)->registers[(*proc)->fetchqueue[2][1]];
 	else
 		sparam = (*proc)->fetchqueue[2][1];
-	aim = (fparam + sparam) % IDX_MOD + (*proc)->begin;
+	if ((aim = (fparam + sparam) % IDX_MOD + (*proc)->begin) < 0)
+		aim += MEM_SIZE;
 	tab = itoo((*proc)->registers[(*proc)->fetchqueue[0][1]]);
 	i = -1;
 	while (++i < 4)
 		print((*proc)->registers[1], aim + i, tab[i]);
 //	debug_sti(proc, aim, 2);
 }
+
+
+
+// P1 ld	%0, r3				PC -> 0		Cycle 4
+// P1 live	42					PC -> 7		Cycle 14
+// P1 sti	r15, %0, r14		PC -> 12		Cycle 39
+// P1 live	42					PC -> 18		Cycle 49
+// P1 sti	r15, %0, r14		PC -> 23		Cycle 74
+// P1 live	42					PC -> 29		Cycle 84
+// P1 sti	r15, %0, r14		PC -> 34		Cycle 109
+// P1 live	42					PC -> 40		Cycle 119
+// P1 sti	r15, %0, r14		PC -> 45		Cycle 144
+// P1 sti	r15, %0, r14		PC -> 51		Cycle 169
+// P1 sti	r15, %0, r14		PC -> 57		Cycle 194
+// P1 sti	r1, %-74, %1		PC -> 63		Cycle 219
+// # R_CORWAR
+// P1 ld 0 r3
+// P1 live 42
+// P1 sti r15 0 0
+// P1 live 42
+// P1 sti r15 0 0
+// P1 live 42
+// P1 sti r15 0 0
+// P1 live 42
+// P1 sti r15 0 0
+// P1 sti r15 0 0
+// P1 sti r15 0 0
+// P1 sti r1 -74 1
