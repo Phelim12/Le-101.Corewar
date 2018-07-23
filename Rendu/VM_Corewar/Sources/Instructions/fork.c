@@ -30,7 +30,7 @@ void		ft_fork(t_process **proc, t_process **begin)
 	tmp->live = 0;
 	tmp->begin = aim;
 	tmp->cycle_delay = -1;
-	tmp->carry = 0;
+	tmp->carry = (*proc)->carry;
 	tmp->registers = malloc(REG_SIZE * (REG_NUMBER + 1));
 	ft_memcpy(tmp->registers, (*proc)->registers, REG_SIZE * REG_NUMBER);
 	tmp->registers[0] = aim;
