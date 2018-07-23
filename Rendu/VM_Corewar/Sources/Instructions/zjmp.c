@@ -21,22 +21,17 @@ void		debug_zjmp(t_process **proc)
 	dprintf(2, "end zjmp aim = %d\n", (*proc)->registers[0]);
 }
 
+
 void		ft_zjmp(t_process **proc)
 {
-	// dprintf(2, "CARRY = %d\n", (*proc)->carry);
-	int jump;
-
-	jump = (*proc)->fetchqueue[0][1] % IDX_MOD;
 	if ((*proc)->carry == 1)
-	{
-		(*proc)->registers[0] = ((*proc)->begin + jump) % MEM_SIZE;
-		if ((*proc)->registers[0] < 0)
-		{
-			(*proc)->registers[0] += MEM_SIZE;
-		}
-	}
-	// debug_zjmp(proc);
+		(*proc)->registers[0] =
+			((*proc)->begin + (*proc)->fetchqueue[0][1] % IDX_MOD) % MEM_SIZE;
+	if ((*proc)->registers[0] < 0)
+		(*proc)->registers[0] += MEM_SIZE;
+//	debug_zjmp(proc);
 }
+
 
 /*
 P2 |	zjmp	0		PC -> 10		Cycle 230
