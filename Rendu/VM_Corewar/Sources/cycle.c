@@ -87,7 +87,8 @@ static int			read_ocp(int cursor, t_op instruction, t_process **proc)
 	int		i;
 
 	i = -1;
-	if (g_vm->map[cursor] > 0xff || g_vm->map[cursor] < 0x40)
+//	if (g_vm->map[cursor] > 0xff || g_vm->map[cursor] < 0x40)
+	if (check_ocp(cursor - 1, cursor))
 		(*proc)->op = -1;
 	(*proc)->fetchqueue[0][0] = g_vm->map[cursor] >> 6 & 0x3;
 	(*proc)->fetchqueue[1][0] = g_vm->map[cursor] >> 4 & 0x3;

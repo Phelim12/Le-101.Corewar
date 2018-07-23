@@ -292,6 +292,9 @@ int							get_dir(int cursor, t_op instruction);
 t_op						*get_op_tab();
 t_op						get_opcode(char op_code);
 
+
+int							check_ocp(int instruct, int ocp);
+
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 **┃
