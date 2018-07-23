@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/03 11:38:10 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/23 15:38:18 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/23 16:58:51 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -56,6 +56,8 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 			else if ((*proc)->fetchqueue[i][0] == 3)
 				cursor += 2;
 		}
+		if (g_vm->v >= 4)
+			ft_printf("\tJUMP Player %d : %d => %d\n", (*proc)->registers[0], (*proc)->begin, cursor);
 	}
 //	dprintf(2, "cursor = %d\n", cursor);
 //		int j = 0;
@@ -156,7 +158,7 @@ void	print_instruction(t_process *proc)
 	f = 0;
 	s = NULL;
 	tab = get_op_tab();
-	ft_printf("P%d |\t%s", abs(proc->registers[1]), tab[g_vm->map[proc->begin] - 1].name);
+	ft_printf("\n\t\tP%d |\t%s", abs(proc->registers[1]), tab[g_vm->map[proc->begin] - 1].name);
 	if (g_vm->v >= 1)
 	{
 		while (++i < tab[proc->op - 1].nparams)
@@ -171,7 +173,7 @@ void	print_instruction(t_process *proc)
 		}
 	}
 	if (g_vm->v >= 2)
-		ft_printf((g_vm->v == 3 ? "\t\tPC -> %d\n" : "\t\tPC -> %d"), proc->begin);
+		ft_printf((g_vm->v >= 3 ? "\t\tPC -> %d\n" : "\t\tPC -> %d"), proc->begin);
 	if (g_vm->v < 3)
 		ft_printf("\t\tCycle %d\n", g_vm->cycle);
 	else
@@ -305,10 +307,20 @@ int		cycle_process()
 					g_vm->map[(*proc)->registers[0]] < 17)
 				read_instruction(proc);
 			else
+			{
 				(*proc)->registers[0] += 1;
+			}
+			if (g_vm->dump >= 4)
+				ft_printf("Player %d => PC %d\n", (*proc)->registers[1], (*proc)->registers[0]);
 		}//jump au prochain op puis read l'instruction + le bit d'encodage et on l'insere dans la fetchqueue
 		else if ((*proc)->cycle_delay > 0)
-			(*proc)->cycle_delay--;
+		{
+			if (g_vm->v >= 4)
+			{
+				(*proc)->cycle_delay--;
+				ft_printf("Player %d => Instruction %d : %d cycles to wait\n", (*proc)->registers[1], (*proc)->op, (*proc)->cycle_delay);
+			}
+		}
 		*proc = (*proc)->next;
 	}
 	g_vm->list_process = begin;
