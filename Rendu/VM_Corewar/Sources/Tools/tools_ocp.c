@@ -72,3 +72,59 @@ int		check_ocp(int instruct, int ocp)
 		ret = check_ocp_two(instruct, ocp);
 	return (ret);
 }
+/*
+P2 | ld 0 r2
+P1 | ld 50595074 r3
+P1 | ld 67293184 r4
+P1 | ld 0 r5
+P1 | st r1 6
+P2 | zjmp 510 OK
+P1 | live -1
+P2 | zjmp 123 OK
+P2 | ld 57672449 r4
+P2 | ld -16186886 r5
+P1 | sti r5 0 50595074
+P2 | ld 151087104 r3
+P2 | ld 0 r2
+P1 | add r3 r4 r5
+P2 | st r4 511
+P1 | ld 0 r16
+P2 | st r5 510
+P1 | zjmp -22 OK
+P2 | zjmp 501 OK
+P2 | st r3 511
+P1 | live -1
+P2 | zjmp 506 OK
+P1 | sti r5 117888258 50595074
+P1 | and 84054016 117888258 r2
+P2 | zjmp 360 OK
+*/
+
+/*
+P1 |	ld			Cycle 4
+P2 |	ld			Cycle 4
+P1 |	ld			Cycle 9
+P1 |	ld			Cycle 14
+P1 |	st			Cycle 19
+P2 |	zjmp		Cycle 24
+P1 |	live		Cycle 29
+P2 |	zjmp		Cycle 44
+P2 |	ld			Cycle 49
+P2 |	ld			Cycle 54
+P1 |	sti			Cycle 54
+P2 |	ld			Cycle 59
+P2 |	ld			Cycle 64
+P1 |	add			Cycle 64
+P2 |	st			Cycle 69
+P1 |	ld			Cycle 69
+P2 |	st			Cycle 74
+P1 |	zjmp		Cycle 89
+P2 |	zjmp		Cycle 94
+P2 |	st			Cycle 99
+P1 |	live		Cycle 99
+P2 |	zjmp		Cycle 119
+P1 |	sti			Cycle 124
+P2 |	zjmp		Cycle 139
+P2 |	ld			Cycle 163
+P2 |	st			Cycle 168
+*/

@@ -44,11 +44,11 @@ void		ft_sti(t_process **proc)
 //	debug_sti(proc, 0, 1);
 	i = -1;
 	tab = NULL;
-	while (++i < 3)
+	/*while (++i < 3)
 	{
 		dprintf(2, "params type = %d | value = %d\n", (*proc)->fetchqueue[i][0], (*proc)->fetchqueue[i][1]);
 		dprintf(2, "register %d value = %d\n", i, (*proc)->registers[(*proc)->fetchqueue[i][1]]);
-	}
+	}*/
 	if ((*proc)->fetchqueue[1][0] == 3)
 		fparam = read_map(((*proc)->fetchqueue[1][1] < 0 ?
 			(*proc)->fetchqueue[1][1] + MEM_SIZE :
