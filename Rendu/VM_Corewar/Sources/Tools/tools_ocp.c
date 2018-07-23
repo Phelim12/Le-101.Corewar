@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/05 22:10:59 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/23 13:38:47 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/23 14:51:53 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,10 +42,10 @@ int		check_ocp_one(int instruct,int cursor)
 			(g_vm->map[cursor] == 0x80))
 			return (0);
 	else if (g_vm->map[instruct] == 2 &&
-			(g_vm->map[cursor] == 0x90 || g_vm->map[cursor] <= 0xD0))
+			(g_vm->map[cursor] == 0x90 || g_vm->map[cursor] == 0xD0))
 			return (0);
 	else if (g_vm->map[instruct] == 3 &&
-			(g_vm->map[cursor] == 0x50 && g_vm->map[cursor] == 0x70))
+			(g_vm->map[cursor] == 0x50 || g_vm->map[cursor] == 0x70))
 			return (0);
 	else if ((g_vm->map[instruct] == 4 || g_vm->map[instruct] == 5) &&
 			(g_vm->map[cursor] == 0x54))

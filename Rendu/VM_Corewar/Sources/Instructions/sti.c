@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 14:26:27 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/22 22:36:11 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/23 15:27:29 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,12 +44,18 @@ void		ft_sti(t_process **proc)
 //	debug_sti(proc, 0, 1);
 	i = -1;
 	tab = NULL;
+	while (++i < 3)
+	{
+		dprintf(2, "params type = %d | value = %d\n", (*proc)->fetchqueue[i][0], (*proc)->fetchqueue[i][1]);
+		dprintf(2, "register %d value = %d\n", i, (*proc)->registers[(*proc)->fetchqueue[i][1]]);
+	}
 	if ((*proc)->fetchqueue[1][0] == 3)
-		fparam =
-			read_map(((*proc)->fetchqueue[1][1] < 0 ? (*proc)->fetchqueue[1][1] + MEM_SIZE : (*proc)->fetchqueue[1][1]) % IDX_MOD + (*proc)->begin, 4);
+		fparam = read_map(((*proc)->fetchqueue[1][1] < 0 ?
+			(*proc)->fetchqueue[1][1] + MEM_SIZE :
+				(*proc)->fetchqueue[1][1]) % IDX_MOD + (*proc)->begin, 4);
 	else if ((*proc)->fetchqueue[1][0] == 1)
 		fparam = (*proc)->registers[(*proc)->fetchqueue[1][1]];
-	else
+	else if ((*proc)->fetchqueue[1][0] == 2)
 		fparam = (*proc)->fetchqueue[1][1];
 	if ((*proc)->fetchqueue[2][0] == 1)
 		sparam = (*proc)->registers[(*proc)->fetchqueue[2][1]];
@@ -57,7 +63,8 @@ void		ft_sti(t_process **proc)
 		sparam = (*proc)->fetchqueue[2][1];
 	aim = (fparam + sparam) % IDX_MOD + (*proc)->begin;
 	tab = itoo((*proc)->registers[(*proc)->fetchqueue[0][1]]);
+	i = -1;
 	while (++i < 4)
 		print((*proc)->registers[1], aim + i, tab[i]);
-//	debug_sti(proc, aim, 2);
+	debug_sti(proc, aim, 2);
 }

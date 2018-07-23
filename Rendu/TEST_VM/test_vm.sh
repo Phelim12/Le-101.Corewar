@@ -6,7 +6,7 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/07/12 19:03:24 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2018/07/22 22:53:20 by jjanin-r    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/23 15:11:23 by jjanin-r    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -44,7 +44,7 @@ do
 	for P2 in $FILES
 	do
 
-		if [ $NAME1 != "littlepuppy" ]; then
+		if [ $NAME1 != "salamahenagalabadoun" ]; then
 			break 
 		fi
 
