@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/04 12:50:12 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/22 17:19:50 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/23 16:40:41 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -48,8 +48,8 @@ static void	parse_v(char const **argv, unsigned int *i)
 			ft_atoi(argv[*i + 1]) >= 0)
 	{
 		verbose = ft_atoi(argv[*i + 1]);
-		if (verbose < 1 || verbose > 3)
-			error_vm("Please enter a valid verbose mode (1 - 3)\n", 0);
+		if (verbose < 1 || verbose > 4)
+			error_vm("Please enter a valid verbose mode (1 - 4)\n", 0);
 		else
 			g_vm->v = verbose;
 	}
