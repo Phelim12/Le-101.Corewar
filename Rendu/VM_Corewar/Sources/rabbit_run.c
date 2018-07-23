@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/23 16:56:09 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/23 18:25:52 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -78,6 +78,8 @@ int		cycling(void)
 //		dprintf(1, "Player %d last_lived\n----------------------------------------------------\n\n", g_vm->last_live);
 //		ft_printf("Cycle %d\n", g_vm->cycle);
 	}
+	if (g_vm->v >= 3)
+		ft_printf("\nCycle %d\n\n", g_vm->cycle);
 
 //	dprintf(1, "cycles_passed = %d\n", cycles_passed);
 	if (g_vm->dump == 1)

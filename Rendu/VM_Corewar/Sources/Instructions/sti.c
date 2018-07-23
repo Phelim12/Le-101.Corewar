@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 14:26:27 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/23 15:27:29 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/23 18:38:16 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -66,5 +66,5 @@ void		ft_sti(t_process **proc)
 	i = -1;
 	while (++i < 4)
 		print((*proc)->registers[1], aim + i, tab[i]);
-	// debug_sti(proc, aim, 2);
+//	debug_sti(proc, aim, 2);
 }

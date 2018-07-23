@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/03 11:38:10 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/23 17:53:48 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/23 18:39:53 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -52,7 +52,7 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 			if ((*proc)->fetchqueue[i][0] == 1)
 				cursor++;
 			else if ((*proc)->fetchqueue[i][0] == 2)
-				cursor += 4;
+				cursor += (instruction.size_dir == 1 ? 2 : 4);
 			else if ((*proc)->fetchqueue[i][0] == 3)
 				cursor += 2;
 		}
