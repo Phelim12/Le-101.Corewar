@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/03 11:38:10 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/23 16:58:51 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/23 17:22:20 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -136,8 +136,8 @@ static void				read_instruction(t_process **proc)
 	instruction = get_opcode(g_vm->map[cursor]);
 	(*proc)->op = g_vm->map[cursor];
 	(*proc)->begin = cursor;
-	// dprintf(2, "PC %d | OPCODE = %d\n", (*proc)->registers[0],  g_vm->map[cursor]);
-	// dprintf(2, "instruction = %s\n", instruction.name);
+	 dprintf(2, "PC %d | OPCODE = %d\n", (*proc)->registers[0],  g_vm->map[cursor]);
+	 dprintf(2, "instruction = %s\n", instruction.name);
 	//	dprintf(1, "info params = %d\n", instruction.info_params);
 	//	dprintf(2, "opcode = %d\ninforparams = %d\n", (*proc)->op, instruction.info_params);
 	if (instruction.info_params)
@@ -182,8 +182,8 @@ void	print_instruction(t_process *proc)
 
 void	run(t_process *proc)
 {
-		// dprintf(2, "PC = %d\n", proc->registers[0]);
-	print_instruction(proc);
+		//dprintf(2, "PC = %d\n", proc->registers[0]);
+//	print_instruction(proc);
 	if (proc->op == 2)
 		ft_ld(&proc);
 	else if (proc->op == 3)
@@ -299,8 +299,8 @@ int		cycle_process()
 	begin = g_vm->list_process;
 	while (*proc)
 	{
-//		dprintf(1, "PC = %d | Player : %d\n", (*proc)->registers[0], (*proc)->registers[1]);
-//		dprintf(2, "cycle_delay = %d\n-----------------------------------------------------------------------\n", (*proc)->cycle_delay);
+		dprintf(2, "PC = %d | Player : %d\n", (*proc)->registers[0], (*proc)->registers[1]);
+		dprintf(2, "cycle_delay = %d\n-----------------------------------------------------------------------\n", (*proc)->cycle_delay);
 		if ((*proc)->cycle_delay == -1)
 		{
 			if (g_vm->map[(*proc)->registers[0]] > 0 &&
@@ -315,11 +315,9 @@ int		cycle_process()
 		}//jump au prochain op puis read l'instruction + le bit d'encodage et on l'insere dans la fetchqueue
 		else if ((*proc)->cycle_delay > 0)
 		{
+			(*proc)->cycle_delay--;
 			if (g_vm->v >= 4)
-			{
-				(*proc)->cycle_delay--;
 				ft_printf("Player %d => Instruction %d : %d cycles to wait\n", (*proc)->registers[1], (*proc)->op, (*proc)->cycle_delay);
-			}
 		}
 		*proc = (*proc)->next;
 	}
