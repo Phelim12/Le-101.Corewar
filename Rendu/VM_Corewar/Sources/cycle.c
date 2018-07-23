@@ -47,7 +47,7 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 	else if ((*proc)->op < 0)
 	{
 		i = -1;
-		while (++i < 3)
+		while (++i < instruction.nparams)
 		{
 			if ((*proc)->fetchqueue[i][0] == 1)
 				cursor++;
