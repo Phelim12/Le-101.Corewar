@@ -73,7 +73,8 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 		ft_printf("fetch[%d][1] = %d\n", j, (*proc)->fetchqueue[j][1]);
 		j++;
 		}
-		*/	return (cursor);
+		*/	
+	return (((*proc)->op == 9 && (*proc)->carry) ? (*proc)->begin : cursor);
 }
 /*
    typedef struct		s_op
@@ -158,8 +159,8 @@ void	print_instruction(t_process *proc)
 	f = 0;
 	s = NULL;
 	tab = get_op_tab();
-	ft_printf("\n%d", g_vm->map[proc->begin] - 1);
-	ft_printf("\nP%d |\t%s", abs(proc->registers[1]), tab[g_vm->map[proc->begin] - 1].name);
+	// ft_printf("\n%d", g_vm->map[proc->begin] - 1);
+	ft_printf("\nP%d |\t%s", abs(proc->registers[1]), tab[proc->op - 1].name);
 	if (g_vm->v >= 1)
 	{
 		while (++i < tab[proc->op - 1].nparams)
@@ -176,7 +177,7 @@ void	print_instruction(t_process *proc)
 	if (g_vm->v >= 2)
 		ft_printf((g_vm->v >= 3 ? "\t\tPC -> %d\n" : "\t\tPC -> %d"), proc->begin);
 	if (g_vm->v < 3)
-		ft_printf("\t\tCycle %d\n", g_vm->cycle);
+		ft_printf("\t\tCycle %d\n", g_vm->cycle + 1);
 	else
 		ft_printf("\n");
 }
@@ -185,6 +186,7 @@ void	run(t_process *proc)
 {
 		//dprintf(2, "PC = %d\n", proc->registers[0]);
 //	print_instruction(proc);
+	// ft_printf("OP = %d\n", proc->op);
 	if (proc->op == 2)
 		ft_ld(&proc);
 	else if (proc->op == 3)
@@ -236,6 +238,21 @@ void	exec_live()
 	g_vm->list_process = begin;
 }
 
+void	ft_print_nb_proc(t_process *begin)
+{
+	t_process 	*tmp;
+	int 		var;
+
+	var = 0;
+	tmp = begin;
+	while (tmp)
+	{
+		var++;
+		tmp = tmp->next;
+	}
+	// ft_printf("NB_PROC = %d\n", var);
+}
+
 void	exec_fork()
 {
 	t_process	**proc;
@@ -252,7 +269,11 @@ void	exec_fork()
 			if (g_vm->v)
 				print_instruction(*proc);
 			if ((*proc)->op == 12)
+			{
+				// ft_print_nb_proc(begin);
 				ft_fork(proc, &begin);
+				// ft_print_nb_proc(begin);
+			}
 			else if ((*proc)->op == 15)
 				ft_lfork(proc, &begin);
 			(*proc)->cycle_delay = -1;
@@ -300,15 +321,17 @@ int		cycle_process()
 	begin = g_vm->list_process;
 	while (*proc)
 	{
-//		dprintf(2, "PC = %d | Player : %d\n", (*proc)->registers[0], (*proc)->registers[1]);
-//		dprintf(2, "cycle_delay = %d\n-----------------------------------------------------------------------\n", (*proc)->cycle_delay);
+		// dprintf(2, "PC = %d | Player : %d\n", (*proc)->registers[0], (*proc)->registers[1]);
+		// dprintf(2, "cycle_delay = %d\n-----------------------------------------------------------------------\n", (*proc)->cycle_delay);
 		if ((*proc)->cycle_delay == -1)
 		{
 			if (g_vm->map[(*proc)->registers[0]] > 0 &&
 					g_vm->map[(*proc)->registers[0]] < 17)
 				read_instruction(proc);
 			else
-			{
+			{	
+				if ((*proc)->registers[0] == MEM_SIZE - 1)
+					(*proc)->registers[0] = -1;
 				(*proc)->registers[0] += 1;
 			}
 			if (g_vm->dump >= 4)
@@ -325,3 +348,117 @@ int		cycle_process()
 	g_vm->list_process = begin;
 	return (0);
 }
+
+/*
+PC = 3 | Player : -1
+cycle_delay = 1
+-----------------------------------------------------------------------
+PC = 2051 | Player : -2
+cycle_delay = 1
+-----------------------------------------------------------------------
+NB_PROC = 2
+BEGIN = 0
+FORK = 144
+AIM = 144
+NB_PROC = 3
+NB_PROC = 3
+BEGIN = 2048
+FORK = 80
+AIM = 2128
+
+PC = 3 | Player : -1
+cycle_delay = 1
+-----------------------------------------------------------------------
+PC = 2051 | Player : -2
+cycle_delay = 1
+-----------------------------------------------------------------------
+NB_PROC = 2
+BEGIN = 0
+FORK = 144
+AIM = 144
+NB_PROC = 3
+NB_PROC = 3
+BEGIN = 2048
+FORK = 80
+AIM = 2128
+NB_PROC = 4
+
+PC = 2128 | Player : -2
+cycle_delay = -1
+-----------------------------------------------------------------------
+PC = 144 | Player : -1
+cycle_delay = -1
+-----------------------------------------------------------------------
+PC = 3 | Player : -1
+cycle_delay = -1
+-----------------------------------------------------------------------
+PC = 2051 | Player : -2
+cycle_delay = -1
+-----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1
+
+
+
+
+
+
+
+
+
+
+
+10
+
+ED
+
+
+
+
+
+
+*/
+

@@ -168,7 +168,7 @@ int			init_map(void)
 	g_vm->map[MEM_SIZE] = '\0';
 	g_vm->p_map[MEM_SIZE] = '\0';
 	g_vm->map = ft_memset(g_vm->map, 0, (size_t)MEM_SIZE);
-	g_vm->p_map = ft_memset(g_vm->p_map, -1, (size_t)MEM_SIZE);
+	g_vm->p_map = ft_memset(g_vm->p_map, 0, (size_t)MEM_SIZE);
 	list_tmp = g_vm->list_process;
 	while (list_tmp)
 	{

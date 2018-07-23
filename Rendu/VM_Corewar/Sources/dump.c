@@ -31,13 +31,13 @@ int		print_color(int i, int *p, int pc)
 {
 	if (!(p[0] == g_vm->p_map[i] || p[1] == g_vm->p_map[i] || p[2] == g_vm->p_map[i] || p[3] == g_vm->p_map[i]))
 	{
-		if (p[0] == -2)
+		if (!p[0])
 			p[0] = g_vm->p_map[i];
-		else if (p[1] == -2)
+		else if (!p[1])
 			p[1] = g_vm->p_map[i];
-		else if (p[2] == -2)
+		else if (!p[2])
 			p[2] = g_vm->p_map[i];
-		else if (p[3] == -2)
+		else if (!p[3])
 			p[3] = g_vm->p_map[i];
 	}
 	if (g_vm->p_map[i] == p[0])
@@ -64,8 +64,9 @@ int		ft_print_pc(int pos)
 	{
 		/*ft_printf("TMP : %d\n", tmp->begin);
 		ft_printf("POS : %d\n", pos);
-		sleep(1);*/
-		if (tmp->begin == pos)
+		// sleep(1);*/
+		// ft_printf("ASDFADSFADSF = %d\t adfasdf ; %d\n", tmp->registers[0], pos);
+		if (tmp->registers[0] == pos)
 		{
 			if (tmp->registers[1] == -1)
 				ft_printf("\033[44m");
@@ -83,10 +84,10 @@ int		ft_dump(void)
 	int i;
 	int p[4];
 
-	p[0] = -2;
-	p[1] = -2;
-	p[2] = -2;
-	p[3] = -2;
+	p[0] = 0;
+	p[1] = 0;
+	p[2] = 0;
+	p[3] = 0;
 
 	i = -1;
 
@@ -96,17 +97,42 @@ int		ft_dump(void)
 			ft_printf("%-#5.4x : ", i);
 		else if (i % (g_vm->d_size ? g_vm->d_size : 64) == 0)
 			ft_printf("\n%-#5.4x : ", i);
-		if (g_vm->p_map[i] < 0)
-		{
-			//if (ft_print_pc(i))
-				//ft_printf("%02x\033[0m", g_vm->map[i]);
-			//else
-				ft_printf("%02x", g_vm->map[i]);
-		}
-		else
-			print_color(i, p, is_pc(i));
+		// if (ft_print_pc(i))
+		// 	ft_printf("%02x{eoc}", g_vm->map[i]);
+		// else
+			ft_printf("%02x", g_vm->map[i]);
 		ft_printf(" ");
 	}
 	ft_printf("\n");
 	return (0);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+// 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+

@@ -61,7 +61,7 @@ int		cycling(void)
 			(g_vm->dump == 0 || g_vm->cycle < g_vm->d_cycles))
 	{
 		if (g_vm->v >= 3)
-			ft_printf("\nCycle %d\n\n", g_vm->cycle);
+			ft_printf("\nCycle %d\n\n", g_vm->cycle + 1);
 //		dprintf(1, "Parsing...\n");
 		cycles_passed = check_destruction_process(cycles_passed);
 		cycle_process();//remplissage de la fetchqueue ou delai, ou exec d'autre chose qu'un fork ou un live ou une ecriture memoire
@@ -78,8 +78,6 @@ int		cycling(void)
 //		dprintf(1, "Player %d last_lived\n----------------------------------------------------\n\n", g_vm->last_live);
 //		ft_printf("Cycle %d\n", g_vm->cycle);
 	}
-	if (g_vm->v >= 3)
-		ft_printf("\nCycle %d\n\n", g_vm->cycle);
 
 //	dprintf(1, "cycles_passed = %d\n", cycles_passed);
 	if (g_vm->dump == 1)
