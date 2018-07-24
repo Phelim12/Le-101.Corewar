@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/03 11:38:10 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/23 18:39:53 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/24 13:11:42 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,7 +20,7 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 
 	param = 0;
 	i = 0;
-//		dprintf(2, "cursor in rd_params = %d\n", cursor);
+	//		dprintf(2, "cursor in rd_params = %d\n", cursor);
 	(*proc)->cycle_delay = instruction.cycles - 1;
 	if ((*proc)->op > 0)
 	{
@@ -59,13 +59,13 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 		if (g_vm->v >= 4)
 			ft_printf("\tJUMP Player %d : %d => %d\n", (*proc)->registers[0], (*proc)->begin, cursor);
 	}
-//	dprintf(2, "cursor = %d\n", cursor);
-//		int j = 0;
-//		ft_printf("OPCODE = %d | %s | type %d value %d | type %d value %d | type %d value %d\n", (*proc)->op, instruction.name,
-//				(*proc)->fetchqueue[0][0], (*proc)->fetchqueue[0][1],
-//				(*proc)->fetchqueue[1][0], (*proc)->fetchqueue[1][1],
-//				(*proc)->fetchqueue[2][0], (*proc)->fetchqueue[2][1],
-//				(*proc)->fetchqueue[3][0], (*proc)->fetchqueue[3][1]);
+	//	dprintf(2, "cursor = %d\n", cursor);
+	//		int j = 0;
+	//		ft_printf("OPCODE = %d | %s | type %d value %d | type %d value %d | type %d value %d\n", (*proc)->op, instruction.name,
+	//				(*proc)->fetchqueue[0][0], (*proc)->fetchqueue[0][1],
+	//				(*proc)->fetchqueue[1][0], (*proc)->fetchqueue[1][1],
+	//				(*proc)->fetchqueue[2][0], (*proc)->fetchqueue[2][1],
+	//				(*proc)->fetchqueue[3][0], (*proc)->fetchqueue[3][1]);
 	//	ft_printf("PC = %d\n", (*proc)->registers[0]);
 	/*	while (j < 4)
 		{
@@ -111,8 +111,8 @@ static int			read_ocp(int cursor, t_op instruction, t_process **proc)
 	(*proc)->fetchqueue[1][0] = g_vm->map[cursor] >> 4 & 0x3;
 	(*proc)->fetchqueue[2][0] = g_vm->map[cursor] >> 2 & 0x3;
 	(*proc)->fetchqueue[3][0] = g_vm->map[cursor]  & 0x3;
-//	while (++i < 4)
-//		dprintf(2, "type = %d\n", (*proc)->fetchqueue[i][0]);
+	//	while (++i < 4)
+	//		dprintf(2, "type = %d\n", (*proc)->fetchqueue[i][0]);
 	if (check_ocp(cursor - 1, cursor))
 		(*proc)->op = -1;
 	// dprintf(2, "proc op = %d\n", (*proc)->op);
@@ -137,8 +137,8 @@ static void				read_instruction(t_process **proc)
 	instruction = get_opcode(g_vm->map[cursor]);
 	(*proc)->op = g_vm->map[cursor];
 	(*proc)->begin = cursor;
-//	 dprintf(2, "PC %d | OPCODE = %d\n", (*proc)->registers[0],  g_vm->map[cursor]);
-//	 dprintf(2, "instruction = %s\n", instruction.name);
+	//	 dprintf(2, "PC %d | OPCODE = %d\n", (*proc)->registers[0],  g_vm->map[cursor]);
+	//	 dprintf(2, "instruction = %s\n", instruction.name);
 	//	dprintf(1, "info params = %d\n", instruction.info_params);
 	//	dprintf(2, "opcode = %d\ninforparams = %d\n", (*proc)->op, instruction.info_params);
 	if (instruction.info_params)
@@ -184,8 +184,8 @@ void	print_instruction(t_process *proc)
 
 void	run(t_process *proc)
 {
-		//dprintf(2, "PC = %d\n", proc->registers[0]);
-//	print_instruction(proc);
+	//dprintf(2, "PC = %d\n", proc->registers[0]);
+	//	print_instruction(proc);
 	// ft_printf("OP = %d\n", proc->op);
 	if (proc->op == 2)
 		ft_ld(&proc);
@@ -280,6 +280,7 @@ void	exec_fork()
 		}
 		(*proc) = (*proc)->next;
 	}
+	//(*proc) = g_vm->list_process;
 	g_vm->list_process = begin;
 }
 
@@ -294,11 +295,11 @@ void	exec_process()
 	{
 		if ((*proc)->op > 0)
 		{
-//						dprintf(1, "exec_process player %d\n", (*proc)->registers[1]);
+			//						dprintf(1, "exec_process player %d\n", (*proc)->registers[1]);
 			if (check_registers(*proc) && (*proc)->cycle_delay == 0 &&
 					(*proc)->op != 12 && (*proc)->op != 15)
 			{
-//								dprintf(2, "WHUT\n");
+				//								dprintf(2, "WHUT\n");
 				if (g_vm->v)
 					print_instruction(*proc);
 				run(*proc);
@@ -321,8 +322,8 @@ int		cycle_process()
 	begin = g_vm->list_process;
 	while (*proc)
 	{
-		// dprintf(2, "PC = %d | Player : %d\n", (*proc)->registers[0], (*proc)->registers[1]);
-		// dprintf(2, "cycle_delay = %d\n-----------------------------------------------------------------------\n", (*proc)->cycle_delay);
+	//	dprintf(2, "PC = %d | Player : %d\n", (*proc)->registers[0], (*proc)->registers[1]);
+	//	dprintf(2, "cycle_delay = %d\n-----------------------------------------------------------------------\n", (*proc)->cycle_delay);
 		if ((*proc)->cycle_delay == -1)
 		{
 			if (g_vm->map[(*proc)->registers[0]] > 0 &&
@@ -350,51 +351,51 @@ int		cycle_process()
 }
 
 /*
-PC = 3 | Player : -1
-cycle_delay = 1
------------------------------------------------------------------------
-PC = 2051 | Player : -2
-cycle_delay = 1
------------------------------------------------------------------------
-NB_PROC = 2
-BEGIN = 0
-FORK = 144
-AIM = 144
-NB_PROC = 3
-NB_PROC = 3
-BEGIN = 2048
-FORK = 80
-AIM = 2128
+   PC = 3 | Player : -1
+   cycle_delay = 1
+   -----------------------------------------------------------------------
+   PC = 2051 | Player : -2
+   cycle_delay = 1
+   -----------------------------------------------------------------------
+   NB_PROC = 2
+   BEGIN = 0
+   FORK = 144
+   AIM = 144
+   NB_PROC = 3
+   NB_PROC = 3
+   BEGIN = 2048
+   FORK = 80
+   AIM = 2128
 
-PC = 3 | Player : -1
-cycle_delay = 1
------------------------------------------------------------------------
-PC = 2051 | Player : -2
-cycle_delay = 1
------------------------------------------------------------------------
-NB_PROC = 2
-BEGIN = 0
-FORK = 144
-AIM = 144
-NB_PROC = 3
-NB_PROC = 3
-BEGIN = 2048
-FORK = 80
-AIM = 2128
-NB_PROC = 4
+   PC = 3 | Player : -1
+   cycle_delay = 1
+   -----------------------------------------------------------------------
+   PC = 2051 | Player : -2
+   cycle_delay = 1
+   -----------------------------------------------------------------------
+   NB_PROC = 2
+   BEGIN = 0
+   FORK = 144
+   AIM = 144
+   NB_PROC = 3
+   NB_PROC = 3
+   BEGIN = 2048
+   FORK = 80
+   AIM = 2128
+   NB_PROC = 4
 
-PC = 2128 | Player : -2
-cycle_delay = -1
------------------------------------------------------------------------
-PC = 144 | Player : -1
-cycle_delay = -1
------------------------------------------------------------------------
-PC = 3 | Player : -1
-cycle_delay = -1
------------------------------------------------------------------------
-PC = 2051 | Player : -2
-cycle_delay = -1
------------------------------------------------------------------------
+   PC = 2128 | Player : -2
+   cycle_delay = -1
+   -----------------------------------------------------------------------
+   PC = 144 | Player : -1
+   cycle_delay = -1
+   -----------------------------------------------------------------------
+   PC = 3 | Player : -1
+   cycle_delay = -1
+   -----------------------------------------------------------------------
+   PC = 2051 | Player : -2
+   cycle_delay = -1
+   -----------------------------------------------------------------------
 
 
 

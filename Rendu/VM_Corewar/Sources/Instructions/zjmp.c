@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 14:02:02 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/22 22:36:02 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/24 14:08:51 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,15 +15,16 @@
 
 void		debug_zjmp(t_process **proc)
 {
-	dprintf(2, "begin zjmp aim = %d\nparam = %d\n",
+		dprintf(2, "bddegin zjmp aim = %d\nparam = %d\n",
 			((*proc)->begin + (*proc)->fetchqueue[0][1] % IDX_MOD) % MEM_SIZE,
 			(*proc)->fetchqueue[0][1]);
-	dprintf(2, "end zjmp aim = %d\n", (*proc)->registers[0]);
+		dprintf(2, "end zjmp aim = %d\n", (*proc)->registers[0]);
 }
 
 
 void		ft_zjmp(t_process **proc)
 {
+//	ft_printf("CARRY = %d\n", (*proc)->carry);
 	if ((*proc)->carry == 1)
 		(*proc)->registers[0] =
 			((*proc)->begin + (*proc)->fetchqueue[0][1] % IDX_MOD) % MEM_SIZE;

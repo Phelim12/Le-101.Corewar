@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/27 19:47:07 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/23 17:14:26 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/24 14:08:31 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -58,20 +58,33 @@ int		print_color(int i, int *p, int pc)
 int		ft_print_pc(int pos)
 {
 	t_process		*tmp;
+	int				tmp_player;
 
 	tmp = g_vm->list_process;
 	while (tmp)
 	{
 		/*ft_printf("TMP : %d\n", tmp->begin);
-		ft_printf("POS : %d\n", pos);
+		  ft_printf("POS : %d\n", pos);
 		// sleep(1);*/
 		// ft_printf("ASDFADSFADSF = %d\t adfasdf ; %d\n", tmp->registers[0], pos);
 		if (tmp->registers[0] == pos)
 		{
-			if (tmp->registers[1] == -1)
+			if (tmp->num == 1)
 				ft_printf("\033[44m");
-			if (tmp->registers[1] == -2)
+			if (tmp->num == 2)
 				ft_printf("\033[41m");
+			if (tmp->num == 3)
+				ft_printf("\033[42m");
+			if (tmp->num == 4)
+				ft_printf("\033[43m");
+			if (tmp->num == 5)
+				ft_printf("\033[45m");
+			if (tmp->num == 6)
+				ft_printf("\033[46m");
+			if (tmp->num == 7)
+				ft_printf("\033[47m");
+			if (tmp->num == 8)
+				ft_printf("\033[48m");
 			return (1);
 		}
 		tmp = tmp->next;
@@ -97,9 +110,9 @@ int		ft_dump(void)
 			ft_printf("%-#5.4x : ", i);
 		else if (i % (g_vm->d_size ? g_vm->d_size : 64) == 0)
 			ft_printf("\n%-#5.4x : ", i);
-		// if (ft_print_pc(i))
-		// 	ft_printf("%02x{eoc}", g_vm->map[i]);
-		// else
+	//	if (ft_print_pc(i))
+	//		ft_printf("%02x{eoc}", g_vm->map[i]);
+	//	else
 			ft_printf("%02x", g_vm->map[i]);
 		ft_printf(" ");
 	}

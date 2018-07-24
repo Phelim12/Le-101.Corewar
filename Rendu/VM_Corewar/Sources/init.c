@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/23 14:04:32 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/24 13:48:05 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,6 +22,7 @@ int			init_process(unsigned int a)
 		return (-1);
 	else
 	{
+		g_vm->nb_proc++;
 		ft_memset(tmp_reg, 0, (REG_NUMBER + 1) * REG_SIZE);
 		tmp_reg[1] = -g_vm->champion[a]->num;
 		tmp_reg[0] = a * MEM_SIZE / g_vm->nb_players;
@@ -29,6 +30,7 @@ int			init_process(unsigned int a)
 //		dprintf(2, "reg[16] = %d\n", tmp_reg[15]);
 		new = lstnew_vm(tmp_reg, REG_SIZE * (REG_NUMBER + 1));
 		new->cycle_delay = -1;
+		new->num = g_vm->nb_proc;
 		if (g_vm->list_process == NULL)
 			g_vm->list_process = new;
 		else
@@ -202,6 +204,7 @@ void		init_vm(char const **argv)
 	g_vm->d_size = 0;
 	g_vm->d_cycles = 0;
 	g_vm->nb_players = 0;
+	g_vm->nb_proc = 0;
 	init_champs(argv);
 	init_map();
 /*	unsigned int x = -1;

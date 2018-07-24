@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 15:25:25 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/22 15:29:24 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/24 14:07:27 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -86,4 +86,5 @@ void		ft_xor(t_process **proc)
 		xor_dir(proc);
 	else
 		xor_ind(proc);
+	(*proc)->carry = (!(*proc)->registers[(*proc)->fetchqueue[2][1]] ? 1 : 0);
 }

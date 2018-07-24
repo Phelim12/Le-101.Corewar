@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 14:01:23 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/22 17:21:28 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/24 13:41:17 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,6 +31,7 @@ void		ft_fork(t_process **proc, t_process **begin)
 	tmp->begin = aim;
 	tmp->cycle_delay = -1;
 	tmp->carry = (*proc)->carry;
+	tmp->op = 0;
 	tmp->registers = malloc(REG_SIZE * (REG_NUMBER + 1));
 	ft_memcpy(tmp->registers, (*proc)->registers, REG_SIZE * REG_NUMBER);
 	tmp->registers[0] = aim;
@@ -38,7 +39,9 @@ void		ft_fork(t_process **proc, t_process **begin)
 	{
 		tmp->fetchqueue[var][0] = 0;
 		tmp->fetchqueue[var][1] = -1;
-	}
+	}	
+	g_vm->nb_proc++;
+	tmp->num = g_vm->nb_proc;
 	tmp->next = *begin;
 	*begin = tmp;
 }

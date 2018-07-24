@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/22 17:18:30 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/24 13:39:08 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -63,6 +63,7 @@
 
 typedef struct				s_process
 {
+	int					num;
 	int					*registers;
 	int					begin;
 	char				carry;
@@ -135,6 +136,7 @@ typedef struct				s_champ
 
 typedef struct				s_vm
 {
+	int				nb_proc;
 	int				cycle_to_die;
 	unsigned int	cycle;
 	unsigned int	checks;
