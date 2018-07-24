@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/03 11:38:10 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/23 18:39:53 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/24 12:54:34 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -73,7 +73,7 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 		ft_printf("fetch[%d][1] = %d\n", j, (*proc)->fetchqueue[j][1]);
 		j++;
 		}
-		*/	
+		*/
 	return (((*proc)->op == 9 && (*proc)->carry) ? (*proc)->begin : cursor);
 }
 /*
@@ -111,12 +111,12 @@ static int			read_ocp(int cursor, t_op instruction, t_process **proc)
 	(*proc)->fetchqueue[1][0] = g_vm->map[cursor] >> 4 & 0x3;
 	(*proc)->fetchqueue[2][0] = g_vm->map[cursor] >> 2 & 0x3;
 	(*proc)->fetchqueue[3][0] = g_vm->map[cursor]  & 0x3;
-//	while (++i < 4)
-//		dprintf(2, "type = %d\n", (*proc)->fetchqueue[i][0]);
+	while (++i < 4)
+		dprintf(2, "type = %d\n", (*proc)->fetchqueue[i][0]);
 	if (check_ocp(cursor - 1, cursor))
 		(*proc)->op = -1;
-	// dprintf(2, "proc op = %d\n", (*proc)->op);
-	//	dprintf(2, "rd_ocp : op = %d\n", (*proc)->op);
+	 dprintf(2, "proc op = %d\n", (*proc)->op);
+		dprintf(2, "rd_ocp : op = %d\n", (*proc)->op);
 	return (read_params(++cursor, instruction, proc));
 }
 
@@ -137,8 +137,8 @@ static void				read_instruction(t_process **proc)
 	instruction = get_opcode(g_vm->map[cursor]);
 	(*proc)->op = g_vm->map[cursor];
 	(*proc)->begin = cursor;
-//	 dprintf(2, "PC %d | OPCODE = %d\n", (*proc)->registers[0],  g_vm->map[cursor]);
-//	 dprintf(2, "instruction = %s\n", instruction.name);
+	 dprintf(2, "PC %d | OPCODE = %d\n", (*proc)->registers[0],  g_vm->map[cursor]);
+	 dprintf(2, "instruction = %s\n", instruction.name);
 	//	dprintf(1, "info params = %d\n", instruction.info_params);
 	//	dprintf(2, "opcode = %d\ninforparams = %d\n", (*proc)->op, instruction.info_params);
 	if (instruction.info_params)
@@ -250,7 +250,7 @@ void	ft_print_nb_proc(t_process *begin)
 		var++;
 		tmp = tmp->next;
 	}
-	// ft_printf("NB_PROC = %d\n", var);
+	dprintf(2, "NB_PROC = %d\n", var);
 }
 
 void	exec_fork()
@@ -272,7 +272,6 @@ void	exec_fork()
 			{
 				// ft_print_nb_proc(begin);
 				ft_fork(proc, &begin);
-				// ft_print_nb_proc(begin);
 			}
 			else if ((*proc)->op == 15)
 				ft_lfork(proc, &begin);
@@ -321,8 +320,8 @@ int		cycle_process()
 	begin = g_vm->list_process;
 	while (*proc)
 	{
-		// dprintf(2, "PC = %d | Player : %d\n", (*proc)->registers[0], (*proc)->registers[1]);
-		// dprintf(2, "cycle_delay = %d\n-----------------------------------------------------------------------\n", (*proc)->cycle_delay);
+		dprintf(2, "PC = %d | Player : %d\n", (*proc)->registers[0], (*proc)->registers[1]);
+		dprintf(2, "cycle_delay = %d\n-----------------------------------------------------------------------\n", (*proc)->cycle_delay);
 		if ((*proc)->cycle_delay == -1)
 		{
 			if (g_vm->map[(*proc)->registers[0]] > 0 &&
