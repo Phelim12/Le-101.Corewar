@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/24 13:39:08 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/24 19:00:27 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -323,7 +323,7 @@ void							free_process(t_process *list);
 
 long long int				extract(unsigned char *tab, unsigned char v_size,
 							unsigned char index,int t_size);
-unsigned int				read_map(int index, int size);
+int							read_map(int index, int size);
 unsigned char				*itoo(int nb);
 void						print(int player, int index, int value);
 

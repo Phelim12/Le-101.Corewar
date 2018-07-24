@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 15:47:49 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/22 15:59:44 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/24 19:16:22 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,19 +25,28 @@ unsigned char		*itoo(int nb)
 	return (tab);
 }
 
-unsigned int		read_map(int index, int size)
+int					read_map(int index, int size)
 {
 	int					i;
-	unsigned int		ret;
+	int					ret;
 
+//	dprintf(2, "index read_map = %d\n", index);
 	i = 0;
 	ret = 0;
 	index %= MEM_SIZE;
 	if (index < 0)
 		index += MEM_SIZE;
-	ret += g_vm->map[index + i++] << 24;
-	ret += g_vm->map[index + i++] << 16;
-	ret += g_vm->map[index + i++] << 8;
-	ret += g_vm->map[index + i++];
+//	dprintf(2, "index read_map = %d\n", index);
+//	dprintf(2, "index + i mod MEM_SIZE = %d\n", index + i % MEM_SIZE);
+	ret += g_vm->map[(index + i) % MEM_SIZE] << 24;
+	i++;
+//	dprintf(2, "index + i mod MEM_SIZE = %d\n", index + i % MEM_SIZE);
+	ret += g_vm->map[(index + i) % MEM_SIZE] << 16;
+	i++;
+//	dprintf(2, "index + i mod MEM_SIZE = %d\n", index + i % MEM_SIZE);
+	ret += g_vm->map[(index + i) % MEM_SIZE] << 8;
+	i++;
+//	dprintf(2, "index + i mod MEM_SIZE = %d\n", index + i % MEM_SIZE);
+	ret += g_vm->map[(index + i) % MEM_SIZE];
 	return (ret);
 }

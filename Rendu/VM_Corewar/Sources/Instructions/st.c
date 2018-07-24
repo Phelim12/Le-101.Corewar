@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 14:26:03 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/23 14:20:37 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/24 19:19:25 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,6 +44,6 @@ void		ft_st(t_process **proc)
 	{
 		tab = itoo((*proc)->registers[(*proc)->fetchqueue[0][1]]);
 		while (++i < 4)
-			print((*proc)->registers[1], aim + i, tab[i]);
+			print((*proc)->registers[1], (aim + i) % MEM_SIZE, tab[i]);
 	}
 }
