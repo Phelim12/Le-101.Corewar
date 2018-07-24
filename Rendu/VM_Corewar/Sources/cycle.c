@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/24 14:21:07 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/24 16:52:34 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/24 21:51:05 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,6 +27,7 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 		while (((*proc)->fetchqueue[i][0] || (!instruction.info_params && !param))
 				&& i < instruction.nparams)
 		{
+		//	dprintf(2, "WHILE OP %d\n", (*proc)->op);
 			if ((*proc)->fetchqueue[i][0] == 1)
 				(*proc)->fetchqueue[i][1] = get_reg(cursor++);
 			else if ((*proc)->fetchqueue[i][0] == 2 || instruction.opcode == 1)
@@ -114,7 +115,7 @@ static int			read_ocp(int cursor, t_op instruction, t_process **proc)
 //			dprintf(2, "type = %d\n", (*proc)->fetchqueue[i][0]);
 	if (check_ocp(cursor - 1, cursor))
 		(*proc)->op = -1;
-//	 dprintf(2, "proc op = %d\n", (*proc)->op);
+	// dprintf(2, "\n<<<<<<<<\nproc op = %d\n", (*proc)->op);
 	return (read_params(++cursor, instruction, proc));
 }
 
@@ -135,10 +136,12 @@ static void				read_instruction(t_process **proc)
 	instruction = get_opcode(g_vm->map[cursor]);
 	(*proc)->op = g_vm->map[cursor];
 	(*proc)->begin = cursor;
+ //   dprintf(2, "----------------------\n");
 //		dprintf(2, "PC %d | OPCODE = %d\n", (*proc)->registers[0],  g_vm->map[cursor]);
 //		dprintf(2, "instruction = %s\n", instruction.name);
-	//	dprintf(1, "info params = %d\n", instruction.info_params);
-	//	dprintf(2, "opcode = %d\ninforparams = %d\n", (*proc)->op, instruction.info_params);
+//		dprintf(1, "info params = %d\n", instruction.info_params);
+//		dprintf(2, "opcode = %d\ninforparams = %d\n", (*proc)->op, instruction.info_params);
+//		dprintf(2, "----------------------\n");
 	if (instruction.info_params)
 		(*proc)->registers[0] = read_ocp(++cursor, instruction, proc) % MEM_SIZE;
 	else
@@ -292,7 +295,8 @@ void	exec_process()
 	{
 //		if ((*proc)->op > 0)
 //		{
-			//						dprintf(1, "exec_process player %d\n", (*proc)->registers[1]);
+	//	dprintf(1, "exec_process player %d\n", (*proc)->registers[1]);
+//	dprintf(2, "BONJOUR1\n");
 			if ((*proc)->cycle_delay == 0 &&
 					(*proc)->op != 12 && (*proc)->op != 15)
 			{
@@ -305,7 +309,8 @@ void	exec_process()
 					(*proc)->cycle_delay = -1;
 				}
 				else
-				{
+				{	
+	//				dprintf(2, "BONJOUR\n");
 					(*proc)->op = -1;
 					(*proc)->cycle_delay = -1;
 				}
