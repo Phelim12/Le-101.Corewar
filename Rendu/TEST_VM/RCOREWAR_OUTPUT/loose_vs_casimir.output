@@ -1,7 +1,7 @@
 Introducing contestants...
 * Player 1, weighing 682 bytes, "loose" ("loooose") !
 * Player 2, weighing 265 bytes, "CASIMIR" ("GLOUBIBOULGA") !
-0x0000 : 0f 08 00 0b 68 01 00 26 00 01 0b 68 01 01 4b 00 01 0b 68 01 01 44 00 10 0b 68 01 01 57 00 01 03 70 02 ff f2 03 70 02 ff f3 01 00 00 cf ad 03 70 02 ff f6 03 70 02 ff f1 03 70 02 ff e8 03 70 02 
+0x0000 : 0f 08 00 0b 68 01 00 26 00 01 0b 68 01 01 4b 00 01 0b 68 01 01 44 00 10 0b 68 01 01 57 00 01 03 70 02 ff f2 03 70 02 ff f3 01 ff ff ff ff 03 70 02 ff f6 03 70 02 ff f1 03 70 02 ff e8 03 70 02 
 0x0040 : ff df 03 70 02 ff d6 03 70 02 ff cd 03 70 02 ff c4 03 70 02 ff bb 03 70 02 ff b2 03 70 02 ff a9 03 70 02 ff a0 03 70 02 ff 97 03 70 02 ff 8e 03 70 02 ff 85 03 70 02 ff 7c 03 70 02 ff 73 03 70 
 0x0080 : 02 ff 6a 03 70 02 ff 61 03 70 02 ff 58 03 70 02 ff 4f 03 70 02 ff 46 03 70 02 ff 3d 03 70 02 ff 34 03 70 02 ff 2b 03 70 02 ff 22 03 70 02 ff 19 03 70 02 ff 10 03 70 02 ff 07 03 70 02 fe fe 03 
 0x00c0 : 70 02 fe f5 03 70 02 fe ec 03 70 02 fe e3 03 70 02 fe da 03 70 02 fe d1 03 70 02 fe c8 03 70 02 fe bf 03 70 02 fe b6 03 70 02 fe ad 03 70 02 fe a4 03 70 02 fe 9b 03 70 02 fe 92 03 70 02 fe 89 

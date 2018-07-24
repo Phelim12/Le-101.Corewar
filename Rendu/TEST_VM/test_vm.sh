@@ -6,7 +6,7 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/07/12 19:03:24 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2018/07/24 15:50:23 by nbettach    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/24 16:59:22 by jjanin-r    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -44,9 +44,9 @@ do
 	for P2 in $FILES
 	do
 
-	#	if [ $NAME1 != "Kappa" ]; then
-	#		break 
-	#	fi
+		if [ $NAME1 != "live" ]; then
+			break 
+		fi
 
 		NAME2=$(echo $P2 | rev | cut -c5- | rev)
 
