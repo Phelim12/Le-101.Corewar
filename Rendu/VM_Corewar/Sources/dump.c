@@ -3,14 +3,10 @@
 /*                                                              /             */
 /*   dump.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/06/27 19:47:07 by jjanin-r     #+#   ##    ##    #+#       */
-<<<<<<< HEAD
-/*   Updated: 2018/07/24 14:08:31 by nbettach    ###    #+. /#+    ###.fr     */
-=======
-/*   Updated: 2018/07/24 12:49:21 by dguelpa     ###    #+. /#+    ###.fr     */
->>>>>>> 45fc3a609f4aa4fc48f5d947e8b258a99017d559
+/*   Created: 2018/07/24 14:20:11 by nbettach     #+#   ##    ##    #+#       */
+/*   Updated: 2018/07/24 14:20:38 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -114,15 +110,9 @@ int		ft_dump(void)
 			ft_printf("%-#5.4x : ", i);
 		else if (i % (g_vm->d_size ? g_vm->d_size : 64) == 0)
 			ft_printf("\n%-#5.4x : ", i);
-<<<<<<< HEAD
 	//	if (ft_print_pc(i))
 	//		ft_printf("%02x{eoc}", g_vm->map[i]);
 	//	else
-=======
-		 if (ft_print_pc(i))
-		 	ft_printf("%02x{eoc}", g_vm->map[i]);
-		 else
->>>>>>> 45fc3a609f4aa4fc48f5d947e8b258a99017d559
 			ft_printf("%02x", g_vm->map[i]);
 		ft_printf(" ");
 	}

@@ -5,12 +5,8 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/07/22 14:01:23 by nbettach     #+#   ##    ##    #+#       */
-<<<<<<< HEAD
-/*   Updated: 2018/07/24 13:41:17 by nbettach    ###    #+. /#+    ###.fr     */
-=======
-/*   Updated: 2018/07/24 12:34:44 by dguelpa     ###    #+. /#+    ###.fr     */
->>>>>>> 45fc3a609f4aa4fc48f5d947e8b258a99017d559
+/*   Created: 2018/07/24 14:22:09 by nbettach     #+#   ##    ##    #+#       */
+/*   Updated: 2018/07/24 14:24:55 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,7 +24,6 @@ void		ft_fork(t_process **proc, t_process **begin)
 		int				var;
 		int				aim;
 
-<<<<<<< HEAD
 	var = -1;
 	tmp = ft_memalloc(sizeof(t_process));
 	aim = ((*proc)->begin + ((*proc)->fetchqueue[0][1] % IDX_MOD) % MEM_SIZE);
@@ -48,25 +43,7 @@ void		ft_fork(t_process **proc, t_process **begin)
 	g_vm->nb_proc++;
 	tmp->num = g_vm->nb_proc;
 	tmp->next = *begin;
-	*begin = tmp;
-=======
-		var = -1;
-		tmp = ft_memalloc(sizeof(t_process));
-		aim = ((*proc)->begin + ((*proc)->fetchqueue[0][1] % IDX_MOD) % MEM_SIZE);
-		tmp->live = 0;
-		tmp->begin = aim;
-		tmp->cycle_delay = -1;
-		tmp->carry = (*proc)->carry;
-		tmp->registers = malloc(REG_SIZE * (REG_NUMBER + 1));
-		ft_memcpy(tmp->registers, (*proc)->registers, REG_SIZE * (REG_NUMBER + 1));
-		tmp->registers[0] = aim;
-		while (++var < 4)
-		{
-		tmp->fetchqueue[var][0] = 0;
-		tmp->fetchqueue[var][1] = -1;
-		}
-		tmp->next = *begin;
-	 *begin = tmp;*/
+	*begin = tmp;*/
 
 	t_process		*new;
 	int				aim;
@@ -77,6 +54,8 @@ void		ft_fork(t_process **proc, t_process **begin)
 	new->cycle_delay = -1;
 	new->carry = (*proc)->carry;
 	new->registers[0] = aim;
+	g_vm->nb_proc++;
+	new->num = g_vm->nb_proc;
 	new->next = *begin;
 	*begin = new;
 
@@ -87,7 +66,6 @@ void		ft_fork(t_process **proc, t_process **begin)
 	   dprintf(1, "new->registers[%d] = %d\n", i, new->registers[i]);
 	   */
 
->>>>>>> 45fc3a609f4aa4fc48f5d947e8b258a99017d559
 }
 
 
