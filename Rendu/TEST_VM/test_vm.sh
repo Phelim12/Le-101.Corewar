@@ -24,15 +24,17 @@ if [ ! -d ./RCOREWAR_OUTPUT ]; then
 	mkdir ./RCOREWAR_OUTPUT
 fi
 
-if [[ $1 = "clear" ]]; then
+if [[ $1 = "clean" ]]; then
+	rm -rf ./corewar.dSYM
+	rm -rf ./MY_LEAKS.output
 	rm -rf ./RCOREWAR_OUTPUT
 	rm -rf ./MCOREWAR_OUTPUT
-	printf "The directory are clear.\n"
+	printf "The directories are cleared.\n"
 	exit 1
 fi
 
 if [[ -z $1 ]] || ! echo $1 | egrep -q '^[0-9]+$' ; then
-    printf "usage: sh $0 \"nb >= 0\" || \"clear\"\n"
+    printf "usage: sh $0 \"nb >= 0\" || \"clean\"\n"
     exit 0
 fi
 
@@ -51,6 +53,22 @@ do
 		NAME2=$(echo $P2 | rev | cut -c5- | rev)
 
 		OUTPUT="${NAME1}_vs_${NAME2}.output"
+
+		# 													LEAKS CHECK
+
+		# valgrind --leak-check=full --show-leak-kinds=all ./corewar ./Champs/$P1 ./Champs/$P2 -d $1 &> ./MCOREWAR_OUTPUT/$OUTPUT
+		# cat ./MCOREWAR_OUTPUT/$OUTPUT | sed 's/^=.*=//g' | grep -A 3 "definitely lost:" | column -t | fmt -c -w 75 > MY_LEAKS.output
+		# DIFF=$(diff ./MY_LEAKS.output ./GOOD_LEAKS.output)
+		# if [ "$DIFF" = "" ]; then
+		# 	printf "${GREEN}$NAME1 VS $NAME2 ✔ ${NC}\n"
+		# else
+		# 	printf "${RED}$NAME1 VS $NAME2 -> HAVE LEAKS ✘ ${NC}\n"
+		# 	cat ./MY_LEAKS.output
+		# 	read -p "Press any key to continue... " -n1 -s
+		# 	printf "\n"
+		# fi
+
+		# 													 DIFF CHECK
 
 		./corewar ./Champs/$P1 ./Champs/$P2 -d $1 > ./MCOREWAR_OUTPUT/$OUTPUT
 		./r_corewar ./Champs/$P1 ./Champs/$P2 -d $1 > ./RCOREWAR_OUTPUT/$OUTPUT

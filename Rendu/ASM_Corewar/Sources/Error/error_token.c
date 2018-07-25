@@ -13,13 +13,21 @@
 
 #include "main_asm.h"
 
-void	print_coord_token(int nbr, int fd)
+void	print_coord_token(t_pos pos, int fd)
 {
-	if (nbr < 100)
+	if (!pos.x)
+		pos.x++;
+	if (pos.y < 100)
 		ft_putchar_fd('0', fd);
-	if (nbr < 10)
+	if (pos.y < 10)
 		ft_putchar_fd('0', fd);
-	ft_putnbr_fd(nbr, fd);
+	ft_putnbr_fd(pos.y, fd);
+	ft_putchar_fd(':', 2);
+	if (pos.x < 100)
+		ft_putchar_fd('0', fd);
+	if (pos.x < 10)
+		ft_putchar_fd('0', fd);
+	ft_putnbr_fd(pos.x, fd);
 }
 
 void	print_error_msg(t_cmd *cmd, int msg_error)
@@ -44,9 +52,7 @@ void	print_error_msg(t_cmd *cmd, int msg_error)
 void	print_error_token(t_line *file, t_cmd *cmd, int msg_error)
 {
 	print_error_msg(cmd, msg_error);
-	print_coord_token(cmd->pos.y, 2);
-	ft_putchar_fd(':', 2);
-	print_coord_token(cmd->pos.x, 2);
+	print_coord_token(cmd->pos, 2);
 	ft_putstr_fd("] ", 2);
 	ft_putstr_fd(token_name(cmd->token), 2);
 	ft_putchar_fd(' ', 2);

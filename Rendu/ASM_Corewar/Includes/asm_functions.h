@@ -74,8 +74,8 @@ void		print_error_params(t_line *file, t_cmd *params, int nb, int type);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-void		file_not_exist(char const *argv[]);
-void		cant_create_file(char const *argv[], char *name_exec, t_file info);
+void		file_not_exist(char *name);
+void		cant_create_file(char *name, char *name_exec, t_file info);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -83,7 +83,7 @@ void		cant_create_file(char const *argv[], char *name_exec, t_file info);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-void		print_coord_token(int nbr, int fd);
+void		print_coord_token(t_pos pos, int fd);
 void		print_error_msg(t_cmd *cmd, int msg_error);
 void		print_error_token(t_line *file, t_cmd *cmd, int msg_error);
 
@@ -270,7 +270,7 @@ void		convert_integer(unsigned char **ptr, int n);
 void		write_code(t_line *file, int fd);
 char		*name_exec_file(const char *name);
 void		write_header(t_header header, int fd);
-void		write_file(t_file info, char const *argv[]);
+void		write_file(t_file info, char *name);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

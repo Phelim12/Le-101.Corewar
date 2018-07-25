@@ -33,6 +33,6 @@
 # define LGRAY		"\x1b[2m"
 # define ITLC		"\x1b[3m"
 # define INST		"\x1b[30;42m"
-# define C_END	"\x1b[0m"
+# define C_END		"\x1b[0m"
 
 #endif
