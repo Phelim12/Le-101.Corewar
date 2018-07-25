@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/25 17:44:11 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/25 23:30:30 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -90,8 +90,8 @@ int		cycling(void)
 		// /!\ /!\ les process sont tous stockes dans la vm, pas dans les champs.
 		// /!\ /!\ On ne fait pas jouer un process d'un champ, puis un autre. a chaque cycle, tous les process jouent
 		// // /!\ /!\ D'ou le fait de les enregistrer ensembles dans la vm. inutile d'une struct champ pour les registers.
-		exec_fork();
-		exec_live();
+//		exec_fork();
+//		exec_live();
 		cycles_passed = check_destruction_process(cycles_passed);
 		if (!check_players_process())
 			break ;
