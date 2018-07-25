@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/24 14:21:07 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/25 21:17:58 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/25 22:09:17 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -321,24 +321,37 @@ void	exec_process()
 
 	proc = &g_vm->list_process;
 	begin = g_vm->list_process;
-	while (*proc)
+/*	while (*proc)
 	{
 		if ((*proc)->cycle_delay == 0 && (*proc)->op != 1 &&
 				(*proc)->op != 12 && (*proc)->op != 15)
 		read_instruction(proc);
 		(*proc) = (*proc)->next;
 	}
-	g_vm->list_process = begin;
+	g_vm->list_process = begin;*/
 	while (*proc)
 	{
 //		if ((*proc)->op > 0)
 //		{
 	//	dprintf(1, "exec_process player %d\n", (*proc)->registers[1]);
 //	dprintf(2, "BONJOUR1\n");
+			if ((*proc)->cycle_delay == -1)
+			{
+				if (g_vm->map[(*proc)->registers[0]] > 0 &&
+					g_vm->map[(*proc)->registers[0]] < 17)
+						read_opcode(proc);
+				else
+				{
+					if ((*proc)->registers[0] == MEM_SIZE - 1)
+							(*proc)->registers[0] = -1;
+					(*proc)->registers[0] += 1;
+				}
+			}
 			if ((*proc)->cycle_delay == 0 && (*proc)->op != 1 &&
 					(*proc)->op != 12 && (*proc)->op != 15)
 			{
 //				dprintf(2, "WHUT\n");
+				read_instruction(proc);
 				if ((*proc)->op > 0 && check_registers(*proc))
 				{
 					if (g_vm->v)
@@ -353,7 +366,7 @@ void	exec_process()
 					(*proc)->cycle_delay = -1;
 				}
 			}
-			else if ((*proc)->cycle_delay == -1)
+/*			else if ((*proc)->cycle_delay == -1)
 			{
 				 if (g_vm->map[(*proc)->registers[0]] > 0 &&
 					g_vm->map[(*proc)->registers[0]] < 17)
@@ -364,7 +377,7 @@ void	exec_process()
 							(*proc)->registers[0] = -1;
 					(*proc)->registers[0] += 1;
 				}
-			}
+			}*/
 //		}
 //		else if (!(*proc)->cycle_delay)
 //			(*proc)->cycle_delay = -1;

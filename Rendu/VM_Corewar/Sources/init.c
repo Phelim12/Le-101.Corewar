@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/25 20:07:15 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/25 21:37:12 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,7 +30,7 @@ int			init_process(unsigned int a)
 //		dprintf(2, "g_vm->champion->num = %d proc reverse \n", -tmp_reg[1]);
 		new = lstnew_vm(tmp_reg, REG_SIZE * (REG_NUMBER + 1));
 		new->cycle_delay = -1;
-		new->num = g_vm->nb_proc;
+		new->num = -tmp_reg[1];
 		if (g_vm->list_process == NULL)
 			g_vm->list_process = new;
 		else
