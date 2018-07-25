@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 17:00:45 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/25 16:09:38 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/25 17:18:55 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,7 +36,7 @@ void		lstnew_vm_init(t_process **new, int *registers)
 	(*new)->begin = registers[0];
 	(*new)->cycle_delay = 0;
 	(*new)->carry = 0;
-	(*new)->creation = g_vm->cycle;
+	(*new)->creation = 0;//g_vm->cycle;
 	(*new)->next = NULL;
 }
 
