@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/25 16:05:22 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/25 23:55:45 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,7 +41,6 @@
 */
 
 /*
-**
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 **┃ typedef struct				s_process
 **┃ {
@@ -49,15 +48,14 @@
 **┃ 	char				carry;			| Dayum carry
 **┃ 	unsigned char		*fetchqueue;	| Current instruction saved
 **┃ 	char				ocp;			| Current ocp
-**┃ 	int					cycle_delay;	| Number of cycles needed to exec instruction
-**┃ 	int					live;			| Number of live since last cycle_to_die
+**┃ 	int					cycle_delay;	| Num o cycles needed to exec instr.
+**┃ 	int					live;			| Num o live since last cycle_to_die
 **┃ 	struct s_process	*next;			| Next and older process
 **┃ }							t_process;
 **┃
 **┃ Linked list ordered from the younger to the older, finaly linked to NULL,
-**┃ in order to respect the ancestral rule which allows the youngest to begin with
-**┃ hostilities.
-**┃
+**┃ in order to respect the ancestral rule which allows the youngest to begin
+**┃ with hostilities.
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
@@ -85,14 +83,14 @@ typedef struct				s_process
 **┃ 	int				live;			| Obsolete ? Mb total lives for champion
 **┃ 	unsigned int	nb_process;		| Number of its process
 **┃ 	char			*name;			| Apocalyptic name of Hell
-**┃ 	char			*comment;		| Funniest comment ever written by bonobos
+**┃ 	char			*comment;		| Funniest comment written by bonobos
 **┃ 	int				num;			| Number of player
-**┃ 	unsigned char	*instructions;	| Finnest part of the champion, fist-like
+**┃ 	unsigned char	*instructions;	| Finnest part of the champion
 **┃ }							t_champ;
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-typedef struct		s_op
+typedef struct				s_op
 {
 	char			*name;
 	char			nparams;
@@ -102,7 +100,7 @@ typedef struct		s_op
 	char			*desc;
 	char			info_params;
 	char			size_dir;
-}					t_op;
+}							t_op;
 
 typedef struct				s_champ
 {
@@ -122,11 +120,11 @@ typedef struct				s_champ
 **┃ {
 **┃ 	int				cycle_to_die;	| Various limit of CYCLE_TO_DIE
 **┃ 	unsigned int	cycle;			| Total number of cycles passed
-**┃ 	unsigned int	checks;			| Number of cycle_to_die passed with no changes
-**┃ 	t_champ			**champion;		| Tab of structs, with champions inside, sort by num
-**┃ 	t_process		*list_process;	| Linked list of processes, from the younger to the older
+**┃ 	unsigned int	checks;			| Num of cycle_to_die passed w/o changes
+**┃ 	t_champ			**champion;		| Tab of structs, with champs inside
+**┃ 	t_process		*list_process;	| Linked list of proc., younger to older
 **┃ 	unsigned char	*map;			| The ARENA of MEM_SIZE
-**┃ 	char			*p_map;			| Map 'filter', with the num of players in, for colors
+**┃ 	char			*p_map;			| 'Filter map', for colors
 **┃ 	int				dump;			| Flag dump
 **┃ 	unsigned int	d_cycles;		| Nombre de cycles avant le dump
 **┃ 	unsigned int	nb_players;		| Nombre de players
@@ -261,11 +259,8 @@ int							print_color(int i, int *p, int pc);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-int							cycle_process(void);
 t_process					*get_last_proc(void);
-void						exec_fork();
-void						exec_live();
-void						exec_process();
+void						lets_process();
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -284,6 +279,20 @@ int							get_dir(int cursor, t_op instruction);
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 **┃
+**┃ ------Functions in tools_cycle.c
+**┃
+**┃ tools
+**┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+void						run(t_process **proc, t_process **begin);
+void						ft_print_nb_proc(t_process *begin);
+void						print_instruction(t_process *proc);
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃
 **┃ ------Functions in tools_op.c
 **┃
 **┃ tools
@@ -293,8 +302,6 @@ int							get_dir(int cursor, t_op instruction);
 
 t_op						*get_op_tab();
 t_op						get_opcode(char op_code);
-
-
 int							check_ocp(int instruct, int ocp);
 
 /*
@@ -307,8 +314,8 @@ int							check_ocp(int instruct, int ocp);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-int								free_all(void);
-void							free_process(t_process *list);
+int							free_all(void);
+void						free_process(t_process *list);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -320,9 +327,8 @@ void							free_process(t_process *list);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-
 long long int				extract(unsigned char *tab, unsigned char v_size,
-							unsigned char index,int t_size);
+							unsigned char index, int t_size);
 int							read_map(int index, int size);
 unsigned char				*itoo(int nb);
 void						print(int player, int index, int value);

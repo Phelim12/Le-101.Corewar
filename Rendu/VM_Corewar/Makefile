@@ -6,7 +6,7 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/12/08 18:11:02 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2018/07/22 17:01:28 by nbettach    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/25 23:56:15 by dguelpa     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -36,7 +36,7 @@ INSTRUCTIONS_SRC = add.c aff.c and.c check_register.c fork.c ld.c ldi.c \
  lfork.c live.c lld.c lldi.c or.c st.c sti.c sub.c xor.c zjmp.c
 
 TOOLS_SRC = tools_error.c tools_free.c tools_instructions.c tools_op.c \
- tools_registers.c tools_vm.c tools_lst.c tools_ocp.c
+ tools_registers.c tools_vm.c tools_lst.c tools_ocp.c tools_cycle.c
 
 NAME_INC = main_vm.h
 
