@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/24 14:21:07 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/24 21:51:05 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/25 13:40:28 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,7 +21,6 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 	param = 0;
 	i = 0;
 	//		dprintf(2, "cursor in rd_params = %d\n", cursor);
-	(*proc)->cycle_delay = instruction.cycles - 1;
 	if ((*proc)->op > 0)
 	{
 		while (((*proc)->fetchqueue[i][0] || (!instruction.info_params && !param))
@@ -121,9 +120,22 @@ static int			read_ocp(int cursor, t_op instruction, t_process **proc)
 
 static void				read_instruction(t_process **proc)
 {
-	t_op				instruction;
-	int					cursor;
-	int				i;
+	t_op	instruction;
+	int		cursor;
+
+	cursor = (*proc)->registers[0];
+	instruction = get_opcode((*proc)->op);
+	if (instruction.info_params)
+		(*proc)->registers[0] = read_ocp(++cursor, instruction, proc) % MEM_SIZE;
+	else
+		(*proc)->registers[0] = read_params(++cursor, instruction, proc) % MEM_SIZE;
+}
+
+static void				read_opcode(t_process **proc)
+{
+	t_op	instruction;
+	int		cursor;
+	int		i;
 
 	//	dprintf(2, "rd_instr\n");
 	i = 0;
@@ -136,16 +148,19 @@ static void				read_instruction(t_process **proc)
 	instruction = get_opcode(g_vm->map[cursor]);
 	(*proc)->op = g_vm->map[cursor];
 	(*proc)->begin = cursor;
+	(*proc)->cycle_delay = instruction.cycles - 1;
  //   dprintf(2, "----------------------\n");
 //		dprintf(2, "PC %d | OPCODE = %d\n", (*proc)->registers[0],  g_vm->map[cursor]);
 //		dprintf(2, "instruction = %s\n", instruction.name);
 //		dprintf(1, "info params = %d\n", instruction.info_params);
 //		dprintf(2, "opcode = %d\ninforparams = %d\n", (*proc)->op, instruction.info_params);
 //		dprintf(2, "----------------------\n");
+/*
 	if (instruction.info_params)
 		(*proc)->registers[0] = read_ocp(++cursor, instruction, proc) % MEM_SIZE;
 	else
 		(*proc)->registers[0] = read_params(++cursor, instruction, proc) % MEM_SIZE;
+*/
 	//	dprintf(2, "LE VRAI PC EST = %d\n", (*proc)->registers[0]);
 }
 
@@ -216,30 +231,7 @@ void	run(t_process *proc)
 		ft_aff(&proc);
 }
 
-void	exec_live()
-{
-	t_process	**proc;
-	t_process	*begin;
-
-	proc = &g_vm->list_process;
-	begin = g_vm->list_process;
-	//	print_instruction(*proc);
-	while (*proc)
-	{
-		if ((*proc)->op == 1 && (*proc)->cycle_delay == 0)
-		{
-			if (g_vm->v)
-				print_instruction(*proc);
-			//			dprintf(1, "exec_process_live player %d\n", (*proc)->registers[1]);
-			ft_live(proc);
-			(*proc)->cycle_delay = -1;
-		}
-		(*proc) = (*proc)->next;
-	}
-	g_vm->list_process = begin;
-}
-
-void	ft_print_nb_proc(t_process *begin)
+static void	ft_print_nb_proc(t_process *begin)
 {
 	t_process 	*tmp;
 	int 		var;
@@ -252,6 +244,30 @@ void	ft_print_nb_proc(t_process *begin)
 		tmp = tmp->next;
 	}
 //	dprintf(2, "NB_PROC = %d\n", var);
+}
+
+void	exec_live()
+{
+	t_process	**proc;
+	t_process	*begin;
+
+	proc = &g_vm->list_process;
+	begin = g_vm->list_process;
+	//	print_instruction(*proc);
+	while (*proc)
+	{
+		if ((*proc)->op == 1 && (*proc)->cycle_delay == 0)
+		{
+				read_instruction(proc);
+			if (g_vm->v)
+				print_instruction(*proc);
+			//			dprintf(1, "exec_process_live player %d\n", (*proc)->registers[1]);
+			ft_live(proc);
+			(*proc)->cycle_delay = -1;
+		}
+		(*proc) = (*proc)->next;
+	}
+	g_vm->list_process = begin;
 }
 
 void	exec_fork()
@@ -267,6 +283,7 @@ void	exec_fork()
 		if (((*proc)->op == 12 || (*proc)->op == 15) &&
 				(*proc)->cycle_delay == 0)
 		{
+				read_instruction(proc);
 			if (g_vm->v)
 				print_instruction(*proc);
 			if ((*proc)->op == 12)
@@ -301,6 +318,7 @@ void	exec_process()
 					(*proc)->op != 12 && (*proc)->op != 15)
 			{
 //				dprintf(2, "WHUT\n");
+				read_instruction(proc);
 				if ((*proc)->op > 0 && check_registers(*proc))
 				{
 					if (g_vm->v)
@@ -338,7 +356,7 @@ int		cycle_process()
 		{
 			if (g_vm->map[(*proc)->registers[0]] > 0 &&
 					g_vm->map[(*proc)->registers[0]] < 17)
-				read_instruction(proc);
+				read_opcode(proc);
 			else
 			{	
 				if ((*proc)->registers[0] == MEM_SIZE - 1)
@@ -359,117 +377,3 @@ int		cycle_process()
 	g_vm->list_process = begin;
 	return (0);
 }
-
-/*
-   PC = 3 | Player : -1
-   cycle_delay = 1
-   -----------------------------------------------------------------------
-   PC = 2051 | Player : -2
-   cycle_delay = 1
-   -----------------------------------------------------------------------
-   NB_PROC = 2
-   BEGIN = 0
-   FORK = 144
-   AIM = 144
-   NB_PROC = 3
-   NB_PROC = 3
-   BEGIN = 2048
-   FORK = 80
-   AIM = 2128
-
-   PC = 3 | Player : -1
-   cycle_delay = 1
-   -----------------------------------------------------------------------
-   PC = 2051 | Player : -2
-   cycle_delay = 1
-   -----------------------------------------------------------------------
-   NB_PROC = 2
-   BEGIN = 0
-   FORK = 144
-   AIM = 144
-   NB_PROC = 3
-   NB_PROC = 3
-   BEGIN = 2048
-   FORK = 80
-   AIM = 2128
-   NB_PROC = 4
-
-   PC = 2128 | Player : -2
-   cycle_delay = -1
-   -----------------------------------------------------------------------
-   PC = 144 | Player : -1
-   cycle_delay = -1
-   -----------------------------------------------------------------------
-   PC = 3 | Player : -1
-   cycle_delay = -1
-   -----------------------------------------------------------------------
-   PC = 2051 | Player : -2
-   cycle_delay = -1
-   -----------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1
-
-
-
-
-
-
-
-
-
-
-
-10
-
-ED
-
-
-
-
-
-
-*/
-
