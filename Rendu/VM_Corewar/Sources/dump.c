@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/24 14:20:11 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/25 22:06:13 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/25 23:02:19 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -70,21 +70,31 @@ int		ft_print_pc(int pos)
 		if (tmp->registers[0] == pos)
 		{
 			if (tmp->num == 1)
-				ft_printf("\033[44m");
-			if (tmp->num == 2)
 				ft_printf("\033[41m");
-			if (tmp->num == 3)
+			if (tmp->num == 2)
 				ft_printf("\033[42m");
+			if (tmp->num == 3)
+				ft_printf("\033[43m");
 			if (tmp->num == 4)
 				ft_printf("\033[43m");
 			if (tmp->num == 5)
-				ft_printf("\033[45m");
+				ft_printf("\033[44m");
 			if (tmp->num == 6)
-				ft_printf("\033[46m");
+				ft_printf("\033[45m");
 			if (tmp->num == 7)
-				ft_printf("\033[47m");
+				ft_printf("\033[46m");
 			if (tmp->num == 8)
-				ft_printf("\033[48m");
+				ft_printf("\033[47m");
+			if (tmp->num == 9)
+				ft_printf("\033[101m");
+			if (tmp->num == 10)
+				ft_printf("\033[102m");
+			if (tmp->num == 11)
+				ft_printf("\033[103m");
+			if (tmp->num == 12)
+				ft_printf("\033[104m");
+			if (tmp->num == 13)
+				ft_printf("\033[105m");
 			return (1);
 		}
 		tmp = tmp->next;
@@ -103,16 +113,16 @@ int		ft_dump(void)
 	p[3] = 0;
 
 	i = -1;
-
+	
 	while (++i < MEM_SIZE)
 	{
 		if (i == 0)
 			ft_printf("%-#5.4x : ", i);
 		else if (i % (g_vm->d_size ? g_vm->d_size : 64) == 0)
 			ft_printf("\n%-#5.4x : ", i);
-//		if (ft_print_pc(i))
-//			ft_printf("%02x{eoc}", g_vm->map[i]);
-//		else
+	//	if (ft_print_pc(i))
+	//		ft_printf("%02x{eoc}", g_vm->map[i]);
+	//	else
 			ft_printf("%02x", g_vm->map[i]);
 		ft_printf(" ");
 	}
