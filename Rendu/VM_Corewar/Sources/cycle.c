@@ -112,7 +112,7 @@ static int			read_ocp(int cursor, t_op instruction, t_process **proc)
 	(*proc)->fetchqueue[3][0] = g_vm->map[cursor]  & 0x3;
 //		while (++i < 4)
 //			dprintf(2, "type = %d\n", (*proc)->fetchqueue[i][0]);
-	if (check_ocp(cursor - 1, cursor))
+	if (check_ocp((*proc)->op, cursor))
 		(*proc)->op = -1;
 //	dprintf(2, "\n<<<<<<<<\nproc op = %d\n", (*proc)->op);
 	return (read_params(++cursor, instruction, proc));

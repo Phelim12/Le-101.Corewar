@@ -46,13 +46,9 @@ do
 	for P2 in $FILES
 	do
 
-		if [ $NAME1 != "Explosive_Kitty" ]; then
-<<<<<<< HEAD
-			break 
-=======
-			break
->>>>>>> abf97e3ecdd8f43a7c42dae08bb9d504c3082dc9
-		fi
+		# if [ $NAME1 != "darksasuke" ]; then
+		# 	break 
+		# fi
 
 		NAME2=$(echo $P2 | rev | cut -c5- | rev)
 

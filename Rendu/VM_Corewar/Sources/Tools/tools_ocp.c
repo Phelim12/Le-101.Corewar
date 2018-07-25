@@ -13,45 +13,45 @@
 
 #include "../../Includes/main_vm.h"
 
-int		check_ocp_two(int instruct,int cursor)
+int		check_ocp_two(int op,int cursor)
 {
-	if ((g_vm->map[instruct] == 9 || g_vm->map[instruct] == 12  ||
-		g_vm->map[instruct] == 15) && ((g_vm->map[cursor] >> 2) == (0x80 >> 2)))
+	if ((op == 9 || op == 12  ||
+		op == 15) && ((g_vm->map[cursor] >> 2) == (0x80 >> 2)))
 			return (0);
-	else if ((g_vm->map[instruct] == 10  || g_vm->map[instruct] == 14) &&
+	else if ((op == 10  || op == 14) &&
 			((g_vm->map[cursor] >> 2) == (0x54 >> 2) || (g_vm->map[cursor] >> 2) == (0x64 >> 2) ||
 			(g_vm->map[cursor] >> 2) == (0x94 >> 2) || (g_vm->map[cursor] >> 2) == (0xA4 >> 2) ||
 			(g_vm->map[cursor] >> 2) == (0xD4 >> 2) || (g_vm->map[cursor] >> 2) == (0xE4 >> 2)))
 			return (0);
-	else if (g_vm->map[instruct] == 11 &&
+	else if (op == 11 &&
 			((g_vm->map[cursor] >> 2) == (0x54 >> 2) || (g_vm->map[cursor] >> 2) == (0x58 >> 2) ||
 			(g_vm->map[cursor] >> 2) == (0x64 >> 2) || (g_vm->map[cursor] >> 2) == (0x68 >> 2) ||
 			(g_vm->map[cursor] >> 2) == (0x74 >> 2) || (g_vm->map[cursor] >> 2) == (0x78 >> 2)))
 			return (0);
-	else if (g_vm->map[instruct] == 13 &&
+	else if (op == 13 &&
 			((g_vm->map[cursor] >> 2) == (0x90 >> 2) || (g_vm->map[cursor] >> 2) == (0xD0 >> 2)))
 			return (0);
-	if (g_vm->map[instruct] == 16 && (g_vm->map[cursor] >> 2) == (0x40 >> 2))
+	if (op == 16 && (g_vm->map[cursor] >> 2) == (0x40 >> 2))
 			return (0);
 	return (-1);
 }
 
-int		check_ocp_one(int instruct,int cursor)
+int		check_ocp_one(int op,int cursor)
 {
-	if (g_vm->map[instruct] == 1 &&
+	if (op == 1 &&
 			((g_vm->map[cursor] >> 2) == (0x80 >> 2)))
 			return (0);
-	else if (g_vm->map[instruct] == 2 &&
+	else if (op == 2 &&
 			((g_vm->map[cursor] >> 2) == (0x90 >> 2) || (g_vm->map[cursor] >> 2) == (0xD0 >> 2)))
 			return (0);
-	else if (g_vm->map[instruct] == 3 &&
+	else if (op == 3 &&
 			((g_vm->map[cursor] >> 2) == (0x50 >> 2) || (g_vm->map[cursor] >> 2) == (0x70 >> 2)))
 			return (0);
-	else if ((g_vm->map[instruct] == 4 || g_vm->map[instruct] == 5) &&
+	else if ((op == 4 || op == 5) &&
 			((g_vm->map[cursor] >> 2) == (0x54 >> 2)))
 			return (0);
-	else if ((g_vm->map[instruct] == 6 || g_vm->map[instruct] == 7 ||
-			g_vm->map[instruct] == 8) &&
+	else if ((op == 6 || op == 7 ||
+			op == 8) &&
 			((g_vm->map[cursor] >> 2) == (0x54 >> 2) || (g_vm->map[cursor] >> 2) == (0x64 >> 2) ||
 			 (g_vm->map[cursor] >> 2) == (0x74 >> 2) || (g_vm->map[cursor] >> 2) == (0x94 >> 2) ||
 			 (g_vm->map[cursor] >> 2) == (0xA4 >> 2) || (g_vm->map[cursor] >> 2) == (0xB4 >> 2) ||
@@ -61,15 +61,15 @@ int		check_ocp_one(int instruct,int cursor)
 	return (-1);
 }
 
-int		check_ocp(int instruct, int ocp)
+int		check_ocp(int op, int ocp)
 {
 	int		ret;
 
 	ret = -1;
-	if (g_vm->map[instruct] >= 1 && g_vm->map[instruct] <= 8)
-		ret = check_ocp_one(instruct, ocp);
-	else if (g_vm->map[instruct] >= 9 && g_vm->map[instruct] <= 16)
-		ret = check_ocp_two(instruct, ocp);
+	if (op >= 1 && op <= 8)
+		ret = check_ocp_one(op, ocp);
+	else if (op >= 9 && op <= 16)
+		ret = check_ocp_two(op, ocp);
 	return (ret);
 }
 /*
