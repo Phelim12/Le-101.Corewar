@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/24 14:21:07 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/25 15:10:33 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/25 15:28:29 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -110,11 +110,11 @@ static int			read_ocp(int cursor, t_op instruction, t_process **proc)
 	(*proc)->fetchqueue[1][0] = g_vm->map[cursor] >> 4 & 0x3;
 	(*proc)->fetchqueue[2][0] = g_vm->map[cursor] >> 2 & 0x3;
 	(*proc)->fetchqueue[3][0] = g_vm->map[cursor]  & 0x3;
-		while (++i < 4)
-			dprintf(2, "type = %d\n", (*proc)->fetchqueue[i][0]);
+//		while (++i < 4)
+//			dprintf(2, "type = %d\n", (*proc)->fetchqueue[i][0]);
 	if (check_ocp(cursor - 1, cursor))
 		(*proc)->op = -1;
-	dprintf(2, "\n<<<<<<<<\nproc op = %d\n", (*proc)->op);
+//	dprintf(2, "\n<<<<<<<<\nproc op = %d\n", (*proc)->op);
 	return (read_params(++cursor, instruction, proc));
 }
 
@@ -150,8 +150,8 @@ static void				read_opcode(t_process **proc)
 	(*proc)->begin = cursor;
 	(*proc)->cycle_delay = instruction.cycles - 1;
  //   dprintf(2, "----------------------\n");
-		dprintf(2, "PC %d | OPCODE = %d\n", (*proc)->registers[0],  g_vm->map[cursor]);
-		dprintf(2, "instruction = %s\n", instruction.name);
+//		dprintf(2, "PC %d | OPCODE = %d\n", (*proc)->registers[0],  g_vm->map[cursor]);
+//		dprintf(2, "instruction = %s\n", instruction.name);
 //		dprintf(1, "info params = %d\n", instruction.info_params);
 //		dprintf(2, "opcode = %d\ninforparams = %d\n", (*proc)->op, instruction.info_params);
 //		dprintf(2, "----------------------\n");
@@ -176,7 +176,7 @@ void	print_instruction(t_process *proc)
 	s = NULL;
 	tab = get_op_tab();
 	// ft_printf("\n%d", g_vm->map[proc->begin] - 1);
-	ft_printf("\nP%d |\t%s", abs(proc->registers[1]), tab[proc->op - 1].name);
+	ft_printf("\nP%d |\t%s", abs(proc->num), tab[proc->op - 1].name);
 	if (g_vm->v >= 1)
 	{
 		while (++i < tab[proc->op - 1].nparams)
@@ -350,8 +350,8 @@ int		cycle_process()
 	begin = g_vm->list_process;
 	while (*proc)
 	{
-		dprintf(2, "PC = %d | Player : %d\n", (*proc)->registers[0], (*proc)->registers[1]);
-		dprintf(2, "cycle_delay = %d\n------------------------------------------------\n", (*proc)->cycle_delay);
+//		dprintf(2, "PC = %d | Player : %d\n", (*proc)->registers[0], (*proc)->registers[1]);
+//		dprintf(2, "cycle_delay = %d\n------------------------------------------------\n", (*proc)->cycle_delay);
 		if ((*proc)->cycle_delay == -1)
 		{
 			if (g_vm->map[(*proc)->registers[0]] > 0 &&
