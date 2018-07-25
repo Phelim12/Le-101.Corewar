@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/24 14:21:07 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 00:05:29 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 01:12:50 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -84,12 +84,12 @@ static int			read_ocp(int cursor, t_op instruction, t_process **proc)
 	(*proc)->fetchqueue[1][0] = g_vm->map[cursor] >> 4 & 0x3;
 	(*proc)->fetchqueue[2][0] = g_vm->map[cursor] >> 2 & 0x3;
 	(*proc)->fetchqueue[3][0] = g_vm->map[cursor]  & 0x3;
-/*	int i = -1;
+	int i = -1;
 	while (++i < 4)
-		dprintf(2, "type = %d\n", (*proc)->fetchqueue[i][0]);*/
+		dprintf(2, "type = %d\n", (*proc)->fetchqueue[i][0]);
 	if (check_ocp((*proc)->op, cursor))
 		(*proc)->op = -1;
-	//	dprintf(2, "\n<<<<<<<<\nproc op = %d\n", (*proc)->op);
+		dprintf(2, "\n<<<<<<<<\nproc op = %d\n", (*proc)->op);
 	return (read_params(++cursor, instruction, proc));
 }
 
@@ -98,7 +98,7 @@ static void				read_instruction(t_process **proc)
 	t_op	instruction;
 	int		cursor;
 
-	//	dprintf(2, "READ_INSTRUCTION : OP = %d\n", (*proc)->op);
+		dprintf(2, "READ_INSTRUCTION : OP = %d\n", (*proc)->op);
 	cursor = (*proc)->registers[0];
 	instruction = get_opcode((*proc)->op);
 	if (instruction.info_params)
@@ -143,6 +143,7 @@ void					lets_process()
 	begin = g_vm->list_process;
 	while (*proc)
 	{
+//		dprintf(2, "cycle_delay : %d\n", (*proc)->cycle_delay);
 		if ((*proc)->cycle_delay > 0)
 			(*proc)->cycle_delay--;
 		if ((*proc)->cycle_delay == -1)
