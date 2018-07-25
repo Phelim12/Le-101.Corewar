@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/23 18:25:52 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/25 15:13:39 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,13 +15,17 @@
 
 static	int check_players_process()
 {
-	unsigned int	a;
 	int				nb;
+	t_process		*proc;
 
-	a = -1;
+	proc = g_vm->list_process;
 	nb = 0;
-	while (++a < g_vm->nb_players)
-		nb += g_vm->champion[a]->nb_process;
+	while (proc)
+	{
+		nb += 1;
+		proc = proc->next;
+	}
+//	dprintf(2, "nb_process : %d\n", nb);
 	return (nb);
 }
 
@@ -74,13 +78,15 @@ int		cycling(void)
 		exec_fork();
 		exec_live();
 		cycles_passed = increment(cycles_passed);
-//		dprintf(1, "cycle_passed %d\n cycle_to_die %u\n", cycles_passed, g_vm->cycle_to_die);
-//		dprintf(1, "Player %d last_lived\n----------------------------------------------------\n\n", g_vm->last_live);
-//		ft_printf("Cycle %d\n", g_vm->cycle);
+//		dprintf(2, "cycle_passed %d\n cycle_to_die %u\n", cycles_passed, g_vm->cycle_to_die);
+//		dprintf(2, "Player %d last_lived\n----------------------------------------------------\n\n", g_vm->last_live);
 	}
+//	if (g_vm->dump == 1 && g_vm->cycle >= g_vm->d_cycles &&
+//			check_players_process() > 0)
+//		ft_dump();
 
 //	dprintf(1, "cycles_passed = %d\n", cycles_passed);
-	if (g_vm->dump == 1)
+	if (g_vm->dump == 1 && g_vm->cycle >= g_vm->d_cycles)
 		ft_dump();
 	return (0);
 }

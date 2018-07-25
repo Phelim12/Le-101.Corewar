@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/24 21:51:26 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/25 14:02:39 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -90,7 +90,6 @@ static void	sub_init_champ(void)
 	while (++i < g_vm->nb_players)
 	{
 		g_vm->champion[i]->live = 0;
-		g_vm->champion[i]->nb_process = 1;
 		f = 1;
 		while (g_vm->champion[i]->num == 0)
 		{

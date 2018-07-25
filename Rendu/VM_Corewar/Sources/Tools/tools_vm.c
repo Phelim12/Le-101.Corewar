@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 16:46:57 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/22 16:51:10 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/25 14:26:43 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,25 +15,11 @@
 
 int		norme_remove(t_process **list, int lives)
 {
+//	dprintf(2, "it's ok\n");
 	lives += (*list)->live;
 	(*list)->live = 0;
 	(*list) = (*list)->next;
 	return (lives);
-}
-
-void	decrease_nbr_process(t_process *list)
-{
-	unsigned int	i;
-
-	i = -1;
-	while (++i < g_vm->nb_players)
-	{
-		if (list->registers[1] == g_vm->champion[i]->num)
-		{
-			g_vm->champion[i]->nb_process--;
-			break ;
-		}
-	}
 }
 
 int		process_remove_if_live(t_process **begin_list, int lives)
@@ -46,15 +32,15 @@ int		process_remove_if_live(t_process **begin_list, int lives)
 	{
 		if (list == *begin_list && list->live == 0)
 		{
+//			dprintf(2, "remove first\n");
 			*begin_list = (*begin_list)->next;
-			decrease_nbr_process(list);
 			free_process(list);
 			list = *begin_list;
 		}
 		else if (list->next && list->next->live == 0)
 		{
+//			dprintf(2, "remove else\n");
 			tmp = list->next->next;
-			decrease_nbr_process(list);
 			free_process(list->next);
 			list->next = tmp;
 		}
