@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/24 14:21:07 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/25 22:09:17 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/25 23:01:10 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -61,10 +61,10 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 	}
 	//	dprintf(2, "cursor = %d\n", cursor);
 //			int j = 0;
-/*			dprintf(2,"OPCODE = %d | %s | type %d value %d | type %d value %d | type %d value %d\n", (*proc)->op, instruction.name,
-					(*proc)->fetchqueue[0][0], (*proc)->fetchqueue[0][1],
-					(*proc)->fetchqueue[1][0], (*proc)->fetchqueue[1][1],
-					(*proc)->fetchqueue[2][0], (*proc)->fetchqueue[2][1]);*/
+//			dprintf(2,"OPCODE = %d | %s | type %d value %d | type %d value %d | type %d value %d\n", (*proc)->op, instruction.name,
+//					(*proc)->fetchqueue[0][0], (*proc)->fetchqueue[0][1],
+//					(*proc)->fetchqueue[1][0], (*proc)->fetchqueue[1][1],
+//					(*proc)->fetchqueue[2][0], (*proc)->fetchqueue[2][1]);
 		//dprintf(2,"PC = %d\n", (*proc)->registers[0]);
 	/*	while (j < 4)
 		{
@@ -123,6 +123,7 @@ static void				read_instruction(t_process **proc)
 	t_op	instruction;
 	int		cursor;
 
+//	dprintf(2, "READ_INSTRUCTION : OP = %d\n", (*proc)->op);
 	cursor = (*proc)->registers[0];
 	instruction = get_opcode((*proc)->op);
 	if (instruction.info_params)
@@ -137,6 +138,7 @@ static void				read_opcode(t_process **proc)
 	int		cursor;
 	int		i;
 
+//	dprintf(2, "READ_OPCODE : %d\n", (*proc)->op);
 	//	dprintf(2, "rd_instr\n");
 	i = 0;
 	while (i < 4)
