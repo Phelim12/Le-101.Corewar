@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/24 14:21:07 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/25 20:09:59 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/25 20:12:22 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -254,17 +254,18 @@ void	exec_live()
 	proc = &g_vm->list_process;
 	begin = g_vm->list_process;
 	//	print_instruction(*proc);
-	while (*proc)
+/*	while (*proc)
 	{
 		if ((*proc)->op == 1 && (*proc)->cycle_delay == 0)
 			read_instruction(proc);
 		(*proc) = (*proc)->next;
 	}
-	g_vm->list_process = begin;
+	g_vm->list_process = begin;*/
 	while (*proc)
 	{
 		if ((*proc)->op == 1 && (*proc)->cycle_delay == 0)
 		{
+			read_instruction(proc);
 			if (g_vm->v)
 				print_instruction(*proc);
 			//			dprintf(1, "exec_process_live player %d\n", (*proc)->registers[1]);
@@ -284,19 +285,20 @@ void	exec_fork()
 	proc = &g_vm->list_process;
 	begin = g_vm->list_process;	
 	//	print_instruction(*proc);
-	while (*proc)
+/*	while (*proc)
 	{
 		if (((*proc)->op == 12 || (*proc)->op == 15)
 				&& (*proc)->cycle_delay == 0)
 		read_instruction(proc);
 		(*proc) = (*proc)->next;
 	}
-	g_vm->list_process = begin;
+	g_vm->list_process = begin;*/
 	while (*proc)
 	{
 		if (((*proc)->op == 12 || (*proc)->op == 15) &&
 				(*proc)->cycle_delay == 0)
 		{
+			read_instruction(proc);
 			if (g_vm->v)
 				print_instruction(*proc);
 			if ((*proc)->op == 12)
@@ -321,14 +323,14 @@ void	exec_process()
 
 	proc = &g_vm->list_process;
 	begin = g_vm->list_process;
-	while (*proc)
+/*	while (*proc)
 	{
 		if ((*proc)->cycle_delay == 0 && (*proc)->op != 1 &&
 				(*proc)->op != 12 && (*proc)->op != 15)
 		read_instruction(proc);
 		(*proc) = (*proc)->next;
 	}
-	g_vm->list_process = begin;
+	g_vm->list_process = begin;*/
 	while (*proc)
 	{
 //		if ((*proc)->op > 0)
@@ -339,6 +341,7 @@ void	exec_process()
 					(*proc)->op != 12 && (*proc)->op != 15)
 			{
 //				dprintf(2, "WHUT\n");
+			read_instruction(proc);
 				if ((*proc)->op > 0 && check_registers(*proc))
 				{
 					if (g_vm->v)
