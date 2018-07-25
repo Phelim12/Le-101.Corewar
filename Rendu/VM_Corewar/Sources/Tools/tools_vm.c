@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 16:46:57 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/25 14:26:43 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/25 17:52:26 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,14 +30,14 @@ int		process_remove_if_live(t_process **begin_list, int lives)
 	list = *begin_list;
 	while (list)
 	{
-		if (list == *begin_list && list->live == 0)
+		if (list == *begin_list && list->live == 0 && g_vm->cycle - list->creation >= CYCLE_TO_DIE - 1)
 		{
-//			dprintf(2, "remove first\n");
+//			dprintf(2, "remove first num : %d\n", list->num);
 			*begin_list = (*begin_list)->next;
 			free_process(list);
 			list = *begin_list;
 		}
-		else if (list->next && list->next->live == 0)
+		else if (list->next && list->next->live == 0 && g_vm->cycle - list->creation >= CYCLE_TO_DIE - 1)
 		{
 //			dprintf(2, "remove else\n");
 			tmp = list->next->next;
