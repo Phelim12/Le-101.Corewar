@@ -6,7 +6,7 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/07/12 19:03:24 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2018/07/25 17:43:09 by dguelpa     ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/25 20:07:31 by dguelpa     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -44,7 +44,7 @@ do
 	for P2 in $FILES
 	do
 
-#		if [ $NAME1 != "loose" ]; then
+#		if [ $NAME1 != "Douceur_power" ]; then
 #			break 
 #		fi
 
