@@ -13,6 +13,24 @@
 
 #include "main_asm.h"
 
+void	verbose_binary_int(int nb)
+{
+	unsigned char	*str;
+
+	str = (unsigned char *)ft_strnew(4);
+	verbose_convert_integer(&str, nb);
+	free(str);
+}
+
+void	verbose_binary_short(short nb)
+{
+	unsigned char	*str;
+
+	str = (unsigned char *)ft_strnew(2);
+	verbose_convert_short(&str, nb);
+	free(str);
+}
+
 void	verbose_register(t_cmd *ptr)
 {
 	char	*ptr1;
@@ -60,22 +78,4 @@ void	verbose_convert_integer(unsigned char **ptr, int n)
 	ft_memdel((void**)&ptr2);
 	ft_memdel((void**)&ptr3);
 	ft_memdel((void**)&ptr4);
-}
-
-void	verbose_binary_int(int nb)
-{
-	unsigned char	*str;
-
-	str = (unsigned char *)ft_strnew(4);
-	verbose_convert_integer(&str, nb);
-	free(str);
-}
-
-void	verbose_binary_short(short nb)
-{
-	unsigned char	*str;
-
-	str = (unsigned char *)ft_strnew(2);
-	verbose_convert_short(&str, nb);
-	free(str);
 }

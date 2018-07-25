@@ -30,9 +30,10 @@
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-void		verbose_code(t_line *file, t_line *tmp);
-void		verbose_header(t_header header);
 void		verbose_file(t_file info);
+void		verbose_header(t_header header);
+int			check_verbose(char const *argv[]);
+void		verbose_code(t_line *file, t_line *tmp);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -41,9 +42,9 @@ void		verbose_file(t_file info);
 */
 
 void		verbose_params(t_line *tmp, t_cmd *cmds);
-void		verbose_instructions(t_op *info, t_cmd *cmds);
 void		verbose_indirect(t_line *tmp, t_cmd *ptr);
 void		verbose_direct_int(t_line *tmp, t_cmd *ptr);
+void		verbose_instructions(t_op *info, t_cmd *cmds);
 void		verbose_direct_short(t_line *tmp, t_cmd *ptr);
 
 /*
@@ -75,7 +76,7 @@ void		print_error_params(t_line *file, t_cmd *params, int nb, int type);
 */
 
 void		file_not_exist(char *name);
-void		cant_create_file(char *name, char *name_exec, t_file info);
+void		cant_create_file(char *name_exec, t_file info);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓

@@ -13,30 +13,22 @@
 
 #include "main_asm.h"
 
-void	verbose_code(t_line *file, t_line *tmp)
+void	verbose_file(t_file info)
 {
-	t_cmd	*ptr;
+	verbose_header(info.header);
+	verbose_code(info.file, NULL);
+	ft_printf("\n\n");
+}
 
-	tmp = file;
-	while (tmp)
-	{
-		ptr = tmp->line->start;
-		if (ptr->token != END && ptr->token != ENDLINE)
-			ft_printf("\n\n%s|%d  [%d]|%s", ITLC, tmp->size, ptr->octet, C_END);
-		while (ptr)
-		{
-			if (ptr->token == LABEL)
-				ft_printf(" %s(%s)%s", LGRAY, ptr->data, C_END);
-			if (ptr->token == INSTRUCTION)
-			{
-				ft_printf("\n%s%s%s %s->%s ", INST, ptr->data, 
-					C_END, YELLOW, C_END);
-				verbose_params(tmp, ptr);
-			}
-			ptr = ptr->next;
-		}
-		tmp = tmp->next;
-	}
+int		check_verbose(char const *argv[])
+{
+	int var;
+
+	var = -1;
+	while (argv[++var])
+		if (!(ft_strcmp("-v", argv[var])))
+			return (1);
+	return (0);
 }
 
 void	verbose_header(t_header header)
@@ -57,9 +49,28 @@ void	verbose_header(t_header header)
 	ft_memdel((void**)&ptr2);
 }
 
-void	verbose_file(t_file info)
+void	verbose_code(t_line *file, t_line *tmp)
 {
-	verbose_header(info.header);
-	verbose_code(info.file, NULL);
-	ft_printf("\n\n");
+	t_cmd	*ptr;
+
+	tmp = file;
+	while (tmp)
+	{
+		ptr = tmp->line->start;
+		if (ptr->token != END && ptr->token != ENDLINE)
+			ft_printf("\n\n%s|%d  [%d]|%s", ITLC, tmp->size, ptr->octet, C_END);
+		while (ptr)
+		{
+			if (ptr->token == LABEL)
+				ft_printf(" %s(%s)%s", LGRAY, ptr->data, C_END);
+			if (ptr->token == INSTRUCTION)
+			{
+				ft_printf("\n%s%s%s %s->%s ", INST, ptr->data,
+					C_END, YELLOW, C_END);
+				verbose_params(tmp, ptr);
+			}
+			ptr = ptr->next;
+		}
+		tmp = tmp->next;
+	}
 }

@@ -21,7 +21,7 @@ void	file_not_exist(char *name)
 	exit(EXIT_FAILURE);
 }
 
-void	cant_create_file(char *name, char *name_exec, t_file info)
+void	cant_create_file(char *name_exec, t_file info)
 {
 	ft_putstr_fd("asm", 2);
 	perror(name_exec);

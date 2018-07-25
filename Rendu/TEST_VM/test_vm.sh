@@ -46,9 +46,9 @@ do
 	for P2 in $FILES
 	do
 
-		# if [ $NAME1 != "darksasuke" ]; then
-		# 	break 
-		# fi
+		if [ $NAME1 != "ultima" ]; then
+			break 
+		fi
 
 		NAME2=$(echo $P2 | rev | cut -c5- | rev)
 
@@ -56,34 +56,40 @@ do
 
 		# 													LEAKS CHECK
 
-		# valgrind --leak-check=full --show-leak-kinds=all ./corewar ./Champs/$P1 ./Champs/$P2 -d $1 &> ./MCOREWAR_OUTPUT/$OUTPUT
-		# cat ./MCOREWAR_OUTPUT/$OUTPUT | sed 's/^=.*=//g' | grep -A 3 "definitely lost:" | column -t | fmt -c -w 75 > MY_LEAKS.output
-		# DIFF=$(diff ./MY_LEAKS.output ./GOOD_LEAKS.output)
-		# if [ "$DIFF" = "" ]; then
-		# 	printf "${GREEN}$NAME1 VS $NAME2 ✔ ${NC}\n"
-		# else
-		# 	printf "${RED}$NAME1 VS $NAME2 -> HAVE LEAKS ✘ ${NC}\n"
-		# 	cat ./MY_LEAKS.output
-		# 	read -p "Press any key to continue... " -n1 -s
-		# 	printf "\n"
-		# fi
-
-		# 													 DIFF CHECK
-
-		./corewar ./Champs/$P1 ./Champs/$P2 -d $1 > ./MCOREWAR_OUTPUT/$OUTPUT
-		./r_corewar ./Champs/$P1 ./Champs/$P2 -d $1 > ./RCOREWAR_OUTPUT/$OUTPUT
-
-		DIFF=$(diff ./RCOREWAR_OUTPUT/$OUTPUT ./MCOREWAR_OUTPUT/$OUTPUT)
-
+		valgrind --leak-check=full --show-leak-kinds=all ./corewar ./Champs/$P1 ./Champs/$P2 -d $1 &> ./MCOREWAR_OUTPUT/$OUTPUT
+		cat ./MCOREWAR_OUTPUT/$OUTPUT | sed 's/^=.*=//g' | grep -A 3 "definitely lost:" | column -t | fmt -c -w 75 > MY_LEAKS.output
+		DIFF=$(diff ./MY_LEAKS.output ./GOOD_LEAKS.output)
 		if [ "$DIFF" = "" ]; then
 			printf "${GREEN}$NAME1 VS $NAME2 ✔ ${NC}\n"
 		else
-			printf "${RED}$NAME1 VS $NAME2 ✘ (REAL COREWAR IN FIRST)${NC}\n"
-			diff -d ./RCOREWAR_OUTPUT/$OUTPUT ./MCOREWAR_OUTPUT/$OUTPUT
+			printf "${RED}$NAME1 VS $NAME2 -> HAVE LEAKS ✘ ${NC}\n"
+			cat ./MY_LEAKS.output
 			read -p "Press any key to continue... " -n1 -s
 			printf "\n"
 		fi
 
+		# 													 DIFF CHECK
+
+		# ./corewar ./Champs/$P1 ./Champs/$P2 -d $1 > ./MCOREWAR_OUTPUT/$OUTPUT
+		# ./r_corewar ./Champs/$P1 ./Champs/$P2 -d $1 > ./RCOREWAR_OUTPUT/$OUTPUT
+
+		# DIFF=$(diff ./RCOREWAR_OUTPUT/$OUTPUT ./MCOREWAR_OUTPUT/$OUTPUT)
+
+		# if [ "$DIFF" = "" ]; then
+		# 	printf "${GREEN}$NAME1 VS $NAME2 ✔ ${NC}\n"
+		# else
+		# 	printf "${RED}$NAME1 VS $NAME2 ✘ (REAL COREWAR IN FIRST)${NC}\n"
+		# 	diff -d ./RCOREWAR_OUTPUT/$OUTPUT ./MCOREWAR_OUTPUT/$OUTPUT
+		# 	read -p "Press any key to continue... " -n1 -s
+		# 	printf "\n"
+		# fi
+
 	done
 
 done
+
+
+
+
+
+

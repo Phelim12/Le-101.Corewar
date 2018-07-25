@@ -242,6 +242,7 @@ static void	ft_print_nb_proc(t_process *begin)
 	tmp = begin;
 	while (tmp)
 	{
+		ft_printf("%s\n", tmp->nb);
 		var++;
 		tmp = tmp->next;
 	}
