@@ -16,7 +16,7 @@
 char	*find_file(char const *argv[])
 {
 	char	*tmp;
-	int 	var;
+	int		var;
 
 	var = -1;
 	while (argv[++var])
@@ -26,27 +26,15 @@ char	*find_file(char const *argv[])
 			return ((char *)argv[var]);
 	}
 	ft_putstr_fd(argv[0], 2);
-	ft_putendl_fd(": No \".s\" file in paramters" , 2);
+	ft_putendl_fd(": No \".s\" file in paramters", 2);
 	exit(EXIT_FAILURE);
 	return (0);
 }
 
-int 	check_verbose(char const *argv[])
-{
-	int var;
-
-	var = -1;
-	while (argv[++var])
-		if (!(ft_strcmp("-v", argv[var])))
-			return (1);
-	return (0);
-}
-
-int		main(int argc, char const *argv[])
+int		main(int fd, char const *argv[])
 {
 	t_file	info;
 	char	*str;
-	int		fd;
 
 	str = find_file(argv);
 	if ((fd = open(str, O_RDONLY)) == -1)

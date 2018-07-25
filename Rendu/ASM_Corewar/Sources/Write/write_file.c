@@ -67,7 +67,7 @@ void	write_file(t_file info, char *name)
 
 	name_exec = name_exec_file(name);
 	if ((fd = open(name_exec, O_WRONLY | O_TRUNC | O_CREAT, 0600)) == -1)
-		cant_create_file(name, name_exec, info);
+		cant_create_file(name_exec, info);
 	write_header(info.header, fd);
 	write_code(info.file, fd);
 	ft_printf(MSG_WRITING, name_exec);

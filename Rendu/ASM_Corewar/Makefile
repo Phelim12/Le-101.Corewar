@@ -17,7 +17,7 @@ CC = gcc
 
 NAME = ../asm
 		
-C_FLAGS = -g
+C_FLAGS = -Wall -Werror -Wextra
 
 DIR_LIB = ../Libft/
 
