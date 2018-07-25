@@ -60,14 +60,14 @@ void	write_header(t_header header, int fd)
 	write_binary_int(fd, 0);
 }
 
-void	write_file(t_file info, char const *argv[])
+void	write_file(t_file info, char *name)
 {
 	char	*name_exec;
 	int		fd;
 
-	name_exec = name_exec_file(argv[1]);
+	name_exec = name_exec_file(name);
 	if ((fd = open(name_exec, O_WRONLY | O_TRUNC | O_CREAT, 0600)) == -1)
-		cant_create_file(argv, name_exec, info);
+		cant_create_file(name, name_exec, info);
 	write_header(info.header, fd);
 	write_code(info.file, fd);
 	ft_printf(MSG_WRITING, name_exec);
