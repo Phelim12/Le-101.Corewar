@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/24 14:21:07 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/25 17:43:34 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/25 18:20:14 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -114,7 +114,7 @@ static int			read_ocp(int cursor, t_op instruction, t_process **proc)
 //			dprintf(2, "type = %d\n", (*proc)->fetchqueue[i][0]);
 	if (check_ocp(cursor - 1, cursor))
 		(*proc)->op = -1;
-	//dprintf(2, "\n<<<<<<<<\nproc op = %d\n", (*proc)->op);
+//	dprintf(2, "\n<<<<<<<<\nproc op = %d\n", (*proc)->op);
 	return (read_params(++cursor, instruction, proc));
 }
 
@@ -257,8 +257,14 @@ void	exec_live()
 	while (*proc)
 	{
 		if ((*proc)->op == 1 && (*proc)->cycle_delay == 0)
-		{
 			read_instruction(proc);
+		(*proc) = (*proc)->next;
+	}
+	g_vm->list_process = begin;
+	while (*proc)
+	{
+		if ((*proc)->op == 1 && (*proc)->cycle_delay == 0)
+		{
 			if (g_vm->v)
 				print_instruction(*proc);
 			//			dprintf(1, "exec_process_live player %d\n", (*proc)->registers[1]);
@@ -280,10 +286,17 @@ void	exec_fork()
 	//	print_instruction(*proc);
 	while (*proc)
 	{
+		if (((*proc)->op == 12 || (*proc)->op == 15)
+				&& (*proc)->cycle_delay == 0)
+		read_instruction(proc);
+		(*proc) = (*proc)->next;
+	}
+	g_vm->list_process = begin;
+	while (*proc)
+	{
 		if (((*proc)->op == 12 || (*proc)->op == 15) &&
 				(*proc)->cycle_delay == 0)
 		{
-				read_instruction(proc);
 			if (g_vm->v)
 				print_instruction(*proc);
 			if ((*proc)->op == 12)
@@ -310,6 +323,14 @@ void	exec_process()
 	begin = g_vm->list_process;
 	while (*proc)
 	{
+		if ((*proc)->cycle_delay == 0 && (*proc)->op != 1 &&
+				(*proc)->op != 12 && (*proc)->op != 15)
+		read_instruction(proc);
+		(*proc) = (*proc)->next;
+	}
+	g_vm->list_process = begin;
+	while (*proc)
+	{
 //		if ((*proc)->op > 0)
 //		{
 	//	dprintf(1, "exec_process player %d\n", (*proc)->registers[1]);
@@ -318,7 +339,6 @@ void	exec_process()
 					(*proc)->op != 12 && (*proc)->op != 15)
 			{
 //				dprintf(2, "WHUT\n");
-				read_instruction(proc);
 				if ((*proc)->op > 0 && check_registers(*proc))
 				{
 					if (g_vm->v)
@@ -327,7 +347,7 @@ void	exec_process()
 					(*proc)->cycle_delay = -1;
 				}
 				else
-				{	
+				{
 	//				dprintf(2, "BONJOUR\n");
 					(*proc)->op = -1;
 					(*proc)->cycle_delay = -1;
@@ -358,7 +378,7 @@ int		cycle_process()
 					g_vm->map[(*proc)->registers[0]] < 17)
 				read_opcode(proc);
 			else
-			{	
+			{
 				if ((*proc)->registers[0] == MEM_SIZE - 1)
 					(*proc)->registers[0] = -1;
 				(*proc)->registers[0] += 1;
