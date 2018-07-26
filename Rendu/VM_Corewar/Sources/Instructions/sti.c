@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 14:26:27 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 01:31:54 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 01:38:20 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,16 +17,16 @@ void		ft_sti(t_process **proc)
 {
 	int				fparam;
 	int				sparam;
-	int				aim;
 	unsigned char	*tab;
-	int				i;
+	int				aim;
+	int				var;
 
 	fparam = 0;
 	sparam = 0;
-	i = -1;
+	var = -1;
 	tab = NULL;
 	if (PROC->params[1][0] == 3)
-		fparam = read_map(PROC->params[1][1] % IDX_MOD + PROC->begin, 4);
+		fparam = read_map(PROC->params[1][1] % IDX_MOD + PROC->begin);
 	else if (PROC->params[1][0] == 1)
 		fparam = PROC->reg[PROC->params[1][1]];
 	else if (PROC->params[1][0] == 2)
@@ -38,6 +38,6 @@ void		ft_sti(t_process **proc)
 	if ((aim = (fparam + sparam) % IDX_MOD + PROC->begin) < 0)
 		aim += MEM_SIZE;
 	tab = itoo(PROC->reg[PROC->params[0][1]]);
-	while (++i < 4)
-		print(PROC->reg[1], (aim + i) % MEM_SIZE, tab[i]);
+	while (++var < 4)
+		print(PROC->reg[1], (aim + var) % MEM_SIZE, tab[var]);
 }
