@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/24 14:21:07 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 13:31:01 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 15:32:49 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -87,8 +87,8 @@ static int			read_ocp(int cursor, t_op instruction, t_process **proc)
 		dprintf(2, "type = %d\n", (*proc)->fetchqueue[i][0]);*/
 	if (check_ocp((*proc)->op, cursor))
 		(*proc)->op = -1;
-//	dprintf(2, "\n<<<<<<<<\nproc op = %d\n", (*proc)->op);
-	return (read_params(++cursor, instruction, proc));
+//	dprintf(2, "\n<<<<<<<<\nproc op = %d Player_Num : %d\n\n", (*proc)->op, (*proc)->num);
+	return (read_params(++cursor % MEM_SIZE, instruction, proc));
 }
 
 static void				read_instruction(t_process **proc)
@@ -100,9 +100,9 @@ static void				read_instruction(t_process **proc)
 	cursor = (*proc)->registers[0];
 	instruction = get_opcode((*proc)->op);
 	if (instruction.info_params)
-		(*proc)->registers[0] = read_ocp(++cursor, instruction, proc) % MEM_SIZE;
+		(*proc)->registers[0] = read_ocp(++cursor % MEM_SIZE, instruction, proc) % MEM_SIZE;
 	else
-		(*proc)->registers[0] = read_params(++cursor, instruction, proc) % MEM_SIZE;
+		(*proc)->registers[0] = read_params(++cursor % MEM_SIZE, instruction, proc) % MEM_SIZE;
 }
 
 static void				read_opcode(t_process **proc)

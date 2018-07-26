@@ -6,7 +6,7 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/07/12 19:03:24 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2018/07/26 14:37:42 by dguelpa     ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/26 15:33:59 by dguelpa     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -47,7 +47,7 @@ do
 	do
 
 #		if [ $NAME1 != "doge" ]; then
-#			break 
+#			break
 #		fi
 
 		NAME2=$(echo $P2 | rev | cut -c5- | rev)
