@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 16:46:57 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/25 17:52:26 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 02:58:33 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -52,11 +52,11 @@ int		process_remove_if_live(t_process **begin_list, int lives)
 
 void	introduction(void)
 {
-	unsigned int i;
+	int i;
 
-	i = 0;
+	i = g_vm->nb_players - 1;
 	ft_printf("Introducing contestants...\n");
-	while (i < g_vm->nb_players)
+	while (i >= 0)
 	{
 		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
 				(g_vm->champion[i]->num >= 0 ? g_vm->champion[i]->num :
@@ -64,7 +64,7 @@ void	introduction(void)
 				g_vm->champion[i]->prog_size,
 				g_vm->champion[i]->name,
 				g_vm->champion[i]->comment);
-		i++;
+		i--;
 	}
 }
 

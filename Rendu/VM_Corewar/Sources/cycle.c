@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/24 14:21:07 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 01:24:06 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 02:00:08 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,11 +60,11 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 			ft_printf("\tJUMP Player %d : %d => %d\n", (*proc)->registers[0], (*proc)->begin, cursor);
 	}
 	//	dprintf(2, "cursor = %d\n", cursor);
-	//			int j = 0;
-	//			dprintf(2,"OPCODE = %d | %s | type %d value %d | type %d value %d | type %d value %d\n", (*proc)->op, instruction.name,
-	//					(*proc)->fetchqueue[0][0], (*proc)->fetchqueue[0][1],
-	//					(*proc)->fetchqueue[1][0], (*proc)->fetchqueue[1][1],
-	//					(*proc)->fetchqueue[2][0], (*proc)->fetchqueue[2][1]);
+/*				int j = 0;
+				dprintf(2,"OPCODE = %d | %s | type %d value %d | type %d value %d | type %d value %d\n", (*proc)->op, instruction.name,
+						(*proc)->fetchqueue[0][0], (*proc)->fetchqueue[0][1],
+						(*proc)->fetchqueue[1][0], (*proc)->fetchqueue[1][1],
+						(*proc)->fetchqueue[2][0], (*proc)->fetchqueue[2][1]);*/
 	//dprintf(2,"PC = %d\n", (*proc)->registers[0]);
 	/*	while (j < 4)
 		{
