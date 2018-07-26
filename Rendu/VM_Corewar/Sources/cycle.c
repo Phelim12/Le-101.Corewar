@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/24 14:21:07 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 18:21:31 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 18:41:31 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -98,10 +98,10 @@ static int			read_ocp(int cursor, t_op instruction, t_process **proc)
 	(*proc)->fetchqueue[3][0] = g_vm->map[cursor]  & 0x3;
 /*	int i = -1;
 	while (++i < 4)
-		dprintf(2, "type = %d\n", (*proc)->fetchqueue[i][0]);*/
+		dprintf(2, "type = %d\n", (*proc)->fetchqueue[i][0]);
 	if (check_ocp((*proc)->op, cursor))
 		(*proc)->op = -1;
-//	dprintf(2, "\n<<<<<<<<\nproc op = %d | num : %d\n", (*proc)->op, (*proc)->num);
+	dprintf(2, "\n<<<<<<<<\nproc op = %d | num : %d\n", (*proc)->op, (*proc)->num);*/
 	return (read_params(++cursor % MEM_SIZE, instruction, proc));
 }
 
@@ -138,6 +138,7 @@ static void				read_opcode(t_process **proc)
 	(*proc)->op = g_vm->map[cursor];
 	(*proc)->begin = cursor;
 	(*proc)->cycle_delay = instruction.cycles - 1;
+	(*proc)->nparams = instruction.nparams;
 	//   dprintf(2, "----------------------\n");
 	//		dprintf(2, "PC %d | OPCODE = %d\n", (*proc)->registers[0],  g_vm->map[cursor]);
 	//		dprintf(2, "instruction = %s\n", instruction.name);
