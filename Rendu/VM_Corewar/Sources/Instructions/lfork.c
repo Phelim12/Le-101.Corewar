@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 14:54:13 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/24 17:01:04 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 14:11:15 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,6 +30,7 @@ void		ft_lfork(t_process **proc, t_process **begin)
 	new->cycle_delay = -1;
 	new->carry = (*proc)->carry;
 	new->registers[0] = aim;
+	new->live = (*proc)->live;
 	g_vm->nb_proc++;
 	new->num = g_vm->nb_proc;
 	new->next = *begin;

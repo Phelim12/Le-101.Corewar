@@ -6,7 +6,7 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/07/12 19:03:24 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2018/07/26 13:48:15 by dguelpa     ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/26 14:37:42 by dguelpa     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -46,7 +46,7 @@ do
 	for P2 in $FILES
 	do
 
-#		if [ $NAME1 != "bigzork" ]; then
+#		if [ $NAME1 != "doge" ]; then
 #			break 
 #		fi
 

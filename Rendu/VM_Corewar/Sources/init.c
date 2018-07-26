@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 04:48:35 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 14:30:09 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -220,8 +220,10 @@ void		init_vm(char const **argv)
 	g_vm->d_cycles = 0;
 	g_vm->nb_players = 0;
 	g_vm->nb_proc = 0;
+	g_vm->nb_live = 0;
 	init_champs(argv);
 	init_map();
+}
 	/*	unsigned int x = -1;
 		dprintf(1, "nb_players = %d\n", g_vm->nb_players);
 		while (++x < g_vm->nb_players)
@@ -235,4 +237,4 @@ void		init_vm(char const **argv)
 		dprintf(1, "PC : %d\n num : %d\n", proc->registers[0], proc->registers[1]);
 		proc = proc->next;
 		}
-		*/}
+		}*/

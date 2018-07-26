@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 14:25:00 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 05:35:46 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 14:30:47 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -59,6 +59,7 @@ void		ft_live(t_process **proc)
 	}
 //	debug_live(proc, player, 2);
 	(*proc)->live++;
+	g_vm->nb_live += 1;
 //	if (g_vm->last_live < 0)
 //		g_vm->last_live = j;
 //	debug_live(proc, player, 3);

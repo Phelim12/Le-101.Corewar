@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 14:00:54 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 14:36:11 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,20 +31,19 @@ static	int check_players_process()
 
 static int		check_destruction_process(int cycles_passed)
 {
-	int		lives;
-
-	lives = 0;
 	if (cycles_passed + 1 == g_vm->cycle_to_die)
 	{
 		g_vm->checks++;
-		lives = process_remove_if_live(&g_vm->list_process, lives);
+		process_remove_if_live(&g_vm->list_process);
 		if (g_vm->checks >= MAX_CHECKS)
 		{
 			g_vm->cycle_to_die -= CYCLE_DELTA;
 			g_vm->checks = 0;
 		}
-		if (lives >= NBR_LIVE)
+		if (g_vm->nb_live >= NBR_LIVE)
 		{
+//			dprintf(2, "lives : %d\n", lives);
+			g_vm->nb_live = 0;
 			g_vm->cycle_to_die -= CYCLE_DELTA;
 			g_vm->checks = 0;
 		}
@@ -84,8 +83,8 @@ int		cycling(void)
 	while (check_players_process() > 0 &&
 			(g_vm->dump == 0 || g_vm->cycle <= g_vm->d_cycles))
 	{
-//		if (g_vm->v >= 3)
-//			ft_printf("\nCycle %d\n\n", g_vm->cycle);
+		if (g_vm->v >= 3)
+			ft_printf("\nCycle %d\n\n", g_vm->cycle);
 		lets_process();
 		cycles_passed = check_destruction_process(cycles_passed);
 		if (!check_players_process())
