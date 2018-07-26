@@ -25,13 +25,16 @@ void		ft_ld(t_process **proc)
 {
 	int aim;
 
-	aim = (*proc)->begin + (*proc)->fetchqueue[0][1] % IDX_MOD;
+	aim = (*proc)->begin + ((*proc)->fetchqueue[0][1] % IDX_MOD);
+	ft_printf("LD\t");
 	if ((*proc)->fetchqueue[0][0] == 2)
-		(*proc)->registers[(*proc)->fetchqueue[1][1]] =
-			(*proc)->fetchqueue[0][1];
+	{
+		(*proc)->registers[(*proc)->fetchqueue[1][1]] = (*proc)->fetchqueue[0][1];
+		ft_printf("%#010x\n", (*proc)->registers[(*proc)->fetchqueue[1][1]]);
+	}
 	else
 		(*proc)->registers[(*proc)->fetchqueue[1][1]] =
-			read_map(aim, REG_SIZE);
+			read_map(aim, DIR_SIZE);
 	(*proc)->carry = (!(*proc)->registers[(*proc)->fetchqueue[1][1]] ? 1 : 0);
 //	debug_ld(proc, aim);
 }

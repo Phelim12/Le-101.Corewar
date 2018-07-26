@@ -46,9 +46,9 @@ do
 	for P2 in $FILES
 	do
 
-#		if [ $NAME1 != "ultima" ]; then
-#			break 
-#		fi
+		if [ $NAME1 != "ultima" ]; then
+			break 
+		fi
 
 		NAME2=$(echo $P2 | rev | cut -c5- | rev)
 

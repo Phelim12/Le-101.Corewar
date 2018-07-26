@@ -67,6 +67,7 @@ typedef struct				s_process
 	char				carry;
 	int					fetchqueue[4][2];
 	char				op;
+	char				info;
 	int					creation;
 	int					cycle_delay;
 	int					live;
