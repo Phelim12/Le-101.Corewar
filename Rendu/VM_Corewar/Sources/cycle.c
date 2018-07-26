@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/24 14:21:07 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 16:30:15 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 17:05:59 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,17 +28,22 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 		{
 			//	dprintf(2, "WHILE OP %d\n", (*proc)->op);
 			if ((*proc)->fetchqueue[i][0] == 1)
+			{
 				(*proc)->fetchqueue[i][1] = get_reg(cursor++);
+				cursor %= MEM_SIZE;
+			}
 			else if ((*proc)->fetchqueue[i][0] == 2 || instruction.opcode == 1)
 			{
 				(*proc)->fetchqueue[i][1] = get_dir(cursor, instruction);
 				cursor += (instruction.size_dir == 1 ? 2 : 4);
+				cursor %= MEM_SIZE;
 			}
 			else if ((*proc)->fetchqueue[i][0] == 3 || instruction.opcode == 9 ||
 					instruction.opcode == 12 || instruction.opcode == 15)
 			{
 				(*proc)->fetchqueue[i][1] = (short)get_ind(cursor);
 				cursor += 2;
+				cursor %= MEM_SIZE;
 			}
 			param++;
 			i++;
@@ -50,11 +55,20 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 		while (++i < instruction.nparams)
 		{
 			if ((*proc)->fetchqueue[i][0] == 1)
+			{
 				cursor++;
+				cursor %= MEM_SIZE;
+			}
 			else if ((*proc)->fetchqueue[i][0] == 2)
+			{
 				cursor += (instruction.size_dir == 1 ? 2 : 4);
+				cursor %= MEM_SIZE;
+			}
 			else if ((*proc)->fetchqueue[i][0] == 3)
+			{
 				cursor += 2;
+				cursor %= MEM_SIZE;
+			}
 		}
 		if (g_vm->v >= 4)
 			ft_printf("\tJUMP Player %d : %d => %d\n", (*proc)->registers[0], (*proc)->begin, cursor);

@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/10 16:59:52 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 16:30:47 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 17:04:35 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,7 +29,7 @@ int				get_dir(int cursor, t_op instruction)
 	ret = g_vm->map[cursor];
 	while (j < size - 1)
 	{
-		ret = (ret << 8) | g_vm->map[cursor + j + 1];
+		ret = (ret << 8) | g_vm->map[(cursor + j + 1) % MEM_SIZE];
 		j++;
 	}
 	return ((size == 2 ? (short)ret : ret));
@@ -37,5 +37,5 @@ int				get_dir(int cursor, t_op instruction)
 
 int				get_ind(int cursor)
 {
-	return (g_vm->map[cursor] << 8 | g_vm->map[cursor + 1]);
+	return (g_vm->map[cursor] << 8 | g_vm->map[(cursor + 1) % MEM_SIZE]);
 }
