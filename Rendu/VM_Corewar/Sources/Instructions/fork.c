@@ -18,14 +18,14 @@ void		ft_fork(t_process **proc, t_process **begin)
 	t_process		*new;
 	int				aim;
 
-	new = lstnew_vm((*proc)->registers, REG_SIZE * (REG_NUMBER + 1));
-	aim = ((*proc)->begin + (*proc)->params[0][1] % IDX_MOD) % MEM_SIZE;
+	new = lstnew_vm(PROC->reg, REG_SIZE * (REG_NUMBER + 1));
+	aim = (PROC->begin + PROC->params[0][1] % IDX_MOD) % MEM_SIZE;
 	aim += (aim < 0 ? MEM_SIZE : 0);
 	new->begin = aim;
 	new->cycle_delay = -1;
-	new->carry = (*proc)->carry;
-	new->registers[0] = aim;
-	new->live = (*proc)->live;
+	new->carry = PROC->carry;
+	new->reg[0] = aim;
+	new->live = PROC->live;
 	g_vm->nb_proc++;
 	new->num = g_vm->nb_proc;
 	new->next = *begin;

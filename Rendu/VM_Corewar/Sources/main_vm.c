@@ -31,7 +31,7 @@ int		main(int argc, char const **argv)
 		list_tmp = g_vm->list_process;
 		while (--i >= 0)
 		{
-			tmp = list_tmp->registers;
+			tmp = list_tmp->reg;
 			ft_printf("filename\t: %20s\nlive\t\t: %20d\nnb_process\t: %20d\nname\t\t: %20s\ncomment\t\t: %20s\nnum\t\t: %20d\nPC\t\t: %20d\nsize\t\t: %20u\nmagic\t\t: %20u\n---------\n",
 					g_vm->champion[i]->filename, g_vm->champion[i]->live,
 					g_vm->champion[i]->nb_process, g_vm->champion[i]->name,

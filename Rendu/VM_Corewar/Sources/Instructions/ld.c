@@ -17,21 +17,21 @@ void		debug_ld(t_process **proc, int aim)
 {
 	dprintf(1, "AIM = %d\n", aim);
 	dprintf(1, "register[%d] = %d\n",
-			(*proc)->params[1][1],
-			(*proc)->registers[(*proc)->params[1][1]]);
+			PROC->params[1][1],
+			PROC->reg[PROC->params[1][1]]);
 }
 
 void		ft_ld(t_process **proc)
 {
 	int aim;
 
-	aim = (*proc)->begin + (*proc)->params[0][1] % IDX_MOD;
-	if ((*proc)->params[0][0] == 2)
-		(*proc)->registers[(*proc)->params[1][1]] =
-			(*proc)->params[0][1];
+	aim = PROC->begin + PROC->params[0][1] % IDX_MOD;
+	if (PROC->params[0][0] == 2)
+		PROC->reg[PROC->params[1][1]] =
+			PROC->params[0][1];
 	else
-		(*proc)->registers[(*proc)->params[1][1]] =
+		PROC->reg[PROC->params[1][1]] =
 			read_map(aim, REG_SIZE);
-	(*proc)->carry = (!(*proc)->registers[(*proc)->params[1][1]] ? 1 : 0);
+	PROC->carry = (!PROC->reg[PROC->params[1][1]] ? 1 : 0);
 //	debug_ld(proc, aim);
 }

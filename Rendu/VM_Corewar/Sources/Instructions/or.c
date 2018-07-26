@@ -15,75 +15,75 @@
 
 void		or_reg(t_process **proc)
 {
-	if ((*proc)->params[1][0] == 1)
-		(*proc)->registers[(*proc)->params[2][1]] =
-			(*proc)->registers[(*proc)->params[0][1]] |
-			(*proc)->registers[(*proc)->params[1][1]];
-	else if ((*proc)->params[1][0] == 2)
+	if (PROC->params[1][0] == 1)
+		PROC->reg[PROC->params[2][1]] =
+			PROC->reg[PROC->params[0][1]] |
+			PROC->reg[PROC->params[1][1]];
+	else if (PROC->params[1][0] == 2)
 	{
-		(*proc)->registers[(*proc)->params[2][1]] =
-			(*proc)->registers[(*proc)->params[0][1]] |
-			(*proc)->params[1][1];
+		PROC->reg[PROC->params[2][1]] =
+			PROC->reg[PROC->params[0][1]] |
+			PROC->params[1][1];
 	}
 	else
 	{
-		(*proc)->registers[(*proc)->params[2][1]] =
-			read_map((*proc)->begin + (*proc)->params[0][1] % IDX_MOD, 4)
-			| (*proc)->params[1][1];
+		PROC->reg[PROC->params[2][1]] =
+			read_map(PROC->begin + PROC->params[0][1] % IDX_MOD, 4)
+			| PROC->params[1][1];
 	}
 }
 
 void		or_dir(t_process **proc)
 {
-	if ((*proc)->params[1][0] == 1)
+	if (PROC->params[1][0] == 1)
 	{
-		(*proc)->registers[(*proc)->params[2][1]] =
-			(*proc)->params[0][1] |
-			(*proc)->registers[(*proc)->params[1][1]];
+		PROC->reg[PROC->params[2][1]] =
+			PROC->params[0][1] |
+			PROC->reg[PROC->params[1][1]];
 	}
-	else if ((*proc)->params[1][0] == 2)
+	else if (PROC->params[1][0] == 2)
 	{
-		(*proc)->registers[(*proc)->params[2][1]] =
-			(*proc)->params[0][1] |
-			(*proc)->params[1][1];
+		PROC->reg[PROC->params[2][1]] =
+			PROC->params[0][1] |
+			PROC->params[1][1];
 	}
 	else
 	{
-		(*proc)->registers[(*proc)->params[2][1]] =
-			read_map((*proc)->begin + (*proc)->params[1][1] % IDX_MOD, 4)
-			| (*proc)->params[0][1];
+		PROC->reg[PROC->params[2][1]] =
+			read_map(PROC->begin + PROC->params[1][1] % IDX_MOD, 4)
+			| PROC->params[0][1];
 	}
 }
 
 void		or_ind(t_process **proc)
 {
-	if ((*proc)->params[1][0] == 1)
+	if (PROC->params[1][0] == 1)
 	{
-		(*proc)->registers[(*proc)->params[2][1]] =
-			read_map((*proc)->begin + (*proc)->params[0][1] % IDX_MOD, 4)
-			| (*proc)->registers[(*proc)->params[1][1]];
+		PROC->reg[PROC->params[2][1]] =
+			read_map(PROC->begin + PROC->params[0][1] % IDX_MOD, 4)
+			| PROC->reg[PROC->params[1][1]];
 	}
-	else if ((*proc)->params[1][0] == 2)
+	else if (PROC->params[1][0] == 2)
 	{
-		(*proc)->registers[(*proc)->params[2][1]] =
-			read_map((*proc)->begin + (*proc)->params[0][1] % IDX_MOD, 4)
-			| (*proc)->params[1][1];
+		PROC->reg[PROC->params[2][1]] =
+			read_map(PROC->begin + PROC->params[0][1] % IDX_MOD, 4)
+			| PROC->params[1][1];
 	}
 	else
 	{
-		(*proc)->registers[(*proc)->params[2][1]] =
-			read_map((*proc)->begin + (*proc)->params[1][1] % IDX_MOD, 4)
-			| read_map((*proc)->begin + (*proc)->params[0][1] % IDX_MOD, 4);
+		PROC->reg[PROC->params[2][1]] =
+			read_map(PROC->begin + PROC->params[1][1] % IDX_MOD, 4)
+			| read_map(PROC->begin + PROC->params[0][1] % IDX_MOD, 4);
 	}
 }
 
 void		ft_or(t_process **proc)
 {
-	if ((*proc)->params[0][0] == 1)
+	if (PROC->params[0][0] == 1)
 		or_reg(proc);
-	else if ((*proc)->params[0][0] == 2)
+	else if (PROC->params[0][0] == 2)
 		or_dir(proc);
 	else
 		or_ind(proc);
-	(*proc)->carry = (!(*proc)->registers[(*proc)->params[2][1]] ? 1 : 0);
+	PROC->carry = (!PROC->reg[PROC->params[2][1]] ? 1 : 0);
 }

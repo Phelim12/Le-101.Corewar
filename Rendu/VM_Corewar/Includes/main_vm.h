@@ -44,7 +44,7 @@
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 **┃ typedef struct				s_process
 **┃ {
-**┃ 	int					*registers;		| Registers for the mighty champion
+**┃ 	int					*reg;		| reg for the mighty champion
 **┃ 	char				carry;			| Dayum carry
 **┃ 	unsigned char		*params;	| Current instruction saved
 **┃ 	char				ocp;			| Current ocp
@@ -62,7 +62,7 @@
 typedef struct				s_process
 {
 	int					num;
-	int					*registers;
+	int					*reg;
 	int					begin;
 	char				carry;
 	int					params[4][2];
@@ -235,7 +235,7 @@ int							cycling(void);
 void						lstiter_vm(t_process *lst,
 							void (*f)(t_process *elem));
 void						lstadd_vm(t_process **alst, t_process *mew);
-t_process					*lstnew_vm(int *registers, int reg_size);
+t_process					*lstnew_vm(int *reg, int reg_size);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -321,9 +321,9 @@ void						free_process(t_process *list);
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 **┃
-**┃ ------Functions in tools_registers.c
+**┃ ------Functions in tools_reg.c
 **┃
-**┃ tools for extract values from registers and fill registers
+**┃ tools for extract values from reg and fill reg
 **┃
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
@@ -360,7 +360,7 @@ void						ft_lld(t_process **proc);
 void						ft_lldi(t_process **proc);
 void						ft_lfork(t_process **proc, t_process **begin);
 void						ft_aff(t_process **proc);
-int							check_registers(t_process *proc);
+int							check_reg(t_process *proc);
 
 /*
 **----------------OP_H---------------
@@ -372,6 +372,7 @@ int							check_registers(t_process *proc);
 */
 
 # define IND_SIZE			2
+# define PROC				(*proc)
 # define REG_SIZE			4
 # define DIR_SIZE			REG_SIZE
 
@@ -420,4 +421,5 @@ typedef struct				s_header
 	unsigned int	prog_size;
 	char			comment[COMMENT_LENGTH + 1];
 }							t_header;
+
 #endif

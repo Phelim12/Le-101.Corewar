@@ -189,7 +189,7 @@ int			init_map(void)
 	list_tmp = g_vm->list_process;
 	while (list_tmp)
 	{
-		tmp = list_tmp->registers;
+		tmp = list_tmp->reg;
 		ft_memcpy(&g_vm->map[tmp[0]],
 				g_vm->champion[i]->instructions, g_vm->champion[i]->prog_size);
 		ft_memset(&g_vm->p_map[tmp[0]],
@@ -234,7 +234,7 @@ void		init_vm(char const **argv)
 		proc = g_vm->list_process;
 		while (proc)
 		{
-		dprintf(1, "PC : %d\n num : %d\n", proc->registers[0], proc->registers[1]);
+		dprintf(1, "PC : %d\n num : %d\n", proc->reg[0], proc->reg[1]);
 		proc = proc->next;
 		}
 		}*/

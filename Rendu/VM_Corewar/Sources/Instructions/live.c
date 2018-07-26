@@ -22,7 +22,7 @@ void		ft_live(t_process **proc)
 	player = 0;
 	while (i < g_vm->nb_players)
 	{
-		if (-g_vm->champion[i]->num == (*proc)->params[0][1])
+		if (-g_vm->champion[i]->num == PROC->params[0][1])
 		{
 			g_vm->champion[i]->live++;
 			g_vm->last_live = i;
@@ -30,6 +30,6 @@ void		ft_live(t_process **proc)
 		}
 		i++;
 	}
-	(*proc)->live++;
+	PROC->live++;
 	g_vm->nb_live += 1;
 }

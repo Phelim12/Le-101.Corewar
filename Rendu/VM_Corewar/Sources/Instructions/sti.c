@@ -17,19 +17,19 @@ void		debug_sti(t_process **proc, int aim, int debug)
 {
 	if (debug == 1)
 	{
-		dprintf(2, "sti PC = %d\n", (*proc)->registers[0]);
+		dprintf(2, "sti PC = %d\n", PROC->reg[0]);
 		dprintf(2, "sti params : %d & %d\n",
-				(*proc)->params[1][1], (*proc)->params[2][1]);
+				PROC->params[1][1], PROC->params[2][1]);
 		dprintf(2, "sti register[%d] = %d\n",
-				(*proc)->params[0][1],
-				(*proc)->registers[(*proc)->params[0][1]]);
+				PROC->params[0][1],
+				PROC->reg[PROC->params[0][1]]);
 	}
 	else if (debug == 2)
 	{
 		dprintf(2, "sti aim = %d\n", aim);
 		dprintf(1, "register[%d] = %d\n",
-				(*proc)->params[0][1],
-				(*proc)->registers[(*proc)->params[0][1]]);
+				PROC->params[0][1],
+				PROC->reg[PROC->params[0][1]]);
 	}
 }
 
@@ -46,29 +46,29 @@ void		ft_sti(t_process **proc)
 	tab = NULL;
 	/*while (++i < 3)
 	{
-		dprintf(2, "params type = %d | value = %d\n", (*proc)->params[i][0], (*proc)->params[i][1]);
-		dprintf(2, "register %d value = %d\n", i, (*proc)->registers[(*proc)->params[i][1]]);
+		dprintf(2, "params type = %d | value = %d\n", PROC->params[i][0], PROC->params[i][1]);
+		dprintf(2, "register %d value = %d\n", i, PROC->reg[PROC->params[i][1]]);
 	}*/
-//	dprintf(2, "param = %d\n", (*proc)->params[1][1]);
-//	dprintf(2, "param  modulo 'IDX_MOD' = %d\n", (*proc)->params[1][1] % IDX_MOD);
-//	dprintf(2, "read  = %d\n", read_map((*proc)->params[1][1] % IDX_MOD + (*proc)->begin, 4));
-	if ((*proc)->params[1][0] == 3)
-		fparam = read_map((*proc)->params[1][1] % IDX_MOD + (*proc)->begin, 4);
-	else if ((*proc)->params[1][0] == 1)
-		fparam = (*proc)->registers[(*proc)->params[1][1]];
-	else if ((*proc)->params[1][0] == 2)
-		fparam = (*proc)->params[1][1];
-	if ((*proc)->params[2][0] == 1)
-		sparam = (*proc)->registers[(*proc)->params[2][1]];
+//	dprintf(2, "param = %d\n", PROC->params[1][1]);
+//	dprintf(2, "param  modulo 'IDX_MOD' = %d\n", PROC->params[1][1] % IDX_MOD);
+//	dprintf(2, "read  = %d\n", read_map(PROC->params[1][1] % IDX_MOD + PROC->begin, 4));
+	if (PROC->params[1][0] == 3)
+		fparam = read_map(PROC->params[1][1] % IDX_MOD + PROC->begin, 4);
+	else if (PROC->params[1][0] == 1)
+		fparam = PROC->reg[PROC->params[1][1]];
+	else if (PROC->params[1][0] == 2)
+		fparam = PROC->params[1][1];
+	if (PROC->params[2][0] == 1)
+		sparam = PROC->reg[PROC->params[2][1]];
 	else
-		sparam = (*proc)->params[2][1];
+		sparam = PROC->params[2][1];
 //	dprintf(2, "fparam = %d, aim = %d\n", fparam, aim);
-	if ((aim = (fparam + sparam) % IDX_MOD + (*proc)->begin) < 0)
+	if ((aim = (fparam + sparam) % IDX_MOD + PROC->begin) < 0)
 		aim += MEM_SIZE;
-	tab = itoo((*proc)->registers[(*proc)->params[0][1]]);
+	tab = itoo(PROC->reg[PROC->params[0][1]]);
 	i = -1;
 	while (++i < 4)
-		print((*proc)->registers[1], (aim + i) % MEM_SIZE, tab[i]);
+		print(PROC->reg[1], (aim + i) % MEM_SIZE, tab[i]);
 //	debug_sti(proc, aim, 2);
 }
 

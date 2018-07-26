@@ -20,7 +20,7 @@ int		is_pc(int i)
 	tmp = g_vm->list_process;
 	while (tmp)
 	{
-		if (i == tmp->registers[0])
+		if (i == tmp->reg[0])
 			return (1);
 		tmp = tmp->next;
 	}
@@ -66,8 +66,8 @@ int		ft_print_pc(int pos)
 		/*ft_printf("TMP : %d\n", tmp->begin);
 		  ft_printf("POS : %d\n", pos);
 		// sleep(1);*/
-		// ft_printf("ASDFADSFADSF = %d\t adfasdf ; %d\n", tmp->registers[0], pos);
-		if (tmp->registers[0] == pos)
+		// ft_printf("ASDFADSFADSF = %d\t adfasdf ; %d\n", tmp->reg[0], pos);
+		if (tmp->reg[0] == pos)
 		{
 			if (tmp->num == 1)
 				ft_printf("\033[41m");

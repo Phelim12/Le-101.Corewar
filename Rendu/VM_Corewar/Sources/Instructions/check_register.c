@@ -13,7 +13,7 @@
 
 #include "../../Includes/main_vm.h"
 
-int				check_registers(t_process *proc)
+int				check_reg(t_process *proc)
 {
 	int		i;
 	t_op info;

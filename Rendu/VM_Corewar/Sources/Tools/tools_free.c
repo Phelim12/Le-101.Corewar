@@ -29,6 +29,6 @@ int		free_all(void)
 
 void	free_process(t_process *list)
 {
-	free(list->registers);
+	free(list->reg);
 	free(list);
 }

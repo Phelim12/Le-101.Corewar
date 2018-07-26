@@ -16,19 +16,19 @@
 void		debug_zjmp(t_process **proc)
 {
 		dprintf(2, "bddegin zjmp aim = %d\nparam = %d\n",
-			((*proc)->begin + (*proc)->params[0][1] % IDX_MOD) % MEM_SIZE,
-			(*proc)->params[0][1]);
-		dprintf(2, "end zjmp aim = %d\n", (*proc)->registers[0]);
+			(PROC->begin + PROC->params[0][1] % IDX_MOD) % MEM_SIZE,
+			PROC->params[0][1]);
+		dprintf(2, "end zjmp aim = %d\n", PROC->reg[0]);
 }
 
 
 void		ft_zjmp(t_process **proc)
 {
-	if ((*proc)->carry == 1)
-		(*proc)->registers[0] =
-			((*proc)->begin + (*proc)->params[0][1] % IDX_MOD) % MEM_SIZE;
-	if ((*proc)->registers[0] < 0)
-		(*proc)->registers[0] += MEM_SIZE;
+	if (PROC->carry == 1)
+		PROC->reg[0] =
+			(PROC->begin + PROC->params[0][1] % IDX_MOD) % MEM_SIZE;
+	if (PROC->reg[0] < 0)
+		PROC->reg[0] += MEM_SIZE;
 //	debug_zjmp(proc);
 }
 

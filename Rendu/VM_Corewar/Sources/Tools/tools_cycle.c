@@ -15,37 +15,37 @@
 
 void	run(t_process **proc, t_process **begin)
 {
-	if ((*proc)->op == 1)
+	if (PROC->op == 1)
 		ft_live(proc);
-	else if ((*proc)->op == 2)
+	else if (PROC->op == 2)
 		ft_ld(proc);
-	else if ((*proc)->op == 3)
+	else if (PROC->op == 3)
 		ft_st(proc);
-	else if ((*proc)->op == 4)
+	else if (PROC->op == 4)
 		ft_add(proc);
-	else if ((*proc)->op == 5)
+	else if (PROC->op == 5)
 		ft_sub(proc);
-	else if ((*proc)->op == 6)
+	else if (PROC->op == 6)
 		ft_and(proc);
-	else if ((*proc)->op == 7)
+	else if (PROC->op == 7)
 		ft_or(proc);
-	else if ((*proc)->op == 8)
+	else if (PROC->op == 8)
 		ft_xor(proc);
-	else if ((*proc)->op == 9)
+	else if (PROC->op == 9)
 		ft_zjmp(proc);
-	else if ((*proc)->op == 10)
+	else if (PROC->op == 10)
 		ft_ldi(proc);
-	else if ((*proc)->op == 11)
+	else if (PROC->op == 11)
 		ft_sti(proc);
-	else if ((*proc)->op == 12)
+	else if (PROC->op == 12)
 		ft_fork(proc, begin);
-	else if ((*proc)->op == 13)
+	else if (PROC->op == 13)
 		ft_lld(proc);
-	else if ((*proc)->op == 14)
+	else if (PROC->op == 14)
 		ft_lldi(proc);
-	else if ((*proc)->op == 15)
+	else if (PROC->op == 15)
 		ft_lfork(proc, begin);
-	else if ((*proc)->op == 16)
+	else if (PROC->op == 16)
 		ft_aff(proc);
 }
 
