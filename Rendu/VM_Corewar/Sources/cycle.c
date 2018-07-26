@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/24 14:21:07 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 15:39:19 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 15:47:36 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -87,7 +87,7 @@ static int			read_ocp(int cursor, t_op instruction, t_process **proc)
 		dprintf(2, "type = %d\n", (*proc)->fetchqueue[i][0]);*/
 	if (check_ocp((*proc)->op, cursor))
 		(*proc)->op = -1;
-//	dprintf(2, "\n<<<<<<<<\nproc op = %d Player_Num : %d\n\n", (*proc)->op, (*proc)->num);
+//	dprintf(2, "\n<<<<<<<<\nproc op = %d\n", (*proc)->op);
 	return (read_params(++cursor % MEM_SIZE, instruction, proc));
 }
 

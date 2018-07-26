@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 15:33:27 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 15:50:59 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -90,7 +90,7 @@ int		cycling(void)
 		if (!check_players_process())
 			break ;
 //		if (cycles_passed == 0)
-//			dprintf(2, "cycle_passed %d\n cycle_to_die %u\n", cycles_passed, g_vm->cycle_to_die);
+//		dprintf(2, "cycle_passed %d\n cycle_to_die %u\n", cycles_passed, g_vm->cycle_to_die);
 		cycles_passed = increment(cycles_passed);
 //		dprintf(2, "Player %d last_lived\n----------------------------------------------------\n\n", g_vm->last_live);
 		
