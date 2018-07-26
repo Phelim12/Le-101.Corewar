@@ -46,9 +46,15 @@ do
 	for P2 in $FILES
 	do
 
+<<<<<<< HEAD
 #		if [ $NAME1 != "doge" ]; then
 #			break
 #		fi
+=======
+		# if [ $NAME1 != "ultima" ]; then
+		# 	break 
+		# fi
+>>>>>>> f747379fe15f79b57b972f3f372cabbd16584984
 
 		NAME2=$(echo $P2 | rev | cut -c5- | rev)
 
