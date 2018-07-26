@@ -48,7 +48,6 @@ int					read_map(int index, int size)
 	i++;
 //	dprintf(2, "index + i mod MEM_SIZE = %d\n", index + i % MEM_SIZE);
 	ret += g_vm->map[(index + i) % MEM_SIZE];
-	ft_printf("%x\n", ret);
 	return (ret);
 }
 
