@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 15:25:25 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 02:28:55 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 22:18:38 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -73,8 +73,7 @@ void		xor_ind(t_process **proc)
 	{
 		(*proc)->registers[(*proc)->fetchqueue[2][1]] =
 			read_map((*proc)->begin + (*proc)->fetchqueue[1][1] % IDX_MOD, 4)
-			^ read_map(((*proc)->begin + (*proc)->fetchqueue[0][1])
-					% IDX_MOD, 4);
+			^ read_map((*proc)->begin + (*proc)->fetchqueue[0][1] % IDX_MOD, 4);
 	}
 }
 

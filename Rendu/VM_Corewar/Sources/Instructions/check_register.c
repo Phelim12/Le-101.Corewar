@@ -6,14 +6,12 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 15:24:47 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/25 13:18:24 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 22:07:50 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../Includes/main_vm.h"
-
-
 
 int				check_registers(t_process *proc)
 {
