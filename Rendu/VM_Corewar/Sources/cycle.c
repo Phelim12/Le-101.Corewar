@@ -122,7 +122,6 @@ static void				read_opcode(t_process **proc)
 	cursor = (*proc)->registers[0];
 	instruction = get_opcode(g_vm->map[cursor]);
 	(*proc)->op = g_vm->map[cursor];
-	(*proc)->info = g_vm->map[cursor + 1];
 	(*proc)->begin = cursor;
 	(*proc)->cycle_delay = instruction.cycles - 1;
 	//   dprintf(2, "----------------------\n");
