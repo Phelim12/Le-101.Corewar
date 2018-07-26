@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/24 14:21:07 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 02:00:08 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 13:31:01 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -141,6 +141,7 @@ void					lets_process()
 	begin = g_vm->list_process;
 	while (*proc)
 	{
+//		dprintf(2, "PC %d |Num_proc : %d\n", (*proc)->registers[0], (*proc)->num);
 //		dprintf(2, "cycle_delay : %d\n", (*proc)->cycle_delay);
 		if ((*proc)->cycle_delay > 0)
 			(*proc)->cycle_delay--;
