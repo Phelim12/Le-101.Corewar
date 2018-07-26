@@ -114,7 +114,7 @@ int		cycling(void)
 **┃
 **┃ ------ Le Pole Question
 **┃
-**┃ - Lors de l'arrivee sur une instruction viable, parser l'instruction et la stocker dans la fetchqueue ?
+**┃ - Lors de l'arrivee sur une instruction viable, parser l'instruction et la stocker dans la params ?
 **┃ ----> Comportement a verifier par corruption de l'instruction pendant le delay
 **┃ - Lors de l'arrivee sur une instruction viable, garder en memoire les valeurs
 **┃ des variables pouvant etre ecrasee ?

@@ -23,25 +23,25 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 	//		dprintf(2, "cursor in rd_params = %d\n", cursor);
 	if ((*proc)->op > 0)
 	{
-		while (((*proc)->fetchqueue[i][0] || (!instruction.info_params && !param))
+		while (((*proc)->params[i][0] || (!instruction.info_params && !param))
 				&& i < instruction.nparams)
 		{
 			//	dprintf(2, "WHILE OP %d\n", (*proc)->op);
-			if ((*proc)->fetchqueue[i][0] == 1)
+			if ((*proc)->params[i][0] == 1)
 			{
-				(*proc)->fetchqueue[i][1] = get_reg(cursor++);
+				(*proc)->params[i][1] = get_reg(cursor++);
 				cursor %= MEM_SIZE;
 			}
-			else if ((*proc)->fetchqueue[i][0] == 2 || instruction.opcode == 1)
+			else if ((*proc)->params[i][0] == 2 || instruction.opcode == 1)
 			{
-				(*proc)->fetchqueue[i][1] = get_dir(cursor, instruction);
+				(*proc)->params[i][1] = get_dir(cursor, instruction);
 				cursor += (instruction.size_dir == 1 ? 2 : 4);
 				cursor %= MEM_SIZE;
 			}
-			else if ((*proc)->fetchqueue[i][0] == 3 || instruction.opcode == 9 ||
+			else if ((*proc)->params[i][0] == 3 || instruction.opcode == 9 ||
 					instruction.opcode == 12 || instruction.opcode == 15)
 			{
-				(*proc)->fetchqueue[i][1] = (short)get_ind(cursor);
+				(*proc)->params[i][1] = (short)get_ind(cursor);
 				cursor += 2;
 				cursor %= MEM_SIZE;
 			}
@@ -54,17 +54,17 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 		i = -1;
 		while (++i < instruction.nparams)
 		{
-			if ((*proc)->fetchqueue[i][0] == 1)
+			if ((*proc)->params[i][0] == 1)
 			{
 				cursor++;
 				cursor %= MEM_SIZE;
 			}
-			else if ((*proc)->fetchqueue[i][0] == 2)
+			else if ((*proc)->params[i][0] == 2)
 			{
 				cursor += (instruction.size_dir == 1 ? 2 : 4);
 				cursor %= MEM_SIZE;
 			}
-			else if ((*proc)->fetchqueue[i][0] == 3)
+			else if ((*proc)->params[i][0] == 3)
 			{
 				cursor += 2;
 				cursor %= MEM_SIZE;
@@ -76,14 +76,14 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 	//	dprintf(2, "cursor = %d\n", cursor);
 /*				int j = 0;
 				dprintf(2,"OPCODE = %d | %s | type %d value %d | type %d value %d | type %d value %d\n", (*proc)->op, instruction.name,
-						(*proc)->fetchqueue[0][0], (*proc)->fetchqueue[0][1],
-						(*proc)->fetchqueue[1][0], (*proc)->fetchqueue[1][1],
-						(*proc)->fetchqueue[2][0], (*proc)->fetchqueue[2][1]);*/
+						(*proc)->params[0][0], (*proc)->params[0][1],
+						(*proc)->params[1][0], (*proc)->params[1][1],
+						(*proc)->params[2][0], (*proc)->params[2][1]);*/
 	//dprintf(2,"PC = %d\n", (*proc)->registers[0]);
 	/*	while (j < 4)
 		{
-		ft_printf("fetch[%d][0] = %d\n", j, (*proc)->fetchqueue[j][0]);
-		ft_printf("fetch[%d][1] = %d\n", j, (*proc)->fetchqueue[j][1]);
+		ft_printf("fetch[%d][0] = %d\n", j, (*proc)->params[j][0]);
+		ft_printf("fetch[%d][1] = %d\n", j, (*proc)->params[j][1]);
 		j++;
 		}
 		*/
@@ -92,13 +92,13 @@ static int			read_params(int cursor, t_op instruction, t_process **proc)
 
 static int			read_ocp(int cursor, t_op instruction, t_process **proc)
 {
-	(*proc)->fetchqueue[0][0] = g_vm->map[cursor] >> 6 & 0x3;
-	(*proc)->fetchqueue[1][0] = g_vm->map[cursor] >> 4 & 0x3;
-	(*proc)->fetchqueue[2][0] = g_vm->map[cursor] >> 2 & 0x3;
-	(*proc)->fetchqueue[3][0] = g_vm->map[cursor]  & 0x3;
+	(*proc)->params[0][0] = g_vm->map[cursor] >> 6 & 0x3;
+	(*proc)->params[1][0] = g_vm->map[cursor] >> 4 & 0x3;
+	(*proc)->params[2][0] = g_vm->map[cursor] >> 2 & 0x3;
+	(*proc)->params[3][0] = g_vm->map[cursor]  & 0x3;
 /*	int i = -1;
 	while (++i < 4)
-		dprintf(2, "type = %d\n", (*proc)->fetchqueue[i][0]);*/
+		dprintf(2, "type = %d\n", (*proc)->params[i][0]);*/
 	if (check_ocp((*proc)->op, cursor))
 		(*proc)->op = -1;
 //	dprintf(2, "\n<<<<<<<<\nproc op = %d | num : %d\n", (*proc)->op, (*proc)->num);
@@ -130,8 +130,8 @@ static void				read_opcode(t_process **proc)
 	i = 0;
 	while (i < 4)
 	{
-		(*proc)->fetchqueue[i][0] = 0;
-		(*proc)->fetchqueue[i++][1] = -1;
+		(*proc)->params[i][0] = 0;
+		(*proc)->params[i++][1] = -1;
 	}
 	cursor = (*proc)->registers[0];
 	instruction = get_opcode(g_vm->map[cursor]);

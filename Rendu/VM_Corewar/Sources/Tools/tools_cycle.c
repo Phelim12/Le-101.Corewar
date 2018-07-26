@@ -80,12 +80,12 @@ void	print_instruction(t_process *proc)
 	{
 		while (++i < tab[proc->op - 1].nparams)
 		{
-			if (proc->fetchqueue[i][0] == 1)
-				ft_printf((f ? ", r%d" : "\tr%d"), proc->fetchqueue[i][1]);
-			else if (proc->fetchqueue[i][0] == 2)
-				ft_printf((f ? ", %%%d" : "\t%%%d"), proc->fetchqueue[i][1]);
+			if (proc->params[i][0] == 1)
+				ft_printf((f ? ", r%d" : "\tr%d"), proc->params[i][1]);
+			else if (proc->params[i][0] == 2)
+				ft_printf((f ? ", %%%d" : "\t%%%d"), proc->params[i][1]);
 			else
-				ft_printf((f ? ", %d" : "\t%d"), proc->fetchqueue[i][1]);
+				ft_printf((f ? ", %d" : "\t%d"), proc->params[i][1]);
 			f = 1;
 		}
 	}

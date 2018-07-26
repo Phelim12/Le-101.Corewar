@@ -46,7 +46,7 @@
 **┃ {
 **┃ 	int					*registers;		| Registers for the mighty champion
 **┃ 	char				carry;			| Dayum carry
-**┃ 	unsigned char		*fetchqueue;	| Current instruction saved
+**┃ 	unsigned char		*params;	| Current instruction saved
 **┃ 	char				ocp;			| Current ocp
 **┃ 	int					cycle_delay;	| Num o cycles needed to exec instr.
 **┃ 	int					live;			| Num o live since last cycle_to_die
@@ -65,7 +65,7 @@ typedef struct				s_process
 	int					*registers;
 	int					begin;
 	char				carry;
-	int					fetchqueue[4][2];
+	int					params[4][2];
 	char				op;
 	int					player;
 	int					creation;
