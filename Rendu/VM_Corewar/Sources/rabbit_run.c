@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 01:10:26 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 03:24:00 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -92,7 +92,7 @@ int		cycling(void)
 	else
 	{
 		if (g_vm->last_live < 0)
-			win = g_vm->nb_players - 1;
+			win = 0;
 		else
 			win = g_vm->last_live;
 		ft_printf("Contestant %d, \"%s\", has won !\n", g_vm->champion[win]->num, g_vm->champion[win]->name);
