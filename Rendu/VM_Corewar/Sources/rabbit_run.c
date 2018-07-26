@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 14:36:11 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 17:24:38 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,10 +43,10 @@ static int		check_destruction_process(int cycles_passed)
 		if (g_vm->nb_live >= NBR_LIVE)
 		{
 //			dprintf(2, "lives : %d\n", lives);
-			g_vm->nb_live = 0;
 			g_vm->cycle_to_die -= CYCLE_DELTA;
 			g_vm->checks = 0;
 		}
+		g_vm->nb_live = 0;
 		cycles_passed = -1;
 	}
 	return (cycles_passed);
