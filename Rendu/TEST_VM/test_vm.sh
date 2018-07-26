@@ -38,17 +38,21 @@ if [[ -z $1 ]] || ! echo $1 | egrep -q '^[0-9]+$' ; then
     exit 0
 fi
 
+VAR1=0
+VAR2=0
+VAR3=0
+
 for P1 in $FILES
 do
-
 	NAME1=$(echo $P1 | rev | cut -c5- | rev)
-
 	for P2 in $FILES
 	do
+		if [ "$VAR1" -ge 0 ]; then
+			if [ "$VAR1" -le 13 ]; then
 
-		 if [ $NAME1 != "Kappa" ]; then
-		 	break
-		 fi
+		 # if [ $NAME1 != "Kappa" ]; then
+		 # 	break
+		 # fi
 
 		NAME2=$(echo $P2 | rev | cut -c5- | rev)
 
@@ -83,7 +87,11 @@ do
 		 	printf "\n"
 		 fi
 
+		fi
+		fi
+
 	done
+	VAR1=$((VAR1+1))
 
 done
 
