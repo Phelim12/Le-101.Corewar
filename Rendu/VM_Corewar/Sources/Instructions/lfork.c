@@ -24,7 +24,7 @@ void		ft_lfork(t_process **proc, t_process **begin)
 	int				aim;
 
 	new = lstnew_vm((*proc)->registers, REG_SIZE * (REG_NUMBER + 1));
-	aim = ((*proc)->begin + ((*proc)->fetchqueue[0][1])) % MEM_SIZE;
+	aim = ((*proc)->begin + ((*proc)->params[0][1])) % MEM_SIZE;
 	aim += (aim < 0 ? MEM_SIZE : 0);
 	new->begin = aim;
 	new->cycle_delay = -1;

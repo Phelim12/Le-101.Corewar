@@ -59,8 +59,8 @@ t_process	*lstnew_vm(int *registers, int reg_size)
 	}
 	while (i < 4)
 	{
-		new->fetchqueue[i][0] = 0;
-		new->fetchqueue[i++][1] = -1;
+		new->params[i][0] = 0;
+		new->params[i++][1] = -1;
 	}
 	lstnew_vm_init(&new, registers);
 	return (new);

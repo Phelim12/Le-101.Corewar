@@ -47,12 +47,12 @@ do
 	NAME1=$(echo $P1 | rev | cut -c5- | rev)
 	for P2 in $FILES
 	do
-		if [ "$VAR1" -ge 0 ]; then
-			if [ "$VAR1" -le 13 ]; then
+		if [ "$VAR1" -ge 14 ]; then
+			if [ "$VAR1" -le 27 ]; then
 
-		 # if [ $NAME1 != "Kappa" ]; then
-		 # 	break
-		 # fi
+		# if [ $NAME1 != "Kappa" ]; then
+		# 	break
+		# fi
 
 		NAME2=$(echo $P2 | rev | cut -c5- | rev)
 
@@ -60,16 +60,16 @@ do
 
 		# 													LEAKS CHECK
 
-#		valgrind --leak-check=full --show-leak-kinds=all ./corewar ./Champs/$P1 ./Champs/$P2 -d $1 &> ./MCOREWAR_OUTPUT/$OUTPUT
-#		DIFF=$(diff ./MY_LEAKS.output ./GOOD_LEAKS.output)
-#		if [ "$DIFF" = "" ]; then
-#			printf "${GREEN}$NAME1 VS $NAME2 ✔ ${NC}\n"
-#		else
-#			printf "${RED}$NAME1 VS $NAME2 -> HAVE LEAKS ✘ ${NC}\n"
-#			cat ./MY_LEAKS.output
-#			read -p "Press any key to continue... " -n1 -s
-#			printf "\n"
-#		fi
+		# valgrind --leak-check=full --show-leak-kinds=all ./corewar ./Champs/$P1 ./Champs/$P2 -d $1 &> ./MCOREWAR_OUTPUT/$OUTPUT
+		# DIFF=$(diff ./MY_LEAKS.output ./GOOD_LEAKS.output)
+		# if [ "$DIFF" = "" ]; then
+		# 	printf "${GREEN}$NAME1 VS $NAME2 ✔ ${NC}\n"
+		# else
+		# 	printf "${RED}$NAME1 VS $NAME2 -> HAVE LEAKS ✘ ${NC}\n"
+		# 	cat ./MY_LEAKS.output
+		# 	read -p "Press any key to continue... " -n1 -s
+		# 	printf "\n"
+		# fi
 
 		# 													 DIFF CHECK
 

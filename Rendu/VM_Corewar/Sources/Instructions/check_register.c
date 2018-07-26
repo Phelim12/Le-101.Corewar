@@ -21,8 +21,8 @@ int				check_registers(t_process *proc)
 	i = -1;
 	info = get_opcode(proc->op);
 	while (++i < info.nparams && i < 3)
-		if ((proc->fetchqueue[i][0] == 1 && proc->fetchqueue[i][1] < 1) ||
-				(proc->fetchqueue[i][0] == 1 && proc->fetchqueue[i][1] > 16))
+		if ((proc->params[i][0] == 1 && proc->params[i][1] < 1) ||
+				(proc->params[i][0] == 1 && proc->params[i][1] > 16))
 			return (0);
 	return (1);
 }

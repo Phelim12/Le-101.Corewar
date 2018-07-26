@@ -16,21 +16,21 @@
 void		debug_lld(t_process **proc)
 {
 	dprintf(1, "register[%d] = %d\n",
-			(*proc)->fetchqueue[1][1],
-			(*proc)->registers[(*proc)->fetchqueue[1][1]]);
+			(*proc)->params[1][1],
+			(*proc)->registers[(*proc)->params[1][1]]);
 }
 
 void		ft_lld(t_process **proc)
 {
 	int aim;
 
-	aim = (*proc)->begin + (*proc)->fetchqueue[0][1];
-	if ((*proc)->fetchqueue[0][0] == 2)
-		(*proc)->registers[(*proc)->fetchqueue[1][1]] =
-			(*proc)->fetchqueue[0][1];
+	aim = (*proc)->begin + (*proc)->params[0][1];
+	if ((*proc)->params[0][0] == 2)
+		(*proc)->registers[(*proc)->params[1][1]] =
+			(*proc)->params[0][1];
 	else
-		(*proc)->registers[(*proc)->fetchqueue[1][1]] =
+		(*proc)->registers[(*proc)->params[1][1]] =
 			read_map(aim, REG_SIZE);
-	(*proc)->carry = (!(*proc)->registers[(*proc)->fetchqueue[1][1]] ? 1 : 0);
+	(*proc)->carry = (!(*proc)->registers[(*proc)->params[1][1]] ? 1 : 0);
 //	debug_lld(proc);
 }

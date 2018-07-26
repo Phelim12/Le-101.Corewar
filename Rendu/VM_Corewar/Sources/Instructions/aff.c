@@ -22,7 +22,7 @@ void		ft_aff(t_process **proc)
 {
 	char c;
 
-	c = (*proc)->registers[(*proc)->fetchqueue[0][1]] % 256;
+	c = (*proc)->registers[(*proc)->params[0][1]] % 256;
 	if (c < 32 || c > 126)
 		return ;
 //	debug_aff(c);
