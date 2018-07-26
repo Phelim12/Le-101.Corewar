@@ -57,7 +57,6 @@ do
 		# 													LEAKS CHECK
 
 #		valgrind --leak-check=full --show-leak-kinds=all ./corewar ./Champs/$P1 ./Champs/$P2 -d $1 &> ./MCOREWAR_OUTPUT/$OUTPUT
-#		cat ./MCOREWAR_OUTPUT/$OUTPUT | sed 's/^=.*=//g' | grep -A 3 "definitely lost:" | column -t | fmt -c -w 75 > MY_LEAKS.output
 #		DIFF=$(diff ./MY_LEAKS.output ./GOOD_LEAKS.output)
 #		if [ "$DIFF" = "" ]; then
 #			printf "${GREEN}$NAME1 VS $NAME2 ✔ ${NC}\n"

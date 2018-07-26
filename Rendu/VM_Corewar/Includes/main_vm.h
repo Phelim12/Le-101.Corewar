@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 18:36:11 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 14:32:35 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -71,7 +71,6 @@ typedef struct				s_process
 	int					creation;
 	int					cycle_delay;
 	int					live;
-	int					nparams;
 	struct s_process	*next;
 }							t_process;
 
