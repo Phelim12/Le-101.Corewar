@@ -6,7 +6,7 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/07/12 19:03:24 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2018/07/26 17:20:30 by dguelpa     ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/26 18:22:30 by dguelpa     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -46,9 +46,9 @@ do
 	for P2 in $FILES
 	do
 
-#		 if [ $NAME1 != "Car" ]; then
-#		 	break
-#		 fi
+		 if [ $NAME1 != "gateau" ]; then
+		 	break
+		 fi
 
 		NAME2=$(echo $P2 | rev | cut -c5- | rev)
 

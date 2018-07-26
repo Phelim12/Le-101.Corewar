@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/05 22:10:59 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/25 22:58:56 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 18:20:11 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,7 +16,7 @@
 int		check_ocp_two(int op,int cursor)
 {
 	if ((op == 9 || op == 12  ||
-		op == 15) && ((g_vm->map[cursor] >> 2) == (0x80 >> 2)))
+		op == 15) && ((g_vm->map[cursor] >> 6) == (0x80 >> 6)))
 			return (0);
 	else if ((op == 10  || op == 14) &&
 			((g_vm->map[cursor] >> 2) == (0x54 >> 2) || (g_vm->map[cursor] >> 2) == (0x64 >> 2) ||
@@ -29,9 +29,9 @@ int		check_ocp_two(int op,int cursor)
 			(g_vm->map[cursor] >> 2) == (0x74 >> 2) || (g_vm->map[cursor] >> 2) == (0x78 >> 2)))
 			return (0);
 	else if (op == 13 &&
-			((g_vm->map[cursor] >> 2) == (0x90 >> 2) || (g_vm->map[cursor] >> 2) == (0xD0 >> 2)))
+			((g_vm->map[cursor] >> 4) == (0x90 >> 4) || (g_vm->map[cursor] >> 4) == (0xD0 >> 4)))
 			return (0);
-	if (op == 16 && (g_vm->map[cursor] >> 2) == (0x40 >> 2))
+	if (op == 16 && (g_vm->map[cursor] >> 6) == (0x40 >> 6))
 			return (0);
 	return (-1);
 }
@@ -39,13 +39,13 @@ int		check_ocp_two(int op,int cursor)
 int		check_ocp_one(int op,int cursor)
 {
 	if (op == 1 &&
-			((g_vm->map[cursor] >> 2) == (0x80 >> 2)))
+			((g_vm->map[cursor] >> 6) == (0x80 >> 6)))
 			return (0);
 	else if (op == 2 &&
-			((g_vm->map[cursor] >> 2) == (0x90 >> 2) || (g_vm->map[cursor] >> 2) == (0xD0 >> 2)))
+			((g_vm->map[cursor] >> 4) == (0x90 >> 4) || (g_vm->map[cursor] >> 4) == (0xD0 >> 4)))
 			return (0);
 	else if (op == 3 &&
-			((g_vm->map[cursor] >> 2) == (0x50 >> 2) || (g_vm->map[cursor] >> 2) == (0x70 >> 2)))
+			((g_vm->map[cursor] >> 4) == (0x50 >> 4) || (g_vm->map[cursor] >> 4) == (0x70 >> 4)))
 			return (0);
 	else if ((op == 4 || op == 5) &&
 			((g_vm->map[cursor] >> 2) == (0x54 >> 2)))
