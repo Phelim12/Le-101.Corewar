@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 01:10:26 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 14:36:11 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,12 +34,20 @@ static int		check_destruction_process(int cycles_passed)
 	if (cycles_passed + 1 == g_vm->cycle_to_die)
 	{
 		g_vm->checks++;
-		if (process_remove_if_live(&g_vm->list_process, 0) >= NBR_LIVE || g_vm->checks >= MAX_CHECKS)
+		process_remove_if_live(&g_vm->list_process);
+		if (g_vm->checks >= MAX_CHECKS)
 		{
 			g_vm->cycle_to_die -= CYCLE_DELTA;
 			g_vm->checks = 0;
 		}
-		cycles_passed = 0;
+		if (g_vm->nb_live >= NBR_LIVE)
+		{
+//			dprintf(2, "lives : %d\n", lives);
+			g_vm->nb_live = 0;
+			g_vm->cycle_to_die -= CYCLE_DELTA;
+			g_vm->checks = 0;
+		}
+		cycles_passed = -1;
 	}
 	return (cycles_passed);
 }
@@ -76,13 +84,14 @@ int		cycling(void)
 			(g_vm->dump == 0 || g_vm->cycle <= g_vm->d_cycles))
 	{
 		if (g_vm->v >= 3)
-			ft_printf("\nCycle %d\n", g_vm->cycle);
+			ft_printf("\nCycle %d\n\n", g_vm->cycle);
 		lets_process();
 		cycles_passed = check_destruction_process(cycles_passed);
 		if (!check_players_process())
 			break ;
+//		if (cycles_passed == 0)
+//			dprintf(2, "cycle_passed %d\n cycle_to_die %u\n", cycles_passed, g_vm->cycle_to_die);
 		cycles_passed = increment(cycles_passed);
-//		dprintf(2, "cycle_passed %d\n cycle_to_die %u\n", cycles_passed, g_vm->cycle_to_die);
 //		dprintf(2, "Player %d last_lived\n----------------------------------------------------\n\n", g_vm->last_live);
 		
 	}
@@ -92,7 +101,7 @@ int		cycling(void)
 	else
 	{
 		if (g_vm->last_live < 0)
-			win = g_vm->nb_players - 1;
+			win = 0;
 		else
 			win = g_vm->last_live;
 		ft_printf("Contestant %d, \"%s\", has won !\n", g_vm->champion[win]->num, g_vm->champion[win]->name);

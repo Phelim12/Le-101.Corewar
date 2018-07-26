@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/25 23:55:45 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 14:32:35 by dguelpa     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -67,7 +67,11 @@ typedef struct				s_process
 	char				carry;
 	int					fetchqueue[4][2];
 	char				op;
+<<<<<<< HEAD
 	char				info;
+=======
+	int					player;
+>>>>>>> c8ad8bcb6863f5a0ab5086c8b48db8f5521f7660
 	int					creation;
 	int					cycle_delay;
 	int					live;
@@ -141,6 +145,7 @@ typedef struct				s_vm
 	unsigned int	checks;
 	t_champ			**champion;
 	t_process		*list_process;
+	int				nb_live;
 	int				last_live;
 	unsigned char	*map;
 	char			*p_map;
@@ -203,8 +208,7 @@ int							get_instructions(int i, int fd);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-int							process_remove_if_live(t_process **begin_list,
-							int lives);
+void						process_remove_if_live(t_process **begin_list);
 void						print_usage(void);
 int							error_vm(char *s, int c);
 int							check_data(void);
