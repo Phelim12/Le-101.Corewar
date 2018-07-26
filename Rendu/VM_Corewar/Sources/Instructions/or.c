@@ -16,65 +16,41 @@
 void		or_reg(t_process **proc)
 {
 	if (PROC->params[1][0] == 1)
-		PROC->reg[PROC->params[2][1]] =
-			PROC->reg[PROC->params[0][1]] |
-			PROC->reg[PROC->params[1][1]];
+		PROC->reg[PROC->params[2][1]] = (PROC->reg[PROC->params[0][1]] |
+			PROC->reg[PROC->params[1][1]]);
 	else if (PROC->params[1][0] == 2)
-	{
-		PROC->reg[PROC->params[2][1]] =
-			PROC->reg[PROC->params[0][1]] |
-			PROC->params[1][1];
-	}
+		PROC->reg[PROC->params[2][1]] = (PROC->reg[PROC->params[0][1]] |
+			PROC->params[1][1]);
 	else
-	{
-		PROC->reg[PROC->params[2][1]] =
-			read_map(PROC->begin + PROC->params[0][1] % IDX_MOD, 4)
-			| PROC->params[1][1];
-	}
+		PROC->reg[PROC->params[2][1]] = (PROC->params[1][1] |
+			read_map(PROC->begin + PROC->params[0][1] % IDX_MOD));
 }
 
 void		or_dir(t_process **proc)
 {
 	if (PROC->params[1][0] == 1)
-	{
-		PROC->reg[PROC->params[2][1]] =
-			PROC->params[0][1] |
-			PROC->reg[PROC->params[1][1]];
-	}
+		PROC->reg[PROC->params[2][1]] = (PROC->params[0][1] |
+			PROC->reg[PROC->params[1][1]]);
 	else if (PROC->params[1][0] == 2)
-	{
-		PROC->reg[PROC->params[2][1]] =
-			PROC->params[0][1] |
-			PROC->params[1][1];
-	}
+		PROC->reg[PROC->params[2][1]] = (PROC->params[0][1] |
+			PROC->params[1][1]);
 	else
-	{
-		PROC->reg[PROC->params[2][1]] =
-			read_map(PROC->begin + PROC->params[1][1] % IDX_MOD, 4)
-			| PROC->params[0][1];
-	}
+		PROC->reg[PROC->params[2][1]] = (PROC->params[0][1] |
+			read_map(PROC->begin + PROC->params[1][1] % IDX_MOD));
 }
 
 void		or_ind(t_process **proc)
 {
 	if (PROC->params[1][0] == 1)
-	{
-		PROC->reg[PROC->params[2][1]] =
-			read_map(PROC->begin + PROC->params[0][1] % IDX_MOD, 4)
-			| PROC->reg[PROC->params[1][1]];
-	}
+		PROC->reg[PROC->params[2][1]] = (PROC->reg[PROC->params[1][1]] |
+			read_map(PROC->begin + PROC->params[0][1] % IDX_MOD));
 	else if (PROC->params[1][0] == 2)
-	{
-		PROC->reg[PROC->params[2][1]] =
-			read_map(PROC->begin + PROC->params[0][1] % IDX_MOD, 4)
-			| PROC->params[1][1];
-	}
+		PROC->reg[PROC->params[2][1]] = (PROC->params[1][1] |
+			read_map(PROC->begin + PROC->params[0][1] % IDX_MOD));
 	else
-	{
 		PROC->reg[PROC->params[2][1]] =
-			read_map(PROC->begin + PROC->params[1][1] % IDX_MOD, 4)
-			| read_map(PROC->begin + PROC->params[0][1] % IDX_MOD, 4);
-	}
+			(read_map(PROC->begin + PROC->params[1][1] % IDX_MOD)
+				| read_map(PROC->begin + PROC->params[0][1] % IDX_MOD));
 }
 
 void		ft_or(t_process **proc)

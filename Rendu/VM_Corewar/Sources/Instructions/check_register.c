@@ -13,16 +13,16 @@
 
 #include "../../Includes/main_vm.h"
 
-int				check_reg(t_process *proc)
+int		check_reg(t_process *proc)
 {
+	t_op	info;
 	int		i;
-	t_op info;
 
 	i = -1;
 	info = get_opcode(proc->op);
-	while (++i < info.nparams && i < 3)
-		if ((proc->params[i][0] == 1 && proc->params[i][1] < 1) ||
-				(proc->params[i][0] == 1 && proc->params[i][1] > 16))
+	while (++i < info.nparams)
+		if ((proc->params[i][0] == REG_CODE) &&
+			(proc->params[i][1] < MIN_REG || proc->params[i][1] > MAX_REG))
 			return (0);
 	return (1);
 }

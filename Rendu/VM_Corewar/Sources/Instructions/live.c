@@ -15,12 +15,10 @@
 
 void		ft_live(t_process **proc)
 {
-	int				player;
-	unsigned int	i;
+	int	i;
 	
-	i = 0;
-	player = 0;
-	while (i < g_vm->nb_players)
+	i = -1;
+	while (++i < g_vm->nb_players)
 	{
 		if (-g_vm->champion[i]->num == PROC->params[0][1])
 		{
@@ -28,8 +26,7 @@ void		ft_live(t_process **proc)
 			g_vm->last_live = i;
 			break ;
 		}
-		i++;
 	}
-	PROC->live++;
 	g_vm->nb_live += 1;
+	PROC->live++;
 }

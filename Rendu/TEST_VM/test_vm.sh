@@ -47,8 +47,8 @@ do
 	NAME1=$(echo $P1 | rev | cut -c5- | rev)
 	for P2 in $FILES
 	do
-		if [ "$VAR1" -ge 14 ]; then
-			if [ "$VAR1" -le 27 ]; then
+		# if [ "$VAR1" -ge 14 ]; then
+		# 	if [ "$VAR1" -le 27 ]; then
 
 		# if [ $NAME1 != "Kappa" ]; then
 		# 	break
@@ -87,8 +87,8 @@ do
 		 	printf "\n"
 		 fi
 
-		fi
-		fi
+		# fi
+		# fi
 
 	done
 	VAR1=$((VAR1+1))

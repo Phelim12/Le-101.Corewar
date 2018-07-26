@@ -25,28 +25,17 @@ unsigned char		*itoo(int nb)
 	return (tab);
 }
 
-int					read_map(int index, int size)
+int					read_map(int index)
 {
-	int					i;
 	int					ret;
 
-//	dprintf(2, "index read_map = %d\n", index);
-	i = 0;
 	ret = 0;
 	index %= MEM_SIZE;
 	if (index < 0)
 		index += MEM_SIZE;
-//	dprintf(2, "index read_map = %d\n", index);
-//	dprintf(2, "index + i mod MEM_SIZE = %d\n", index + i % MEM_SIZE);
-	ret += g_vm->map[(index + i) % MEM_SIZE] << 24;
-	i++;
-//	dprintf(2, "index + i mod MEM_SIZE = %d\n", index + i % MEM_SIZE);
-	ret += g_vm->map[(index + i) % MEM_SIZE] << 16;
-	i++;
-//	dprintf(2, "index + i mod MEM_SIZE = %d\n", index + i % MEM_SIZE);
-	ret += g_vm->map[(index + i) % MEM_SIZE] << 8;
-	i++;
-//	dprintf(2, "index + i mod MEM_SIZE = %d\n", index + i % MEM_SIZE);
-	ret += g_vm->map[(index + i) % MEM_SIZE];
+	ret += g_vm->map[index % MEM_SIZE] << 24;
+	ret += g_vm->map[(index + 1) % MEM_SIZE] << 16;
+	ret += g_vm->map[(index + 2) % MEM_SIZE] << 8;
+	ret += g_vm->map[(index + 3) % MEM_SIZE];
 	return (ret);
 }

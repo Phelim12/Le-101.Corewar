@@ -330,7 +330,7 @@ void						free_process(t_process *list);
 
 long long int				extract(unsigned char *tab, unsigned char v_size,
 							unsigned char index, int t_size);
-int							read_map(int index, int size);
+int							read_map(int index);
 unsigned char				*itoo(int nb);
 void						print(int player, int index, int value);
 
@@ -379,6 +379,9 @@ int							check_reg(t_process *proc);
 # define REG_CODE			1
 # define DIR_CODE			2
 # define IND_CODE			3
+
+# define MIN_REG			1
+# define MAX_REG			16
 
 # define MAX_ARGS_NUMBER	4
 # define MAX_PLAYERS		4
