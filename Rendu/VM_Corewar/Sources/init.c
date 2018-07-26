@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 02:53:33 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 04:48:35 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,6 +46,7 @@ int			init_process(unsigned int a)
 		new = lstnew_vm(tmp_reg, REG_SIZE * (REG_NUMBER + 1));
 		new->cycle_delay = -1;
 		new->num = -tmp_reg[1];
+		new->player = g_vm->champion[a]->num;
 		if (g_vm->list_process == NULL)
 			g_vm->list_process = new;
 		else

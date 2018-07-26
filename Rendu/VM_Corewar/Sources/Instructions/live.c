@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 14:25:00 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/25 14:32:23 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 05:35:46 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,27 +38,33 @@ void		ft_live(t_process **proc)
 {
 	int				player;
 	unsigned int	i;
+	unsigned int	j;
 
+	j = 0;
 	i = 0;
 	player = 0;
 //	debug_live(proc, player, 1);
 	while (i < g_vm->nb_players)
 	{
-		if (g_vm->champion[i]->num == (*proc)->fetchqueue[0][1])
+		if (-g_vm->champion[i]->num == (*proc)->fetchqueue[0][1])
 		{
-			player = g_vm->champion[i]->num;
+			g_vm->champion[i]->live++;
+			g_vm->last_live = i;
+//			dprintf(2, "process %d is alive", (*proc)->num);
 			break ;
 		}
+//		if (g_vm->champion[i]->num == (*proc)->player)
+//			j = i;
 		i++;
 	}
 //	debug_live(proc, player, 2);
 	(*proc)->live++;
+//	if (g_vm->last_live < 0)
+//		g_vm->last_live = j;
 //	debug_live(proc, player, 3);
-	if (i < g_vm->nb_players)
-	{
-		g_vm->champion[i]->live++;
-		g_vm->last_live = player;
+//	if (i < g_vm->nb_players)
+//	{
 //		debug_live(proc, player, 4);
-	}
+//	}
 //	debug_live(proc, player, 5);
 }

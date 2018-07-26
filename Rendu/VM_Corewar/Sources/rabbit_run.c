@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 03:24:00 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 06:18:29 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,10 +31,19 @@ static	int check_players_process()
 
 static int		check_destruction_process(int cycles_passed)
 {
+	int		lives;
+
+	lives = 0;
 	if (cycles_passed + 1 == g_vm->cycle_to_die)
 	{
 		g_vm->checks++;
-		if (process_remove_if_live(&g_vm->list_process, 0) >= NBR_LIVE || g_vm->checks >= MAX_CHECKS)
+		lives = process_remove_if_live(&g_vm->list_process, lives);
+		if (g_vm->checks >= MAX_CHECKS)
+		{
+			g_vm->cycle_to_die -= CYCLE_DELTA;
+			g_vm->checks = 0;
+		}
+		if (lives >= NBR_LIVE)
 		{
 			g_vm->cycle_to_die -= CYCLE_DELTA;
 			g_vm->checks = 0;

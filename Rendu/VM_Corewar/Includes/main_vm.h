@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/25 23:55:45 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 06:17:12 by nbettach    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -67,6 +67,7 @@ typedef struct				s_process
 	char				carry;
 	int					fetchqueue[4][2];
 	char				op;
+	int					player;
 	int					creation;
 	int					cycle_delay;
 	int					live;
@@ -202,8 +203,7 @@ int							get_instructions(int i, int fd);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-int							process_remove_if_live(t_process **begin_list,
-							int lives);
+int							process_remove_if_live(t_process **begin_list, int lives);
 void						print_usage(void);
 int							error_vm(char *s, int c);
 int							check_data(void);
