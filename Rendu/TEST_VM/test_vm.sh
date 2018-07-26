@@ -6,7 +6,7 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/07/12 19:03:24 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2018/07/26 22:20:56 by dguelpa     ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/27 00:44:04 by jjanin-r    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -47,8 +47,8 @@ do
 	NAME1=$(echo $P1 | rev | cut -c5- | rev)
 	for P2 in $FILES
 	do
-		if [ "$VAR1" -ge 14 ]; then
-			if [ "$VAR1" -le 27 ]; then
+#		if [ "$VAR1" -ge 14 ]; then
+#			if [ "$VAR1" -le 27 ]; then
 
 		# if [ $NAME1 != "Kappa" ]; then
 		# 	break
@@ -87,8 +87,8 @@ do
 		 	printf "\n"
 		 fi
 
-		fi
-		fi
+#		fi
+#		fi
 
 	done
 	VAR1=$((VAR1+1))
