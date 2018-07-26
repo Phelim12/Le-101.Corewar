@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/04 12:50:12 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/25 19:17:50 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 01:05:17 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -85,7 +85,6 @@ void		parse_args(char const **argv)
 	k = 0;
 	while (argv[i])
 	{
-//		dprintf(1, "arg %d\n", i);
 		if (!ft_strcmp("-d", argv[i]))
 			parse_dump(argv, &i);
 		else if (!ft_strcmp("-n", argv[i]))
@@ -97,6 +96,7 @@ void		parse_args(char const **argv)
 		else if (!ft_strcmp("-s", argv[i]))
 			parse_s(argv, &i);
 		else
-			error_vm("An error occured in the argument passed to Corewar\n", 0);
+			error_vm("An error occured in the argument passed to Corewar\n",
+					0);
 	}
 }
