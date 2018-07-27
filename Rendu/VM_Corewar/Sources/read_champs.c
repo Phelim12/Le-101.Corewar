@@ -13,60 +13,53 @@
 
 #include "../Includes/main_vm.h"
 
-unsigned int	big_to_little_endian(unsigned int i)
+unsigned int	little_endian(unsigned int i)
 {
-	i = ((i >> 24) & 0xff) |
-	((i << 8) & 0xff0000) |
-	((i >> 8) & 0xff00) |
-	((i << 24) & 0xff000000);
+	i = ((i >> 24) & 0xff) | ((i << 8) & 0xff0000) |
+		((i >> 8) & 0xff00) | ((i << 24) & 0xff000000);
 	return (i);
 }
 
-int				get_header(int i)
+int				read_code(int i)
 {
-	int			fd;
 	t_header	*header;
+	int			fd;
 
 	if (!(header = malloc(sizeof(t_header))))
 		return (-1);
-	if ((fd = open(g_vm->champion[i]->filename, O_RDONLY, 555)) == -1 ||
+	if ((fd = open(g_vm->champion[i]->filename, O_RDONLY)) == -1 ||
 			read(fd, header, sizeof(t_header)) == -1)
 		error_vm("open", i);
 	if (!(g_vm->champion[i]->name = ft_strdup(header->prog_name)))
 		return (-1);
 	if (!(g_vm->champion[i]->comment = ft_strdup(header->comment)))
 		return (-1);
-	g_vm->champion[i]->prog_size = big_to_little_endian(header->prog_size);
-	g_vm->champion[i]->magic = big_to_little_endian(header->magic);
+	g_vm->champion[i]->magic = little_endian(header->magic);
+	g_vm->champion[i]->prog_size = little_endian(header->prog_size);
 	free(header);
 	return (fd);
 }
 
-int				get_instructions(int i, int fd)
+int				read_code(int i, int fd)
 {
-	int			j;
+	int			size;
 	int			ret;
 
-	j = -1;
 	ret = 0;
-	if (!(g_vm->champion[i]->instructions =
-				malloc(g_vm->champion[i]->prog_size)))
+	size = g_vm->champion[i]->prog_size;
+	if (!(g_vm->champion[i]->instructions = malloc(size + 1)))
 		return (-1);
-	while ((ret = read(fd, &g_vm->champion[i]->instructions[++j], 1)) > 0)
-		;
-	if (ret >= 0)
-		return (0);
-	else
-		return (-1);
+	return (read(fd, g_vm->champion[i]->instructions, size));
 }
 
-int				get_champ(int i)
+int				read_champ(int i)
 {
 	int			fd;
 
-	if ((fd = get_header(i)) == -1)
+	fd = read_code(i);
+	if (fd == -1)
 		return (-1);
-	if ((get_instructions(i, fd)) == -1)
+	if ((read_code(i, fd)) == -1)
 		return (-1);
 	return (0);
 }

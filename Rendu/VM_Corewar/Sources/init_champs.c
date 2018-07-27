@@ -19,8 +19,8 @@ static void	sort_champ_tab(void)
 	unsigned int	i;
 	int	a;
 
-	a = g_vm->nb_players;
 	i = -1;
+	a = g_vm->nb_players;
 	while (++i < g_vm->nb_players - 1)
 	{
 		if (g_vm->champion[i]->num < g_vm->champion[i + 1]->num)
@@ -32,7 +32,7 @@ static void	sort_champ_tab(void)
 		}
 	}
 	while (--a >= 0)
-		if (init_process(a) == -1 || get_champ(a) == -1)
+		if (init_process(a) == -1 || read_champ(a) == -1)
 			error_vm("malloc failed\n", 0);
 }
 

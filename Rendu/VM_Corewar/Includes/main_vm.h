@@ -21,7 +21,6 @@
 # include "../../Libft/Includes/libft.h"
 # include "../../Libft/Includes/libftprintf.h"
 
-
 # define USE1 "Usage: ./corewar [-d N] [[-n number] champion1.cor] ...\n"
 # define USE2 "\t-d N\t: dump memory after nbr_cycles then exit\n"
 # define USE3 "\t-n number\t: set the number of the next player\n"
@@ -177,8 +176,8 @@ typedef struct				s_op
 
 typedef struct				s_champ
 {
-	unsigned int	magic;
-	unsigned int	prog_size;
+	int			magic;
+	int				prog_size;
 	char			*filename;
 	int				live;
 	char			*name;
@@ -263,9 +262,9 @@ int							init_process(unsigned int a);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-int							get_champ(int i);
-int							get_header(int i);
-int							get_instructions(int i, int fd);
+int							read_champ(int i);
+int							read_header(int i);
+int							read_code(int i, int fd);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
