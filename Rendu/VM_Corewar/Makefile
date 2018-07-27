@@ -30,13 +30,13 @@ DIR_INSTRUCTIONS = $(addprefix $(DIR_SRC), Instructions/)
 DIR_TOOLS = $(addprefix $(DIR_SRC), Tools/)
 
 NAME_SRC = main_vm.c parse_args_vm.c init.c init_champs.c read_champs.c \
- rabbit_run.c dump.c cycle.c read.c run.c
+ rabbit_run.c dump.c cycle.c read.c run.c process.c
 
 INSTRUCTIONS_SRC = add.c aff.c and.c check_register.c fork.c ld.c ldi.c \
  lfork.c live.c lld.c lldi.c or.c st.c sti.c sub.c xor.c zjmp.c
 
 TOOLS_SRC = tools_error.c tools_free.c tools_instructions.c tools_op.c \
- tools_vm.c tools_lst.c tools_ocp.c tools_cycle.c
+ tools_vm.c tools_lst.c tools_ocp.c
 
 NAME_INC = main_vm.h
 

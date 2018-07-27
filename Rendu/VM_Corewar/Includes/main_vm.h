@@ -334,7 +334,7 @@ int							print_color(int i, int *p, int pc);
 */
 
 t_process					*get_last_proc(void);
-void						lets_process(void);
+void						process(void);
 void						read_instruction(t_process **proc);
 
 /*

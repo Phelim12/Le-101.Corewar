@@ -13,62 +13,50 @@
 
 #include "../Includes/main_vm.h"
 
-void			read_opcode(t_process **proc)
+void	run_2(t_process **proc, t_process **begin)
 {
-	t_op	instruction;
-	int		cursor;
-	int		i;
-
-	i = 0;
-	while (i < 4)
-	{
-		PROC->params[i][0] = 0;
-		PROC->params[i++][1] = -1;
-	}
-	cursor = PROC->reg[0];
-	instruction = get_opcode(g_vm->map[cursor]);
-	PROC->op = g_vm->map[cursor];
-	PROC->begin = cursor;
-	PROC->cycle_delay = instruction.cycles - 1;
+	if (PROC->op == ZJMP)
+		ft_zjmp(proc);
+	if (PROC->op == LDI)
+		ft_ldi(proc);
+	if (PROC->op == STI)
+		ft_sti(proc);
+	if (PROC->op == FORK)
+		ft_fork(proc, begin);
+	if (PROC->op == LLD)
+		ft_lld(proc);
+	if (PROC->op == LLDI)
+		ft_lldi(proc);
+	if (PROC->op == LFORK)
+		ft_lfork(proc, begin);
+	if (PROC->op == AFF)
+		ft_aff(proc);
 }
 
-void static		go(t_process **proc, t_process **begin)
+void	run_1(t_process **proc)
 {
-	read_instruction(proc);
-	if (PROC->op > 0 && check_reg(*proc))
-	{
-		run(proc, begin);
-		PROC->cycle_delay = -1;
-	}
-	else
-	{
-		PROC->op = -1;
-		PROC->cycle_delay = -1;
-	}
+	if (PROC->op == LIVE)
+		ft_live(proc);
+	if (PROC->op == LD)
+		ft_ld(proc);
+	if (PROC->op == ST)
+		ft_st(proc);
+	if (PROC->op == ADD)
+		ft_add(proc);
+	if (PROC->op == SUB)
+		ft_sub(proc);
+	if (PROC->op == AND)
+		ft_and(proc);
+	if (PROC->op == OR)
+		ft_or(proc);
+	if (PROC->op == XOR)
+		ft_xor(proc);
 }
 
-void			lets_process(void)
+void	run(t_process **proc, t_process **begin)
 {
-	t_process	**proc;
-	t_process	*begin;
-
-	proc = &g_vm->list_process;
-	begin = g_vm->list_process;
-	while PROC
-	{
-		if (PROC->cycle_delay > 0)
-			PROC->cycle_delay--;
-		if (PROC->cycle_delay == -1)
-		{
-			if (g_vm->map[PROC->reg[0]] > 0 &&
-					g_vm->map[PROC->reg[0]] < 17)
-				read_opcode(proc);
-			else
-				PROC->reg[0] = (PROC->reg[0] + 1) % MEM_SIZE;
-		}
-		else if (PROC->cycle_delay == 0)
-			go(proc, &begin);
-		PROC = PROC->next;
-	}
-	g_vm->list_process = begin;
+	if (PROC->op >= LIVE && PROC->op <= XOR)
+		run_1(proc);
+	if (PROC->op >= ZJMP && PROC->op <= AFF)
+		run_2(proc, begin);
 }

@@ -70,7 +70,7 @@ int		cycling(void)
 	{
 		if (g_vm->v >= 3)
 			ft_printf("\nCycle %d\n\n", g_vm->cycle);
-		lets_process();
+		process();
 		cycles_passed = check_destruction_process(cycles_passed);
 		if (!check_players_process())
 			break ;
