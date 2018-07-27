@@ -6,18 +6,18 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/27 02:36:04 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 02:45:05 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 03:16:20 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../Includes/main_vm.h"
 
-static void	sort_champ_tab(void)
+static void		sort_champ_tab(void)
 {
 	t_champ			*tmp;
 	unsigned int	i;
-	int	a;
+	int				a;
 
 	a = g_vm->nb_players;
 	i = -1;
@@ -65,7 +65,7 @@ static void		init_champ_num(void)
 	sort_champ_tab();
 }
 
-void		init_champs(char const **argv)
+void			init_champs(char const **argv)
 {
 	void			*tmp;
 	unsigned int	i;

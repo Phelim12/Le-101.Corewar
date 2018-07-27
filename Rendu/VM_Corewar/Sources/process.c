@@ -6,13 +6,13 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/27 01:11:33 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 01:21:24 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 04:06:31 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../Includes/main_vm.h"
-// OPCODE 
+
 void			read_opcode(t_process **proc)
 {
 	t_op	instruction;
@@ -37,7 +37,7 @@ void			launch(t_process **proc, t_process **begin)
 	read_instruction(proc);
 	if (PROC->op > 0 && check_reg(*proc))
 	{
-		run(proc, begin);
+		exec(proc, begin);
 		PROC->cycle_delay = -1;
 	}
 	else
@@ -54,7 +54,7 @@ void			process(void)
 
 	proc = &g_vm->list_process;
 	begin = g_vm->list_process;
-	while PROC
+	while (*proc)
 	{
 		if (PROC->cycle_delay > 0)
 			PROC->cycle_delay--;
@@ -68,7 +68,7 @@ void			process(void)
 		}
 		else if (PROC->cycle_delay == 0)
 			launch(proc, &begin);
-		PROC = PROC->next;
+		*proc = (*proc)->next;
 	}
 	g_vm->list_process = begin;
 }

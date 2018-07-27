@@ -6,7 +6,7 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/12/08 18:11:02 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2018/07/27 02:38:23 by jjanin-r    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/27 04:08:28 by jjanin-r    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -29,8 +29,8 @@ DIR_INSTRUCTIONS = $(addprefix $(DIR_SRC), Instructions/)
 
 DIR_TOOLS = $(addprefix $(DIR_SRC), Tools/)
 
-NAME_SRC = main_vm.c parse_args_vm.c init.c init_champs.c read_champs.c \
- rabbit_run.c dump.c cycle.c read.c run.c process.c
+NAME_SRC = main_vm.c parser.c init.c init_champs.c read_champs.c \
+ cycle.c dump.c read.c exec.c process.c move.c
 
 INSTRUCTIONS_SRC = add.c aff.c and.c check_register.c fork.c ld.c ldi.c \
  lfork.c live.c lld.c lldi.c or.c st.c sti.c sub.c xor.c zjmp.c

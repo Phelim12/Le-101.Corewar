@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   run.c                                            .::    .:/ .      .::   */
+/*   exec.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/07/27 01:11:33 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 01:21:24 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/07/27 04:12:03 by jjanin-r     #+#   ##    ##    #+#       */
+/*   Updated: 2018/07/27 04:12:05 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../Includes/main_vm.h"
 
-void	run_2(t_process **proc, t_process **begin)
+void			exec_2(t_process **proc, t_process **begin)
 {
 	if (PROC->op == ZJMP)
 		ft_zjmp(proc);
@@ -33,7 +33,7 @@ void	run_2(t_process **proc, t_process **begin)
 		ft_aff(proc);
 }
 
-void	run_1(t_process **proc)
+static void		exec_1(t_process **proc)
 {
 	if (PROC->op == LIVE)
 		ft_live(proc);
@@ -53,10 +53,10 @@ void	run_1(t_process **proc)
 		ft_xor(proc);
 }
 
-void	run(t_process **proc, t_process **begin)
+void			exec(t_process **proc, t_process **begin)
 {
 	if (PROC->op >= LIVE && PROC->op <= XOR)
-		run_1(proc);
+		exec_1(proc);
 	if (PROC->op >= ZJMP && PROC->op <= AFF)
-		run_2(proc, begin);
+		exec_2(proc, begin);
 }

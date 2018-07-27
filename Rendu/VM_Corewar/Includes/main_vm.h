@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/29 16:14:53 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 02:37:52 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 04:17:15 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,23 +21,18 @@
 # include "../../Libft/Includes/libft.h"
 # include "../../Libft/Includes/libftprintf.h"
 
-
 # define USE1 "Usage: ./corewar [-d N] [[-n number] champion1.cor] ...\n"
 # define USE2 "\t-d N\t: dump memory after nbr_cycles then exit\n"
 # define USE3 "\t-n number\t: set the number of the next player\n"
-
 # define IND_SIZE			2
 # define PROC				(*proc)
 # define REG_SIZE			4
 # define DIR_SIZE			REG_SIZE
-
 # define REG_CODE			1
 # define DIR_CODE			2
 # define IND_CODE			3
-
 # define MIN_REG			1
 # define MAX_REG			16
-
 # define LIVE	1
 # define LD		2
 # define ST		3
@@ -54,25 +49,19 @@
 # define LLDI	14
 # define LFORK	15
 # define AFF	16
-
 # define MAX_ARGS_NUMBER	4
 # define MAX_PLAYERS		4
 # define MEM_SIZE			(4*1024)
 # define IDX_MOD			(MEM_SIZE / 8)
 # define CHAMP_MAX_SIZE		(MEM_SIZE / 6)
-
 # define COMMENT_CHAR		'#'
 # define LABEL_CHAR			':'
 # define DIRECT_CHAR		'%'
 # define SEPARATOR_CHAR		','
-
 # define LABEL_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789"
-
 # define NAME_CMD_STRING	".name"
 # define COMMENT_CMD_STRING	".comment"
-
 # define REG_NUMBER			16
-
 # define CYCLE_TO_DIE		1536
 # define CYCLE_DELTA		50
 # define NBR_LIVE			21
@@ -97,28 +86,25 @@ typedef struct				s_header
 	char			comment[COMMENT_LENGTH + 1];
 }							t_header;
 
-/*
-**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃ Functions allowed:                                                         ┃
-**┃  ◦ open                                                                    ┃
-**┃  ◦ read                                                                    ┃
-**┃  ◦ write                                                                   ┃
-**┃  ◦ lseek                                                                   ┃
-**┃  ◦ close                                                                   ┃
-**┃  ◦ malloc                                                                  ┃
-**┃  ◦ realloc                                                                 ┃
-**┃  ◦ free                                                                    ┃
-**┃  ◦ exit                                                                    ┃
-**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-*/
+typedef struct				s_op
+{
+	char			*name;
+	char			nparams;
+	char			params[4];
+	char			opcode;
+	int				cycles;
+	char			*desc;
+	char			info_params;
+	char			size_dir;
+}							t_op;
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 **┃ typedef struct				s_process
 **┃ {
-**┃ 	int					*reg;		| reg for the mighty champion
+**┃ 	int					*reg;			| reg for the mighty champion
 **┃ 	char				carry;			| Dayum carry
-**┃ 	unsigned char		*params;	| Current instruction saved
+**┃ 	unsigned char		*params;		| Current instruction saved
 **┃ 	char				ocp;			| Current ocp
 **┃ 	int					cycle_delay;	| Num o cycles needed to exec instr.
 **┃ 	int					live;			| Num o live since last cycle_to_die
@@ -154,7 +140,6 @@ typedef struct				s_process
 **┃ 	unsigned int	prog_size;		| Champion size
 **┃ 	char			*filename;		| Filename
 **┃ 	int				live;			| Obsolete ? Mb total lives for champion
-**┃ 	unsigned int	nb_process;		| Number of its process
 **┃ 	char			*name;			| Apocalyptic name of Hell
 **┃ 	char			*comment;		| Funniest comment written by bonobos
 **┃ 	int				num;			| Number of player
@@ -162,19 +147,6 @@ typedef struct				s_process
 **┃ }							t_champ;
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
-
-typedef struct				s_op
-{
-	char			*name;
-	char			nparams;
-	char			params[4];
-	char			opcode;
-	int				cycles;
-	char			*desc;
-	char			info_params;
-	char			size_dir;
-}							t_op;
-
 typedef struct				s_champ
 {
 	unsigned int	magic;
@@ -226,196 +198,44 @@ typedef struct				s_vm
 
 t_vm						*g_vm;
 
-/*
-**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃
-**┃ ------Functions in parse_args_vm.c
-**┃
-**┃ Parse argv, and treat -n and -dump.
-**┃
-**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-*/
-
 void						parse_args(char const **argv);
-
-/*
-**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃
-**┃ ------Functions in init.c
-**┃
-**┃ Initiaize all structures, g_vm and champs and processes.
-**┃ Set the map after reading champs.
-**┃
-**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-*/
-
 void						init_champs(char const **argv);
 void						init_vm(char const **argv);
 int							init_process(unsigned int a);
-
-/*
-**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃
-**┃ ------Functions in read_champs.c
-**┃
-**┃ Decode champs, save the header and instructions.
-**┃
-**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-*/
-
 int							get_champ(int i);
 int							get_header(int i);
 int							get_instructions(int i, int fd);
-
-/*
-**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃
-**┃ ------Functions in utils_vm.c
-**┃
-**┃ Different useful functions.
-**┃
-**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-*/
-
 void						process_remove_if_live(t_process **begin_list);
 void						print_usage(void);
 void						error_vm(char *s, int c);
 int							check_data(void);
 void						introduction(void);
-
-/*
-**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃
-**┃ ------Functions in rabbit_run.c
-**┃
-**┃ It's really gettin started here.
-**┃
-**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-*/
-
 int							cycling(void);
-
-/*
-**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃
-**┃ ------Functions in lst_vm.c
-**┃
-**┃ Linked_list functions, adapted from libft for the current s_process type.
-**┃
-**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-*/
-
+int							read_params(int cursor, t_op instruction,
+							t_process **proc);
 void						lstiter_vm(t_process *lst,
 							void (*f)(t_process *elem));
 void						lstadd_vm(t_process **alst, t_process *mew);
 t_process					*lstnew_vm(int *reg, int reg_size);
-
-/*
-**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃
-**┃ ------Functions in dump.c
-**┃
-**┃ Dumper.
-**┃
-**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-*/
-
 int							ft_dump(void);
 int							print_color(int i, int *p, int pc);
-
-/*
-**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃
-**┃ ------Functions in cycle.c
-**┃
-**┃ Cycling
-**┃
-**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-*/
-
 t_process					*get_last_proc(void);
 void						process(void);
 void						read_instruction(t_process **proc);
-
-/*
-**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃
-**┃ ------Functions in read.c
-**┃
-**┃ Reading
-**┃
-**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-*/
-
-int							get_reg(int cursor);
-int							get_ind(int cursor);
-int							get_dir(int cursor, t_op instruction);
-
-/*
-**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃
-**┃ ------Functions in tools_cycle.c
-**┃
-**┃ tools
-**┃
-**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-*/
-
-void						run(t_process **proc, t_process **begin);
+int							read_reg(int cursor);
+int							read_ind(int cursor);
+int							read_dir(int cursor, t_op instruction);
+void						exec(t_process **proc, t_process **begin);
 void						ft_print_nb_proc(t_process *begin);
 void						print_instruction(t_process *proc);
-
-/*
-**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃
-**┃ ------Functions in tools_op.c
-**┃
-**┃ tools
-**┃
-**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-*/
-
 t_op						*get_op_tab();
 t_op						get_opcode(char op_code);
 int							check_ocp(int instruct, int ocp);
-
-/*
-**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃
-**┃ ------Functions in tools_free.c
-**┃
-**┃ tools
-**┃
-**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-*/
-
 int							free_all(void);
 void						free_process(t_process *list);
-
-/*
-**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃
-**┃ ------Functions in tools_reg.c
-**┃
-**┃ tools for extract values from reg and fill reg
-**┃
-**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-*/
-
 int							read_map(int index);
 unsigned char				*itoo(int nb);
 void						print(int player, int index, int value);
-
-/*
-**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃
-**┃ ------Instrtuctions (in instructX.c)
-**┃
-**┃ all instructions executions
-**┃
-**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-*/
-
 void						ft_live(t_process **proc);
 void						ft_ld(t_process **proc);
 void						ft_st(t_process **proc);
@@ -433,6 +253,5 @@ void						ft_lldi(t_process **proc);
 void						ft_lfork(t_process **proc, t_process **begin);
 void						ft_aff(t_process **proc);
 int							check_reg(t_process *proc);
-
 
 #endif
