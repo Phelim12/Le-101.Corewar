@@ -54,21 +54,21 @@ do
 
 		#                                                     LEAKS CHECK
 
-		#        valgrind --leak-check=full --show-leak-kinds=all ./corewar ./Champs/$P1 ./Champs/$P2 -d $1 &> ./MCOREWAR_OUTPUT/$OUTPUT
-		#        cat ./MCOREWAR_OUTPUT/$OUTPUT | sed 's/^=.*=//g' | grep -A 3 "definitely lost:" | column -t | fmt -c -w 75 > MY_LEAKS.output
-		#        DIFF=$(diff ./MY_LEAKS.output ./GOOD_LEAKS.output)
-		#        if [ "$DIFF" = "" ]; then
-		#            printf "${GREEN}$NAME1 VS $NAME2 ✔ ${NC}\n"
-		#        else
-		#            printf "${RED}$NAME1 VS $NAME2 -> HAVE LEAKS ✘ ${NC}\n"
-		#            cat ./MY_LEAKS.output
-		#            read -p "Press any key to continue... " -n1 -s
-		#            printf "\n"
-		#        fi
+		       # valgrind --leak-check=full --show-leak-kinds=all ./corewar ./Champs/$P1 ./Champs/$P2 -d $1 &> ./MCOREWAR_OUTPUT/$OUTPUT
+		       # cat ./MCOREWAR_OUTPUT/$OUTPUT | sed 's/^=.*=//g' | grep -A 3 "definitely lost:" | column -t | fmt -c -w 75 > MY_LEAKS.output
+		       # DIFF=$(diff ./MY_LEAKS.output ./GOOD_LEAKS.output)
+		       # if [ "$DIFF" = "" ]; then
+		       #     printf "${GREEN}$NAME1 VS $NAME2 ✔ ${NC}\n"
+		       # else
+		       #     printf "${RED}$NAME1 VS $NAME2 -> HAVE LEAKS ✘ ${NC}\n"
+		       #     cat ./MY_LEAKS.output
+		       #     read -p "Press any key to continue... " -n1 -s
+		       #     printf "\n"
+		       # fi
 
 		#                                                      DIFF CHECK
 
-		./corewar ./Champs/$P1 ./Champs/$P2 -d $1 > ./MCOREWAR_OUTPUT/$OUTPUT
+		./corewar ./Champs/$P1 ./Champs/$P2 -d $1 -s 64 > ./MCOREWAR_OUTPUT/$OUTPUT
 		./r_corewar ./Champs/$P1 ./Champs/$P2 -d $1 > ./RCOREWAR_OUTPUT/$OUTPUT
 
 		DIFF=$(diff ./RCOREWAR_OUTPUT/$OUTPUT ./MCOREWAR_OUTPUT/$OUTPUT)

@@ -55,7 +55,7 @@ int		ft_dump(void)
 	{
 		if (i == 0)
 			ft_printf("%-#5.4x : ", i);
-		else if (i % (g_vm->d_size ? g_vm->d_size : 64) == 0)
+		else if (i % (g_vm->d_size ? g_vm->d_size : 32) == 0)
 			ft_printf("\n%-#5.4x : ", i);
 		ft_printf("%02x", g_vm->map[i]);
 		ft_printf(" ");

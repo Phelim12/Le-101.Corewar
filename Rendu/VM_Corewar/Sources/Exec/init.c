@@ -13,31 +13,31 @@
 
 #include "main_vm.h"
 
-void		init_vm(char const **argv)
+int			init_process(unsigned int a)
 {
-	void	*tmp;
+	int				*tmp_reg;
+	t_process		*new;
 
-	if ((tmp = (t_vm*)malloc(sizeof(t_vm))))
-		g_vm = tmp;
+	if (!(tmp_reg = (int*)malloc(REG_SIZE * REG_NUMBER + 4)))
+		error_vm("malloc failed in init_process\n", 0);
 	else
-		error_vm("malloc failed in init_vm\n", 0);
-	g_vm->cycle_to_die = CYCLE_TO_DIE;
-	g_vm->cycle = 1;
-	g_vm->checks = 0;
-	g_vm->champion = NULL;
-	g_vm->list_process = NULL;
-	g_vm->map = NULL;
-	g_vm->p_map = NULL;
-	g_vm->last_live = -1;
-	g_vm->dump = 0;
-	g_vm->v = 0;
-	g_vm->d_size = 0;
-	g_vm->d_cycles = 0;
-	g_vm->nb_players = 0;
-	g_vm->nb_proc = 0;
-	g_vm->nb_live = 0;
-	init_champs(argv);
-	init_map();
+	{
+		g_vm->nb_proc++;
+		ft_memset(tmp_reg, 0, REG_NUMBER * REG_SIZE + 4);
+		tmp_reg[1] = -g_vm->champion[a]->num;
+		tmp_reg[0] = (g_vm->nb_players - a - 1) * MEM_SIZE / g_vm->nb_players;
+		tmp_reg[15] = 0;
+		new = lstnew_vm(tmp_reg, REG_SIZE * (REG_NUMBER + 1));
+		new->cycle_delay = -1;
+		new->num = -tmp_reg[1];
+		new->player = g_vm->champion[a]->num;
+		if (g_vm->list_process == NULL)
+			g_vm->list_process = new;
+		else
+			lstadd_vm(&g_vm->list_process, new);
+		free(tmp_reg);
+	}
+	return (0);
 }
 
 int			init_map(void)
@@ -68,7 +68,7 @@ int			init_map(void)
 	return (0);
 }
 
-int			init_process(unsigned int a)
+void		init_vm(char const **argv)
 {
 	g_vm = NULL;
 	if (!(g_vm = (t_vm*)malloc(sizeof(t_vm))))

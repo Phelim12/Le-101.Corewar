@@ -21,6 +21,7 @@ int		main(int argc, char const **argv)
 		check_data();
 		introduction();
 		cycling();
+		free_all();
 	}
 	else
 		print_usage();
