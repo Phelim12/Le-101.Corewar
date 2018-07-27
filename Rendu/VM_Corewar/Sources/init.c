@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 19:47:48 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 20:08:59 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -70,7 +70,6 @@ int			init_map(void)
 
 void		init_vm(char const **argv)
 {
-
 	g_vm = NULL;
 	if (!(g_vm = (t_vm*)malloc(sizeof(t_vm))))
 		error_vm("malloc failed in init_vm\n", 0);
