@@ -22,16 +22,18 @@ void		ft_sti(t_process **proc)
 	int				var;
 
 	var = -1;
+	fparam = 0;
+	sparam = 0;
 	tab = NULL;
-	if (PROC->params[1][0] == 3)
-		fparam = read_map(PROC->params[1][1] % IDX_MOD + PROC->begin);
-	else if (PROC->params[1][0] == 1)
+	if (PROC->params[1][0] == REG_CODE)
 		fparam = PROC->reg[PROC->params[1][1]];
-	else if (PROC->params[1][0] == 2)
+	if (PROC->params[1][0] == DIR_CODE)
 		fparam = PROC->params[1][1];
-	if (PROC->params[2][0] == 1)
+	if (PROC->params[1][0] == IND_CODE)
+		fparam = read_map(PROC->params[1][1] % IDX_MOD + PROC->begin);
+	if (PROC->params[2][0] == REG_CODE)
 		sparam = PROC->reg[PROC->params[2][1]];
-	else
+	if (PROC->params[2][0] == DIR_CODE)
 		sparam = PROC->params[2][1];
 	if ((aim = (fparam + sparam) % IDX_MOD + PROC->begin) < 0)
 		aim += MEM_SIZE;
@@ -39,6 +41,3 @@ void		ft_sti(t_process **proc)
 	while (++var < 4)
 		print(PROC->reg[1], (aim + var) % MEM_SIZE, tab[var]);
 }
-
-
-

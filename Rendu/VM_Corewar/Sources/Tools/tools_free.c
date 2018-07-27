@@ -17,13 +17,16 @@ int		free_all(void)
 {
 	unsigned int i;
 
-	i = 0;
-	while (i < g_vm->nb_players)
-		free(g_vm->champion[i++]);
-	free(g_vm->champion);
+	i = -1;
 	ft_strdel(&g_vm->p_map);
 	ft_strdel((char **)&g_vm->map);
-	free(g_vm);
+	while (++i < g_vm->nb_players)
+		if (g_vm->champion[i])
+			free(g_vm->champion[i]);
+	if (g_vm->champion)
+		free(g_vm->champion);
+	if (g_vm)
+		free(g_vm);
 	return (0);
 }
 

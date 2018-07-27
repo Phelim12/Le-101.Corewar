@@ -27,7 +27,7 @@ unsigned char		*itoo(int nb)
 
 int					read_map(int index)
 {
-	int					ret;
+	int	ret;
 
 	ret = 0;
 	index %= MEM_SIZE;

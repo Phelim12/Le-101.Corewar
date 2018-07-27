@@ -31,7 +31,7 @@ int		get_header(int i)
 		return (-1);
 	if ((fd = open(g_vm->champion[i]->filename, O_RDONLY, 555)) == -1 ||
 			read(fd, header, sizeof(t_header)) == -1)
-		return (error_vm("open", i));
+		error_vm("open", i);
 	if (!(g_vm->champion[i]->name = ft_strdup(header->prog_name)))
 		return (-1);
 	if (!(g_vm->champion[i]->comment = ft_strdup(header->comment)))

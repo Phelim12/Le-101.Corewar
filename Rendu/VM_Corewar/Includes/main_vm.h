@@ -206,7 +206,7 @@ int							get_instructions(int i, int fd);
 
 void						process_remove_if_live(t_process **begin_list);
 void						print_usage(void);
-int							error_vm(char *s, int c);
+void						error_vm(char *s, int c);
 int							check_data(void);
 void						introduction(void);
 
@@ -328,8 +328,6 @@ void						free_process(t_process *list);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-long long int				extract(unsigned char *tab, unsigned char v_size,
-							unsigned char index, int t_size);
 int							read_map(int index);
 unsigned char				*itoo(int nb);
 void						print(int player, int index, int value);
@@ -382,6 +380,23 @@ int							check_reg(t_process *proc);
 
 # define MIN_REG			1
 # define MAX_REG			16
+
+# define LIVE	1
+# define LD		2
+# define ST		3
+# define ADD	4
+# define SUB	5
+# define AND	6
+# define OR		7
+# define XOR	8
+# define ZJMP	9
+# define LDI	10
+# define STI	11
+# define FORK	12
+# define LLD	13
+# define LLDI	14
+# define LFORK	15
+# define AFF	16
 
 # define MAX_ARGS_NUMBER	4
 # define MAX_PLAYERS		4

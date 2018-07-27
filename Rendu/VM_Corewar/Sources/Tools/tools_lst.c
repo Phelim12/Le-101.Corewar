@@ -33,21 +33,20 @@ void		lstiter_vm(t_process *lst, void (*f)(t_process *elem))
 void		lstnew_vm_init(t_process **new, int *reg)
 {
 	(*new)->live = 0;
+	(*new)->carry = 0;
+	(*new)->next = NULL;
+	(*new)->creation = 0;
 	(*new)->begin = reg[0];
 	(*new)->cycle_delay = 0;
-	(*new)->carry = 0;
-	(*new)->creation = 0;//g_vm->cycle;
-	(*new)->next = NULL;
 }
 
 t_process	*lstnew_vm(int *reg, int reg_size)
 {
 	t_process	*new;
-	int			i;
+	int			var;
 
-	i = 0;
-	new = (t_process*)malloc(sizeof(t_process));
-	if (!new)
+	var = -1;
+	if (!(new = (t_process*)malloc(sizeof(t_process))))
 		return (NULL);
 	if (!reg)
 		new->reg = NULL;
@@ -57,10 +56,10 @@ t_process	*lstnew_vm(int *reg, int reg_size)
 			return (NULL);
 		ft_memcpy(new->reg, reg, reg_size);
 	}
-	while (i < 4)
+	while (++var < 4)
 	{
-		new->params[i][0] = 0;
-		new->params[i++][1] = -1;
+		new->params[var][0] = 0;
+		new->params[var][1] = -1;
 	}
 	lstnew_vm_init(&new, reg);
 	return (new);
