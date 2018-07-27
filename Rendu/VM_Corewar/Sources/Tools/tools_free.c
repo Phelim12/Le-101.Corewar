@@ -6,23 +6,18 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 16:01:00 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 09:15:58 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 18:19:16 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../Includes/main_vm.h"
 
-int		free_all(void)
+static void		free_champs(void)
 {
-	unsigned int	i;
-	t_process		**proc;
-	t_process		**tmp;
+	int		i;
 
-	proc = &g_vm->list_process;
 	i = -1;
-	ft_strdel(&g_vm->p_map);
-	ft_strdel((char **)&g_vm->map);
 	while (++i < g_vm->nb_players)
 	{
 		ft_strdel(&g_vm->champion[i]->name);
@@ -33,6 +28,19 @@ int		free_all(void)
 	}
 	if (g_vm->champion)
 		free(g_vm->champion);
+}
+
+int				free_all(void)
+{
+	unsigned int	i;
+	t_process		**proc;
+	t_process		**tmp;
+
+	proc = &g_vm->list_process;
+	i = -1;
+	ft_strdel(&g_vm->p_map);
+	ft_strdel((char **)&g_vm->map);
+	free_champs();
 	while (*proc)
 	{
 		free((*proc)->reg);
@@ -46,7 +54,7 @@ int		free_all(void)
 	return (0);
 }
 
-void	free_process(t_process *list)
+void			free_process(t_process *list)
 {
 	free(list->reg);
 	free(list);
