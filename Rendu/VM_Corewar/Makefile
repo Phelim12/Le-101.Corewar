@@ -6,14 +6,14 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/12/08 18:11:02 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2018/07/27 01:33:38 by jjanin-r    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/27 01:42:20 by jjanin-r    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
 
 .PHONY: all clean fclean re
 
-CC = gcc
+CC = gcc -Wall -Wextra -Werror
 
 NAME = ./corewar
 

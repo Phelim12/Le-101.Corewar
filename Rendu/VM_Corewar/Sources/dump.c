@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/24 14:20:11 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 01:29:14 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 02:09:12 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -58,8 +58,8 @@ int		print_color(int i, int *p, int pc)
 
 int		ft_dump(void)
 {
-	unsigned int i;
-	int p[4];
+	unsigned int	i;
+	int				p[4];
 
 	i = -1;
 	while (++i < g_vm->nb_players)

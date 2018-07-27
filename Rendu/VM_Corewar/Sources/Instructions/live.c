@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 14:25:00 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 14:30:47 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 01:46:15 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,7 @@
 
 void		ft_live(t_process **proc)
 {
-	int	i;
+	unsigned int	i;
 	
 	i = -1;
 	while (++i < g_vm->nb_players)

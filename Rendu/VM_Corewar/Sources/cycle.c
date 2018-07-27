@@ -6,14 +6,14 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/24 14:21:07 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 01:12:59 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 02:11:16 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../Includes/main_vm.h"
 
-int static		valid_ocp(int cursor, t_op instruction, t_process **proc)
+static int		valid_ocp(int cursor, t_op instruction, t_process **proc)
 {
 	int		i;
 
@@ -43,7 +43,7 @@ int static		valid_ocp(int cursor, t_op instruction, t_process **proc)
 	return (cursor);
 }
 
-int static		jump(int cursor, t_op instruction, t_process **proc)
+static int		jump(int cursor, t_op instruction, t_process **proc)
 {
 	int		i;
 
@@ -63,7 +63,7 @@ int static		jump(int cursor, t_op instruction, t_process **proc)
 	return (cursor);
 }
 
-int static		read_params(int cursor, t_op instruction, t_process **proc)
+static int		read_params(int cursor, t_op instruction, t_process **proc)
 {
 	if (PROC->op > 0)
 		cursor = valid_ocp(cursor, instruction, proc);
@@ -74,7 +74,7 @@ int static		read_params(int cursor, t_op instruction, t_process **proc)
 	return (cursor);
 }
 
-int static		read_ocp(int cursor, t_op instruction, t_process **proc)
+static int		read_ocp(int cursor, t_op instruction, t_process **proc)
 {
 	PROC->params[0][0] = g_vm->map[cursor] >> 6 & 0x3;
 	PROC->params[1][0] = g_vm->map[cursor] >> 4 & 0x3;
