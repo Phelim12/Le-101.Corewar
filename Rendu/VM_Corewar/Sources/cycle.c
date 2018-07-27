@@ -1,100 +1,80 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   cycle.c                                          .::    .:/ .      .::   */
+/*   rabbit_run.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/07/24 14:21:07 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 02:32:19 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
+/*   Updated: 2018/07/27 03:54:31 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../Includes/main_vm.h"
 
-static int		valid_ocp(int cursor, t_op instruction, t_process **proc)
+static int		check_players_process(void)
 {
-	int		i;
+	int				nb;
+	t_process		*proc;
 
-	i = -1;
-	while (++i < instruction.nparams && (PROC->params[i][0] ||
-				(!instruction.info_params && !i)))
+	proc = g_vm->list_process;
+	nb = 0;
+	while (proc)
 	{
-		if (PROC->params[i][0] == 1)
-		{
-			PROC->params[i][1] = get_reg(cursor++);
-			cursor %= MEM_SIZE;
-		}
-		else if (PROC->params[i][0] == 2 || instruction.opcode == 1)
-		{
-			PROC->params[i][1] = get_dir(cursor, instruction);
-			cursor += (instruction.size_dir == 1 ? 2 : 4);
-			cursor %= MEM_SIZE;
-		}
-		else if (PROC->params[i][0] == 3 || instruction.opcode == 9 ||
-				instruction.opcode == 12 || instruction.opcode == 15)
-		{
-			PROC->params[i][1] = (short)get_ind(cursor);
-			cursor = (2 + cursor) % MEM_SIZE;
-		}
+		nb += 1;
+		proc = proc->next;
 	}
-	return (cursor);
+	return (nb);
 }
 
-static int		jump(int cursor, t_op instruction, t_process **proc)
+static int		check_destruction_process(int cycles_passed)
 {
-	int		i;
-
-	i = -1;
-	while (++i < instruction.nparams)
+	if (cycles_passed + 1 == g_vm->cycle_to_die)
 	{
-		if (PROC->params[i][0] == 1)
-			cursor = (cursor + 1) % MEM_SIZE;
-		else if (PROC->params[i][0] == 2)
+		g_vm->checks++;
+		process_remove_if_live(&g_vm->list_process);
+		if (g_vm->checks >= MAX_CHECKS)
 		{
-			cursor += (instruction.size_dir == 1 ? 2 : 4);
-			cursor %= MEM_SIZE;
+			g_vm->cycle_to_die -= CYCLE_DELTA;
+			g_vm->checks = 0;
 		}
-		else if (PROC->params[i][0] == 3)
-			cursor = (cursor + 2) % MEM_SIZE;
+		if (g_vm->nb_live >= NBR_LIVE)
+		{
+			g_vm->cycle_to_die -= CYCLE_DELTA;
+			g_vm->checks = 0;
+		}
+		g_vm->nb_live = 0;
+		cycles_passed = -1;
 	}
-	return (cursor);
+	return (cycles_passed);
 }
 
-static int		read_params(int cursor, t_op instruction, t_process **proc)
+int				cycling(void)
 {
-	if (PROC->op > 0)
-		cursor = valid_ocp(cursor, instruction, proc);
-	else if (PROC->op < 0)
-		cursor = jump(cursor, instruction, proc);
-	if (PROC->op == 9 && PROC->carry)
-		return (PROC->begin);
-	return (cursor);
-}
+	unsigned int	cycles_passed;
+	int				win;
 
-static int		read_ocp(int cursor, t_op instruction, t_process **proc)
-{
-	PROC->params[0][0] = g_vm->map[cursor] >> 6 & 0x3;
-	PROC->params[1][0] = g_vm->map[cursor] >> 4 & 0x3;
-	PROC->params[2][0] = g_vm->map[cursor] >> 2 & 0x3;
-	PROC->params[3][0] = g_vm->map[cursor] & 0x3;
-	if (check_ocp(PROC->op, cursor))
-		PROC->op = -1;
-	return (read_params(++cursor % MEM_SIZE, instruction, proc));
-}
-
-void			read_instruction(t_process **proc)
-{
-	t_op	instruction;
-	int		cursor;
-
-	cursor = PROC->reg[0];
-	instruction = get_opcode(PROC->op);
-	if (instruction.info_params)
-		PROC->reg[0] = read_ocp(++cursor % MEM_SIZE, instruction, proc) %
-			MEM_SIZE;
+	win = 0;
+	cycles_passed = 0;
+	while (check_players_process() > 0 &&
+			(g_vm->dump == 0 || g_vm->cycle <= g_vm->d_cycles))
+	{
+		process();
+		cycles_passed = check_destruction_process(cycles_passed);
+		if (!check_players_process())
+			break ;
+		g_vm->cycle++;
+		cycles_passed++;
+	}
+	if (g_vm->dump == 1 && g_vm->cycle > g_vm->d_cycles)
+		ft_dump();
 	else
-		PROC->reg[0] = read_params(++cursor % MEM_SIZE, instruction, proc) %
-			MEM_SIZE;
+	{
+		if (g_vm->last_live != -1)
+			win = g_vm->last_live;
+		ft_printf("Contestant %d, \"%s\", has won !\n",
+				g_vm->champion[win]->num, g_vm->champion[win]->name);
+	}
+	return (0);
 }

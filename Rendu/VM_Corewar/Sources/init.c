@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 02:38:25 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 03:38:33 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,12 +18,12 @@ int			init_process(unsigned int a)
 	int				*tmp_reg;
 	t_process		*new;
 
-	if (!(tmp_reg = (int*)malloc(REG_SIZE * (REG_NUMBER + 1))))
+	if (!(tmp_reg = (int*)malloc(REG_SIZE * REG_NUMBER + 4)))
 		return (-1);
 	else
 	{
 		g_vm->nb_proc++;
-		ft_memset(tmp_reg, 0, (REG_NUMBER + 1) * REG_SIZE);
+		ft_memset(tmp_reg, 0, REG_NUMBER * REG_SIZE + 4);
 		tmp_reg[1] = -g_vm->champion[a]->num;
 		tmp_reg[0] = (g_vm->nb_players - a - 1) * MEM_SIZE / g_vm->nb_players;
 		tmp_reg[15] = 0;
@@ -47,8 +47,8 @@ int			init_map(void)
 	unsigned int	i;
 
 	i = 0;
-	if (!(g_vm->map = malloc(MEM_SIZE + 1)) || !(g_vm->p_map = malloc(MEM_SIZE
-					+ 1)))
+	g_vm->map = malloc(MEM_SIZE + 1);
+	if (!g_vm->map || !(g_vm->p_map = malloc(MEM_SIZE + 1)))
 		return (-1);
 	g_vm->map[MEM_SIZE] = '\0';
 	g_vm->p_map[MEM_SIZE] = '\0';
