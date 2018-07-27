@@ -45,9 +45,9 @@ do
 
 	for P2 in $FILES
 	do
-		 if [ $NAME1 == "Car" ]; then
-	 		break 
-	 	fi
+		 # if [ $NAME1 == "Car" ]; then
+	 	# 	break 
+	 	# fi
 		NAME2=$(echo $P2 | rev | cut -c5- | rev)
 
 		OUTPUT="${NAME1}_vs_${NAME2}.output"
@@ -68,8 +68,8 @@ do
 
 		#                                                      DIFF CHECK
 
-		./corewar ./Champs/$P1 ./Champs/$P2 > ./MCOREWAR_OUTPUT/$OUTPUT
-		./r_corewar ./Champs/$P1 ./Champs/$P2 > ./RCOREWAR_OUTPUT/$OUTPUT
+		./corewar ./Champs/$P1 ./Champs/$P2 -d $1 > ./MCOREWAR_OUTPUT/$OUTPUT
+		./r_corewar ./Champs/$P1 ./Champs/$P2 -d $1 > ./RCOREWAR_OUTPUT/$OUTPUT
 
 		DIFF=$(diff ./RCOREWAR_OUTPUT/$OUTPUT ./MCOREWAR_OUTPUT/$OUTPUT)
 

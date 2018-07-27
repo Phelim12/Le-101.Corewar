@@ -13,7 +13,13 @@
 
 #include "../../Includes/main_vm.h"
 
-static void		free_champs(void)
+void			free_process(t_process *list)
+{
+	free(list->reg);
+	free(list);
+}
+
+void			free_champs(void)
 {
 	unsigned int		i;
 
@@ -52,10 +58,4 @@ int				free_all(void)
 	if (g_vm)
 		free(g_vm);
 	return (0);
-}
-
-void			free_process(t_process *list)
-{
-	free(list->reg);
-	free(list);
 }

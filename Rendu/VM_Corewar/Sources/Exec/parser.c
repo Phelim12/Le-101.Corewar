@@ -13,7 +13,7 @@
 
 #include "../Includes/main_vm.h"
 
-static void	parse_n(char const **argv, unsigned int *i, unsigned int *k)
+void	parse_n(char const **argv, unsigned int *i, unsigned int *k)
 {
 	if (argv[*i + 1] && ft_strisdigit(argv[*i + 1]) &&
 			ft_atoi(argv[*i + 1]) >= 0)
@@ -29,7 +29,7 @@ static void	parse_n(char const **argv, unsigned int *i, unsigned int *k)
 	*k += 1;
 }
 
-static void	parse_dump(char const **argv, unsigned int *i)
+void	parse_dump(char const **argv, unsigned int *i)
 {
 	g_vm->dump = 1;
 	if (argv[*i + 1] && ft_strisdigit(argv[*i + 1]) &&
@@ -40,7 +40,7 @@ static void	parse_dump(char const **argv, unsigned int *i)
 	*i += 2;
 }
 
-static void	parse_v(char const **argv, unsigned int *i)
+void	parse_v(char const **argv, unsigned int *i)
 {
 	int		verbose;
 
@@ -58,7 +58,7 @@ static void	parse_v(char const **argv, unsigned int *i)
 	*i += 2;
 }
 
-static void	parse_s(char const **argv, unsigned int *i)
+void	parse_s(char const **argv, unsigned int *i)
 {
 	int		size;
 
@@ -76,7 +76,7 @@ static void	parse_s(char const **argv, unsigned int *i)
 	*i += 2;
 }
 
-void		parse_args(char const **argv)
+void	parse_args(char const **argv)
 {
 	unsigned int	i;
 	unsigned int	k;

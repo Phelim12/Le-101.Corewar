@@ -23,6 +23,8 @@ DIR_LIB = ../Libft/
 
 DIR_SRC = Sources/
 
+DIR_INC = Includes/
+
 DIR_TOOLS = $(addprefix $(DIR_SRC), Tools/)
 
 DIR_WRITE = $(addprefix $(DIR_SRC), Write/)
@@ -32,8 +34,6 @@ DIR_ERROR = $(addprefix $(DIR_SRC), Error/)
 DIR_PARSER = $(addprefix $(DIR_SRC), Parser/)
 
 DIR_BONUS = $(addprefix $(DIR_SRC), Bonus/)
-
-DIR_INC = Includes/
 
 NAME_SRC = main_asm.c
 

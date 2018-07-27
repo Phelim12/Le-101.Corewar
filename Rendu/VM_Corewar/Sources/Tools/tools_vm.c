@@ -25,6 +25,37 @@ void		norme_remove(t_process **list)
 	(*list) = (*list)->next;
 }
 
+int			check_data(void)
+{
+	unsigned int i;
+
+	i = -1;
+	while (++i < g_vm->nb_players)
+	{
+		if (g_vm->champion[i]->prog_size > MEM_SIZE / 6)
+			error_vm("size", i);
+	}
+	return (0);
+}
+
+void		introduction(void)
+{
+	int i;
+
+	i = g_vm->nb_players - 1;
+	ft_printf("Introducing contestants...\n");
+	while (i >= 0)
+	{
+		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
+				(g_vm->champion[i]->num >= 0 ? g_vm->champion[i]->num :
+				g_vm->champion[i]->num * -1),
+				g_vm->champion[i]->prog_size,
+				g_vm->champion[i]->name,
+				g_vm->champion[i]->comment);
+		i--;
+	}
+}
+
 void		process_remove_if_live(t_process **begin_list)
 {
 	t_process	*list;
@@ -48,35 +79,4 @@ void		process_remove_if_live(t_process **begin_list)
 		else
 			norme_remove(&list);
 	}
-}
-
-void		introduction(void)
-{
-	int i;
-
-	i = g_vm->nb_players - 1;
-	ft_printf("Introducing contestants...\n");
-	while (i >= 0)
-	{
-		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
-				(g_vm->champion[i]->num >= 0 ? g_vm->champion[i]->num :
-				g_vm->champion[i]->num * -1),
-				g_vm->champion[i]->prog_size,
-				g_vm->champion[i]->name,
-				g_vm->champion[i]->comment);
-		i--;
-	}
-}
-
-int			check_data(void)
-{
-	unsigned int i;
-
-	i = -1;
-	while (++i < g_vm->nb_players)
-	{
-		if (g_vm->champion[i]->prog_size > MEM_SIZE / 6)
-			error_vm("size", i);
-	}
-	return (0);
 }

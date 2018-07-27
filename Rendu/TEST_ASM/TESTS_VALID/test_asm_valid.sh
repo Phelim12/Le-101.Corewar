@@ -16,7 +16,11 @@ NC='\033[0m'
 RED='\033[0;36m'
 GREEN='\033[0;32m'
 CHAMPS=$(ls -A1 ./CHAMPS)
-COLUMNS=$(tput cols) 
+
+if [ "$1" != "--clear" ] && [ "$1" != "" ]; then
+	printf "usage: sh $0 [ --clear ]\n"
+    exit 0
+fi
 
 if [ ! -d ./MCHAMPS ]; then
 	mkdir ./MCHAMPS
@@ -45,11 +49,6 @@ if [[ $1 = "--clear" ]]; then
 	exit 1
 fi
 
-if [ "$1" != "--clear" ] && [ "$1" != "" ]; then
-	printf "usage: sh $0 [ --clear ]\n"
-    exit 0
-fi
-
 for P1 in $CHAMPS
 do
 
@@ -74,5 +73,6 @@ do
 	echo "\n------------------- DIFF OUTPUT (REAL COREWAR IN FIRST) -------------------"
 	diff ./RASM_OUTPUT/"$NAME1.output" ./MASM_OUTPUT/"$NAME1.output"
 	echo "\n----------------------------------- END -----------------------------------"
-	# sleep 1
+	# sleep 5
+	
 done

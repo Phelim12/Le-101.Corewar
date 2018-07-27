@@ -39,3 +39,17 @@ int					read_map(int index)
 	ret += g_vm->map[(index + 3) % MEM_SIZE];
 	return (ret);
 }
+
+int					check_reg(t_process *proc)
+{
+	t_op	info;
+	int		i;
+
+	i = -1;
+	info = get_opcode(proc->op);
+	while (++i < info.nparams)
+		if ((proc->params[i][0] == REG_CODE) &&
+			(proc->params[i][1] < MIN_REG || proc->params[i][1] > MAX_REG))
+			return (0);
+	return (1);
+}

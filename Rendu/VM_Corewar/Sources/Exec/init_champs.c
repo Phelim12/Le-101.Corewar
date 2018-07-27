@@ -13,7 +13,7 @@
 
 #include "../Includes/main_vm.h"
 
-static void		sort_champ_tab(void)
+void		sort_champ_tab(void)
 {
 	t_champ			*tmp;
 	unsigned int	i;
@@ -38,7 +38,7 @@ static void		sort_champ_tab(void)
 	}
 }
 
-static void		init_champ_num(void)
+void		init_champ_num(void)
 {
 	unsigned int	i;
 	long			num;
@@ -67,7 +67,7 @@ static void		init_champ_num(void)
 	sort_champ_tab();
 }
 
-void			init_champs(char const **argv)
+void		init_champs(char const **argv)
 {
 	unsigned int	i;
 

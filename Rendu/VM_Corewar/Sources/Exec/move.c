@@ -13,7 +13,7 @@
 
 #include "../Includes/main_vm.h"
 
-static int		valid_ocp(int cursor, t_op instruction, t_process **proc)
+int		valid_ocp(int cursor, t_op instruction, t_process **proc)
 {
 	int		i;
 
@@ -42,7 +42,7 @@ static int		valid_ocp(int cursor, t_op instruction, t_process **proc)
 	return (cursor);
 }
 
-static int		pass_params(int cursor, t_op instruction, t_process **proc)
+int		pass_params(int cursor, t_op instruction, t_process **proc)
 {
 	int		i;
 
@@ -62,7 +62,7 @@ static int		pass_params(int cursor, t_op instruction, t_process **proc)
 	return (cursor);
 }
 
-int				read_params(int cursor, t_op instruction, t_process **proc)
+int		read_params(int cursor, t_op instruction, t_process **proc)
 {
 	if (PROC->op > 0)
 		cursor = valid_ocp(cursor, instruction, proc);

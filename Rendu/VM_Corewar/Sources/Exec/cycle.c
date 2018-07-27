@@ -13,7 +13,7 @@
 
 #include "../Includes/main_vm.h"
 
-static int		check_players_process(void)
+int		check_players_process(void)
 {
 	int				nb;
 	t_process		*proc;
@@ -28,7 +28,7 @@ static int		check_players_process(void)
 	return (nb);
 }
 
-static int		check_destruction_process(int cycles_passed)
+int		check_destruction_process(int cycles_passed)
 {
 	if (cycles_passed + 1 == g_vm->cycle_to_die)
 	{
@@ -50,7 +50,7 @@ static int		check_destruction_process(int cycles_passed)
 	return (cycles_passed);
 }
 
-int				cycling(void)
+int		cycling(void)
 {
 	unsigned int	cycles_passed;
 	int				win;

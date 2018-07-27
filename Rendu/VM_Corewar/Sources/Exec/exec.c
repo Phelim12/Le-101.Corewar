@@ -33,7 +33,7 @@ void			exec_2(t_process **proc, t_process **begin)
 		ft_aff(proc);
 }
 
-static void		exec_1(t_process **proc)
+void			exec_1(t_process **proc)
 {
 	if (PROC->op == LIVE)
 		ft_live(proc);
