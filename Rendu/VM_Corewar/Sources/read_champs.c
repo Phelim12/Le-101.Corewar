@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/13 14:10:23 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 18:25:21 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 18:45:20 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,14 +36,14 @@ int				read_header(int i)
 	int			fd;
 
 	if (!(header = malloc(sizeof(t_header))))
-		return (-1);
+		error_vm("malloc failed in read_header\n", 0);
 	if ((fd = open(g_vm->champion[i]->filename, O_RDONLY)) == -1 ||
 			read(fd, header, sizeof(t_header)) == -1)
 		error_vm("open", i);
 	if (!(g_vm->champion[i]->name = ft_strdup(header->prog_name)))
-		return (-1);
+		error_vm("malloc failed in read_header\n", 0);
 	if (!(g_vm->champion[i]->comment = ft_strdup(header->comment)))
-		return (-1);
+		error_vm("malloc failed in read_header\n", 0);
 	g_vm->champion[i]->magic = little_endian(header->magic);
 	g_vm->champion[i]->prog_size = little_endian(header->prog_size);
 	free(header);
@@ -59,7 +59,7 @@ int				read_code(int i, int fd)
 	ret = 0;
 	size = g_vm->champion[i]->prog_size;
 	if (!(g_vm->champion[i]->instructions = malloc(size + 1)))
-		return (-1);
+		error_vm("malloc failed in read_code\n", 0);
 	return (read(fd, g_vm->champion[i]->instructions, size));
 }
 

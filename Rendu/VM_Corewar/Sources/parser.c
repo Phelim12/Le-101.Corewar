@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/27 18:24:43 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 18:24:59 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 18:39:00 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -96,7 +96,7 @@ void		parse_args(char const **argv)
 		else if (!ft_strcmp("-s", argv[i]))
 			parse_s(argv, &i);
 		else
-			error_vm("An error occured in the argument passed to Corewar\n",
+			error_vm("An error occured in the arguments passed to Corewar\n",
 					0);
 	}
 }

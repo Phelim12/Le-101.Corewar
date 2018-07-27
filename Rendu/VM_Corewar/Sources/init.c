@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/05 17:33:45 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 03:38:33 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 18:37:36 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,7 +19,7 @@ int			init_process(unsigned int a)
 	t_process		*new;
 
 	if (!(tmp_reg = (int*)malloc(REG_SIZE * REG_NUMBER + 4)))
-		return (-1);
+		error_vm("malloc failed in init_process\n", 0);
 	else
 	{
 		g_vm->nb_proc++;
@@ -49,7 +49,7 @@ int			init_map(void)
 	i = 0;
 	g_vm->map = malloc(MEM_SIZE + 1);
 	if (!g_vm->map || !(g_vm->p_map = malloc(MEM_SIZE + 1)))
-		return (-1);
+		error_vm("malloc failed in init_map\n", 0);
 	g_vm->map[MEM_SIZE] = '\0';
 	g_vm->p_map[MEM_SIZE] = '\0';
 	g_vm->map = ft_memset(g_vm->map, 0, (size_t)MEM_SIZE);
@@ -74,6 +74,8 @@ void		init_vm(char const **argv)
 
 	if ((tmp = (t_vm*)malloc(sizeof(t_vm))))
 		g_vm = tmp;
+	else
+		error_vm("malloc failed in init_vm\n", 0);
 	g_vm->cycle_to_die = CYCLE_TO_DIE;
 	g_vm->cycle = 1;
 	g_vm->checks = 0;

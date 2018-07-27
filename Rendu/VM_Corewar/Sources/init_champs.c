@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/27 18:14:53 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 18:14:56 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 18:40:44 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,10 +33,8 @@ static void		sort_champ_tab(void)
 	}
 	while (--a >= 0)
 	{
-		if (init_process(a) == -1)
-			error_vm("malloc failed\n", 0);
-		if (read_champ(a) == -1)
-			error_vm("Error reading champion\n", 0);
+		init_process(a);
+		read_champ(a);
 	}
 }
 
@@ -80,12 +78,12 @@ void			init_champs(char const **argv)
 	i = -1;
 	g_vm->champion = (t_champ**)malloc(sizeof(t_champ*) * g_vm->nb_players + 1);
 	if (!g_vm->champion)
-		error_vm("malloc failed\n", 0);
+		error_vm("malloc failed in init_champs\n", 0);
 	while (++i < g_vm->nb_players)
 	{
 		g_vm->champion[i] = (t_champ*)malloc(sizeof(t_champ));
 		if (!g_vm->champion[i])
-			error_vm("malloc failed\n", 0);
+			error_vm("malloc failed in init_champs\n", 0);
 		g_vm->champion[i]->name = NULL;
 		g_vm->champion[i]->comment = NULL;
 		g_vm->champion[i]->filename = NULL;
