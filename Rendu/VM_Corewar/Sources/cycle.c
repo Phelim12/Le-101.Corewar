@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/24 14:21:07 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 02:11:16 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 02:32:19 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,9 +17,9 @@ static int		valid_ocp(int cursor, t_op instruction, t_process **proc)
 {
 	int		i;
 
-	i = 0;
-	while ((PROC->params[i][0] || (!instruction.info_params && !i))
-			&& i < instruction.nparams)
+	i = -1;
+	while (++i < instruction.nparams && (PROC->params[i][0] ||
+				(!instruction.info_params && !i)))
 	{
 		if (PROC->params[i][0] == 1)
 		{
@@ -38,7 +38,6 @@ static int		valid_ocp(int cursor, t_op instruction, t_process **proc)
 			PROC->params[i][1] = (short)get_ind(cursor);
 			cursor = (2 + cursor) % MEM_SIZE;
 		}
-		i++;
 	}
 	return (cursor);
 }
@@ -79,7 +78,7 @@ static int		read_ocp(int cursor, t_op instruction, t_process **proc)
 	PROC->params[0][0] = g_vm->map[cursor] >> 6 & 0x3;
 	PROC->params[1][0] = g_vm->map[cursor] >> 4 & 0x3;
 	PROC->params[2][0] = g_vm->map[cursor] >> 2 & 0x3;
-	PROC->params[3][0] = g_vm->map[cursor]  & 0x3;
+	PROC->params[3][0] = g_vm->map[cursor] & 0x3;
 	if (check_ocp(PROC->op, cursor))
 		PROC->op = -1;
 	return (read_params(++cursor % MEM_SIZE, instruction, proc));
