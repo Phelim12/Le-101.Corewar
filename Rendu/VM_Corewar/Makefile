@@ -6,18 +6,18 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/12/08 18:11:02 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2018/07/27 18:11:03 by jjanin-r    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/27 18:28:49 by jjanin-r    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
 
 .PHONY: all clean fclean re
 
-CC = gcc -fsanitize=address -g#-Wall -Wextra -Werror
+CC = gcc
 
 NAME = ../corewar
 
-C_FLAGS =  -g
+C_FLAGS =  -Wall -Wextra -Werror
 
 DIR_LIB = ../Libft/
 
@@ -55,26 +55,25 @@ NB_FILES = $(words $(SRC))
 all: $(NAME)
 
 $(NAME): $(OBJ) $(INC)
-	@make -C ../Libft
 	@$(CC) $(C_FLAGS) $(OBJ) -L $(DIR_LIB) -lft -o $(NAME)
-	@printf "\r\033[0;32m✅️   make corewar 100%%\033[0m\033[K\n"
+	@printf "\r\033[0;32m✅️   make VM_Corewar 100%%\033[0m\033[K\n"
 
 ./%.o: ./%.c $(INC)
 	@$(eval CURSOR=$(shell echo $$(($(CURSOR)+1))))
 	@$(eval PERCENT=$(shell echo $$(($(CURSOR)*100/$(NB_FILES)))))
-	@printf "\033[0;32m⌛️   make $(NAME) $(PERCENT)%%\033[0m\033[K\r"
+	@printf "\033[0;32m⌛️   make VM_Corewar $(PERCENT)%%\033[0m\033[K\r"
 	@$(CC) $(C_FLAGS) -I $(DIR_INC) -o $@ -c $< 
 
 clean:
 	@if [ -e Sources/main_vm.o ]; then \
-		printf "\r\033[38;5;202m🗑️   clean corewar\033[0m\033[K\n";\
+		printf "\r\033[38;5;202m🗑️   clean VM_Corewar\033[0m\033[K\n";\
 	fi;
 	@make -C ../Libft clean
 	@rm -rf $(OBJ)
 
 fclean: clean
 	@if [ -e $(NAME) ]; then \
-		printf "\r\033[38;5;196m🗑️   fclean corewar\033[0m\033[K\n"; \
+		printf "\r\033[38;5;196m🗑️   fclean VM_Corewar\033[0m\033[K\n"; \
 	fi;
 	@make -C ../Libft fclean
 	@rm -rf $(NAME)

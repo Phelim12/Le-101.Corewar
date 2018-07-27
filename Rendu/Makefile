@@ -39,7 +39,19 @@ CURSOR = 0
 
 NB_FILES = $(words $(SRC))
 
-all: libft asm corewar
+all: libft corewar asm
+
+asm: libft 
+	@if !(make -q -C $(DIR_ASM)); then \
+		rm -rf $(NAME_ASM);\
+		make -C $(DIR_ASM);\
+	fi;
+
+corewar: libft
+	@if !(make -q -C $(DIR_VM)); then \
+		rm -rf $(NAME_VM);\
+		make -C $(DIR_VM);\
+	fi;
 
 libft: 
 	@if !(make -q -C $(DIR_LIB)); then \
@@ -48,31 +60,14 @@ libft:
 		make -C $(DIR_LIB);\
 	fi;
 
-asm: libft 
-	@if !(make -q -C $(DIR_ASM)); then \
-		rm -rf $(NAME_ASM);\
-		make -C $(DIR_ASM);\
-	fi;
-
-vm: libft
-	@if !(make -q -C $(DIR_VM)); then \
-		rm -rf $(NAME_VM);\
-		make -C $(DIR_VM);\
-	fi;
-corewar: libft
-	@if !(make -q -C $(DIR_VM)); then \
-		rm -rf $(NAME_VM);\
-		make -C $(DIR_VM);\
-	fi;
-
 clean:
-	@make clean -C $(DIR_ASM)
-	@make clean -C $(DIR_VM)
 	@make clean -C $(DIR_LIB)
+	@make clean -C $(DIR_VM)
+	@make clean -C $(DIR_ASM)
 
 fclean: clean
-	@make fclean -C $(DIR_ASM)
-	@make fclean -C $(DIR_VM)
 	@make fclean -C $(DIR_LIB)
+	@make fclean -C $(DIR_VM)
+	@make fclean -C $(DIR_ASM)
 
 re: fclean all

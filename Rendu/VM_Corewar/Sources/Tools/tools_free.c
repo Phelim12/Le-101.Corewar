@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 16:01:00 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 18:19:16 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 18:30:28 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,7 @@
 
 static void		free_champs(void)
 {
-	int		i;
+	unsigned int		i;
 
 	i = -1;
 	while (++i < g_vm->nb_players)
