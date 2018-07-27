@@ -6,14 +6,14 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/12/08 18:11:02 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2018/07/25 23:56:15 by dguelpa     ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/27 01:42:20 by jjanin-r    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
 
 .PHONY: all clean fclean re
 
-CC = gcc
+CC = gcc -Wall -Wextra -Werror
 
 NAME = ./corewar
 
@@ -30,7 +30,7 @@ DIR_INSTRUCTIONS = $(addprefix $(DIR_SRC), Instructions/)
 DIR_TOOLS = $(addprefix $(DIR_SRC), Tools/)
 
 NAME_SRC = main_vm.c parse_args_vm.c init.c read_champs.c \
- rabbit_run.c dump.c cycle.c read.c
+ rabbit_run.c dump.c cycle.c read.c run.c
 
 INSTRUCTIONS_SRC = add.c aff.c and.c check_register.c fork.c ld.c ldi.c \
  lfork.c live.c lld.c lldi.c or.c st.c sti.c sub.c xor.c zjmp.c

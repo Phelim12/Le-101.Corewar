@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 14:26:27 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 01:59:29 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 01:38:20 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,6 +21,8 @@ void		ft_sti(t_process **proc)
 	int				aim;
 	int				var;
 
+	fparam = 0;
+	sparam = 0;
 	var = -1;
 	fparam = 0;
 	sparam = 0;

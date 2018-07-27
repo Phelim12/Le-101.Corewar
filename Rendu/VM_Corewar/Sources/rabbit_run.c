@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 17:24:38 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 01:28:21 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,7 +25,6 @@ static	int check_players_process()
 		nb += 1;
 		proc = proc->next;
 	}
-//	dprintf(2, "nb_process : %d\n", nb);
 	return (nb);
 }
 
@@ -42,7 +41,6 @@ static int		check_destruction_process(int cycles_passed)
 		}
 		if (g_vm->nb_live >= NBR_LIVE)
 		{
-//			dprintf(2, "lives : %d\n", lives);
 			g_vm->cycle_to_die -= CYCLE_DELTA;
 			g_vm->checks = 0;
 		}
@@ -57,19 +55,6 @@ static int		increment(cycles_passed)
 	g_vm->cycle++;
 	cycles_passed++;
 	return (cycles_passed);
-}
-
-static char		*get_champ_name(int player)
-{
-	int		i;
-
-	i = -1;
-	if (player < 0)
-		return (NULL);
-	while (++i < g_vm->nb_players)
-		if (g_vm->champion[i]->num == player)
-			return (g_vm->champion[i]->name);
-	return (NULL);
 }
 
 int		cycling(void)
@@ -89,13 +74,8 @@ int		cycling(void)
 		cycles_passed = check_destruction_process(cycles_passed);
 		if (!check_players_process())
 			break ;
-//		if (cycles_passed == 0)
-//			dprintf(2, "cycle_passed %d\n cycle_to_die %u\n", cycles_passed, g_vm->cycle_to_die);
 		cycles_passed = increment(cycles_passed);
-//		dprintf(2, "Player %d last_lived\n----------------------------------------------------\n\n", g_vm->last_live);
-		
 	}
-//	dprintf(2, "cycles = %d\n", g_vm->cycle);
 	if (g_vm->dump == 1 && g_vm->cycle > g_vm->d_cycles)
 		ft_dump();
 	else
@@ -108,29 +88,3 @@ int		cycling(void)
 	}
 	return (0);
 }
-
-/*
-**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-**┃
-**┃ ------ Le Pole Question
-**┃
-**┃ - Lors de l'arrivee sur une instruction viable, parser l'instruction et la stocker dans la params ?
-**┃ ----> Comportement a verifier par corruption de l'instruction pendant le delay
-**┃ - Lors de l'arrivee sur une instruction viable, garder en memoire les valeurs
-**┃ des variables pouvant etre ecrasee ?
-**┃ ----> Comportement a verifier par corruption des valeurs pendant le delay
-**┃ ----> Il est vraisemblable que ce sera lors de l'exec que l'on ira chercher les valeurs des parametres
-**┃
-**┃ - Mouvement du PC. A mon avis : PC bouge a chaque instruction, jump s'il faut jump etc.
-**┃ Le curseur visible de la VM n'est pas le PC, mais un vrai cursor en recherche de la prochaine instruction.
-**┃ Sur ..|00|.. c'est le cursor qui se deplace, et le PC est laisse avant.
-**┃ Je pense qu'il faudrait suivre le verbose 16 de la VM dans un premier temps
-**┃ Maybe.
-**┃ ----> a confirmer
-**┃	/!\ SEGV sur ./corewar -d 1500 --> SOLVED (pb lors de l'init et le free_all, des trucs pas instancies)
-**┃
-**┃ LEAKS ?
-**┃
-**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-*/
-
