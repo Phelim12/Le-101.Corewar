@@ -45,9 +45,9 @@ do
 
 	for P2 in $FILES
 	do
-		if [ $NAME1 != "Car" ]; then
- 			break 
- 		fi
+		# if [ $NAME1 != "Car" ]; then
+ 	# 		break 
+ 	# 	fi
 		NAME2=$(echo $P2 | rev | cut -c5- | rev)
 
 		OUTPUT="${NAME1}_vs_${NAME2}.output"
