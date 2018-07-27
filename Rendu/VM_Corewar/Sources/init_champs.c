@@ -74,25 +74,25 @@ static void		init_champ_num(void)
 
 void			init_champs(char const **argv)
 {
-	void			*tmp;
 	unsigned int	i;
 
 	i = -1;
-	tmp = NULL;
 	while (argv[++i])
 		if (!ft_strcmp(".cor", &argv[i][ft_strlen(argv[i]) - 4]))
 			g_vm->nb_players++;
 	i = -1;
-	tmp = (t_champ**)malloc(sizeof(t_champ*) * g_vm->nb_players + 1);
-	if (!tmp)
+	g_vm->champion = (t_champ**)malloc(sizeof(t_champ*) * g_vm->nb_players + 1);
+	if (!g_vm->champion)
 		error_vm("malloc failed\n", 0);
-	g_vm->champion = tmp;
 	while (++i < g_vm->nb_players)
 	{
-		tmp = (t_champ*)malloc(sizeof(t_champ));
-		if (!tmp)
+		g_vm->champion[i] = (t_champ*)malloc(sizeof(t_champ));
+		if (!g_vm->champion[i])
 			error_vm("malloc failed\n", 0);
-		g_vm->champion[i] = tmp;
+		g_vm->champion[i]->name = NULL;
+		g_vm->champion[i]->comment = NULL;
+		g_vm->champion[i]->filename = NULL;
+		g_vm->champion[i]->instructions = NULL;
 		g_vm->champion[i]->num = 0;
 	}
 	if (g_vm->nb_players > MAX_PLAYERS)

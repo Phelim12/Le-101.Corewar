@@ -39,13 +39,15 @@ void	print_error_size(int var)
 
 void	error_vm(char *str, int var)
 {
-//	if (!(ft_strcmp("open", str)))
-//		print_error_read(var);
-//	 if (!(ft_strcmp("size", str)))
-//		print_error_size(var);
-//	else if (str)
-//		ft_putstr_fd(str, 2);
-//	else
+	if (str)
+	{
+		if (!(ft_strcmp("open", str)))
+			print_error_read(var);
+		if (!(ft_strcmp("size", str)))
+			print_error_size(var);
+		else
+			ft_putstr_fd(str, 2);
+	}
 	free_all();
 	exit(1);
 }

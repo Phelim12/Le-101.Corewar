@@ -17,7 +17,6 @@ int		free_all(void)
 {
 	unsigned int	i;
 	t_process		**proc;
-	t_champ			**champ;
 	t_process		**tmp;
 
 	proc = &g_vm->list_process;
@@ -26,17 +25,14 @@ int		free_all(void)
 	ft_strdel((char **)&g_vm->map);
 	while (++i < g_vm->nb_players)
 	{
-		champ = &g_vm->champion[i];
-//		ft_strdel(&(*champ)->name);
-//		ft_strdel(&g_vm->champion[i]->comment);
-//		ft_strdel(&g_vm->champion[i]->filename);
-//		ft_strdel((char **)&g_vm->champion[i]->instructions);
+		ft_strdel(&g_vm->champion[i]->name);
+		ft_strdel(&g_vm->champion[i]->comment);
+		ft_strdel(&g_vm->champion[i]->filename);
+		ft_strdel((char **)&g_vm->champion[i]->instructions);
 		free(g_vm->champion[i]);
 	}
 	if (g_vm->champion)
-	{
 		free(g_vm->champion);
-	}
 	while (*proc)
 	{
 		free((*proc)->reg);
