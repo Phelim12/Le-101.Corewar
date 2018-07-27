@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   parse_args_vm.c                                  .::    .:/ .      .::   */
+/*   parser.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
+/*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/06/04 12:50:12 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 08:09:52 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/07/27 18:24:43 by jjanin-r     #+#   ##    ##    #+#       */
+/*   Updated: 2018/07/27 18:24:59 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,7 +36,7 @@ static void	parse_dump(char const **argv, unsigned int *i)
 			ft_atoi(argv[*i + 1]) >= 0)
 		g_vm->d_cycles = ft_atoi(argv[*i + 1]);
 	else
-		error_vm("wrong parameter for -dump option\n", 0);
+		error_vm("wrong parameter for -d option\n", 0);
 	*i += 2;
 }
 
