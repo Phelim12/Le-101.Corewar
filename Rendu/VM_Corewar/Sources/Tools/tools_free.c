@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 16:01:00 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 19:07:45 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 19:27:36 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,20 +34,20 @@ static void		free_champs(void)
 int				free_all(void)
 {
 	unsigned int	i;
-	t_process		**proc;
-	t_process		**tmp;
+	t_process		*proc;
+	t_process		*tmp;
 
-	proc = &g_vm->list_process;
+	proc = g_vm->list_process;
 	i = -1;
 	ft_strdel(&g_vm->p_map);
 	ft_strdel((char **)&g_vm->map);
 	free_champs();
-	while (*proc)
+	while (proc)
 	{
-		free((*proc)->reg);
+		free(proc->reg);
 		tmp = proc;
-		*proc = (*proc)->next;
-		free(*tmp);
+		proc = proc->next;
+		free(tmp);
 	}
 	if (g_vm)
 		free(g_vm);
