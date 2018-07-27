@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 16:01:00 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 19:27:36 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 19:35:21 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,6 +37,7 @@ int				free_all(void)
 	t_process		*proc;
 	t_process		*tmp;
 
+	proc = NULL;
 	proc = g_vm->list_process;
 	i = -1;
 	ft_strdel(&g_vm->p_map);
