@@ -70,21 +70,18 @@ void			init_champs(char const **argv)
 	void			*tmp;
 	unsigned int	i;
 
-	i = 0;
-	while (argv[i])
-	{
+	i = -1;
+	while (argv[++i])
 		if (!ft_strcmp(".cor", &argv[i][ft_strlen(argv[i]) - 4]))
 			g_vm->nb_players++;
-		i++;
-	}
-	i = 0;
+	i = -1;
 	if ((tmp = (t_champ**)malloc(sizeof(t_champ*) * g_vm->nb_players + 1)))
 		g_vm->champion = tmp;
-	while (i < g_vm->nb_players)
+	while (++i < g_vm->nb_players)
 	{
 		if ((tmp = (t_champ*)malloc(sizeof(t_champ))))
 			g_vm->champion[i] = tmp;
-		g_vm->champion[i++]->num = 0;
+		g_vm->champion[i]->num = 0;
 	}
 	if (g_vm->nb_players > MAX_PLAYERS)
 		error_vm("Too many .cor files in parameters\n", 0);

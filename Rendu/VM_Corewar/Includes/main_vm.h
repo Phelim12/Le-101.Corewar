@@ -106,7 +106,7 @@ typedef struct				s_op
 **┃ 	char				carry;			| Dayum carry
 **┃ 	unsigned char		*params;		| Current instruction saved
 **┃ 	char				ocp;			| Current ocp
-**┃ 	int					cycle_delay;	| Num o cycles needed to exec instr.
+**┃ 	int					cycle_delay;	| Cycles needed to exec instruct
 **┃ 	int					live;			| Num o live since last cycle_to_die
 **┃ 	struct s_process	*next;			| Next and older process
 **┃ }							t_process;
@@ -202,9 +202,9 @@ void						parse_args(char const **argv);
 void						init_champs(char const **argv);
 void						init_vm(char const **argv);
 int							init_process(unsigned int a);
-int							get_champ(int i);
-int							get_header(int i);
-int							get_instructions(int i, int fd);
+int							read_champ(int i);
+int							read_header(int i);
+int							read_code(int i, int fd);
 void						process_remove_if_live(t_process **begin_list);
 void						print_usage(void);
 void						error_vm(char *s, int c);

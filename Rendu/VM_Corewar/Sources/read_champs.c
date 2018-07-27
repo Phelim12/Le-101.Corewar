@@ -20,7 +20,7 @@ unsigned int	little_endian(unsigned int i)
 	return (i);
 }
 
-int				read_code(int i)
+int				read_header(int i)
 {
 	t_header	*header;
 	int			fd;
@@ -56,7 +56,7 @@ int				read_champ(int i)
 {
 	int			fd;
 
-	fd = read_code(i);
+	fd = read_header(i);
 	if (fd == -1)
 		return (-1);
 	if ((read_code(i, fd)) == -1)

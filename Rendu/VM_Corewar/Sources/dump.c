@@ -13,20 +13,6 @@
 
 #include "../Includes/main_vm.h"
 
-int		is_pc(int i)
-{
-	t_process	*tmp;
-
-	tmp = g_vm->list_process;
-	while (tmp)
-	{
-		if (i == tmp->reg[0])
-			return (1);
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
 int		print_color(int i, int *p, int pc)
 {
 	if (!(p[0] == g_vm->p_map[i] || p[1] == g_vm->p_map[i] ||
