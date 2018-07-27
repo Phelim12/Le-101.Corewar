@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 16:01:00 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 19:44:19 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 20:05:17 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,14 +18,16 @@ static void		free_champs(void)
 	unsigned int		i;
 
 	i = -1;
-	while (++i < g_vm->nb_players)
+	while (++i < g_vm->nb_players && g_vm->champion && g_vm->champion[i])
 	{
-		ft_strdel(&g_vm->champion[i]->name);
-		ft_strdel(&g_vm->champion[i]->comment);
-		ft_strdel(&g_vm->champion[i]->filename);
-		ft_strdel((char **)&g_vm->champion[i]->instructions);
 		if (g_vm->champion[i])
+		{
+			ft_strdel(&g_vm->champion[i]->name);
+			ft_strdel(&g_vm->champion[i]->comment);
+			ft_strdel(&g_vm->champion[i]->filename);
+			ft_strdel((char **)&g_vm->champion[i]->instructions);
 			free(g_vm->champion[i]);
+		}
 	}
 	if (g_vm->champion)
 		free(g_vm->champion);
