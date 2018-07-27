@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 17:00:45 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 22:07:32 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 19:14:04 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,6 +40,12 @@ void		lstnew_vm_init(t_process **new, int *reg)
 	(*new)->cycle_delay = 0;
 }
 
+void		error_lstnew(int *reg)
+{
+	free(reg);
+	error_vm("malloc failed in lstnew_vm\n", 0);
+}
+
 t_process	*lstnew_vm(int *reg, int reg_size)
 {
 	t_process	*new;
@@ -47,13 +53,13 @@ t_process	*lstnew_vm(int *reg, int reg_size)
 
 	var = -1;
 	if (!(new = (t_process*)malloc(sizeof(t_process))))
-		return (NULL);
+		error_lstnew(reg);
 	if (!reg)
 		new->reg = NULL;
 	else
 	{
 		if (!(new->reg = malloc(REG_SIZE * REG_NUMBER + 4)))
-			return (NULL);
+			error_lstnew(reg);
 		ft_memcpy(new->reg, reg, reg_size);
 	}
 	while (++var < 4)

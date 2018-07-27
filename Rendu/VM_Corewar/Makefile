@@ -6,7 +6,7 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/12/08 18:11:02 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2018/07/27 18:28:49 by jjanin-r    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/27 19:23:18 by jjanin-r    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -17,7 +17,7 @@ CC = gcc
 
 NAME = ../corewar
 
-C_FLAGS =  -Wall -Wextra -Werror
+C_FLAGS =  -Wall -Wextra -Werror -g
 
 DIR_LIB = ../Libft/
 

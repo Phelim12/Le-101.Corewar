@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/27 18:14:53 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 18:40:44 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 20:06:02 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -76,13 +76,12 @@ void		init_champs(char const **argv)
 		if (!ft_strcmp(".cor", &argv[i][ft_strlen(argv[i]) - 4]))
 			g_vm->nb_players++;
 	i = -1;
-	g_vm->champion = (t_champ**)malloc(sizeof(t_champ*) * g_vm->nb_players + 1);
-	if (!g_vm->champion)
+	if (!(g_vm->champion = (t_champ**)malloc(sizeof(t_champ*) *
+				g_vm->nb_players + 1)))
 		error_vm("malloc failed in init_champs\n", 0);
 	while (++i < g_vm->nb_players)
 	{
-		g_vm->champion[i] = (t_champ*)malloc(sizeof(t_champ));
-		if (!g_vm->champion[i])
+		if (!(g_vm->champion[i] = (t_champ*)malloc(sizeof(t_champ))))
 			error_vm("malloc failed in init_champs\n", 0);
 		g_vm->champion[i]->name = NULL;
 		g_vm->champion[i]->comment = NULL;
