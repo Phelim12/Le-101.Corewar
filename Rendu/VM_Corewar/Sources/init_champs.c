@@ -5,8 +5,8 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/07/27 02:36:04 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 09:16:32 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/07/27 18:14:53 by jjanin-r     #+#   ##    ##    #+#       */
+/*   Updated: 2018/07/27 18:14:56 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,10 +36,7 @@ static void		sort_champ_tab(void)
 		if (init_process(a) == -1)
 			error_vm("malloc failed\n", 0);
 		if (read_champ(a) == -1)
-		{
-			perror("Error reading champion: ");
-			error_vm(NULL, 0);
-		}
+			error_vm("Error reading champion\n", 0);
 	}
 }
 
