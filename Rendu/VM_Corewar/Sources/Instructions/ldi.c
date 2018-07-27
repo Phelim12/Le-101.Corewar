@@ -18,8 +18,8 @@ void		ft_ldi(t_process **proc)
 	int		fparam;
 	int		sparam;
 
-	fparam	= 0;
-	sparam	= 0;
+	fparam = 0;
+	sparam = 0;
 	if (PROC->params[0][0] == REG_CODE)
 		fparam = PROC->reg[PROC->params[0][1]];
 	if (PROC->params[0][0] == DIR_CODE)

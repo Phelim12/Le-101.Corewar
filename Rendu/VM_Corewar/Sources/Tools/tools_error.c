@@ -20,20 +20,31 @@ void	print_usage(void)
 	ft_printf(USE3);
 }
 
-int		error_vm(char *s, int c)
+void	print_error_read(int var)
 {
-	unsigned int i;
+	ft_putstr_fd("Can't read source file ", 2);
+	ft_putendl_fd(g_vm->champion[var]->filename, 2);
+}
 
-	i = 0;
-	if (!ft_strcmp("open", s))
-		ft_printf("Can't read source file %s\n", g_vm->champion[c]->filename);
-	else if (!ft_strcmp("size", s))
-		ft_printf("Error: File %s has too large a code (%d bytes > %d bytes)\n",
-		g_vm->champion[c]->filename, g_vm->champion[c]->prog_size,
-		MEM_SIZE / 6);
+void	print_error_size(int var)
+{
+	ft_putstr_fd("Error: File ", 2);
+	ft_putstr_fd(g_vm->champion[var]->filename, 2);
+	ft_putstr_fd(" has too large a code (", 2);
+	ft_putnbr_fd(g_vm->champion[var]->prog_size, 2);
+	ft_putstr_fd(" bytes > ", 2);
+	ft_putnbr_fd((MEM_SIZE / 6), 2);
+	ft_putendl_fd(" bytes)", 2);
+}
+
+void	error_vm(char *str, int var)
+{
+	if (!(ft_strcmp("open", str)))
+		print_error_read(var);
+	else if (!(ft_strcmp("size", str)))
+		print_error_size(var);
 	else
-		ft_printf(s);
+		ft_putstr_fd(str, 2);
 	free_all();
 	exit(1);
-	return (-1);
 }

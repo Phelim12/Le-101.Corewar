@@ -13,9 +13,14 @@
 
 #include "../../Includes/main_vm.h"
 
+void		print(int player, int index, int value)
+{
+	g_vm->map[index] = value;
+	g_vm->p_map[index] = player;
+}
+
 void		norme_remove(t_process **list)
 {
-//	dprintf(2, "it's ok num : %d and lives : %d\n", (*list)->num, (*list)->live);
 	(*list)->live = 0;
 	(*list) = (*list)->next;
 }
@@ -30,14 +35,12 @@ void		process_remove_if_live(t_process **begin_list)
 	{
 		if (list == *begin_list && list->live == 0)
 		{
-//			dprintf(2, "remove first num : %d\n and lives : %d\n", list->num, list->live);
 			*begin_list = (*begin_list)->next;
 			free_process(list);
 			list = *begin_list;
 		}
 		else if (list->next && list->next->live == 0)
 		{
-//			dprintf(2, "remove else num : %d\n and lives : %d\n", list->num, list->live);
 			tmp = list->next->next;
 			free_process(list->next);
 			list->next = tmp;
@@ -73,7 +76,7 @@ int		check_data(void)
 	while (++i < g_vm->nb_players)
 	{
 		if (g_vm->champion[i]->prog_size > MEM_SIZE / 6)
-			return (error_vm("size", i));
+			error_vm("size", i);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/07/12 19:03:24 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2018/07/27 01:39:09 by jjanin-r    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/27 02:23:25 by jjanin-r    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -34,66 +34,56 @@ if [[ $1 = "clean" ]]; then
 fi
 
 if [[ -z $1 ]] || ! echo $1 | egrep -q '^[0-9]+$' ; then
-    printf "usage: sh $0 \"nb >= 0\" || \"clean\"\n"
-    exit 0
+	printf "usage: sh $0 \"nb >= 0\" || \"clean\"\n"
+	exit 0
 fi
-
-VAR1=0
-VAR2=0
-VAR3=0
 
 for P1 in $FILES
 do
+
 	NAME1=$(echo $P1 | rev | cut -c5- | rev)
+
 	for P2 in $FILES
 	do
-#		if [ "$VAR1" -ge 14 ]; then
-#			if [ "$VAR1" -le 27 ]; then
-		# if [ "$VAR1" -ge 14 ]; then
-		# 	if [ "$VAR1" -le 27 ]; then
+
+#		if [ $NAME1 != "gateau" ]; then
+#			break
+#		fi
 
 		NAME2=$(echo $P2 | rev | cut -c5- | rev)
 
 		OUTPUT="${NAME1}_vs_${NAME2}.output"
 
-		# 													LEAKS CHECK
+		#                                                     LEAKS CHECK
 
-		# valgrind --leak-check=full --show-leak-kinds=all ./corewar ./Champs/$P1 ./Champs/$P2 -d $1 &> ./MCOREWAR_OUTPUT/$OUTPUT
-		# DIFF=$(diff ./MY_LEAKS.output ./GOOD_LEAKS.output)
-		# if [ "$DIFF" = "" ]; then
-		# 	printf "${GREEN}$NAME1 VS $NAME2 ✔ ${NC}\n"
-		# else
-		# 	printf "${RED}$NAME1 VS $NAME2 -> HAVE LEAKS ✘ ${NC}\n"
-		# 	cat ./MY_LEAKS.output
-		# 	read -p "Press any key to continue... " -n1 -s
-		# 	printf "\n"
-		# fi
+		#        valgrind --leak-check=full --show-leak-kinds=all ./corewar ./Champs/$P1 ./Champs/$P2 -d $1 &> ./MCOREWAR_OUTPUT/$OUTPUT
+		#        cat ./MCOREWAR_OUTPUT/$OUTPUT | sed 's/^=.*=//g' | grep -A 3 "definitely lost:" | column -t | fmt -c -w 75 > MY_LEAKS.output
+		#        DIFF=$(diff ./MY_LEAKS.output ./GOOD_LEAKS.output)
+		#        if [ "$DIFF" = "" ]; then
+		#            printf "${GREEN}$NAME1 VS $NAME2 ✔ ${NC}\n"
+		#        else
+		#            printf "${RED}$NAME1 VS $NAME2 -> HAVE LEAKS ✘ ${NC}\n"
+		#            cat ./MY_LEAKS.output
+		#            read -p "Press any key to continue... " -n1 -s
+		#            printf "\n"
+		#        fi
 
-		# 													 DIFF CHECK
+		#                                                      DIFF CHECK
 
-		 ./corewar ./Champs/$P1 ./Champs/$P2 -d $1 > ./MCOREWAR_OUTPUT/$OUTPUT
-		 ./r_corewar ./Champs/$P1 ./Champs/$P2 -d $1 > ./RCOREWAR_OUTPUT/$OUTPUT
+		./corewar ./Champs/$P1 ./Champs/$P2 -d $1 > ./MCOREWAR_OUTPUT/$OUTPUT
+		./r_corewar ./Champs/$P1 ./Champs/$P2 -d $1 > ./RCOREWAR_OUTPUT/$OUTPUT
 
-		 DIFF=$(diff ./RCOREWAR_OUTPUT/$OUTPUT ./MCOREWAR_OUTPUT/$OUTPUT)
+		DIFF=$(diff ./RCOREWAR_OUTPUT/$OUTPUT ./MCOREWAR_OUTPUT/$OUTPUT)
 
-		 if [ "$DIFF" = "" ]; then
-		 	printf "${GREEN}$NAME1 VS $NAME2 ✔ ${NC}\n"
-		 else
-		 	printf "${RED}$NAME1 VS $NAME2 ✘ (REAL COREWAR IN FIRST)${NC}\n"
-		 	diff -d ./RCOREWAR_OUTPUT/$OUTPUT ./MCOREWAR_OUTPUT/$OUTPUT
-		 	read -p "Press any key to continue... " -n1 -s
-		 	printf "\n"
-		 fi
+		if [ "$DIFF" = "" ]; then
+			printf "${GREEN}$NAME1 VS $NAME2 ✔ ${NC}\n"
+		else
+			printf "${RED}$NAME1 VS $NAME2 ✘ (REAL COREWAR IN FIRST)${NC}\n"
+			diff -d ./RCOREWAR_OUTPUT/$OUTPUT ./MCOREWAR_OUTPUT/$OUTPUT
+			read -p "Press any key to continue... " -n1 -s
+			printf "\n"
+		fi
 
-#		fi
-#		fi
 	done
-	VAR1=$((VAR1+1))
 
 done
-
-
-
-
-
-
