@@ -32,7 +32,7 @@ void		and_dir(t_process **proc)
 		PROC->reg[PROC->params[2][1]] = (PROC->params[0][1] &
 			PROC->reg[PROC->params[1][1]]);
 	if (PROC->params[1][0] == DIR_CODE)
-		PROC->reg[PROC->params[2][1]] = 
+		PROC->reg[PROC->params[2][1]] =
 			(PROC->params[0][1] & PROC->params[1][1]);
 	if (PROC->params[1][0] == IND_CODE)
 		PROC->reg[PROC->params[2][1]] = (PROC->params[0][1] &

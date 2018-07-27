@@ -52,7 +52,7 @@ t_process	*lstnew_vm(int *reg, int reg_size)
 		new->reg = NULL;
 	else
 	{
-		if (!(new->reg = malloc(REG_SIZE * (REG_NUMBER + 1))))
+		if (!(new->reg = malloc(REG_NUMBER + 1)))
 			return (NULL);
 		ft_memcpy(new->reg, reg, reg_size);
 	}

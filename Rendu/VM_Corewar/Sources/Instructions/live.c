@@ -13,10 +13,10 @@
 
 #include "../../Includes/main_vm.h"
 
-void		ft_live(t_process **proc)
+void	ft_live(t_process **proc)
 {
 	unsigned int	i;
-	
+
 	i = -1;
 	while (++i < g_vm->nb_players)
 	{

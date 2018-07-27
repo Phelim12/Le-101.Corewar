@@ -50,7 +50,7 @@ void		process_remove_if_live(t_process **begin_list)
 	}
 }
 
-void	introduction(void)
+void		introduction(void)
 {
 	int i;
 
@@ -68,7 +68,7 @@ void	introduction(void)
 	}
 }
 
-int		check_data(void)
+int			check_data(void)
 {
 	unsigned int i;
 

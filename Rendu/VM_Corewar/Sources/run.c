@@ -37,8 +37,6 @@ void static		go(t_process **proc, t_process **begin)
 	read_instruction(proc);
 	if (PROC->op > 0 && check_reg(*proc))
 	{
-		if (g_vm->v)
-			print_instruction(*proc);
 		run(proc, begin);
 		PROC->cycle_delay = -1;
 	}

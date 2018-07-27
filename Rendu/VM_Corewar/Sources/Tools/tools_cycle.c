@@ -33,7 +33,7 @@ void	run_2(t_process **proc, t_process **begin)
 		ft_aff(proc);
 }
 
-void	run_1(t_process **proc, t_process **begin)
+void	run_1(t_process **proc)
 {
 	if (PROC->op == LIVE)
 		ft_live(proc);
@@ -55,8 +55,8 @@ void	run_1(t_process **proc, t_process **begin)
 
 void	run(t_process **proc, t_process **begin)
 {
+	if (PROC->op >= LIVE && PROC->op <= XOR)
+		run_1(proc);
 	if (PROC->op >= ZJMP && PROC->op <= AFF)
 		run_2(proc, begin);
-	if (PROC->op >= LIVE && PROC->op <= XOR)
-		run_1(proc, begin);
 }

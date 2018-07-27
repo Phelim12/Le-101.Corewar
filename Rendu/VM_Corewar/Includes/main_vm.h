@@ -13,10 +13,6 @@
 
 #ifndef MAIN_VM_H
 # define MAIN_VM_H
-# define USE1 "Usage: ./corewar [-d N] [[-n number] champion1.cor] ...\n"
-# define USE2 "\t-d N\t: dump memory after nbr_cycles then exit\n"
-# define USE3 "\t-n number\t: set the number of the next player\n"
-
 # include <stdio.h>
 # include <fcntl.h>
 # include <unistd.h>
@@ -24,6 +20,82 @@
 # include <string.h>
 # include "../../Libft/Includes/libft.h"
 # include "../../Libft/Includes/libftprintf.h"
+
+
+# define USE1 "Usage: ./corewar [-d N] [[-n number] champion1.cor] ...\n"
+# define USE2 "\t-d N\t: dump memory after nbr_cycles then exit\n"
+# define USE3 "\t-n number\t: set the number of the next player\n"
+
+# define IND_SIZE			2
+# define PROC				(*proc)
+# define REG_SIZE			4
+# define DIR_SIZE			REG_SIZE
+
+# define REG_CODE			1
+# define DIR_CODE			2
+# define IND_CODE			3
+
+# define MIN_REG			1
+# define MAX_REG			16
+
+# define LIVE	1
+# define LD		2
+# define ST		3
+# define ADD	4
+# define SUB	5
+# define AND	6
+# define OR		7
+# define XOR	8
+# define ZJMP	9
+# define LDI	10
+# define STI	11
+# define FORK	12
+# define LLD	13
+# define LLDI	14
+# define LFORK	15
+# define AFF	16
+
+# define MAX_ARGS_NUMBER	4
+# define MAX_PLAYERS		4
+# define MEM_SIZE			(4*1024)
+# define IDX_MOD			(MEM_SIZE / 8)
+# define CHAMP_MAX_SIZE		(MEM_SIZE / 6)
+
+# define COMMENT_CHAR		'#'
+# define LABEL_CHAR			':'
+# define DIRECT_CHAR		'%'
+# define SEPARATOR_CHAR		','
+
+# define LABEL_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789"
+
+# define NAME_CMD_STRING	".name"
+# define COMMENT_CMD_STRING	".comment"
+
+# define REG_NUMBER			16
+
+# define CYCLE_TO_DIE		1536
+# define CYCLE_DELTA		50
+# define NBR_LIVE			21
+# define MAX_CHECKS			10
+
+typedef char				t_arg_type;
+
+# define T_REG				1
+# define T_DIR				2
+# define T_IND				4
+# define T_LAB				8
+
+# define PROG_NAME_LENGTH	(128)
+# define COMMENT_LENGTH		(2048)
+# define COREWAR_EXEC_MAGIC	0xea83f3
+
+typedef struct				s_header
+{
+	unsigned int	magic;
+	char			prog_name[PROG_NAME_LENGTH + 1];
+	unsigned int	prog_size;
+	char			comment[COMMENT_LENGTH + 1];
+}							t_header;
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -361,84 +433,5 @@ void						ft_lfork(t_process **proc, t_process **begin);
 void						ft_aff(t_process **proc);
 int							check_reg(t_process *proc);
 
-/*
-**----------------OP_H---------------
-*/
-
-/*
-** Toutes les tailles sont en octets.
-** On part du principe qu'un int fait 32 bits.
-*/
-
-# define IND_SIZE			2
-# define PROC				(*proc)
-# define REG_SIZE			4
-# define DIR_SIZE			REG_SIZE
-
-# define REG_CODE			1
-# define DIR_CODE			2
-# define IND_CODE			3
-
-# define MIN_REG			1
-# define MAX_REG			16
-
-# define LIVE	1
-# define LD		2
-# define ST		3
-# define ADD	4
-# define SUB	5
-# define AND	6
-# define OR		7
-# define XOR	8
-# define ZJMP	9
-# define LDI	10
-# define STI	11
-# define FORK	12
-# define LLD	13
-# define LLDI	14
-# define LFORK	15
-# define AFF	16
-
-# define MAX_ARGS_NUMBER	4
-# define MAX_PLAYERS		4
-# define MEM_SIZE			(4*1024)
-# define IDX_MOD			(MEM_SIZE / 8)
-# define CHAMP_MAX_SIZE		(MEM_SIZE / 6)
-
-# define COMMENT_CHAR		'#'
-# define LABEL_CHAR			':'
-# define DIRECT_CHAR		'%'
-# define SEPARATOR_CHAR		','
-
-# define LABEL_CHARS		"abcdefghijklmnopqrstuvwxyz_0123456789"
-
-# define NAME_CMD_STRING	".name"
-# define COMMENT_CMD_STRING	".comment"
-
-# define REG_NUMBER			16
-
-# define CYCLE_TO_DIE		1536
-# define CYCLE_DELTA		50
-# define NBR_LIVE			21
-# define MAX_CHECKS			10
-
-typedef char				t_arg_type;
-
-# define T_REG				1
-# define T_DIR				2
-# define T_IND				4
-# define T_LAB				8
-
-# define PROG_NAME_LENGTH	(128)
-# define COMMENT_LENGTH		(2048)
-# define COREWAR_EXEC_MAGIC	0xea83f3
-
-typedef struct				s_header
-{
-	unsigned int	magic;
-	char			prog_name[PROG_NAME_LENGTH + 1];
-	unsigned int	prog_size;
-	char			comment[COMMENT_LENGTH + 1];
-}							t_header;
 
 #endif

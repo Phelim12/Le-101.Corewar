@@ -18,7 +18,7 @@ void		ft_fork(t_process **proc, t_process **begin)
 	t_process		*new;
 	int				aim;
 
-	new = lstnew_vm(PROC->reg, REG_SIZE * (REG_NUMBER + 1));
+	new = lstnew_vm(PROC->reg, REG_SIZE * REG_NUMBER + 10);
 	aim = (PROC->begin + PROC->params[0][1] % IDX_MOD) % MEM_SIZE;
 	aim += (aim < 0 ? MEM_SIZE : 0);
 	new->carry = PROC->carry;

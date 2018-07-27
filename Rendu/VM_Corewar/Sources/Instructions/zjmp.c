@@ -20,4 +20,3 @@ void		ft_zjmp(t_process **proc)
 	if (PROC->reg[0] < 0)
 		PROC->reg[0] += MEM_SIZE;
 }
-

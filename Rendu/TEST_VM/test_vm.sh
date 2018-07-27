@@ -51,7 +51,9 @@ do
 #			if [ "$VAR1" -le 27 ]; then
 		# if [ "$VAR1" -ge 14 ]; then
 		# 	if [ "$VAR1" -le 27 ]; then
-
+		if [ $NAME1 != "Car" ]; then
+ 			break 
+ 		fi
 		NAME2=$(echo $P2 | rev | cut -c5- | rev)
 
 		OUTPUT="${NAME1}_vs_${NAME2}.output"

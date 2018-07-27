@@ -21,8 +21,6 @@ void		ft_sti(t_process **proc)
 	int				aim;
 	int				var;
 
-	fparam = 0;
-	sparam = 0;
 	var = -1;
 	fparam = 0;
 	sparam = 0;
