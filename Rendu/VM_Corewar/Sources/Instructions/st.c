@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 14:26:03 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 18:22:17 by dguelpa     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 06:26:46 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,4 +32,5 @@ void		ft_st(t_process **proc)
 		while (++var < 4)
 			print(PROC->reg[1], (aim + var) % MEM_SIZE, tab[var]);
 	}
+	free(tab);
 }

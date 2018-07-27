@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 14:25:00 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 01:46:15 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 06:38:55 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,6 +22,9 @@ void	ft_live(t_process **proc)
 	{
 		if (-g_vm->champion[i]->num == PROC->params[0][1])
 		{
+			if (g_vm->v == 1)
+				ft_printf("Player %d (%s) is said to be alive\n",
+						g_vm->champion[i]->num, g_vm->champion[i]->name);
 			g_vm->champion[i]->live++;
 			g_vm->last_live = i;
 			break ;

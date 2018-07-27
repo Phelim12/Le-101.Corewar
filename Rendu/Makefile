@@ -6,7 +6,7 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/12/08 18:11:02 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2017/12/08 18:11:02 by clcreuso    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/27 08:36:20 by jjanin-r    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -54,6 +54,11 @@ asm: libft
 		make -C $(DIR_ASM);\
 	fi;
 
+vm: libft
+	@if !(make -q -C $(DIR_VM)); then \
+		rm -rf $(NAME_VM);\
+		make -C $(DIR_VM);\
+	fi;
 corewar: libft
 	@if !(make -q -C $(DIR_VM)); then \
 		rm -rf $(NAME_VM);\

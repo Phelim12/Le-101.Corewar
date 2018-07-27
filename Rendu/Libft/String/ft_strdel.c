@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/11/24 22:06:19 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2017/11/24 22:06:19 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 08:47:30 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,7 @@
 
 void	ft_strdel(char **as)
 {
-	if (!as)
+	if (!as || *as == NULL)
 		return ;
 	free(*as);
 	*as = NULL;

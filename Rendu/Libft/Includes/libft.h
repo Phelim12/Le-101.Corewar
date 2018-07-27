@@ -6,7 +6,7 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/12/28 15:16:18 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/27 17:02:00 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 06:46:29 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -52,7 +52,7 @@ int				ft_isdigit(int c);
 int				ft_islower(int c);
 int				ft_isprint(int c);
 int				ft_isspace(int c);
-int 			ft_iscntrl(int c);
+int				ft_iscntrl(int c);
 int				ft_isupper(int c);
 int				ft_tolower(int c);
 int				ft_toupper(int c);

@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/24 14:20:11 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 02:09:12 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 06:42:11 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,7 +55,7 @@ int		ft_dump(void)
 	{
 		if (i == 0)
 			ft_printf("%-#5.4x : ", i);
-		else if (i % (g_vm->d_size ? g_vm->d_size : 64) == 0)
+		else if (i % (g_vm->d_size ? g_vm->d_size : 32) == 0)
 			ft_printf("\n%-#5.4x : ", i);
 		ft_printf("%02x", g_vm->map[i]);
 		ft_printf(" ");

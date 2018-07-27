@@ -6,14 +6,14 @@
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/18 21:28:11 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/18 21:28:11 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 06:47:05 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int 	ft_iscntrl(int c)
+int		ft_iscntrl(int c)
 {
 	if (c == 127)
 		return (1);

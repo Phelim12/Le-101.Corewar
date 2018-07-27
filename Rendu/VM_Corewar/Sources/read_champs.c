@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/13 14:10:23 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 01:14:59 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 07:33:20 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,6 +18,16 @@ unsigned int	little_endian(unsigned int i)
 	i = ((i >> 24) & 0xff) | ((i << 8) & 0xff0000) |
 		((i >> 8) & 0xff00) | ((i << 24) & 0xff000000);
 	return (i);
+}
+
+void			check_header(int i)
+{
+	if (g_vm->champion[i]->magic != COREWAR_EXEC_MAGIC)
+		error_vm("ERROR [HEADER] [MAGIC NUMBER]\n", 0);
+	if (!g_vm->champion[i]->name)
+		error_vm("ERROR [HEADER] [NAME]\n", 0);
+	if (!g_vm->champion[i]->comment)
+		error_vm("ERROR [HEADER] [COMMENT]\n", 0);
 }
 
 int				read_header(int i)
@@ -37,6 +47,7 @@ int				read_header(int i)
 	g_vm->champion[i]->magic = little_endian(header->magic);
 	g_vm->champion[i]->prog_size = little_endian(header->prog_size);
 	free(header);
+	check_header(i);
 	return (fd);
 }
 

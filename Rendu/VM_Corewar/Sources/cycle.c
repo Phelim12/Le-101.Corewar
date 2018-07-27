@@ -6,7 +6,7 @@
 /*   By: dguelpa <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 14:46:51 by dguelpa      #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 03:54:31 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 06:40:13 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -57,7 +57,7 @@ int				cycling(void)
 
 	win = 0;
 	cycles_passed = 0;
-	while (check_players_process() > 0 &&
+	while (g_vm->cycle_to_die > 0 && check_players_process() > 0 &&
 			(g_vm->dump == 0 || g_vm->cycle <= g_vm->d_cycles))
 	{
 		process();

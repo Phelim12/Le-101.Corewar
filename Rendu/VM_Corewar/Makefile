@@ -6,16 +6,16 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/12/08 18:11:02 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2018/07/27 04:08:28 by jjanin-r    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/27 09:10:53 by jjanin-r    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
 
 .PHONY: all clean fclean re
 
-CC = gcc -Wall -Wextra -Werror
+CC = gcc -fsanitize=address -g#-Wall -Wextra -Werror
 
-NAME = ./corewar
+NAME = ../corewar
 
 C_FLAGS =  -g
 
@@ -55,7 +55,7 @@ NB_FILES = $(words $(SRC))
 all: $(NAME)
 
 $(NAME): $(OBJ) $(INC)
-	@make -C ../Libft
+#	@make -C ../Libft
 	@$(CC) $(C_FLAGS) $(OBJ) -L $(DIR_LIB) -lft -o $(NAME)
 	@printf "\r\033[0;32m✅️   make corewar 100%%\033[0m\033[K\n"
 

@@ -6,7 +6,7 @@
 /*   By: jjanin-r <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/27 02:36:04 by jjanin-r     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/27 03:16:20 by jjanin-r    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 09:16:32 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,8 +32,15 @@ static void		sort_champ_tab(void)
 		}
 	}
 	while (--a >= 0)
-		if (init_process(a) == -1 || read_champ(a) == -1)
+	{
+		if (init_process(a) == -1)
 			error_vm("malloc failed\n", 0);
+		if (read_champ(a) == -1)
+		{
+			perror("Error reading champion: ");
+			error_vm(NULL, 0);
+		}
+	}
 }
 
 static void		init_champ_num(void)
@@ -71,16 +78,21 @@ void			init_champs(char const **argv)
 	unsigned int	i;
 
 	i = -1;
+	tmp = NULL;
 	while (argv[++i])
 		if (!ft_strcmp(".cor", &argv[i][ft_strlen(argv[i]) - 4]))
 			g_vm->nb_players++;
 	i = -1;
-	if ((tmp = (t_champ**)malloc(sizeof(t_champ*) * g_vm->nb_players + 1)))
-		g_vm->champion = tmp;
+	tmp = (t_champ**)malloc(sizeof(t_champ*) * g_vm->nb_players + 1);
+	if (!tmp)
+		error_vm("malloc failed\n", 0);
+	g_vm->champion = tmp;
 	while (++i < g_vm->nb_players)
 	{
-		if ((tmp = (t_champ*)malloc(sizeof(t_champ))))
-			g_vm->champion[i] = tmp;
+		tmp = (t_champ*)malloc(sizeof(t_champ));
+		if (!tmp)
+			error_vm("malloc failed\n", 0);
+		g_vm->champion[i] = tmp;
 		g_vm->champion[i]->num = 0;
 	}
 	if (g_vm->nb_players > MAX_PLAYERS)

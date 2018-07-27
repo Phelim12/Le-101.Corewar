@@ -6,7 +6,7 @@
 /*   By: nbettach <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/22 16:49:07 by nbettach     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/22 16:49:10 by nbettach    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 07:42:00 by jjanin-r    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -39,12 +39,13 @@ void	print_error_size(int var)
 
 void	error_vm(char *str, int var)
 {
-	if (!(ft_strcmp("open", str)))
-		print_error_read(var);
-	else if (!(ft_strcmp("size", str)))
-		print_error_size(var);
-	else
-		ft_putstr_fd(str, 2);
+//	if (!(ft_strcmp("open", str)))
+//		print_error_read(var);
+//	 if (!(ft_strcmp("size", str)))
+//		print_error_size(var);
+//	else if (str)
+//		ft_putstr_fd(str, 2);
+//	else
 	free_all();
 	exit(1);
 }
