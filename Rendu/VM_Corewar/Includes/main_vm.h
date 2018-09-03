@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
+# include <inttypes.h>
 # include "../../Libft/Includes/libft.h"
 # include "../../Libft/Includes/libftprintf.h"
 # include "vm_defines.h"

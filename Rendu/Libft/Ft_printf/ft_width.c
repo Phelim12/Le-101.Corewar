@@ -16,10 +16,8 @@
 void		ft_width(t_param *ptr)
 {
 	int i;
-	int j;
 
 	i = 0;
-	j = 0;
 	while (ptr->next)
 		ptr = ptr->next;
 	if (ptr->type == 'p')

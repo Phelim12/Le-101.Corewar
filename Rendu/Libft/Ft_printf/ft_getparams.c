@@ -15,11 +15,9 @@
 
 int		ft_getparams(const char *restrict format, t_param **begin, va_list ap)
 {
-	int		i;
 	char	*str;
 	int		clen;
 
-	i = 0;
 	str = ft_strdup(format);
 	clen = ft_colorlen(str);
 	str = ft_color(str);

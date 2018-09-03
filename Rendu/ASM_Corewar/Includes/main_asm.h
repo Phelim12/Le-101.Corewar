@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <errno.h>
+# include <inttypes.h>
 # include "../../Libft/Includes/libft.h"
 # include "op.h"
 # include "asm_define.h"

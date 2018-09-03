@@ -54,9 +54,7 @@ int				read_header(int i)
 int				read_code(int i, int fd)
 {
 	int			size;
-	int			ret;
-
-	ret = 0;
+	
 	size = g_vm->champion[i]->prog_size;
 	if (!(g_vm->champion[i]->instructions = malloc(size + 1)))
 		error_vm("malloc failed in read_code\n", 0);
